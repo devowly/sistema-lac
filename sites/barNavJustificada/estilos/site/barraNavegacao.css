@@ -1,0 +1,9 @@
+/* @arquivo barraNavegacao.css 
+ *
+ * Estilos para nossa barra de navegação.
+ */
+
+.navbar {
+  /* Espaçamento entre a barra de navegação e o conteúdo */
+  margin-bottom: 20px;
+}

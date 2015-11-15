@@ -1,0 +1,35 @@
+/* @arquivo topo.css 
+ *
+ * Estilos para logotipo e barra de navegação do topo
+ */
+
+#topo .text-muted .row {
+  margin-bottom: 0px;
+} 
+
+/* A coluna que contêm o nosso logotipo */
+#topo .text-muted  .col-md-4 {
+  background-color: #fff; /* Cor branco */
+  border: 0px; 
+  padding-top: 0px; 
+  padding-bottom: 0px;
+}
+
+/* A coluna que contêm os botões alinhados a direita do logotipo */
+#topo .text-muted .col-md-8 {
+  border: 0px;
+  background-color: #fff; /* Cor branco */ 
+  padding-top: 0px; 
+  padding-bottom: 0px;
+} 
+
+/* Botões do topo que ficam posicionados à direita */
+#topo .text-muted .col-md-8 .btn {
+
+} 
+
+/* Largura e altura da nossa imagem de logo */
+#topo .text-muted .col-md-4  img {
+  width: 205px; 
+  height: 84px;
+} 
