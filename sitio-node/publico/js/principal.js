@@ -11,7 +11,6 @@ var aplicativo = null;
 var RoteadorAplicativo = Backbone.Router.extend({
 
   seCarrosselIniciado: false,
-  seQuemSomosIniciado: false,
   
   /* ROTAS DO NOSSO APLICATIVO 
    * Aqui vão ser realizadas o roteamento das visões.
@@ -26,15 +25,7 @@ var RoteadorAplicativo = Backbone.Router.extend({
     "quemSomos": "quemSomos",                   // Página de quem somos.
     "nossaEquipe": "nossaEquipe",               // Página da nossa equipe.
     "nossasUnidades": "nossasUnidades",         // Página das nossas unidades.
-    "infoConvenio": "infoConvenio",             // Pág. de informações de cada convênio.
-     
-    // O scrollSpy utiliza a mesma forma (#ancora) de navegar pelas ancoras que o backbone utiliza. 
-    // então adicionamos as rotas para cada um dos items do menu vertical.
-    // @AFAZER Quando usuário navegar por estas rotas abaixo, fazer com que o texto seja posicionado na ancora.
-    "consAmbiental": "conscienciaAmbiental",    // Ancora consciencia ambiental
-    "aEmpresa": "sobreEmpresa",                 // Ancora sobre a empresa
-    "misVisVal": "missaoVisaoValores",          // Ancora para missões, visões e valores
-    "gestaoQualidade": "gestaoQualidade"        // Ancora para gestão de qualidade.
+    "infoConvenio": "infoConvenio"              // Pág. de informações de cada convênio.
   },
 
   /* @funcao initialize().
@@ -167,60 +158,8 @@ var RoteadorAplicativo = Backbone.Router.extend({
     // Remove selecao de qualquer item da barra de navegação.
     this.visaoBarraNavegacao.selecionarItemMenu(null);
     
-  },
-  
-  conscienciaAmbiental: function() {
-    // Removemos a seleção de qualquer item na barra de navegação
-    this.visaoBarraNavegacao.selecionarItemMenu(null);
-    
-    // Aqui adicionamos o conteúdo de quem somos.
-    if (!this.visaoQuemSomos) {
-      this.visaoQuemSomos = new VisaoQuemSomos();
-    }
-    $('#conteudo').html(this.visaoQuemSomos.el);
-   
-    this.visaoQuemSomos.selecionarItemNavegacao('itemConsAmb');
-  },
-  
-  sobreEmpresa: function() {
-    // Removemos a seleção de qualquer item na barra de navegação
-    this.visaoBarraNavegacao.selecionarItemMenu(null);
-    
-    // Aqui adicionamos o conteúdo de quem somos.
-    if (!this.visaoQuemSomos) {
-      this.visaoQuemSomos = new VisaoQuemSomos();
-    }
-    $('#conteudo').html(this.visaoQuemSomos.el);
-    
-    this.visaoQuemSomos.selecionarItemNavegacao('itemEmpresa');
-  },
-  
-  missaoVisaoValores: function() {
-    // Removemos a seleção de qualquer item na barra de navegação
-    this.visaoBarraNavegacao.selecionarItemMenu(null);
-    
-    // Aqui adicionamos o conteúdo de quem somos.
-    if (!this.visaoQuemSomos) {
-      this.visaoQuemSomos = new VisaoQuemSomos();
-    }
-    $('#conteudo').html(this.visaoQuemSomos.el);
-    
-    this.visaoQuemSomos.selecionarItemNavegacao('itemMisVisVal');
-  },
-  
-  gestaoQualidade: function() {
-    // Removemos a seleção de qualquer item na barra de navegação
-    this.visaoBarraNavegacao.selecionarItemMenu(null);
-    
-    // Aqui adicionamos o conteúdo de quem somos.
-    if (!this.visaoQuemSomos) {
-      this.visaoQuemSomos = new VisaoQuemSomos();
-    }
-    $('#conteudo').html(this.visaoQuemSomos.el);
-    
-    this.visaoQuemSomos.selecionarItemNavegacao('itemGestQuali');
   }
-
+  
 });
 
 // Carregamos o template em html de cada uma das visões.
