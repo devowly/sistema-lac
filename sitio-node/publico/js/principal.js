@@ -1,29 +1,39 @@
 'use strict'
 
+/* @arquivo principal.js
+ *
+ * @Descrição Aqui vamos adicionar as caracteristicas de trabalhar com as rotas,
+ *  Carregar os arquivos de visão. 
+ */
+
 var aplicativo = null;
 
 var RoteadorAplicativo = Backbone.Router.extend({
 
-  /* A rotas do nosso aplicativo.
-   */
+  seCarrosselIniciado: false,
+  
+  /* ROTAS DO NOSSO APLICATIVO 
+   * Aqui vão ser realizadas o roteamento das visões.
+   *----------------------------------------------------*/
   routes: {
     
     /* PAGINAS BASE DO NOSSO SITIO. */
-    "": "inicio", // Caso seja a extenção inicial, adicionamos o conteúdo de início.
-    "examesOrientacoes": "examesOrientacoes", // Página contendo a tabela de exames e suas orientações.
-    "centralAtendimento": "centralAtendimento",
-    "convenios": "convenios",
-    "quemSomos": "quemSomos",
-    "nossaEquipe": "nossaEquipe",
-    "nossasUnidades": "nossasUnidades",
-    "infoConvenio": "infoConvenio",
-    
-    /* O scrollSpy utiliza a mesma caracteristica do backbone, então adicionamos as rotas para
-     * cada um dos items do menu vertical. */
-    "consAmbiental": "conscienciaAmbiental",
-    "aEmpresa": "sobreEmpresa",
-    "misVisVal": "missaoVisaoValores",
-    "gestaoQualidade": "gestaoQualidade"
+    "": "inicio",                               // Caso seja a extenção inicial, adicionamos o conteúdo de início.
+    "examesOrientacoes": "examesOrientacoes",   // Página contendo a tabela de exames e suas orientações.
+    "centralAtendimento": "centralAtendimento", // Página da central de atendimento.
+    "convenios": "convenios",                   // Página dos convênios.
+    "quemSomos": "quemSomos",                   // Página de quem somos.
+    "nossaEquipe": "nossaEquipe",               // Página da nossa equipe.
+    "nossasUnidades": "nossasUnidades",         // Página das nossas unidades.
+    "infoConvenio": "infoConvenio",             // Pág. de informações de cada convênio.
+     
+    // O scrollSpy utiliza a mesma forma (#ancora) de navegar pelas ancoras que o backbone utiliza. 
+    // então adicionamos as rotas para cada um dos items do menu vertical.
+    // @AFAZER Quando usuário navegar por estas rotas abaixo, fazer com que o texto seja posicionado na ancora.
+    "consAmbiental": "conscienciaAmbiental",    // Ancora consciencia ambiental
+    "aEmpresa": "sobreEmpresa",                 // Ancora sobre a empresa
+    "misVisVal": "missaoVisaoValores",          // Ancora para missões, visões e valores
+    "gestaoQualidade": "gestaoQualidade"        // Ancora para gestão de qualidade.
   },
 
   /* @funcao initialize().
@@ -42,6 +52,8 @@ var RoteadorAplicativo = Backbone.Router.extend({
       this.visaoBarraNavegacao = new VisaoBarraNavegacao();
     }
     $('#barraNavegacao').html(this.visaoBarraNavegacao.el);
+    
+    // Seleciona item inicio.
     this.visaoBarraNavegacao.selecionarItemMenu('inicio');
     
     // Adiciona o rodape
@@ -56,8 +68,20 @@ var RoteadorAplicativo = Backbone.Router.extend({
     if (!this.visaoCarrossel) {
       this.visaoCarrossel = new VisaoCarrossel();
     }
+    
+    // Inserindo conteudo da nossa página inicial.
     $('#conteudo').html(this.visaoCarrossel.el);
     
+    // @AFAZER rever este código, ele simplesmente não funciona porque quando o conteudo é
+    // inserido uma segunda vez, o carrossel para de funcionar.
+    if (!this.seCarrosselIniciado) {
+      // Iniciamos o nosso carrossel, apenas uma vez, com um intervalo de 8segundos para cada slide.
+      //this.visaoCarrossel.iniciarCarrossel();
+      
+      this.seCarrosselIniciado = true;
+    }
+    
+    // Selecionamos o item inicio na barra de navegação.
     this.visaoBarraNavegacao.selecionarItemMenu('inicio');
   },
   
@@ -86,8 +110,10 @@ var RoteadorAplicativo = Backbone.Router.extend({
     if (!this.visaoConvenios) {
       this.visaoConvenios = new VisaoConvenios();
     }
+    // Inserindo conteudo dos convênios.
     $('#conteudo').html(this.visaoConvenios.el);
     
+    // Selecionamos o item convênios na barra de navegação.
     this.visaoBarraNavegacao.selecionarItemMenu('convenios');
   },
   
@@ -193,10 +219,14 @@ var RoteadorAplicativo = Backbone.Router.extend({
 
 });
 
-/* Carregamos o template de cada um dos conteúdos do sitio. */
+// Carregamos o template em html de cada uma das visões.
 utilitarios.carregaTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao', 'VisaoCarrossel', 
                                'VisaoRodape', 'VisaoExamesOrientacoes', 'VisaoCentralAtendimento', 'VisaoConvenios', 
                                'VisaoQuemSomos', 'VisaoNossaEquipe', 'VisaoNossasUnidades', 'VisaoInfoConvenio'], function() {
+  
+  // Assim que todos templantes forem carregados, iniciamos as nossas rotas.
   aplicativo = new RoteadorAplicativo();
+  
+  // Iniciamos o histórico das rotas.
   Backbone.history.start();
 });
