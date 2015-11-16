@@ -11,6 +11,7 @@ var aplicativo = null;
 var RoteadorAplicativo = Backbone.Router.extend({
 
   seCarrosselIniciado: false,
+  seQuemSomosIniciado: false,
   
   /* ROTAS DO NOSSO APLICATIVO 
    * Aqui vão ser realizadas o roteamento das visões.
@@ -126,6 +127,9 @@ var RoteadorAplicativo = Backbone.Router.extend({
     
     // Remove seleção de qualquer item da barra de navegacao
     this.visaoBarraNavegacao.selecionarItemMenu(null);
+    
+    // Iniciamos os eventos para o texto.
+    this.visaoQuemSomos.iniciarEventosParaMenu('itemEmpresa');
   },
   
   nossaEquipe: function() {
@@ -222,11 +226,11 @@ var RoteadorAplicativo = Backbone.Router.extend({
 // Carregamos o template em html de cada uma das visões.
 utilitarios.carregaTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao', 'VisaoCarrossel', 
                                'VisaoRodape', 'VisaoExamesOrientacoes', 'VisaoCentralAtendimento', 'VisaoConvenios', 
-                               'VisaoQuemSomos', 'VisaoNossaEquipe', 'VisaoNossasUnidades', 'VisaoInfoConvenio'], function() {
-  
-  // Assim que todos templantes forem carregados, iniciamos as nossas rotas.
-  aplicativo = new RoteadorAplicativo();
-  
-  // Iniciamos o histórico das rotas.
-  Backbone.history.start();
+                               'VisaoQuemSomos', 'VisaoNossaEquipe', 'VisaoNossasUnidades', 'VisaoInfoConvenio'], 
+  function() {
+    // Assim que todos templantes forem carregados, iniciamos as nossas rotas.
+    aplicativo = new RoteadorAplicativo();
+    
+    // Iniciamos o histórico das rotas.
+    Backbone.history.start();
 });
