@@ -1,9 +1,44 @@
-{
+{ 
   "name": "laboratorio-site",
   "description": "Site para laboratorios",
+  "keywords": "Laboratorio analises clinicas sangue",
   "version": "0.0.1",
-  "private": true,
+  "author": "Léo Felippe <leofelippedias@hotmail.com.br>",
+  "main": "./iniciador.js",
   "dependencies": {
-    "express": "3.x"
-  }
+    "express": "3.21.2",
+    "mongodb": "1.1.8",
+    "jsconfig": "0.2.0",
+    "bluebird": "2.9.25",
+    "bunyan": "1.3.5",
+    "bunyan-logstash-tcp": "0.3.4",
+    "cors": "2.6.0"
+  },
+  "devDependencies": {
+   
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "path": "git@github.com:umdez/testantoSites.git"
+    }
+  ],
+  "homepage": "https://github.com/umdez/testantoSites",
+  "bugs": "https://github.com/umdez/testantoSites/issues",
+  "maintainers": [
+    {
+      "name": "umdez",
+      "email": "leofelippedias@hotmail.com.br",
+      "url": "http://meu-dominio.com.br"
+    }
+  ],
+  "contributors": [
+    "Leo Felippe"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": ">=0.4.0"
+  },
+  "bin": "./iniciador.js"
 }
