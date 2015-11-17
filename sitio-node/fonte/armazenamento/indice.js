@@ -23,7 +23,9 @@ var Armazenamento = function (opcoes) {
 util.inherits(Armazenamento, EmissorEvento);
 
 Armazenamento.prototype.carregarModelos = function () {
-  // Carrega todos os modelos como se fossem propriedades proprias
+  // Carrega todos modelos da pasta modelos e cada um deles é adicionado a este objeto.
+  // Por exemplo, o modelo Slide será armazenado em this.Slide
+  // Sendo assim a gente pode acessar daqui os diversos modelos.
   modelos(this.sequelize, this);
 };
 
