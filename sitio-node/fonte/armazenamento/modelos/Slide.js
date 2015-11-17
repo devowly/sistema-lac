@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = function (database, DataTypes) {
 
-  var Slide = sequelize.define('Slide', {
+  var Slide = database.define('Slide', {
     titulo: {
       type: DataTypes.STRING,
       validate: {}

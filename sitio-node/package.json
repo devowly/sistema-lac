@@ -4,18 +4,25 @@
   "keywords": "Laboratorio analises clinicas sangue",
   "version": "0.0.1",
   "author": "Léo Felippe <leofelippedias@hotmail.com.br>",
-  "main": "./iniciador.js",
+  "main": "./iniciar.js",
   "dependencies": {
     "express": "3.21.2",
-    "mongodb": "1.1.8",
+    "mysql": "2.9.0",
+    "sequelize": "2.0.0-rc8",
     "jsconfig": "0.2.0",
     "bluebird": "2.9.25",
     "bunyan": "1.3.5",
     "bunyan-logstash-tcp": "0.3.4",
-    "cors": "2.6.0"
+    "cors": "2.6.0",
+    "lodash": "3.7.0",
+    "node-uuid": "1.4.2",
+    "epilogue": "0.6.5",
+    "body-parser": "1.14.1"
   },
   "devDependencies": {
-   
+    "mocha": "2.3.3",
+    "vows": "0.9.0-rc3",
+    "underscore": "1.8.3"
   },
   "repositories": [
     {
@@ -40,5 +47,5 @@
   "engines": {
     "node": ">=0.4.0"
   },
-  "bin": "./iniciador.js"
+  "bin": "./iniciar.js"
 }

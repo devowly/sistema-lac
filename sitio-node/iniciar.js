@@ -5,8 +5,6 @@ var configuracao = require('jsconfig');
 var pastaConfiguracaoPadrao = pasta.join(__dirname, "/configuracao/configuracao.js");
 var express = require('express');
 var http = require('http');
-var epilogue = require('epilogue');
-//var wine = require('./routes/wines');
 
 // Carregamos o nosso registrador
 var registrador = require('./fonte/nucleo/registrador')('iniciar');
@@ -53,25 +51,13 @@ configuracao.load(function (args, opcs) {
   
   // Chamamos o arquivo principal, ele vai carregar os outros arquivos principais do servidor.
   var sitio = require('./fonte/iniciador/principal');
-  sitio.prosseguir(configuracao, function() {
-    registrador.debug('Carregando rotas.');
+  sitio.prosseguir(configuracao, aplic, function() {
     
-    /* ABAIXO RESTFUL:
-     * GET (Pega dados)
-     * POST (Envio de dados)
-     * PUT (Atualização de dados)
-     * DELETE (Apaga uma entrada)
-    --------------------------------------*/
-    /*
-    aplic.get('/wines', wine.findAll);
-    aplic.get('/wines/:id', wine.findById);
-    aplic.post('/wines', wine.addWine);
-    aplic.put('/wines/:id', wine.updateWine);
-    aplic.delete('/wines/:id', wine.deleteWine);
-    */
+    registrador.debug('Carregando servideo HTTP.');
     
+    // Inicia o servidor HTTP e começa a esperar por conexões
     var servidorHTTP = http.createServer(aplic);
-    // Inicia escuta por conexões
+    
     servidorHTTP.listen(aplic.get('port'), function () {
       console.log("Servidor express carregado e escutando na porta " + aplic.get('port'));
     });

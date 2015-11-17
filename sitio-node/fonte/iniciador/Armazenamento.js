@@ -1,7 +1,7 @@
 'use strict';
 
-var baseBiblioteca = require('../indice');
-var Armazenamento = baseBiblioteca.Armazenamento;
+var baseSitio = require('../indice');
+var Armazenamento = baseSitio.Armazenamento;
 var registrador = require('../nucleo/registrador')('armazenamento'); 
 
 function CarregaArmazenamento() {}
