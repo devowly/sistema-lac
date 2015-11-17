@@ -70,11 +70,11 @@ configuracao.load(function (args, opcs) {
     aplic.delete('/wines/:id', wine.deleteWine);
     */
     
-  });
-  
-  // Inicia escuta por conexões
-  http.createServer(aplic).listen(aplic.get('port'), function () {
-    console.log("Servidor express carregado e escutando na porta " + aplic.get('port'));
+    var servidorHTTP = http.createServer(aplic);
+    // Inicia escuta por conexões
+    servidorHTTP.listen(aplic.get('port'), function () {
+      console.log("Servidor express carregado e escutando na porta " + aplic.get('port'));
+    });
   });
   
 });
