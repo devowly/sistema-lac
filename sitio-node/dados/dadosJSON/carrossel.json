@@ -1,0 +1,29 @@
+[
+  {
+    "model": "Carrossel",
+    "data": {
+      "titulo": "Vários exames laboratoriais",
+      "texto": "Mais de 50 tipos de exames laboratoriais.",
+      "texto_botao": "Ver lista de exames",
+      "imagem": "./imagens/carrosselSlides/slide01.jpg"
+    }
+  },
+  {
+    "model": "Carrossel",
+    "data": {
+      "titulo": "Acesso aos resultados à distância",
+      "texto": "Resultados online: Você nem precisa mais sair de casa.",
+      "texto_botao": "Ver meus resultados",
+      "imagem": "./imagens/carrosselSlides/slide02.jpg"
+    }
+  },
+  {
+    "model": "Carrossel",
+    "data": {
+      "titulo": "Atendimento Online",
+      "texto": "Atendimento online gratuito de segunda a sábado em horário comercial.",
+      "texto_botao": "Entrar em contato agora",
+      "imagem": "./imagens/carrosselSlides/slide03.jpg"
+    }
+  }
+]
