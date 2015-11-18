@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
-  Rota: require('./rota/indice'),
-  Armazenamento: require('./armazenamento/indice')
+  ServicoRest: require('./servicoRest/indice'),
+  Armazenamento: require('./armazenamento/indice'),
+  registrador: require('./nucleo/registrador')
 };

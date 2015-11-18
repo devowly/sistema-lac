@@ -2,20 +2,12 @@
 
 module.exports = function (database, DataTypes) {
 
-  var Unidade = database.define('Unidade', {
-    titulo: {
+  var Coordenada = database.define('Coordenada', {
+    latitude: {
       type: DataTypes.STRING,
       validate: {}
     },
-    texto: {
-      type: DataTypes.STRING,
-      validate: {}
-    },
-    texto_botao: {
-      type: DataTypes.STRING,
-      validate: {}
-    },
-    imagem: {
+    longitude: {
       type: DataTypes.STRING,
       validate: {}
     }
@@ -28,5 +20,5 @@ module.exports = function (database, DataTypes) {
     }
   });
 
-  return Unidade;
+  return Coordenada;
 };

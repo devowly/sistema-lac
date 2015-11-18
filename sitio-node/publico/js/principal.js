@@ -4,8 +4,8 @@
  *
  * @Descrição Aqui vamos adicionar as caracteristicas de trabalhar com as rotas,
  *  Carregar os arquivos de visão. 
- */
-
+ */ 
+ 
 var aplicativo = null;
 
 var RoteadorAplicativo = Backbone.Router.extend({
@@ -56,13 +56,20 @@ var RoteadorAplicativo = Backbone.Router.extend({
   },
 
   inicio: function () {
-    // Aqui adicionamos o carrossel de marketing e atualizamos a barra de navegacao.
-    if (!this.visaoCarrossel) {
-      this.visaoCarrossel = new VisaoCarrossel();
-    }
+    var esteObj = this;
     
-    // Inserindo conteudo da nossa página inicial.
-    $('#conteudo').html(this.visaoCarrossel.el);
+    if (!this.visaoCarrossel) {
+      var colCarrosselSlides = new ColecaoCarrosselSlides();
+      
+      colCarrosselSlides.fetch({success: function(){
+        
+        esteObj.visaoCarrossel = new VisaoCarrossel({model: colCarrosselSlides});
+        
+        $("#conteudo").html(esteObj.visaoCarrossel.el);
+      }});
+    } else {
+      $("#conteudo").html(this.visaoCarrossel.el);
+    }
     
     // @AFAZER rever este código, ele simplesmente não funciona porque quando o conteudo é
     // inserido uma segunda vez, o carrossel para de funcionar.
@@ -135,10 +142,10 @@ var RoteadorAplicativo = Backbone.Router.extend({
   },
   
   nossasUnidades: function() {
-    // Aqui adicionamos o conteúdo de nossas unidades.
     if (!this.visaoNossasUnidades) {
       this.visaoNossasUnidades = new VisaoNossasUnidades();
     }
+    // Aqui adicionamos o conteúdo de nossas unidades.
     $('#conteudo').html(this.visaoNossasUnidades.el);
     
     this.visaoBarraNavegacao.selecionarItemMenu('unidades');
@@ -157,13 +164,12 @@ var RoteadorAplicativo = Backbone.Router.extend({
     
     // Remove selecao de qualquer item da barra de navegação.
     this.visaoBarraNavegacao.selecionarItemMenu(null);
-    
   }
   
 });
 
 // Carregamos o template em html de cada uma das visões.
-utilitarios.carregaTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao', 'VisaoCarrossel', 
+utilitarios.carregaTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao', 'VisaoCarrossel', 'VisaoSlideItem', 
                                'VisaoRodape', 'VisaoExamesOrientacoes', 'VisaoCentralAtendimento', 'VisaoConvenios', 
                                'VisaoQuemSomos', 'VisaoNossaEquipe', 'VisaoNossasUnidades', 'VisaoInfoConvenio'], 
   function() {
@@ -171,5 +177,5 @@ utilitarios.carregaTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao', 'VisaoC
     aplicativo = new RoteadorAplicativo();
     
     // Iniciamos o histórico das rotas.
-    Backbone.history.start();
+    Backbone.history.start();  
 });

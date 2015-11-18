@@ -2,7 +2,7 @@
 
 module.exports = function (database, DataTypes) {
 
-  var Unidade = database.define('Unidade', {
+  var CarrosselSlide = database.define('CarrosselSlide', {
     titulo: {
       type: DataTypes.STRING,
       validate: {}
@@ -15,7 +15,15 @@ module.exports = function (database, DataTypes) {
       type: DataTypes.STRING,
       validate: {}
     },
-    imagem: {
+    imagem_dir: {
+      type: DataTypes.STRING,
+      validate: {}
+    },
+    ativo: {
+      type: DataTypes.BOOLEAN,
+      validate: {}
+    },
+    endereco_botao: {
       type: DataTypes.STRING,
       validate: {}
     }
@@ -28,5 +36,5 @@ module.exports = function (database, DataTypes) {
     }
   });
 
-  return Unidade;
+  return CarrosselSlide;
 };
