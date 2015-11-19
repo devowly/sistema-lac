@@ -6,9 +6,9 @@
  *  Carregar os arquivos de visão. 
  */ 
  
-var aplicativo = null;
+var sitio = null;
 
-var RoteadorAplicativo = Backbone.Router.extend({
+var RoteadorSitio = Backbone.Router.extend({
 
   seCarrosselIniciado: false,
   
@@ -174,7 +174,7 @@ utilitarios.carregaTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao', 'VisaoC
                                'VisaoQuemSomos', 'VisaoNossaEquipe', 'VisaoNossasUnidades', 'VisaoInfoConvenio'], 
   function() {
     // Assim que todos templantes forem carregados, iniciamos as nossas rotas.
-    aplicativo = new RoteadorAplicativo();
+    sitio = new RoteadorSitio();
     
     // Iniciamos o histórico das rotas.
     Backbone.history.start();  
