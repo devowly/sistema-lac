@@ -6,7 +6,7 @@
  *  Carregar os arquivos de visão. 
  */ 
  
-var sitio = null;
+window.sitio = null;
 
 var RoteadorSitio = Backbone.Router.extend({
 
