@@ -30,6 +30,7 @@ window.VisaoQuemSomos = Backbone.View.extend({
     // Adicionamos o evento de clique nos links
     $('a#rolagemId').click(function(evento){
       // Fazemos com que o link não prossiga para barra de endereços.
+      // Isto é importante para que a rolagem funcione.
       evento.preventDefault();
       
       // Remove seleção atual
@@ -38,6 +39,8 @@ window.VisaoQuemSomos = Backbone.View.extend({
       // Pegamos o elemento que miramos.
       var mira = $(this).attr('mira');
       
+      // É importante utilizarmos este método porque não podemos
+      // fazer a rolagem utilizando o método do scrollspy.
       $('div#' + 'textoQuemSomos').scrollTo(
         mira, 
         {duration: 500, offset: -30}
