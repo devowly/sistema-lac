@@ -32,7 +32,8 @@ window.VisaoQuemSomos = Backbone.View.extend({
       // Fazemos com que o link não prossiga para barra de endereços.
       // Isto é importante para que a rolagem funcione.
       evento.preventDefault();
-      
+      evento.stopPropagation();
+        
       // Remove seleção atual
       $('#menuVertEsquerdo .nav li').removeClass('active');
     
