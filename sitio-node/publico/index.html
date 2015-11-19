@@ -72,6 +72,12 @@
     <!-- jQuery (Necessário para os plugins em javascript do bootstrap) -->
     <script src="bibliotecas/jquery.v1_11_03.min.js" crossorigin="anonymous"></script>
    
+    <!-- jQuery's scrollTo -->
+    <script src="bibliotecas/jquery.scrollTo.v2_1_1.min.js"></script> 
+    
+    <!-- jQuery UI -->
+    <script src="bibliotecas/jquery-ui.v1_11_4.min.js" crossorigin="anonymous"></script>
+   
     <!-- BootStrap -->
     <script src="bibliotecas/bootstrap.v3_3_5.min.js" crossorigin="anonymous"></script>
     
@@ -86,6 +92,9 @@
     
     <!-- Google Mapa -->
     <script src="js/gglMapa.js"></script>
+    
+    <!-- Carregamos os nossos modelos -->
+    <script src="js/modelos/Carrossel.js"></script>
     
     <!-- Carregamos as visões do backbone -->
     <script src="js/visoes/logoBotoes.js"></script>
@@ -103,7 +112,7 @@
     <!-- Arquivo principal do nosso servidor -->
     <script src="js/principal.js"></script>
     
-    <!-- Mapa do Google (Chama método gglMapa.carregouMapaApi() ). -->
+    <!-- Mapa do Google (Chama método gglMapa.carregouMapaApi() ). Lembre-se que isto deve ficar *depois* de carregarmos o principal.js e as *visões* -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbi1li8ie5oMqH5pjgok6Y0Xb-NUrW3ag&callback=gglMapa.carregouMapaApi" async defer></script> 
     
   </body>

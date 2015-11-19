@@ -3,9 +3,8 @@
 
 /* IMPORTAÇÃO DOS ESTILOS DE BASE
 -------------------------------------------*/
-
-@import url('temas/temaVerde.css'); /* Estilos do tema verde */
-@import url('global.css'); /* Estilos globais: São compartilhados por vários arquivos. */
+@import url('temas/temaVerde.css');  /* Estilos do tema verde */
+@import url('global.css');           /* Estilos globais: São compartilhados por vários arquivos. */
 @import url('topo.css');
 @import url('barraNavegacao.css');
 @import url('corpo.css');
@@ -14,25 +13,29 @@
 
 /* ESTILOS ÚNICOS DE CADA ARQUIVO
 -----------------------------------------------*/
-@import url('paginas/pagInicio.css'); /* Página index.html */
-@import url('paginas/pagExamesOrientacoes.css'); /* pág. examesOrientacoes.html */
+@import url('paginas/pagInicio.css');             /* Página index.html */
+@import url('paginas/pagExamesOrientacoes.css');  /* pág. examesOrientacoes.html */
 @import url('paginas/pagCentralAtendimento.css'); /* pág. centralAtendimento.html */
-@import url('paginas/pagConvenios.css'); /* pág. convenios.html */
-@import url('paginas/pagQuemSomos.css'); /* pág. quemSomos.html */
-@import url('paginas/pagNossaEquipe.css'); /* pág. nossaEquipe.html */
-@import url('paginas/pagNossasUnidades.css'); /* pág. unidades.html */    
+@import url('paginas/pagConvenios.css');          /* pág. convenios.html */
+@import url('paginas/pagQuemSomos.css');          /* pág. quemSomos.html */
+@import url('paginas/pagNossaEquipe.css');        /* pág. nossaEquipe.html */
+@import url('paginas/pagNossasUnidades.css');     /* pág. unidades.html */    
       
 /* ESTILOS DO BOOTSTRAP
 ---------------------------------------------------------------*/
+@import url('../bootstrap-3.3.5-dist/css/bootstrap.min.css');       /* CSS minificado e compilado */
+@import url('../bootstrap-3.3.5-dist/css/bootstrap-theme.min.css'); /* Tema opcional */
 
-/* CSS minificado e compilado */
-@import url('../bootstrap-3.3.5-dist/css/bootstrap.min.css');
-
-/* Tema opcional */
-@import url('../bootstrap-3.3.5-dist/css/bootstrap-theme.min.css');
-
-/* Estilos para botões das redes sociais */
+/* ESTILOS DOS BOTÕES DE REDE SOCIAL
+----------------------------------------------*/
 @import url('../bootstrap-social/bootstrap-social.css');
 
-/* Fontes */
+/* ESTILOS DE FONTES E ICONES
+----------------------------------------------*/
 @import url('../font-awesome/font-awesome-4.4.0/css/font-awesome.css');
+
+/* ESTILOS DO JQUERY UI
+-------------------------------------------------------------*/
+@import url('../jquery-ui-1.11.4.custom/jquery-ui.min.css');
+@import url('../jquery-ui-1.11.4.custom/jquery-ui.min.structure.css');
+@import url('../jquery-ui-1.11.4.custom/jquery-ui.min.theme.css');
