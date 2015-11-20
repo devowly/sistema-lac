@@ -2,33 +2,33 @@
 
 /* @arquivo CarrosselSlide.js */
 
-// @AFAZER: Adicionar o tamanho máximo de cada item 
+
 module.exports = function (database, DataTypes) {
 
   var CarrosselSlide = database.define('CarrosselSlide', {
     titulo: {
-      type: DataTypes.STRING, // <umdez> Qual será o tamanho desta coluna?
-      validate: {} // <umdez> Como realizar esta validação?
+      type: DataTypes.STRING, 
+      validate: {} 
     },
     texto: {
-      type: DataTypes.STRING, // <umdez> Qual será o tamanho desta coluna?
-      validate: {} // <umdez> Como realizar esta validação?
+      type: DataTypes.STRING, 
+      validate: {} 
     },
     texto_botao: {
-      type: DataTypes.STRING, // <umdez> Qual será o tamanho desta coluna?
-      validate: {} // <umdez> Como realizar esta validação?
+      type: DataTypes.STRING, 
+      validate: {} 
     },
     imagem_dir: {
-      type: DataTypes.STRING, // <umdez> Qual será o tamanho desta coluna?
-      validate: {} // <umdez> Como realizar esta validação?
+      type: DataTypes.STRING, 
+      validate: {} 
     },
     ativo: {
-      type: DataTypes.BOOLEAN, // <umdez> Qual será o tamanho desta coluna?
-      validate: {} // <umdez> Como realizar esta validação?
+      type: DataTypes.BOOLEAN,
+      validate: {} 
     },
     endereco_botao: {
-      type: DataTypes.STRING, // <umdez> Qual será o tamanho desta coluna?
-      validate: {} // <umdez> Como realizar esta validação?
+      type: DataTypes.STRING, 
+      validate: {} 
     }
   }, {
     associate: function (modelos) {
