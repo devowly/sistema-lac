@@ -23,6 +23,8 @@ var ServicoRest = function (aplicativo, bancoDados) {
 
 util.inherits(ServicoRest, EmissorEvento);
 
+/* Iniciamos o serviço REST para cada modelo do banco de dados.
+ */
 ServicoRest.prototype.carregarModelos = function () {
   
   var mods = modelos(this);
@@ -51,7 +53,7 @@ ServicoRest.prototype.carregarModelos = function () {
 };
 
 /**
- * Inicia o banco de dados e sincroniza as tabelas se elas não estiverem lá
+ * Inicia o epilogue e carrega o serviço REST para cada modelo de tabela do sequelize
  */
 ServicoRest.prototype.iniciar = function () {
 
