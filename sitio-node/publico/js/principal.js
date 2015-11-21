@@ -142,17 +142,28 @@ var RoteadorSitio = Backbone.Router.extend({
   },
   
   nossasUnidades: function() {
+    
     if (!this.visaoNossasUnidades) {
-      this.visaoNossasUnidades = new VisaoNossasUnidades();
+      this.visaoNossasUnidades = new VisaoNossasUnidades(function(visNossasUnidades) {
+                  
+        // Aqui adicionamos o conteúdo de nossas unidades.
+        $('#conteudo').html(visNossasUnidades.el);
+        
+        // Caso a biblioteca do google maps já estiver carregada, iniciamos o mapa de cada unidade.
+        if (gglMapa.seMapaPronto()) {
+          visNossasUnidades.iniciarCadaMapa();
+        }
+        
+        visNossasUnidades.iniciarEventosParaAbas();
+        
+      });
+    } else {
+      
+      $('#conteudo').html(this.visaoNossasUnidades.el);
+      this.visaoNossasUnidades.iniciarEventosParaAbas();
     }
-    // Aqui adicionamos o conteúdo de nossas unidades.
-    $('#conteudo').html(this.visaoNossasUnidades.el);
     
     this.visaoBarraNavegacao.selecionarItemMenu('unidades');
-    
-    if (gglMapa.seMapaPronto) {
-      this.visaoNossasUnidades.iniciarMapa();
-    }
   },
   
   infoConvenio: function() {
@@ -169,7 +180,7 @@ var RoteadorSitio = Backbone.Router.extend({
 });
 
 // Carregamos o template em html de cada uma das visões.
-utilitarios.carregaTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao', 'VisaoCarrossel', 'VisaoSlideItem', 
+utilitarios.carregarTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao', 'VisaoCarrossel', 'VisaoSlideItem', 
                                'VisaoRodape', 'VisaoExamesOrientacoes', 'VisaoCentralAtendimento', 'VisaoConvenios', 
                                'VisaoQuemSomos', 'VisaoNossaEquipe', 'VisaoNossasUnidades', 'VisaoInfoConvenio'], 
   function() {
