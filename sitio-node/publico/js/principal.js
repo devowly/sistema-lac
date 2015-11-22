@@ -154,15 +154,21 @@ var RoteadorSitio = Backbone.Router.extend({
           visNossasUnidades.iniciarCadaMapa();
         }
         
+        // Adicionamos escuta para os eventos.
+        // Isto é necessário por causa do mapa que precisa receber resize.
         visNossasUnidades.iniciarEventosParaAbas();
         
       });
     } else {
       
+      // Aqui adicionamos o conteúdo de nossas unidades.
       $('#conteudo').html(this.visaoNossasUnidades.el);
+      
+      // Adicionamos escuta para os eventos.
       this.visaoNossasUnidades.iniciarEventosParaAbas();
     }
     
+    // Selecionamos o item unidades na barra de navegação
     this.visaoBarraNavegacao.selecionarItemMenu('unidades');
   },
   
