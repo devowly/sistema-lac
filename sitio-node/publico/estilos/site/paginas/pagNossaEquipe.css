@@ -11,12 +11,18 @@
 #conteudoNossaEquipe .col-sm-6 {
   background-color: #fff; /* Branco */
   border-color: #fff;  /* Branco */
-  min-height: 332px; /* largura mínima da altura */
-  height: 330px; /* lagura da altura */
+  min-height: 412px; /* largura mínima da altura */
+  height: 410px; /* tamanho da altura */
   width:290px; /* comprimento */
 }
 
 /* Altura do subtitulo */
 #conteudoNossaEquipe .col-sm-6 .caption {
   min-height: 156px;
+}
+
+/* Imagem pessoa da equipe da */
+#conteudoNossaEquipe .thumbnail img {
+  width: 220px; 
+  height: 220px;
 }
