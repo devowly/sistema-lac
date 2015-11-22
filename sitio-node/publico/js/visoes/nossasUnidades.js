@@ -4,9 +4,6 @@
 
 window.VisaoNossasUnidades = Backbone.View.extend({
 
-  // Versão da API para o mapa.
-  GMAPA_VERSAO: 3,
-
   // Aqui adicionamos os diversos mapas.
   // Lembre-se que estamos utilizando esta forma que poderia ao inves ser carregada do banco de dados.
   unidade: [{
@@ -131,61 +128,32 @@ window.VisaoNossasUnidades = Backbone.View.extend({
     _.each(this.unidadeUniao, function(mapaObj) {
       
       // Centraliza e dá um zoom 
-      mapaObj.mapa = this.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, mapaObj.nomeElemento);
+      mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nomeElemento).get(0));
     
       if (mapaObj.mapa) {
         // Coloca uma marca de unidade no mapa
-        mapaObj.marca = this.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
+        mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
       } 
     }, this);
    
   },
-  
-  centralizarMapa: function (coordenadas, nivelZoom, nomeElem) {
-    var mapa;
     
-    // Centraliza e faz um zoom 
-    mapa = new google.maps.Map( $('.embed-responsive > #' + nomeElem).get(0), {
-      center: coordenadas,
-      zoom: nivelZoom
-    });
-    
-    return mapa;
-  },
-  
-  adcrMarcadorMapa: function (mapa, coordenadas, titulo) {
-  
-    // Coloca uma marca de unidade no mapa na posição das coordenadas informadas.
-    var marca = new google.maps.Marker({
-      position: coordenadas,
-      map: mapa,
-      title: titulo
-    }); 
-    
-    return marca;
-  },
-  
-  // Faz o mapa re-aparecer
+  // Faz o mapa redimensionar
   // Sempre que houver troca de aba é necessário utilizar isso.
   // Eu não sei ainda se essa maneira está criando novos mapas a cada vez que uma aba é clicada.
-  reiniciarMapa: function () {
+  redimensionarMapa: function () {
     
     _.each(this.unidadeUniao, function(mapaObj) {
       
-      if (this.GMAPA_VERSAO === 3) {
-        google.maps.event.trigger(mapaObj.mapa, 'resize');
-      } else if (this.GMAPA_VERSAO === 2) {
-        mapaObj.mapa.checkResize()
-      } else {
-        console.log('Versão do mapa não disponível.');
-      }
+      //Faz o mapa redimensionar.
+      gglMapa.redimensionarMapa( mapaObj.mapa);
       
       // Centraliza e faz um zoom 
-      mapaObj.mapa = this.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, mapaObj.nomeElemento);
+      mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nomeElemento).get(0));
     
       if (mapaObj.mapa) {
         // Adicionamos denovo a marca
-        mapaObj.marca = this.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
+        mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
       } 
       
     }, this);
@@ -203,7 +171,7 @@ window.VisaoNossasUnidades = Backbone.View.extend({
       e.relatedTarget // aba previamente ativa.
       
       // Re-iniciamos o mapa.
-      esteObj.reiniciarMapa();
+      esteObj.redimensionarMapa();
     })
     
   }
