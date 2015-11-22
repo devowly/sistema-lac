@@ -19,6 +19,7 @@ var modelo = {
 
 // Nosso array contendo os slides
 var carrosselSlides = [
+  // Primeiro slide
   {
     "model": "CarrosselSlide",
     "data": {
@@ -30,6 +31,7 @@ var carrosselSlides = [
       "endereco_botao": "#examesOrientacoes"
     }
   },
+  // Segundo slide.
   {
     "model": "CarrosselSlide",
     "data": {
@@ -41,6 +43,7 @@ var carrosselSlides = [
       "endereco_botao": "#"
     }
   },
+  // terceiro slide.
   {
     "model": "CarrosselSlide",
     "data": {
