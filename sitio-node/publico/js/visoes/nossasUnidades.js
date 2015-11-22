@@ -2,9 +2,10 @@
 
 /* @arquivo nossasUnidades.js */
 
-var GMAPA_VERSAO = 3;
-
 window.VisaoNossasUnidades = Backbone.View.extend({
+
+  // Versão da API para o mapa.
+  GMAPA_VERSAO: 3,
 
   // Aqui adicionamos os diversos mapas.
   // Lembre-se que estamos utilizando esta forma que poderia ao inves ser carregada do banco de dados.
@@ -17,11 +18,19 @@ window.VisaoNossasUnidades = Backbone.View.extend({
       titulo: 'Nossa unidade do bairro Jardim Panorama de Montes Claros',
       pagEndereco: 'enderecoUnidade002.html',      // Página que contem endereço em XML
       nomeAba: 'JARDIM PANORAMA' // Nome da aba onde esta unidade irá ser apresentada.
+    },
+    {
+      titulo: 'Nossa unidade do bairro Todos os Santos de Montes Claros',
+      pagEndereco: 'enderecoUnidade003.html',      // Página que contem endereço em XML
+      nomeAba: 'TODOS OS SANTOS' // Nome da aba onde esta unidade irá ser apresentada.
     }
   ],
   
   // Cada unidade possui uma coordenada.
   unidadeCoordenada: [{
+      coordenadas: {lat: -16.7244327, lng: -43.8715339}   // Coordenadas da unidade do centro de Montes Claros
+    },
+    {
       coordenadas: {lat: -16.7244327, lng: -43.8715339}   // Coordenadas da unidade do centro de Montes Claros
     },
     {
@@ -39,6 +48,11 @@ window.VisaoNossasUnidades = Backbone.View.extend({
       mapa: null,
       zoom: 15,
       marca: null
+    },
+    {
+      mapa: null,
+      zoom: 15,
+      marca: null
     }
   ],
   
@@ -47,7 +61,10 @@ window.VisaoNossasUnidades = Backbone.View.extend({
     },
     {
       nomeElemento: 'mapaUnidade002'  // Nome do elemento onde iremos adicionar o mapa.
-    } 
+    },
+    {
+      nomeElemento: 'mapaUnidade003'  // Nome do elemento onde iremos adicionar o mapa.
+    }  
   ],
   
   // Aqui armazenamos a lista das visões que esta visão vai utilizar.
@@ -73,6 +90,7 @@ window.VisaoNossasUnidades = Backbone.View.extend({
       }
     }
     
+    // Armazenamos a função que será chamada logo após os templantes estiverem carregados.
     this.quandoPronto = cd;
     
     // Procura no diretorio pagsEnderecosUnidades os templates e os carrega, salvando-os na lista.
@@ -102,7 +120,7 @@ window.VisaoNossasUnidades = Backbone.View.extend({
         $('div.tab-content', this.el).append(new VisaoUnidadeAbaConteudo({model: this.unidadeUniao[i]}).render().el);
       }
     }
-    
+    // Quando tudo estiver pronto nós chamamos esta função.
     this.quandoPronto(this);
     
   },
@@ -154,9 +172,9 @@ window.VisaoNossasUnidades = Backbone.View.extend({
     
     _.each(this.unidadeUniao, function(mapaObj) {
       
-      if (GMAPA_VERSAO === 3) {
+      if (this.GMAPA_VERSAO === 3) {
         google.maps.event.trigger(mapaObj.mapa, 'resize');
-      } else if (GMAPA_VERSAO === 2) {
+      } else if (this.GMAPA_VERSAO === 2) {
         mapaObj.mapa.checkResize()
       } else {
         console.log('Versão do mapa não disponível.');
@@ -179,6 +197,7 @@ window.VisaoNossasUnidades = Backbone.View.extend({
     
     var esteObj = this;
     
+    // Quando clicar em uma aba, logo após a nova aba ser aberta então o evento é disparado.
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       e.target // Nova aba ativada
       e.relatedTarget // aba previamente ativa.
