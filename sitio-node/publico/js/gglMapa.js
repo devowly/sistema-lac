@@ -19,11 +19,11 @@ window.gglMapa = {
     return this.seMapaApiPronto;
   },
 
-  centralizarMapa: function (coordenadas, zoom, elemento) {
+  centralizarMapa: function (coordenadas, zoom, $elemento) {
     var mapa;
     
     // Centraliza e faz um zoom 
-    mapa = new google.maps.Map( elemento , {
+    mapa = new google.maps.Map( $elemento , {
       center: coordenadas,
       zoom: zoom
     });
