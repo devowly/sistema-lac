@@ -7,14 +7,8 @@
   margin-left: 0px;
 }
 
-/* Nossa coluna de endereço */
-.tab-content .col-md-3 {
-  background-color: #fff; /* Cor branca */
-  border-top: 0px;
-}
-
-/* Nossa coluna de mapa */
-.tab-content .col-md-9 {
+/* Nossa coluna de mapa e de endereço */
+.tab-content .col-md-12 {
   background-color: #fff; /* Cor branca */
   border-top: 0px;
 }

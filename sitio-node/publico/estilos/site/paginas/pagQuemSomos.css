@@ -3,6 +3,11 @@
 /* ESTILOS PARA O CONTEÚDO
 ---------------------------------------------------------------------------*/
 
+/* Precisamos de menos margem no titulo inicial */
+#textoQuemSomos #aEmpresa .page-header{
+  margin-top: 3px;
+}
+
 /* Estilo das linha */
 #quemSomosConteudo .row {
   min-height: 370px; 
