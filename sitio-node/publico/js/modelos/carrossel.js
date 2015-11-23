@@ -2,7 +2,6 @@
 
 /* @arquivo carrossel.js */
 
-// @AFAZER: Adicionar validação
 
 /* Metodos dos modelos são
  *
@@ -14,8 +13,6 @@ window.CarrosselSlides = Backbone.Model.extend({
 
   // O endereço REST onde iremos pegar os dados.
   urlRoot: "/carrosselSlides",
-
-  idAttribute: "id",
 
   initialize: function () {
       
