@@ -64,8 +64,8 @@ window.VisaoNossasUnidades = Backbone.View.extend({
     }  
   ],
   
-  // Aqui armazenamos a lista das visões que esta visão vai utilizar.
-  listaVisoes: [],
+  // Aqui armazenamos a lista do templante que esta visão vai utilizar.
+  listaTemplantes: [],
   
   quandoPronto: null,
   
@@ -79,6 +79,8 @@ window.VisaoNossasUnidades = Backbone.View.extend({
     // Faz a união dos objetos, simulando de forma bastante *simples* um JOIN na database. 
     for (var i = 0; i < quantidade; i++) {
       if (this.unidade[i] && this.unidadeCoordenada[i] && this.unidadeMapa[i] && this.unidadeVisoes[i]) {
+        
+        // Faz a união da(s) unidade(s)
         this.unidadeUniao[i] = _.extend(this.unidade[i], this.unidadeCoordenada[i], this.unidadeMapa[i], this.unidadeVisoes[i]); 
         
         // Pegamos o nome da nossa visão
@@ -88,15 +90,16 @@ window.VisaoNossasUnidades = Backbone.View.extend({
         visoes[i] = nomeEl;
         
         // Para cada visão iremos armazenar aqui os templantes.
-        this.listaVisoes[nomeEl] = {};
+        this.listaTemplantes[nomeEl] = {};
       }
     }
     
     // Armazenamos a função que será chamada logo após os templantes estiverem carregados.
     this.quandoPronto = cd;
     
-    // Procura no diretorio pagsEnderecosUnidades os templates e os carrega, salvando-os na lista.
-    utilitarios.carregarTemplantesVisao(this.listaVisoes, 'pagsEnderecosUnidades/', visoes, this.render.bind(this));
+    // Procura no diretorio pagsEnderecosUnidades os templates e os carrega, salvando-os na listaTemplantes.
+    // Logo após carregados nós chamamos o método render().
+    utilitarios.carregarTemplantesVisao(this.listaTemplantes, 'pagsEnderecosUnidades/', visoes, this.render.bind(this));
     
     return this;
   },
@@ -112,7 +115,8 @@ window.VisaoNossasUnidades = Backbone.View.extend({
       // Necessário por que vamos marcar o primeiro elemento como ativo.
       this.unidadeUniao[i].indice = i;
        
-      this.unidadeUniao[i].minhaVisao = this.listaVisoes[this.unidadeUniao[i].nomeElemento]; 
+      // Armazenamos o templante.
+      this.unidadeUniao[i].minhaVisao = this.listaTemplantes[this.unidadeUniao[i].nomeElemento]; 
        
       if (this.unidadeUniao[i]) {
         // Adicionamos as abas.
@@ -146,7 +150,7 @@ window.VisaoNossasUnidades = Backbone.View.extend({
   // Faz o mapa re-iniciar
   // Sempre que houver troca de aba é necessário utilizar isso.
   // Eu não sei ainda se essa maneira está criando novos mapas a cada vez que uma aba é clicada.
-  reIniciarMapa: function () {
+  reIniciarCadaMapa: function () {
     
     _.each(this.unidadeUniao, function(mapaObj) {
       
@@ -176,7 +180,7 @@ window.VisaoNossasUnidades = Backbone.View.extend({
       e.relatedTarget // aba previamente ativa.
       
       // Re-iniciamos o mapa.
-      esteObj.reIniciarMapa();
+      esteObj.reIniciarCadaMapa();
     })
     
   }
@@ -259,6 +263,7 @@ window.VisaoUnidadeAbaConteudo = Backbone.View.extend({
     
     $(this.el).attr('id', meuModelo.nomeElemento);
     
+    // Carregamos o templante
     $(this.el).html(meuModelo.minhaVisao.template(meuModelo));
     
     return this;
