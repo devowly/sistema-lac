@@ -81,8 +81,13 @@ window.VisaoNossasUnidades = Backbone.View.extend({
       if (this.unidade[i] && this.unidadeCoordenada[i] && this.unidadeMapa[i] && this.unidadeVisoes[i]) {
         this.unidadeUniao[i] = _.extend(this.unidade[i], this.unidadeCoordenada[i], this.unidadeMapa[i], this.unidadeVisoes[i]); 
         
+        // Pegamos o nome da nossa visão
         var nomeEl = this.unidadeUniao[i].nomeElemento;
+        
+        // Vai armazenar o nome de cada uma das visões em visoes[i].
         visoes[i] = nomeEl;
+        
+        // Para cada visão iremos armazenar aqui os templantes.
         this.listaVisoes[nomeEl] = {};
       }
     }
@@ -138,10 +143,10 @@ window.VisaoNossasUnidades = Backbone.View.extend({
    
   },
     
-  // Faz o mapa redimensionar
+  // Faz o mapa re-iniciar
   // Sempre que houver troca de aba é necessário utilizar isso.
   // Eu não sei ainda se essa maneira está criando novos mapas a cada vez que uma aba é clicada.
-  redimensionarMapa: function () {
+  reIniciarMapa: function () {
     
     _.each(this.unidadeUniao, function(mapaObj) {
       
@@ -171,7 +176,7 @@ window.VisaoNossasUnidades = Backbone.View.extend({
       e.relatedTarget // aba previamente ativa.
       
       // Re-iniciamos o mapa.
-      esteObj.redimensionarMapa();
+      esteObj.reIniciarMapa();
     })
     
   }
