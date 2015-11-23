@@ -151,7 +151,7 @@ window.VisaoNossasUnidades = Backbone.View.extend({
   // Sempre que houver troca de aba é necessário utilizar isso.
   // <umdez> Eu não sei ainda se essa maneira está criando novos mapas a cada vez que uma aba é clicada.
   // <umdez> Depois seria uma boa fazer o re-inicio de apenas o mapa da aba selecionada e não de todos os mapas como é feito agora.
-  reIniciarCadaMapa: function () {
+  _reIniciarCadaMapa: function () {
     
     _.each(this.unidadeUniao, function(mapaObj) {
       
@@ -181,7 +181,7 @@ window.VisaoNossasUnidades = Backbone.View.extend({
       e.relatedTarget // aba previamente ativa.
       
       // Re-iniciamos o mapa.
-      esteObj.reIniciarCadaMapa();
+      esteObj._reIniciarCadaMapa();
     })
     
   }
