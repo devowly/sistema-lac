@@ -37,5 +37,5 @@
 /* ESTILOS DO JQUERY UI
 -------------------------------------------------------------*/
 @import url('../jquery-ui-1.11.4.custom/jquery-ui.min.css');
-@import url('../jquery-ui-1.11.4.custom/jquery-ui.min.structure.css');
-@import url('../jquery-ui-1.11.4.custom/jquery-ui.min.theme.css');
+@import url('../jquery-ui-1.11.4.custom/jquery-ui.structure.min.css');
+@import url('../jquery-ui-1.11.4.custom/jquery-ui.theme.min.css');
