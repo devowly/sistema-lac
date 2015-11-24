@@ -57,7 +57,7 @@ Preencher.prototype.iniciar = function () {
         recusar(err);
       } else {
         registrador.debug('Banco de dados sincronizado.');
-        deliberar();
+        deliberar(esteObj);
       }
     });
   });
