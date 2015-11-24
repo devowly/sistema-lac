@@ -30,6 +30,7 @@ module.exports = function (sequelize, bd)  {
 
   // No momento em que o modelo é definido, vamos carregar as associações
   modelos.forEach(function (modelo) {
+    
     if (modelo.options.hasOwnProperty('associate')) {
       modelo.options.associate(bd);
     }
