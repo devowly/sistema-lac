@@ -1,6 +1,9 @@
 'use strict'
 
-/* @arquivo preencherBanco.js */
+/* @arquivo preencherBanco.js 
+ *
+ * @descrição Carrega os dados  para o banco de dados.
+ **/
 
 /* Versão 0.0.1-Beta
  * - Adicionar forma de carregar todos os arquivos a partir deste arquivo. [FEITO]
@@ -65,7 +68,7 @@ Preencher.prototype.iniciar = function () {
 
 var preencher = new Preencher();
 
-preencher.iniciar().then(function() {
+preencher.iniciar().then(function(esteObj) {
   // Carregamos os dados após o banco de dados estiver criado e sincronizado.
   preencher.carregarDados();
 }).catch(function (err) {
