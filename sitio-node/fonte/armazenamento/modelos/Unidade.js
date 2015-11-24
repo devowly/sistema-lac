@@ -2,11 +2,6 @@
 
 /* @arquivo Unidade.js */
 
-// ATENÇÃO: Por enquanto não vamos utilizar isso porque é mais produtivo definir as 
-// Coordenadas de Unidades diretamente em arquivo html.
-// O grande problema é inserir os dados das coordenadas e unidades.
-// Precisariamos de desenvolver um formulário para adicionar os dados.
-
 /* Versão 0.0.1-beta
  * - Uso do padrão snake_case. [FEITO]
  * - Fazer associação funcionar. [FEITO]
