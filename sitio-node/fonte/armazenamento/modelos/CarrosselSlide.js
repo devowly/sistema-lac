@@ -43,7 +43,8 @@ module.exports = function (database, DataTypes) {
     instanceMethods: {
     
     },
-    underscored: true // Lembre-se que utilizamos o padrão snake_case
+    underscored: true, // Lembre-se que utilizamos o padrão snake_case
+    timestamps: false
   });
 
   return CarrosselSlide;

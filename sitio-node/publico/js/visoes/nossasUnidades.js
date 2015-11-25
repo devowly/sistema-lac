@@ -2,24 +2,35 @@
 
 /* @arquivo nossasUnidades.js */
 
+/* Versão 0.0.1-Beta
+ * - Adc caracteristicas básicas para a visão. [FEITO]
+ * - Adicionar forma de realizar o re-inicio do mapa para apenas a aba que estiver aberta. (issue #1)
+ * - Carregar dados das unidades pelo banco de dados. (issue #2) 
+ */
+
+var UTILIZAR_BANCO_UNIDADE = false; // Se utilizar o banco os dados serão carregados pelo banco de dados. 
+ 
 window.VisaoNossasUnidades = Backbone.View.extend({
 
+  // União dos dados carregados do banco de dados.
+  unidadeUniaoDB: [],
+  
   // Aqui adicionamos os diversos mapas.
   // Lembre-se que estamos utilizando esta forma que poderia ao inves ser carregada do banco de dados.
   unidade: [{
       titulo: 'Nossa unidade do centro de Montes Claros',
-      pagEndereco: 'enderecoUnidade001.html',      // Página que contem endereço em XML
-      nomeAba: 'CENTRO' // Nome da aba onde esta unidade irá ser apresentada.
+      pagina_endereco: 'enderecoUnidade001.html',      // Página que contem endereço em XML
+      nome_aba: 'CENTRO' // Nome da aba onde esta unidade irá ser apresentada.
     },
     {
       titulo: 'Nossa unidade do bairro Jardim Panorama de Montes Claros',
-      pagEndereco: 'enderecoUnidade002.html',      // Página que contem endereço em XML
-      nomeAba: 'JARDIM PANORAMA' // Nome da aba onde esta unidade irá ser apresentada.
+      pagina_endereco: 'enderecoUnidade002.html',      // Página que contem endereço em XML
+      nome_aba: 'JARDIM PANORAMA' // Nome da aba onde esta unidade irá ser apresentada.
     },
     {
       titulo: 'Nossa unidade do bairro Todos os Santos de Montes Claros',
-      pagEndereco: 'enderecoUnidade003.html',      // Página que contem endereço em XML
-      nomeAba: 'TODOS OS SANTOS' // Nome da aba onde esta unidade irá ser apresentada.
+      pagina_endereco: 'enderecoUnidade003.html',      // Página que contem endereço em XML
+      nome_aba: 'TODOS OS SANTOS' // Nome da aba onde esta unidade irá ser apresentada.
     }
   ],
   
@@ -54,13 +65,13 @@ window.VisaoNossasUnidades = Backbone.View.extend({
   ],
   
   unidadeVisoes: [{
-      nomeElemento: 'mapaUnidade001'  // Nome do elemento onde iremos adicionar o mapa.
+      nome_elemento: 'mapaUnidade001'  // Nome do elemento onde iremos adicionar o mapa.
     },
     {
-      nomeElemento: 'mapaUnidade002'  // Nome do elemento onde iremos adicionar o mapa.
+      nome_elemento: 'mapaUnidade002'  // Nome do elemento onde iremos adicionar o mapa.
     },
     {
-      nomeElemento: 'mapaUnidade003'  // Nome do elemento onde iremos adicionar o mapa.
+      nome_elemento: 'mapaUnidade003'  // Nome do elemento onde iremos adicionar o mapa.
     }  
   ],
   
@@ -72,78 +83,191 @@ window.VisaoNossasUnidades = Backbone.View.extend({
   // Aqui iremos *simular* o join que iriamos fazer na database.
   unidadeUniao: [],
   
-  initialize: function (cd) {
-    var visoes = [];
-    var quantidade = this.unidade.length;
+  initialize: function () {
     
-    // Faz a união dos objetos, simulando de forma bastante *simples* um JOIN na database. 
-    for (var i = 0; i < quantidade; i++) {
-      if (this.unidade[i] && this.unidadeCoordenada[i] && this.unidadeMapa[i] && this.unidadeVisoes[i]) {
+    return this;
+  },
+
+  carregarTemplantes: function(cd) {
+    var visoes = [];
+    var quantidadeUnidades = 0;
+    var esteObj = this;
+    
+    if (UTILIZAR_BANCO_UNIDADE) {
+      
+      var unidades = this.model.models;
+      quantidadeUnidades = unidades.length;
+      var unidadeJson = null;
+      
+      // Para cada uma das nossas unidades
+      for (var i = 0; i < quantidadeUnidades; i++) {
         
-        // Faz a união da(s) unidade(s)
-        this.unidadeUniao[i] = _.extend(this.unidade[i], this.unidadeCoordenada[i], this.unidadeMapa[i], this.unidadeVisoes[i]); 
+        // Transforma em JSON para podermos manipular e acessar as propriedades do modelo.
+        unidadeJson = unidades[i].toJSON();
         
         // Pegamos o nome da nossa visão
-        var nomeEl = this.unidadeUniao[i].nomeElemento;
+        var nomeEl = unidadeJson.nome_elemento;
         
         // Vai armazenar o nome de cada uma das visões em visoes[i].
         visoes[i] = nomeEl;
         
         // Para cada visão iremos armazenar aqui os templantes.
         this.listaTemplantes[nomeEl] = {};
+        
+      }
+     
+    } 
+    // Utilizamos variaveis ao invez de modelos do banco de dados.
+    else {
+      quantidadeUnidades = this.unidade.length;
+      
+      // Faz a união dos objetos, simulando de forma bastante *simples* um JOIN na database. 
+      for (var i = 0; i < quantidadeUnidades; i++) {
+        if (this.unidade[i] && this.unidadeCoordenada[i] && this.unidadeMapa[i] && this.unidadeVisoes[i]) {
+          
+          // Faz a união da(s) unidade(s)
+          this.unidadeUniao[i] = _.extend(this.unidade[i], this.unidadeCoordenada[i], this.unidadeMapa[i], this.unidadeVisoes[i]); 
+          
+          // Pegamos o nome da nossa visão
+          var nomeEl = this.unidadeUniao[i].nome_elemento;
+          
+          // Vai armazenar o nome de cada uma das visões em visoes[i].
+          visoes[i] = nomeEl;
+          
+          // Para cada visão iremos armazenar aqui os templantes.
+          this.listaTemplantes[nomeEl] = {};
+        }
       }
     }
-    
-    // Armazenamos a função que será chamada logo após os templantes estiverem carregados.
-    this.quandoPronto = cd;
     
     // Procura no diretorio pagsEnderecosUnidades os templates e os carrega, salvando-os na listaTemplantes.
     // Logo após carregados nós chamamos o método render().
-    utilitarios.carregarTemplantesDinamicamente(this.listaTemplantes, 'pagsEnderecosUnidades/', visoes, this.render.bind(this));
-    
-    return this;
+    utilitarios.carregarTemplantesDinamicamente(this.listaTemplantes, 'pagsEnderecosUnidades/', visoes, function(){
+      esteObj.render(cd);
+    });
   },
-
-  render: function () {
+  
+  render: function (cd) {
+    
     // Carrega este template. É ideal carrega-lo agora, antes das outras visões.
     $(this.el).html(this.template());
   
-    var quantidade = this.unidadeUniao.length;
+    var quantidadeUnidades = 0;
+    var esteObj = this;
     
-    for (var i = 0; i < quantidade; i++) {
+    if (UTILIZAR_BANCO_UNIDADE) {
       
-      // Necessário por que vamos marcar o primeiro elemento como ativo.
-      this.unidadeUniao[i].indice = i;
-       
+      var unidades = this.model.models;     // Quantidade de modelos de unidades desta coleção
+      quantidadeUnidades = unidades.length; //Quantidade de unidades
+      var ind = 0;
+      
+    _.each(unidades, function(unidade) {
+
+      // Armazenamos em JSON para podermos manipulalo e ter acesso a suas propriedades.
+      var unidadeJson = unidade.toJSON();
+      
       // Armazenamos o templante.
-      this.unidadeUniao[i].minhaVisao = this.listaTemplantes[this.unidadeUniao[i].nomeElemento]; 
-       
-      if (this.unidadeUniao[i]) {
-        // Adicionamos as abas.
-        $('ul.nav-tabs', this.el).append(new VisaoUnidadeAba({model: this.unidadeUniao[i]}).render().el);
+      unidadeJson.minha_visao = esteObj.listaTemplantes[unidadeJson.nome_elemento];  
       
-        // Adicionamos os conteúdos  
-        $('div.tab-content', this.el).append(new VisaoUnidadeAbaConteudo({model: this.unidadeUniao[i]}).render().el);
-      }
+        
+       // Para cada uma dos mapas desta unidade
+       _.each(unidade.unidadeMapas.models, function(unidadeMapa) {
+         
+         // Armazenamos em json para podermos manipula-lo e ter acesso as suas propriedades.
+         var unidadeMapaJson = unidadeMapa.toJSON();
+         
+         // Contem a união dos dados necessarios para carregar os dados dos templantes.
+         var unidadeUniaoLocal = {
+           lat: parseFloat(unidadeMapaJson.lat),           // Latitude do mapa
+           lng: parseFloat(unidadeMapaJson.lng),           // Longitude do mapa
+           zoom: parseInt(unidadeMapaJson.zoom),           // Nivel do zoom
+           titulo: unidadeJson.titulo,                     // Titulo da unidade. Exemplo: Nossa unidade do centro de Montes Claros.
+           pagina_endereco: unidadeJson.pagina_endereco,   // Página que contem endereço em XML. Exemplo: enderecoUnidade002.html
+           nome_elemento: unidadeJson.nome_elemento,       // Nome do elemento onde iremos adicionar o mapa. Exemplo: mapaUnidade002
+           nome_aba: unidadeJson.nome_aba,                 // Cada mapa tem uma aba
+           minha_visao: unidadeJson.minha_visao,
+           indice: ind                                     // Indice desta unidade
+         };
+           
+         // Armazenamos os dados ao nivel global para serem utilizados por outros métodos
+         esteObj.unidadeUniaoDB.push(unidadeUniaoLocal);
+           
+         ind++;
+           
+         // Adicionamos as abas.
+         $('ul.nav-tabs', esteObj.el).append(new VisaoUnidadeAba({model: unidadeUniaoLocal}).render().el); 
+           
+         // Adicionamos os conteúdos da aba
+         $('div.tab-content', esteObj.el).append(new VisaoUnidadeAbaConteudo({model: unidadeUniaoLocal}).render().el); 
+           
+         });
+      
+      });
+      
     }
-    // Quando tudo estiver pronto nós chamamos esta função.
-    this.quandoPronto(this);
+    // Utilizamos variaveis ao invez de modelos do banco de dados.
+    else {
+      
+      quantidadeUnidades = this.unidadeUniao.length;
+      
+      for (var i = 0; i < quantidadeUnidades; i++) {
+      
+        // Necessário por que vamos marcar o primeiro elemento como ativo.
+        this.unidadeUniao[i].indice = i;
+         
+        // Armazenamos o templante.
+        this.unidadeUniao[i].minha_visao = this.listaTemplantes[this.unidadeUniao[i].nome_elemento]; 
+         
+        if (this.unidadeUniao[i]) {
+          // Adicionamos as abas.
+          $('ul.nav-tabs', this.el).append(new VisaoUnidadeAba({model: this.unidadeUniao[i]}).render().el);
+        
+          // Adicionamos os conteúdos  
+          $('div.tab-content', this.el).append(new VisaoUnidadeAbaConteudo({model: this.unidadeUniao[i]}).render().el);
+        }
+      }
+      
+    }
     
+    // Quando tudo estiver pronto nós chamamos esta função.
+    cd(this);
   },
   
   iniciarCadaMapa: function () {
     
-    // Para cada um dos objetos iremos iniciar o mapa e adicionar um marcador.
-    _.each(this.unidadeUniao, function(mapaObj) {
+    if (UTILIZAR_BANCO_UNIDADE) {
       
-      // Centraliza e dá um zoom 
-      mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nomeElemento).get(0));
-    
-      if (mapaObj.mapa) {
-        // Coloca uma marca de unidade no mapa
-        mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
-      } 
-    }, this);
+      _.each(this.unidadeUniaoDB, function(mapaObj) {
+
+        // Coordenadas do centro do mapa.
+        var coordenadas = {
+          lat: mapaObj.lat, 
+          lng: mapaObj.lng
+        };
+        
+        // Centraliza e faz um zoom 
+        mapaObj.mapa = gglMapa.centralizarMapa(coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
+      
+        if (mapaObj.mapa) {
+          // Coloca uma marca de unidade no mapa
+          mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, coordenadas, mapaObj.titulo);
+        }
+        
+      }, this);         
+      
+    } else {
+      // Para cada um dos objetos iremos iniciar o mapa e adicionar um marcador.
+      _.each(this.unidadeUniao, function(mapaObj) {
+        
+        // Centraliza e faz um zoom 
+        mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
+      
+        if (mapaObj.mapa) {
+          // Coloca uma marca de unidade no mapa
+          mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
+        } 
+      }, this);
+    }
    
   },
     
@@ -153,21 +277,47 @@ window.VisaoNossasUnidades = Backbone.View.extend({
   // <umdez> Depois seria uma boa fazer o re-inicio de apenas o mapa da aba selecionada e não de todos os mapas como é feito agora.
   _reIniciarCadaMapa: function () {
     
-    _.each(this.unidadeUniao, function(mapaObj) {
+    if (UTILIZAR_BANCO_UNIDADE) {
       
-      //Faz o mapa redimensionar.
-      gglMapa.redimensionarMapa( mapaObj.mapa);
+      _.each(this.unidadeUniaoDB, function(mapaObj) {
+        
+        // Coordenadas do centro do mapa.
+        var coordenadas = {
+          lat: mapaObj.lat, 
+          lng: mapaObj.lng
+        };
+        
+        //Faz o mapa redimensionar.
+        gglMapa.redimensionarMapa( mapaObj.mapa);
+        
+        // Centraliza e faz um zoom 
+        mapaObj.mapa = gglMapa.centralizarMapa(coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
       
-      // Centraliza e faz um zoom 
-      mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nomeElemento).get(0));
-    
-      if (mapaObj.mapa) {
-        // Adicionamos denovo a marca
-        mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
-      } 
+        if (mapaObj.mapa) {
+          // Adicionamos denovo a marca
+          mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, coordenadas, mapaObj.titulo);
+        } 
+        
+      }, this);
       
-    }, this);
-    
+    } else {
+      
+      _.each(this.unidadeUniao, function(mapaObj) {
+        
+        //Faz o mapa redimensionar.
+        gglMapa.redimensionarMapa( mapaObj.mapa);
+        
+        // Centraliza e faz um zoom 
+        mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
+      
+        if (mapaObj.mapa) {
+          // Adicionamos denovo a marca
+          mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
+        } 
+        
+      }, this);
+     
+    }
   },
   
   // Escutamos por eventos das abas.
@@ -208,13 +358,11 @@ window.VisaoUnidadeAba = Backbone.View.extend({
   render: function () {
     var meuModelo = this.model;
     
-    // meuModelo = meuModelo.toJSON(); Descomentar isto se for utilizado coleção ou modelo
-    
     // Coloca classe active na primeira aba.
     if (meuModelo.indice == 0) $(this.el).addClass('active');
      
-    var conteudoAba = '<a href="#' + meuModelo.nomeElemento + '" aria-controls="'+ meuModelo.nomeElemento +'" role="tab" data-toggle="tab">';
-    conteudoAba += meuModelo.nomeAba;
+    var conteudoAba = '<a href="#' + meuModelo.nome_elemento + '" aria-controls="'+ meuModelo.nome_elemento +'" role="tab" data-toggle="tab">';
+    conteudoAba += meuModelo.nome_aba;
     conteudoAba += ' <span class="fa fa-map-marker fa-1x" aria-hidden="true"></span></a>';
     
     $(this.el).append(conteudoAba);
@@ -256,16 +404,14 @@ window.VisaoUnidadeAbaConteudo = Backbone.View.extend({
 
   render: function () {
     var meuModelo = this.model;
-    
-    // meuModelo = meuModelo.toJSON(); Descomentar isto se for utilizado coleção ou modelo
-    
+  
     // Coloca classe active no primeiro painel.
     if (meuModelo.indice == 0) $(this.el).addClass('active');
     
-    $(this.el).attr('id', meuModelo.nomeElemento);
+    $(this.el).attr('id', meuModelo.nome_elemento);
     
     // Carregamos o templante
-    $(this.el).html(meuModelo.minhaVisao.template(meuModelo));
+    $(this.el).html(meuModelo.minha_visao.template(meuModelo));
     
     return this;
   }

@@ -5,10 +5,11 @@
  * @Descrição Aqui vamos adicionar as caracteristicas de trabalhar com as rotas,
  *  Carregar os arquivos de visão. 
  */ 
- 
-window.sitio = null;
 
-var RoteadorSitio = Backbone.Router.extend({
+/* Versão 0.0.1-Beta
+ */
+ 
+Roteador.Sitio = Backbone.Router.extend({
 
   seCarrosselIniciado: false,
   
@@ -59,7 +60,7 @@ var RoteadorSitio = Backbone.Router.extend({
     var esteObj = this;
     
     if (!this.visaoCarrossel) {
-      var colCarrosselSlides = new ColecaoCarrosselSlides();
+      var colCarrosselSlides = new Colecao.CarrosselSlides();
       
       colCarrosselSlides.fetch({success: function(){
         
@@ -142,23 +143,55 @@ var RoteadorSitio = Backbone.Router.extend({
   },
   
   nossasUnidades: function() {
-    
+    var esteObj = this;
+  
     if (!this.visaoNossasUnidades) {
-      this.visaoNossasUnidades = new VisaoNossasUnidades(function(visNossasUnidades) {
-                  
-        // Aqui adicionamos o conteúdo de nossas unidades.
-        $('#conteudo').html(visNossasUnidades.el);
+      
+      var colecaoUnidades = new Colecao.Unidades();
+      
+      // Inicia a visão de cada unidade sendo chamado após a coleção de modelos e de mapas estiver carregado.
+      var carregarVisao = function() {
         
-        // Caso a biblioteca do google maps já estiver carregada, iniciamos o mapa de cada unidade.
-        if (gglMapa.seMapaPronto()) {
-          visNossasUnidades.iniciarCadaMapa();
+        esteObj.visaoNossasUnidades = new VisaoNossasUnidades({model: colecaoUnidades});
+        
+        esteObj.visaoNossasUnidades.carregarTemplantes( function(visNossasUnidades) {
+          
+          // Aqui adicionamos o conteúdo de nossas unidades.
+          $('#conteudo').html(visNossasUnidades.el);
+          
+          // Caso a biblioteca do google maps já estiver carregada, iniciamos o mapa de cada unidade.
+          if (gglMapa.seMapaPronto()) {
+            visNossasUnidades.iniciarCadaMapa();
+          }
+          
+          // Adicionamos escuta para os eventos.
+          // Isto é necessário por causa do mapa que precisa receber resize.
+          visNossasUnidades.iniciarEventosParaAbas();
+          
+        });
+      }
+      
+      // Carrega a coleção de unidades
+      colecaoUnidades.fetch({success: function(){
+
+        // Quantos modelos esta coleção possui
+        var quantidadeUnidades = colecaoUnidades.models.length;
+        
+        // Para cada unidade teremos que carregar a coleçao dos mapas.
+        // Quando finalizar o carregamento da coleção de mapas de cada unidade, chama carregarVisao().
+        var quantBuscas = _.after(quantidadeUnidades, carregarVisao);
+        
+        for (var i = 0; i < quantidadeUnidades; i++) {
+          
+          // Manipulamos cada modelo unidade
+          var unidade = colecaoUnidades.models[i];
+          
+          // Para cada modelo de unidade temos uma coleção de mapa(s)
+          unidade.unidadeMapas.fetch({success: quantBuscas});
         }
         
-        // Adicionamos escuta para os eventos.
-        // Isto é necessário por causa do mapa que precisa receber resize.
-        visNossasUnidades.iniciarEventosParaAbas();
-        
-      });
+      }});
+      
     } else {
       
       // Aqui adicionamos o conteúdo de nossas unidades.
@@ -191,7 +224,7 @@ utilitarios.carregarTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao', 'Visao
                                'VisaoQuemSomos', 'VisaoNossaEquipe', 'VisaoNossasUnidades', 'VisaoInfoConvenio'], 
   function() {
     // Assim que todos templantes forem carregados, iniciamos as nossas rotas.
-    sitio = new RoteadorSitio();
+    sitio = new Roteador.Sitio();
     
     // Iniciamos o histórico das rotas.
     Backbone.history.start();  

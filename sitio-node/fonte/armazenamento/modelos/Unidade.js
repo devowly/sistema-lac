@@ -4,7 +4,7 @@
 
 /* Versão 0.0.1-beta
  * - Uso do padrão snake_case. [FEITO]
- * - Fazer associação funcionar. [FEITO]
+ * - Corrigido forma de associação. [FEITO]
  */
 
 module.exports = function (database, DataTypes) {
@@ -31,15 +31,16 @@ module.exports = function (database, DataTypes) {
   }, 
    {
     associate: function (modelos) {
-      // Adiciona coluna de chave estrangeira 'unidade_id' para tabela de coordenadas.
-      // Cada coordenada pertencerá à uma unidade. 
-      modelos.Unidade.hasOne(modelos.UnidadeCoordenada, { foreignKey: 'unidade_id' }); 
+      // Adiciona coluna de chave estrangeira 'unidade_id' para tabela de mapas da unidade.
+      // Cada mapa pertencerá à uma unidade. 
+      modelos.Unidade.hasOne(modelos.UnidadeMapa, { foreignKey: 'unidade_id' }); 
       
     },
     instanceMethods: {
     
     },
-    underscored: true // Lembre-se que utilizamos o padrão snake_case
+    underscored: true, // Lembre-se que utilizamos o padrão snake_case
+    timestamps: false
   });
 
   return Unidade;
