@@ -5,7 +5,7 @@
 /* Versão 0.0.1-Beta
  * - Adc caracteristicas básicas para a visão. [FEITO]
  * - Adicionar forma de realizar o re-inicio do mapa para apenas a aba que estiver aberta. (issue #1)
- * - Carregar dados das unidades pelo banco de dados. (issue #2) 
+ * - Carregar dados das unidades pelo banco de dados. (issue #2) (9e832dd11688bfd27b51ca1a22a13d675388174a) [FEITO]
  */
 
 var UTILIZAR_BANCO_UNIDADE = false; // Se utilizar o banco os dados serão carregados pelo banco de dados. 
