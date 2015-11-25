@@ -4,7 +4,7 @@
 
 /* Versão 0.0.1-Beta
  * - Adc caracteristicas básicas para a visão. [FEITO]
- * - Adicionar forma de realizar o re-inicio do mapa para apenas a aba que estiver aberta. (issue #1) [FEITO]
+ * - Adicionar forma de realizar o re-inicio do mapa para apenas a aba que estiver aberta. (issue #1) (f43ba72653466e6a9ce7dedf4128bdc240bccb66) [FEITO]
  * - Carregar dados das unidades pelo banco de dados. (issue #2) (9e832dd11688bfd27b51ca1a22a13d675388174a) [FEITO]
  */
 
