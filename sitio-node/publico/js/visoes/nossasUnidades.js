@@ -4,11 +4,11 @@
 
 /* Versão 0.0.1-Beta
  * - Adc caracteristicas básicas para a visão. [FEITO]
- * - Adicionar forma de realizar o re-inicio do mapa para apenas a aba que estiver aberta. (issue #1)
+ * - Adicionar forma de realizar o re-inicio do mapa para apenas a aba que estiver aberta. (issue #1) [FEITO]
  * - Carregar dados das unidades pelo banco de dados. (issue #2) (9e832dd11688bfd27b51ca1a22a13d675388174a) [FEITO]
  */
 
-var UTILIZAR_BANCO_UNIDADE = false; // Se utilizar o banco os dados serão carregados pelo banco de dados. 
+var UTILIZAR_BANCO_UNIDADE = true; // Se utilizar o banco os dados serão carregados pelo banco de dados. 
  
 window.VisaoNossasUnidades = Backbone.View.extend({
 
@@ -275,46 +275,50 @@ window.VisaoNossasUnidades = Backbone.View.extend({
   // Sempre que houver troca de aba é necessário utilizar isso.
   // <umdez> Eu não sei ainda se essa maneira está criando novos mapas a cada vez que uma aba é clicada.
   // <umdez> Depois seria uma boa fazer o re-inicio de apenas o mapa da aba selecionada e não de todos os mapas como é feito agora.
-  _reIniciarCadaMapa: function () {
+  _reIniciarCadaMapa: function (aba) {
     
     if (UTILIZAR_BANCO_UNIDADE) {
-      
+     
       _.each(this.unidadeUniaoDB, function(mapaObj) {
+        // Apenas o mapa da nova aba clicada que vai ser reiniciado
+        if ('#' + mapaObj.nome_elemento === aba) {
+          
+          // Coordenadas do centro do mapa.
+          var coordenadas = {
+            lat: mapaObj.lat, 
+            lng: mapaObj.lng
+          };
+          
+          //Faz o mapa redimensionar.
+          gglMapa.redimensionarMapa( mapaObj.mapa);
+          
+          // Centraliza e faz um zoom 
+          mapaObj.mapa = gglMapa.centralizarMapa(coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
         
-        // Coordenadas do centro do mapa.
-        var coordenadas = {
-          lat: mapaObj.lat, 
-          lng: mapaObj.lng
-        };
-        
-        //Faz o mapa redimensionar.
-        gglMapa.redimensionarMapa( mapaObj.mapa);
-        
-        // Centraliza e faz um zoom 
-        mapaObj.mapa = gglMapa.centralizarMapa(coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
-      
-        if (mapaObj.mapa) {
-          // Adicionamos denovo a marca
-          mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, coordenadas, mapaObj.titulo);
-        } 
-        
+          if (mapaObj.mapa) {
+            // Adicionamos denovo a marca
+            mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, coordenadas, mapaObj.titulo);
+          } 
+        }
       }, this);
       
     } else {
       
       _.each(this.unidadeUniao, function(mapaObj) {
         
-        //Faz o mapa redimensionar.
-        gglMapa.redimensionarMapa( mapaObj.mapa);
+        // Apenas o mapa da nova aba clicada que vai ser reiniciado
+        if ('#' + mapaObj.nome_elemento === aba) {
+          //Faz o mapa redimensionar.
+          gglMapa.redimensionarMapa( mapaObj.mapa);
+          
+          // Centraliza e faz um zoom 
+          mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
         
-        // Centraliza e faz um zoom 
-        mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
-      
-        if (mapaObj.mapa) {
-          // Adicionamos denovo a marca
-          mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
-        } 
-        
+          if (mapaObj.mapa) {
+            // Adicionamos denovo a marca
+            mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
+          } 
+        }
       }, this);
      
     }
@@ -327,11 +331,13 @@ window.VisaoNossasUnidades = Backbone.View.extend({
     
     // Quando clicar em uma aba, logo após a nova aba ser aberta então o evento é disparado.
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-      e.target // Nova aba ativada
-      e.relatedTarget // aba previamente ativa.
+      var abaAtiva = e.target.toString() // Nova aba ativada
+      
+      // Pegamos apenas o que é importante, removendo o resto.
+      var abaAtiva = abaAtiva.slice( abaAtiva.indexOf('#'), abaAtiva.length);
       
       // Re-iniciamos o mapa.
-      esteObj._reIniciarCadaMapa();
+      esteObj._reIniciarCadaMapa(abaAtiva);
     })
     
   }
