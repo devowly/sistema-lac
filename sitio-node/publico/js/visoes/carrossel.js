@@ -30,7 +30,7 @@ Visao.Carrossel = Backbone.View.extend({
       slides[i].indice = i;
        
       // Adicionamos os indicadores
-      $('.carousel-indicators', this.el).append(new VisaoIndicadorSlides({model: slides[i]}).render().el);
+      $('.carousel-indicators', this.el).append(new Visao.IndicadorSlides({model: slides[i]}).render().el);
       
       // Adicionamos os items 
       $('.carousel-inner', this.el).append(new Visao.SlideItem({model: slides[i]}).render().el);
@@ -53,7 +53,7 @@ Visao.Carrossel = Backbone.View.extend({
 });
 
 // @Elemento <li data-target="#oCarrossel" data-slide-to="0" class="active"></li>
-window.VisaoIndicadorSlides = Backbone.View.extend({
+Visao.IndicadorSlides = Backbone.View.extend({
 
   tagName: 'li',
   
