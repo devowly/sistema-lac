@@ -177,8 +177,10 @@ window.VisaoNossasUnidades = Backbone.View.extend({
          
          // Contem a união dos dados necessarios para carregar os dados dos templantes.
          var unidadeUniaoLocal = {
-           lat: parseFloat(unidadeMapaJson.lat),           // Latitude do mapa
-           lng: parseFloat(unidadeMapaJson.lng),           // Longitude do mapa
+           coordenadas: {
+             lat: parseFloat(unidadeMapaJson.lat),           // Latitude do mapa
+             lng: parseFloat(unidadeMapaJson.lng),           // Longitude do mapa
+           },
            zoom: parseInt(unidadeMapaJson.zoom),           // Nivel do zoom
            titulo: unidadeJson.titulo,                     // Titulo da unidade. Exemplo: Nossa unidade do centro de Montes Claros.
            pagina_endereco: unidadeJson.pagina_endereco,   // Página que contem endereço em XML. Exemplo: enderecoUnidade002.html
@@ -237,19 +239,13 @@ window.VisaoNossasUnidades = Backbone.View.extend({
     if (UTILIZAR_BANCO_UNIDADE) {
       
       _.each(this.unidadeUniaoDB, function(mapaObj) {
-
-        // Coordenadas do centro do mapa.
-        var coordenadas = {
-          lat: mapaObj.lat, 
-          lng: mapaObj.lng
-        };
         
         // Centraliza e faz um zoom 
-        mapaObj.mapa = gglMapa.centralizarMapa(coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
+        mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
       
         if (mapaObj.mapa) {
           // Coloca uma marca de unidade no mapa
-          mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, coordenadas, mapaObj.titulo);
+          mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
         }
         
       }, this);         
@@ -282,21 +278,15 @@ window.VisaoNossasUnidades = Backbone.View.extend({
         // Apenas o mapa da nova aba clicada que vai ser reiniciado
         if ('#' + mapaObj.nome_elemento === aba) {
           
-          // Coordenadas do centro do mapa.
-          var coordenadas = {
-            lat: mapaObj.lat, 
-            lng: mapaObj.lng
-          };
-          
           //Faz o mapa redimensionar.
           gglMapa.redimensionarMapa( mapaObj.mapa);
           
           // Centraliza e faz um zoom 
-          mapaObj.mapa = gglMapa.centralizarMapa(coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
+          mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
         
           if (mapaObj.mapa) {
             // Adicionamos denovo a marca
-            mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, coordenadas, mapaObj.titulo);
+            mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
           } 
         }
       }, this);
