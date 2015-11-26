@@ -20,7 +20,7 @@ Global.utilitarios = {
           window.Visao[visao].prototype.template = _.template(dados);
         }));
       } else {
-        console.log(visao + " não foi encontrado");
+        console.log(visao + ' não foi encontrado');
       }
     });
 
@@ -44,7 +44,7 @@ Global.utilitarios = {
           lista[visao].template = _.template(dados);
         }));
       } else {
-        console.log(visao + " não foi encontrado");
+        console.log(visao + ' não foi encontrado');
       }
     });
 
@@ -99,6 +99,7 @@ Global.utilitarios = {
       }
     }}, {error: function(){
       // <umdez> Como fazer em caso de erro?
+      console.log('Não foi possivel carregar dados para a coleção.');
     }} );
   }
   
