@@ -16,15 +16,15 @@ Modelo.Exame = Backbone.Model.extend({
 
   initialize: function () {
     
-    // Cada uma das unidades possue um zoom e coordenadas para o mapa
+    // Cada um dos exames possue uma orientação a ser informada.
     this.exameOrientacoes = nestCollection(this, 'exameOrientacoes', new Colecao.ExameOrientacoes(this.get('exameOrientacoes')));
     this.exameOrientacoes.url = '/exames/' + this.id + '/ExameOrientacao';
   },
   
   // Aqui os atributos padrões deste modelo de exame.
   defaults: {
-    id: null,            // Identificador
-    nome: ""            //Nome do exame. Exemplo: 1,25 DIHIDROXI VITAMINA D3.
+    id: null,   // Identificador
+    nome: ""    //Nome do exame. Exemplo: 1,25 DIHIDROXI VITAMINA D3.
   }
 });
 

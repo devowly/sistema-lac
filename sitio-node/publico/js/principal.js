@@ -109,9 +109,11 @@ Roteador.Sitio = Backbone.Router.extend({
       });
       
     } else {
+      // Visão já está carregada, apenas iremos inseri-la no conteudo
       $('#conteudo').html(this.visaoExamesOrientacoes.el);
     }
   
+    // Selecionamos o nosso item na barra de navegação.
     this.visaoBarraNavegacao.selecionarItemMenu('exames');
   },
   
