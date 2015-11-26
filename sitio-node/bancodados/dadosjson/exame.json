@@ -1,0 +1,146 @@
+[
+  {
+    "model": "Exame",
+    "data": {
+      "id": 1,
+      "nome": "1,25 DIHIDROXI VITAMINA D3"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 1,
+      "pagina_html": "orientacao0001.html",
+      "nome_elemento": "orientacao0001",
+      "exame_id": 1
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 2,
+      "nome": "17OH PROGESTERONA 1H APOS CORTROSINA"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 2,
+      "pagina_html": "orientacao0002.html",
+      "nome_elemento": "orientacao0002",
+      "exame_id": 2
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 3,
+      "nome": "17OH PROGESTERONA"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 3,
+      "pagina_html": "orientacao0003.html",
+      "nome_elemento": "orientacao0003",
+      "exame_id": 3
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 4,
+      "nome": "17OH CORTICOSTEROIDE"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 4,
+      "pagina_html": "orientacao0004.html",
+      "nome_elemento": "orientacao0004",
+      "exame_id": 4
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 5,
+      "nome": "17KS CETOESTEROIDES NEUTROS TOTAIS"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 5,
+      "pagina_html": "orientacao0005.html",
+      "nome_elemento": "orientacao0005",
+      "exame_id": 5
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 6,
+      "nome": "11 DESOXICORTISOL 60 MIN APOS CORTROSINA"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 6,
+      "pagina_html": "orientacao0006.html",
+      "nome_elemento": "orientacao0006",
+      "exame_id": 6
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 7,
+      "nome": "11 DESOXICORTISOL"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 7,
+      "pagina_html": "orientacao0007.html",
+      "nome_elemento": "orientacao0007",
+      "exame_id": 7
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 8,
+      "nome": "11 DESOXICORTICOSTERONA"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 8,
+      "pagina_html": "orientacao0008.html",
+      "nome_elemento": "orientacao0008",
+      "exame_id": 8
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 9,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 9,
+      "pagina_html": "orientacao0009.html",
+      "nome_elemento": "orientacao0009",
+      "exame_id": 9
+    }
+  }
+]
