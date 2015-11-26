@@ -91,12 +91,27 @@ Roteador.Sitio = Backbone.Router.extend({
   },
   
   examesOrientacoes: function() {
+    var esteObj = this;
+    
     // Aqui adicionamos a tabela de exames e orientações e atualizamos a barra de navegacao.
     if (!this.visaoExamesOrientacoes) {
-      this.visaoExamesOrientacoes = new Visao.ExamesOrientacoes();
+      
+      var colExames = new Colecao.Exames();
+      
+      // Carregamos esta coleção de exames e suas orientacoes.
+      Global.utilitarios.carregarColecao(colExames, ['exameOrientacoes'], function(){
+        
+        // Carregamos a nossa visão
+        esteObj.visaoExamesOrientacoes = new Visao.ExamesOrientacoes({model: colExames});
+        
+        // Quando tudo estiver carregado, inserimos a visão no conteudo.
+        $("#conteudo").html(esteObj.visaoExamesOrientacoes.el);
+      });
+      
+    } else {
+      $('#conteudo').html(this.visaoExamesOrientacoes.el);
     }
-    $('#conteudo').html(this.visaoExamesOrientacoes.el);
-    
+  
     this.visaoBarraNavegacao.selecionarItemMenu('exames');
   },
   
