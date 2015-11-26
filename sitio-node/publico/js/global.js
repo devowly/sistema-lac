@@ -6,9 +6,9 @@ window.Colecao = { }; // Coleções
 
 window.Modelo = { };  // Modelos
 
-window.Roteador = { }; // Roteador
+window.Roteador = { }; // Roteadores
 
-window.Visao = { };    // Visão
+window.Visao = { };    // Visões
 
 window.Sitio = null;   // Sitio
 
