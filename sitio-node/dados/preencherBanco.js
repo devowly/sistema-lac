@@ -6,7 +6,7 @@
  **/
 
 /* Versão 0.0.1-Beta
- * - Adicionar forma de carregar todos os arquivos a partir deste arquivo. [FEITO]
+ * - Adicionar forma de carregar todos os arquivos a partir deste arquivo. (issue #5) [FEITO]
  */
  
 var Sequelize = require('sequelize');
@@ -18,6 +18,7 @@ var modelos = require('../fonte/armazenamento/modelos/indice');
 var Promessa = require('bluebird');
 var registrador = require('../fonte/nucleo/registrador')('preencherbanco');
 
+/* CLASSE PREENCHER */
 var Preencher = function() {
   this.bd = null;
   this.listaModelos = {};
@@ -33,6 +34,8 @@ Preencher.prototype.carregarModelos = function () {
 } 
  
 Preencher.prototype.carregarDados = function () { 
+
+  // Carregamos aqueles arquivos json que contem os registros que serão armazenados no Banco de Dados
   registrador.debug('Carregando dados de preenchimento do banco de dados.');
   dados(sequelize_fixtures, this.listaModelos);
 } 
