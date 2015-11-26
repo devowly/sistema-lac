@@ -6,7 +6,7 @@
  **/
 
 /* Versão 0.0.1-Beta
- * - Adicionar forma de carregar todos os arquivos a partir deste arquivo. (issue #5) [FEITO]
+ * - Adicionar forma de carregar todos os dados a partir deste arquivo. (issue #5) [FEITO]
  */
  
 var Sequelize = require('sequelize');
