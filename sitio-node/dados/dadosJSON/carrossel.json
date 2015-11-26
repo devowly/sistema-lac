@@ -2,6 +2,7 @@
   {
     "model": "CarrosselSlide",
     "data": {
+      "id": 1,
       "titulo": "Vários exames laboratoriais",
       "texto": "Mais de 50 tipos de exames laboratoriais.",
       "texto_botao": "Ver lista de exames",
@@ -13,6 +14,7 @@
   {
     "model": "CarrosselSlide",
     "data": {
+      "id": 2,
       "titulo": "Acesso aos resultados à distância",
       "texto": "Resultados online: Você nem precisa mais sair de casa.",
       "texto_botao": "Ver meus resultados",
@@ -24,6 +26,7 @@
   {
     "model": "CarrosselSlide",
     "data": {
+      "id": 3,
       "titulo": "Atendimento Online",
       "texto": "Atendimento online gratuito de segunda a sábado em horário comercial.",
       "texto_botao": "Entrar em contato agora",
