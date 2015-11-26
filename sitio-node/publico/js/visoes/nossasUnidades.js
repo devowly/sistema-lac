@@ -8,7 +8,7 @@
  * - Carregar dados das unidades pelo banco de dados. (issue #2) (9e832dd11688bfd27b51ca1a22a13d675388174a) [FEITO]
  */
 
-var UTILIZAR_BANCO_UNIDADE = true; // Se utilizar o banco os dados serão carregados pelo banco de dados. 
+var UTILIZAR_BANCO_UNIDADE = true; // Você quer utilizar o banco de dados? 
  
 window.VisaoNossasUnidades = Backbone.View.extend({
 
@@ -169,7 +169,6 @@ window.VisaoNossasUnidades = Backbone.View.extend({
       // Armazenamos o templante.
       unidadeJson.minha_visao = esteObj.listaTemplantes[unidadeJson.nome_elemento];  
       
-        
        // Para cada uma dos mapas desta unidade
        _.each(unidade.unidadeMapas.models, function(unidadeMapa) {
          
