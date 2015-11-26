@@ -104,8 +104,14 @@ Roteador.Sitio = Backbone.Router.extend({
         // Carregamos a nossa visão
         esteObj.visaoExamesOrientacoes = new Visao.ExamesOrientacoes({model: colExames});
         
-        // Quando tudo estiver carregado, inserimos a visão no conteudo.
-        $("#conteudo").html(esteObj.visaoExamesOrientacoes.el);
+        // Carregamos os templates dos modais do nosso exame.
+        esteObj.visaoExamesOrientacoes.carregarTemplantesModais( function(visExames) {
+          
+          // Quando tudo estiver carregado, inserimos a visão no conteudo.
+          $("#conteudo").html(visExames.el);
+          
+        });
+        
       });
       
     } else {
