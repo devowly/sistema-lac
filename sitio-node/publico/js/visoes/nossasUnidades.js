@@ -196,10 +196,10 @@ Visao.NossasUnidades = Backbone.View.extend({
          ind++;
            
          // Adicionamos as abas.
-         $('ul.nav-tabs', esteObj.el).append(new VisaoUnidadeAba({model: unidadeUniaoLocal}).render().el); 
+         $('ul.nav-tabs', esteObj.el).append(new Visao.UnidadeAba({model: unidadeUniaoLocal}).render().el); 
            
          // Adicionamos os conteúdos da aba
-         $('div.tab-content', esteObj.el).append(new VisaoUnidadeAbaConteudo({model: unidadeUniaoLocal}).render().el); 
+         $('div.tab-content', esteObj.el).append(new Visao.UnidadeAbaConteudo({model: unidadeUniaoLocal}).render().el); 
            
          });
       
@@ -221,10 +221,10 @@ Visao.NossasUnidades = Backbone.View.extend({
          
         if (this.unidadeUniao[i]) {
           // Adicionamos as abas.
-          $('ul.nav-tabs', this.el).append(new VisaoUnidadeAba({model: this.unidadeUniao[i]}).render().el);
+          $('ul.nav-tabs', this.el).append(new Visao.UnidadeAba({model: this.unidadeUniao[i]}).render().el);
         
           // Adicionamos os conteúdos  
-          $('div.tab-content', this.el).append(new VisaoUnidadeAbaConteudo({model: this.unidadeUniao[i]}).render().el);
+          $('div.tab-content', this.el).append(new Visao.UnidadeAbaConteudo({model: this.unidadeUniao[i]}).render().el);
         }
       }
       
@@ -341,7 +341,7 @@ Visao.NossasUnidades = Backbone.View.extend({
  *   </a>
  * </li> 
 **/
-window.VisaoUnidadeAba = Backbone.View.extend({
+Visao.UnidadeAba = Backbone.View.extend({
 
   tagName: 'li',
   
@@ -389,7 +389,7 @@ window.VisaoUnidadeAba = Backbone.View.extend({
  *  </div>
  *     
 **/ 
-window.VisaoUnidadeAbaConteudo = Backbone.View.extend({
+Visao.UnidadeAbaConteudo = Backbone.View.extend({
   tagName: 'div',
   
   initialize: function () {
