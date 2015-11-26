@@ -4,7 +4,7 @@
     "data": {
       "id": 1,
       "titulo": "Nossa unidade do centro de Montes Claros",
-      "pagina_endereco": "enderecoUnidade001.html",
+      "pagina_endereco": "mapaUnidade001.html",
       "nome_elemento": "mapaUnidade001",
       "nome_aba": "CENTRO"
     }
@@ -24,7 +24,7 @@
     "data": {
       "id": 2,
       "titulo": "Nossa unidade do bairro Jardim Panorama de Montes Claros",
-      "pagina_endereco": "enderecoUnidade002.html",
+      "pagina_endereco": "mapaUnidade002.html",
       "nome_elemento": "mapaUnidade002",
       "nome_aba": "JARDIM PANORAMA"
     }
@@ -44,7 +44,7 @@
     "data": {
       "id": 3,
       "titulo": "Nossa unidade do bairro Todos os Santos de Montes Claros",
-      "pagina_endereco": "enderecoUnidade003.html",
+      "pagina_endereco": "mapaUnidade003.html",
       "nome_elemento": "mapaUnidade003",
       "nome_aba": "TODOS OS SANTOS"
     }
