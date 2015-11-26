@@ -62,6 +62,7 @@ Roteador.Sitio = Backbone.Router.extend({
     if (!this.visaoCarrossel) {
       var colCarrosselSlides = new Colecao.CarrosselSlides();
       
+      // Carregamos esta coleção de slides.
       Global.utilitarios.carregarColecao(colCarrosselSlides, null, function(){
         
         // Carregamos a nossa visão
@@ -72,6 +73,7 @@ Roteador.Sitio = Backbone.Router.extend({
       });
       
     } else {
+      // Esta visão já foi iniciada, apenas inserimos ela na div conteudo.
       $("#conteudo").html(this.visaoCarrossel.el);
     }
     
