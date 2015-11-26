@@ -3,7 +3,7 @@
 /* Versão 0.0.1-Beta
  */
 
-global.utilitarios = {
+Global.utilitarios = {
 
   /* @função carregarTemplantes()
    * @descrição Carrega assincronamente os templates encontrados em arquivos .html separados.

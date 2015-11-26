@@ -10,4 +10,4 @@ window.Roteador = { }; // Roteador
 
 window.sitio = null;   // Sitio
 
-window.global = { };   // Conteúdo global.
+window.Global = { };   // Conteúdo global.

@@ -1,7 +1,7 @@
 'use strict'
 
 /* Objeto para lidar com o mapa do google que será utilizado na página de unidades */
-global.gglMapa = {
+Global.gglMapa = {
   
   // Versão da API para o mapa.
   GMAPA_VERSAO: 3,
