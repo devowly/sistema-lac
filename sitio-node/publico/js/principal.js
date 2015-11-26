@@ -149,11 +149,13 @@ Roteador.Sitio = Backbone.Router.extend({
       
       var colecaoUnidades = new Colecao.Unidades();
       
-      // Inicia a visão de cada unidade sendo chamado após a coleção de modelos e de mapas estiver carregado.
-      var carregarVisao = function() {
-        
+      // Carrega a coleção unidades e depois as coleções aninhadas aos modelos.
+      utilitarios.carregarColecao(colecaoUnidades, ['unidadeMapas'], function() {
+          
+        // Inicia a visão de cada unidade sendo chamado após a coleção de modelos e de mapas estiver carregado.
         esteObj.visaoNossasUnidades = new VisaoNossasUnidades({model: colecaoUnidades});
         
+        // Carregamos os templates das nossas unidades.
         esteObj.visaoNossasUnidades.carregarTemplantes( function(visNossasUnidades) {
           
           // Aqui adicionamos o conteúdo de nossas unidades.
@@ -169,28 +171,7 @@ Roteador.Sitio = Backbone.Router.extend({
           visNossasUnidades.iniciarEventosParaAbas();
           
         });
-      }
-      
-      // Carrega a coleção de unidades
-      colecaoUnidades.fetch({success: function(){
-
-        // Quantos modelos esta coleção possui
-        var quantidadeUnidades = colecaoUnidades.models.length;
-        
-        // Para cada unidade teremos que carregar a coleçao dos mapas.
-        // Quando finalizar o carregamento da coleção de mapas de cada unidade, chama carregarVisao().
-        var quantBuscas = _.after(quantidadeUnidades, carregarVisao);
-        
-        for (var i = 0; i < quantidadeUnidades; i++) {
-          
-          // Manipulamos cada modelo unidade
-          var unidade = colecaoUnidades.models[i];
-          
-          // Para cada modelo de unidade temos uma coleção de mapa(s)
-          unidade.unidadeMapas.fetch({success: quantBuscas});
-        }
-        
-      }});
+      });
       
     } else {
       
