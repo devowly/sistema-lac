@@ -1,5 +1,10 @@
 'use strict'
 
+/* @arquivo iniciar.js */
+
+/* Versão 0.0.1-Beta
+ */
+
 var pasta = require('path');
 var configuracao = require('jsconfig');
 var pastaConfiguracaoPadrao = pasta.join(__dirname, "/configuracao/configuracao.js");

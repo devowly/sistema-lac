@@ -1,5 +1,14 @@
 'use strict';
 
+/* @arquivo indice.js 
+ *
+ * @descrição Carrega serviço REST
+ **/
+
+/* Versão 0.0.1-Beta
+ * - Adicionar requisição de autenticação para acesso aos dados do serviço REST. (issue #4) 
+ */
+
 var util = require('util');
 var EmissorEvento = require('events').EventEmitter;
 var Promessa = require('bluebird');
@@ -8,6 +17,7 @@ var registrador = require('../nucleo/registrador')('servicorest');
 var epilogue = require('epilogue');
 
 /**
+ * CLASSE SERVICOREST
  * Abstração da gerencia das rotas do serviço REST.
  */
 var ServicoRest = function (aplicativo, bancoDados) {
@@ -43,7 +53,8 @@ ServicoRest.prototype.carregarModelos = function () {
       
       esteObjeto[mod.nome] = epilogue.resource({
         model: esteObjeto.bd[mod.nome],
-        endpoints: mod.rotas
+        endpoints: mod.rotas,
+        associations: mod.associations
       });
     } else {
       registrador.debug('Não encontramos o modelo (' + mod.nome + ') do banco de dados.');
