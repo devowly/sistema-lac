@@ -78,6 +78,7 @@ Global.utilitarios = {
         if (modelo[colecaoAninhada]) {
           modelo[colecaoAninhada].fetch({success: quantBuscas}, {error: function(){
             // <umdez> Como fazer em caso de erro?
+            console.log('Não foi possivel carregar dados para a coleção aninhada.');
           }} );  
         }
       }
