@@ -33,7 +33,7 @@ Visao.Carrossel = Backbone.View.extend({
       $('.carousel-indicators', this.el).append(new VisaoIndicadorSlides({model: slides[i]}).render().el);
       
       // Adicionamos os items 
-      $('.carousel-inner', this.el).append(new VisaoSlideItem({model: slides[i]}).render().el);
+      $('.carousel-inner', this.el).append(new Visao.SlideItem({model: slides[i]}).render().el);
     }
 
     return this;
