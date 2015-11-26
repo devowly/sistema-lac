@@ -1,6 +1,6 @@
 'use strict'
 
-window.VisaoRodape = Backbone.View.extend({
+Visao.Rodape = Backbone.View.extend({
 
   initialize: function () {
     this.render();

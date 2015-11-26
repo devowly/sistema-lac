@@ -1,6 +1,6 @@
 'use strict'
 
-window.VisaoCentralAtendimento = Backbone.View.extend({
+Visao.CentralAtendimento = Backbone.View.extend({
 
   initialize: function () {
     this.render();

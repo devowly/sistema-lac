@@ -1,6 +1,6 @@
 'use strict'
 
-window.VisaoExamesOrientacoes = Backbone.View.extend({
+Visao.ExamesOrientacoes = Backbone.View.extend({
 
   initialize: function () {
     this.render();

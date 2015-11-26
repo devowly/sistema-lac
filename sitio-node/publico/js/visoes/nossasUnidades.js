@@ -10,7 +10,7 @@
 
 var UTILIZAR_BANCO_UNIDADE = true; // Você quer utilizar o banco de dados? 
  
-window.VisaoNossasUnidades = Backbone.View.extend({
+Visao.NossasUnidades = Backbone.View.extend({
 
   // União dos dados carregados do banco de dados.
   unidadeUniaoDB: [],

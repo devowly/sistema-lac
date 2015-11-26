@@ -1,6 +1,6 @@
 'use strict'
 
-window.VisaoQuemSomos = Backbone.View.extend({
+Visao.QuemSomos = Backbone.View.extend({
 
   initialize: function () {
     this.render();

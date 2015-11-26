@@ -6,7 +6,7 @@
  * - Remover a coluna ativo do banco de dados, passando está função para aqui. [EM ANDAMENTO]
  */
 
-window.VisaoCarrossel = Backbone.View.extend({
+Visao.Carrossel = Backbone.View.extend({
 
   initialize: function () {
     // Renderizamos o html
@@ -86,7 +86,7 @@ window.VisaoIndicadorSlides = Backbone.View.extend({
  *    </div>
  *  </div>
 */ 
-window.VisaoSlideItem = Backbone.View.extend({
+Visao.SlideItem = Backbone.View.extend({
   tagName: 'div',
   // className: 'item',
   

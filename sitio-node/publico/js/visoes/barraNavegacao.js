@@ -1,6 +1,6 @@
 'use strict'
 
-window.VisaoBarraNavegacao = Backbone.View.extend({
+Visao.BarraNavegacao = Backbone.View.extend({
 
   initialize: function () {
     this.render();

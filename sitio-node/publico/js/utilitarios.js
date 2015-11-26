@@ -1,6 +1,7 @@
 'use strict'
 
 /* Versão 0.0.1-Beta
+ * - Armazenado as variaveis das visões para a variavel global window.Visao. [FEITO]
  */
 
 Global.utilitarios = {
@@ -12,11 +13,11 @@ Global.utilitarios = {
   carregarTemplantes: function(visoes, cd) {
 
     var deferidos = [];
-
+    
     $.each(visoes, function(indice, visao) {
-      if (window[visao]) {
-        deferidos.push($.get('templantes/' + visao + '.html', function(dados) {
-          window[visao].prototype.template = _.template(dados);
+      if (window.Visao[visao]) {
+        deferidos.push($.get('templantes/Visao.' + visao + '.html', function(dados) {
+          window.Visao[visao].prototype.template = _.template(dados);
         }));
       } else {
         console.log(visao + " não foi encontrado");
@@ -36,10 +37,10 @@ Global.utilitarios = {
   carregarTemplantesDinamicamente: function(lista, diretorio, visoes, cd) {
 
     var deferidos = [];
-
+ 
     $.each(visoes, function(indice, visao) {
       if (lista[visao]) {
-        deferidos.push($.get('templantes/' + diretorio + visao + '.html', function(dados) {
+        deferidos.push($.get('templantes/' + diretorio + 'Visao.' + visao + '.html', function(dados) {
           lista[visao].template = _.template(dados);
         }));
       } else {

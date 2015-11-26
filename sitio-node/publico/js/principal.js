@@ -36,13 +36,13 @@ Roteador.Sitio = Backbone.Router.extend({
     
     // Adiciona o logo e o botão de resultados
     if (!this.visaoLogoBotoes) {
-      this.visaoLogoBotoes = new VisaoLogoBotoes();
+      this.visaoLogoBotoes = new Visao.LogoBotoes();
     }
     $('#topo').html(this.visaoLogoBotoes.el);
     
     // Adiciona a barra de navegação
     if (!this.visaoBarraNavegacao) {
-      this.visaoBarraNavegacao = new VisaoBarraNavegacao();
+      this.visaoBarraNavegacao = new Visao.BarraNavegacao();
     }
     $('#barraNavegacao').html(this.visaoBarraNavegacao.el);
     
@@ -51,7 +51,7 @@ Roteador.Sitio = Backbone.Router.extend({
     
     // Adiciona o rodape
     if (!this.visaoRodape) {
-      this.visaoRodape = new VisaoRodape();
+      this.visaoRodape = new Visao.Rodape();
     }
     $('#rodape').html(this.visaoRodape.el);
   },
@@ -64,7 +64,7 @@ Roteador.Sitio = Backbone.Router.extend({
       
       colCarrosselSlides.fetch({success: function(){
         
-        esteObj.visaoCarrossel = new VisaoCarrossel({model: colCarrosselSlides});
+        esteObj.visaoCarrossel = new Visao.Carrossel({model: colCarrosselSlides});
         
         $("#conteudo").html(esteObj.visaoCarrossel.el);
       }});
@@ -88,7 +88,7 @@ Roteador.Sitio = Backbone.Router.extend({
   examesOrientacoes: function() {
     // Aqui adicionamos a tabela de exames e orientações e atualizamos a barra de navegacao.
     if (!this.visaoExamesOrientacoes) {
-      this.visaoExamesOrientacoes = new VisaoExamesOrientacoes();
+      this.visaoExamesOrientacoes = new Visao.ExamesOrientacoes();
     }
     $('#conteudo').html(this.visaoExamesOrientacoes.el);
     
@@ -98,7 +98,7 @@ Roteador.Sitio = Backbone.Router.extend({
   centralAtendimento: function() {
     // Aqui adicionamos o conteúdo da central de atendimento.
     if (!this.visaoCentralAtendimento) {
-      this.visaoCentralAtendimento = new VisaoCentralAtendimento();
+      this.visaoCentralAtendimento = new Visao.CentralAtendimento();
     }
     $('#conteudo').html(this.visaoCentralAtendimento.el);
     
@@ -108,7 +108,7 @@ Roteador.Sitio = Backbone.Router.extend({
   convenios: function() {
     // Aqui adicionamos o conteúdo de convenios.
     if (!this.visaoConvenios) {
-      this.visaoConvenios = new VisaoConvenios();
+      this.visaoConvenios = new Visao.Convenios();
     }
     // Inserindo conteudo dos convênios.
     $('#conteudo').html(this.visaoConvenios.el);
@@ -120,7 +120,7 @@ Roteador.Sitio = Backbone.Router.extend({
   quemSomos: function() {
     // Aqui adicionamos o conteúdo de quem somos.
     if (!this.visaoQuemSomos) {
-      this.visaoQuemSomos = new VisaoQuemSomos();
+      this.visaoQuemSomos = new Visao.QuemSomos();
     }
     $('#conteudo').html(this.visaoQuemSomos.el);
     
@@ -134,7 +134,7 @@ Roteador.Sitio = Backbone.Router.extend({
   nossaEquipe: function() {
     // Aqui adicionamos o conteúdo de nossa equipe.
     if (!this.visaoNossaEquipe) {
-      this.visaoNossaEquipe = new VisaoNossaEquipe();
+      this.visaoNossaEquipe = new Visao.NossaEquipe();
     }
     $('#conteudo').html(this.visaoNossaEquipe.el);
     
@@ -153,7 +153,7 @@ Roteador.Sitio = Backbone.Router.extend({
       Global.utilitarios.carregarColecao(colecaoUnidades, ['unidadeMapas'], function() {
           
         // Inicia a visão de cada unidade sendo chamado após a coleção de modelos e de mapas estiver carregado.
-        esteObj.visaoNossasUnidades = new VisaoNossasUnidades({model: colecaoUnidades});
+        esteObj.visaoNossasUnidades = new Visao.NossasUnidades({model: colecaoUnidades});
         
         // Carregamos os templates das nossas unidades.
         esteObj.visaoNossasUnidades.carregarTemplantes( function(visNossasUnidades) {
@@ -189,7 +189,7 @@ Roteador.Sitio = Backbone.Router.extend({
   infoConvenio: function() {
     // Aqui adicionamos o conteúdo.
     if (!this.visaoInfoConvenio) {
-      this.visaoInfoConvenio = new VisaoInfoConvenio();
+      this.visaoInfoConvenio = new Visao.InfoConvenio();
     }
     $('#conteudo').html(this.visaoInfoConvenio.el);
     
@@ -200,9 +200,9 @@ Roteador.Sitio = Backbone.Router.extend({
 });
 
 // Carregamos o template em html de cada uma das visões.
-Global.utilitarios.carregarTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao', 'VisaoCarrossel', 'VisaoSlideItem', 
-                               'VisaoRodape', 'VisaoExamesOrientacoes', 'VisaoCentralAtendimento', 'VisaoConvenios', 
-                               'VisaoQuemSomos', 'VisaoNossaEquipe', 'VisaoNossasUnidades', 'VisaoInfoConvenio'], 
+Global.utilitarios.carregarTemplantes(['LogoBotoes', 'BarraNavegacao', 'Carrossel', 'SlideItem', 
+                               'Rodape', 'ExamesOrientacoes', 'CentralAtendimento', 'Convenios', 
+                               'QuemSomos', 'NossaEquipe', 'NossasUnidades', 'InfoConvenio'], 
   function() {
     // Assim que todos templantes forem carregados, iniciamos as nossas rotas.
     Sitio = new Roteador.Sitio();

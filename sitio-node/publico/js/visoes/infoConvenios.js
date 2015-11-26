@@ -1,6 +1,6 @@
 'use strict'
 
-window.VisaoInfoConvenio = Backbone.View.extend({
+Visao.InfoConvenio = Backbone.View.extend({
 
   initialize: function () {
     this.render();

@@ -1,6 +1,6 @@
 'use strict'
 
-window.VisaoNossaEquipe = Backbone.View.extend({
+Visao.NossaEquipe = Backbone.View.extend({
 
   initialize: function () {
     this.render();

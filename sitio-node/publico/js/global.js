@@ -8,6 +8,8 @@ window.Modelo = { };  // Modelos
 
 window.Roteador = { }; // Roteador
 
+window.Visao = { };    // Visão
+
 window.Sitio = null;   // Sitio
 
 window.Global = { };   // Conteúdo global.

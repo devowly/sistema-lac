@@ -1,6 +1,6 @@
 'use strict'
 
-window.VisaoLogoBotoes = Backbone.View.extend({
+Visao.LogoBotoes = Backbone.View.extend({
 
   initialize: function () {
     this.render();
