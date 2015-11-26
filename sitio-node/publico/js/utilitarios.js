@@ -76,7 +76,9 @@ Global.utilitarios = {
         var colecaoAninhada = colecoesAninhadas[cb];
         
         if (modelo[colecaoAninhada]) {
-          modelo[colecaoAninhada].fetch({success: quantBuscas});  
+          modelo[colecaoAninhada].fetch({success: quantBuscas}, {error: function(){
+            // <umdez> Como fazer em caso de erro?
+          }} );  
         }
       }
     }
@@ -90,8 +92,14 @@ Global.utilitarios = {
     
     // Carrega esta coleção e depois chama o método de carregar as coleções aninhadas.
     colecao.fetch({success: function(){
-      esteObj.carregarColecaoAninhada(colecao, colecoesAninhadas, cd);
-    }});
+      if (colecoesAninhadas) {
+        esteObj.carregarColecaoAninhada(colecao, colecoesAninhadas, cd);
+      } else {
+        cd(); //Não temos coleções aninhadas para carregar.
+      }
+    }}, {error: function(){
+      // <umdez> Como fazer em caso de erro?
+    }} );
   }
   
 };

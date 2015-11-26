@@ -62,12 +62,15 @@ Roteador.Sitio = Backbone.Router.extend({
     if (!this.visaoCarrossel) {
       var colCarrosselSlides = new Colecao.CarrosselSlides();
       
-      colCarrosselSlides.fetch({success: function(){
+      Global.utilitarios.carregarColecao(colCarrosselSlides, null, function(){
         
+        // Carregamos a nossa visão
         esteObj.visaoCarrossel = new Visao.Carrossel({model: colCarrosselSlides});
         
+        // Inserimos a visão no conteudo.
         $("#conteudo").html(esteObj.visaoCarrossel.el);
-      }});
+      });
+      
     } else {
       $("#conteudo").html(this.visaoCarrossel.el);
     }
