@@ -10,11 +10,12 @@
     }
   },
   {
-    "model": "UnidadeCoordenada",
+    "model": "UnidadeMapa",
     "data": {
       "id": 1,
-      "latitude": "-16.7244327",
-      "longitude": "-43.8715339",
+      "lat": "-16.7244327",
+      "lng": "-43.8715339",
+      "zoom": "15",
       "unidade_id": 1
     }
   },
@@ -29,11 +30,12 @@
     }
   },
   {
-    "model": "UnidadeCoordenada",
+    "model": "UnidadeMapa",
     "data": {
       "id": 2,
-      "latitude": "-16.7244327",
-      "longitude": "-43.8715339",
+      "lat": "-16.7244327",
+      "lng": "-43.8715339",
+      "zoom": "15",
       "unidade_id": 2
     }
   },
@@ -48,11 +50,12 @@
     }
   },
   {
-    "model": "UnidadeCoordenada",
+    "model": "UnidadeMapa",
     "data": {
       "id": 3,
-      "latitude": "-16.7244327",
-      "longitude": "-43.8715339",
+      "lat": "-16.7244327",
+      "lng": "-43.8715339",
+      "zoom": "15",
       "unidade_id": 3
     }
   }
