@@ -9,3 +9,5 @@ window.Modelo = { };  // Modelos
 window.Roteador = { }; // Roteador
 
 window.sitio = null;   // Sitio
+
+window.global = { };   // Conteúdo global.

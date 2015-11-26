@@ -2,6 +2,10 @@
 
 /* @arquivo carrossel.js */
 
+/* Versão 0.0.1-beta
+ * - Remover a coluna ativo do banco de dados, passando está função para aqui. [EM ANDAMENTO]
+ */
+
 window.VisaoCarrossel = Backbone.View.extend({
 
   initialize: function () {

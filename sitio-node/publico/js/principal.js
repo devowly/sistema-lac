@@ -150,7 +150,7 @@ Roteador.Sitio = Backbone.Router.extend({
       var colecaoUnidades = new Colecao.Unidades();
       
       // Carrega a coleção unidades e depois as coleções aninhadas aos modelos.
-      utilitarios.carregarColecao(colecaoUnidades, ['unidadeMapas'], function() {
+      global.utilitarios.carregarColecao(colecaoUnidades, ['unidadeMapas'], function() {
           
         // Inicia a visão de cada unidade sendo chamado após a coleção de modelos e de mapas estiver carregado.
         esteObj.visaoNossasUnidades = new VisaoNossasUnidades({model: colecaoUnidades});
@@ -162,7 +162,7 @@ Roteador.Sitio = Backbone.Router.extend({
           $('#conteudo').html(visNossasUnidades.el);
           
           // Caso a biblioteca do google maps já estiver carregada, iniciamos o mapa de cada unidade.
-          if (gglMapa.seMapaPronto()) {
+          if (global.gglMapa.seMapaPronto()) {
             visNossasUnidades.iniciarCadaMapa();
           }
           
@@ -200,7 +200,7 @@ Roteador.Sitio = Backbone.Router.extend({
 });
 
 // Carregamos o template em html de cada uma das visões.
-utilitarios.carregarTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao', 'VisaoCarrossel', 'VisaoSlideItem', 
+global.utilitarios.carregarTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao', 'VisaoCarrossel', 'VisaoSlideItem', 
                                'VisaoRodape', 'VisaoExamesOrientacoes', 'VisaoCentralAtendimento', 'VisaoConvenios', 
                                'VisaoQuemSomos', 'VisaoNossaEquipe', 'VisaoNossasUnidades', 'VisaoInfoConvenio'], 
   function() {

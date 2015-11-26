@@ -142,7 +142,7 @@ window.VisaoNossasUnidades = Backbone.View.extend({
     
     // Procura no diretorio pagsEnderecosUnidades os templates e os carrega, salvando-os na listaTemplantes.
     // Logo após carregados nós chamamos o método render().
-    utilitarios.carregarTemplantesDinamicamente(this.listaTemplantes, 'pagsEnderecosUnidades/', visoes, function(){
+    global.utilitarios.carregarTemplantesDinamicamente(this.listaTemplantes, 'pagsEnderecosUnidades/', visoes, function(){
       esteObj.render(cd);
     });
   },
@@ -241,11 +241,11 @@ window.VisaoNossasUnidades = Backbone.View.extend({
       _.each(this.unidadeUniaoDB, function(mapaObj) {
         
         // Centraliza e faz um zoom 
-        mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
+        mapaObj.mapa = global.gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
       
         if (mapaObj.mapa) {
           // Coloca uma marca de unidade no mapa
-          mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
+          mapaObj.marca = global.gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
         }
         
       }, this);         
@@ -255,11 +255,11 @@ window.VisaoNossasUnidades = Backbone.View.extend({
       _.each(this.unidadeUniao, function(mapaObj) {
         
         // Centraliza e faz um zoom 
-        mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
+        mapaObj.mapa = global.gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
       
         if (mapaObj.mapa) {
           // Coloca uma marca de unidade no mapa
-          mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
+          mapaObj.marca = global.gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
         } 
       }, this);
     }
@@ -279,14 +279,14 @@ window.VisaoNossasUnidades = Backbone.View.extend({
         if ('#' + mapaObj.nome_elemento === aba) {
           
           //Faz o mapa redimensionar.
-          gglMapa.redimensionarMapa( mapaObj.mapa);
+          global.gglMapa.redimensionarMapa( mapaObj.mapa);
           
           // Centraliza e faz um zoom 
-          mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
+          mapaObj.mapa = global.gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
         
           if (mapaObj.mapa) {
             // Adicionamos denovo a marca
-            mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
+            mapaObj.marca = global.gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
           } 
         }
       }, this);
@@ -298,14 +298,14 @@ window.VisaoNossasUnidades = Backbone.View.extend({
         // Apenas o mapa da nova aba clicada que vai ser reiniciado
         if ('#' + mapaObj.nome_elemento === aba) {
           //Faz o mapa redimensionar.
-          gglMapa.redimensionarMapa( mapaObj.mapa);
+          global.gglMapa.redimensionarMapa( mapaObj.mapa);
           
           // Centraliza e faz um zoom 
-          mapaObj.mapa = gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
+          mapaObj.mapa = global.gglMapa.centralizarMapa(mapaObj.coordenadas, mapaObj.zoom, $('.embed-responsive > #' + mapaObj.nome_elemento).get(0));
         
           if (mapaObj.mapa) {
             // Adicionamos denovo a marca
-            mapaObj.marca = gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
+            mapaObj.marca = global.gglMapa.adcrMarcadorMapa(mapaObj.mapa, mapaObj.coordenadas, mapaObj.titulo);
           } 
         }
       }, this);
