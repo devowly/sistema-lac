@@ -205,7 +205,7 @@ Global.utilitarios.carregarTemplantes(['VisaoLogoBotoes', 'VisaoBarraNavegacao',
                                'VisaoQuemSomos', 'VisaoNossaEquipe', 'VisaoNossasUnidades', 'VisaoInfoConvenio'], 
   function() {
     // Assim que todos templantes forem carregados, iniciamos as nossas rotas.
-    sitio = new Roteador.Sitio();
+    Sitio = new Roteador.Sitio();
     
     // Iniciamos o histórico das rotas.
     Backbone.history.start();  
