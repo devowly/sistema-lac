@@ -157,7 +157,7 @@ Visao.NossasUnidades = Backbone.View.extend({
     
     if (UTILIZAR_BANCO_UNIDADE) {
       
-      var unidades = this.model.models;     // Quantidade de modelos de unidades desta coleção
+      var unidades = this.model.models;     // Os modelos de unidades desta coleção
       quantidadeUnidades = unidades.length; //Quantidade de unidades
       var ind = 0;
       
