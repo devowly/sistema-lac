@@ -1,5 +1,8 @@
 'use strict'
 
+/* Versão 0.0.1-Beta
+ */
+
 window.utilitarios = {
 
   /* @função carregarTemplantes()
@@ -63,13 +66,13 @@ window.utilitarios = {
     var quantBuscas = _.after(quantidadeModelos * quantidadeColecoesAninhadas, cd);
     
     // Para cada modelo
-    for (var i = 0; i < quantidadeModelos; i++) {
-      var modelo = colecao.models[i];
+    for (var ca = 0; ca < quantidadeModelos; ca++) {
+      var modelo = colecao.models[ca];
       
       // Para cada modelo temos colecao aninhada.
-      for (var x = 0; x < quantidadeColecoesAninhadas; x++) {
+      for (var cb = 0; cb < quantidadeColecoesAninhadas; cb++) {
         
-        var colecaoAninhada = colecoesAninhadas[x];
+        var colecaoAninhada = colecoesAninhadas[cb];
         
         if (modelo[colecaoAninhada]) {
           modelo[colecaoAninhada].fetch({success: quantBuscas});  
