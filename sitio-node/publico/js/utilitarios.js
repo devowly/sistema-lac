@@ -102,6 +102,26 @@ Global.utilitarios = {
       // <umdez> Como fazer em caso de erro?
       console.log('Não foi possivel carregar dados para a coleção.');
     }} );
+  },
+  
+  /* @função pegarImagem()
+   * @Descrição retorna uma imagem em base64 para cada nome de arquivo
+   */
+  pegarImagemB64: function(arquivo) {
+    
+    // Armazenamos aqui o tipo da imagem e sua representação em base 64
+    var imgBase64 = null;
+    
+    // Percorremos cada uma das imagems
+    _.each(Global.IMAGEMS_BASE, function(imagem) {
+      
+      // Retornamos o valor da imagem de determinado arquivo.
+      if (imagem.arquivo === arquivo) {
+        imgBase64 = imagem.tipo + ',' + imagem.base64;
+      }
+    });
+    
+    return imgBase64;
   }
   
 };

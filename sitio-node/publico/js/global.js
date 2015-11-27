@@ -12,4 +12,4 @@ window.Visao = { };    // Visões
 
 window.Sitio = null;   // Sitio
 
-window.Global = { };   // Conteúdo global.
+window.Global = { };   // Variáveis globais.

@@ -7,8 +7,9 @@ Visao.LogoBotoes = Backbone.View.extend({
   },
 
   render: function () {
+    
     // Renderiza este template
-    $(this.el).html(this.template());
+    $(this.el).html(this.template({ imagem: Global.utilitarios.pegarImagemB64('logo.jpg') }));
     return this;
   }
 

@@ -99,6 +99,9 @@ Visao.SlideItem = Backbone.View.extend({
     
     if (modeloJsonObj.ativo) $(this.el).addClass('active');
     
+    // pegamos a imagem na base 64.
+    modeloJsonObj.imagem_b64 = Global.utilitarios.pegarImagemB64(modeloJsonObj.imagem_dir.slice(-11));
+    
     $(this.el).html(this.template(modeloJsonObj));
     return this;
   }
