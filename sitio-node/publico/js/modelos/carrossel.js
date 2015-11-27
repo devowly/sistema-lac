@@ -25,7 +25,7 @@ Modelo.CarrosselSlide = Backbone.Model.extend({
     texto: "",           // O texto do slide
     texto_botao: "",     // O texto do botão do slide
     imagem_dir: "",      // Imagem de fundo deste slide.
-    ativo: false,        // Um dos slides tem que iniciar ativo. Os seguintes são inativos.
+    imagem_arquivo: "",  // Nome do arquivo da imagem deste slide.
     endereco_botao: "#"  // Endereço da rota que o botão vai levar ao ser clicado.
   }
 });

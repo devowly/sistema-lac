@@ -24,12 +24,12 @@ module.exports = function (database, DataTypes) {
       type: DataTypes.STRING, 
       validate: {} 
     },
-    imagem_dir: {                   // Imagem de fundo do slide.
+    imagem_dir: {                   // Diretório onde se encontra as imagems
       type: DataTypes.STRING, 
       validate: {} 
     },
-    ativo: {                        // O primeiro slide começa sempre ativo.
-      type: DataTypes.BOOLEAN,
+    imagem_arquivo: {               // Nome do arquivo da imagem. Exemplo: slide01.jpg
+      type: DataTypes.STRING, 
       validate: {} 
     },
     endereco_botao: {               // Endereço que será acessado ao clicar no botão.
