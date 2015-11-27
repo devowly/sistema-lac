@@ -95,7 +95,7 @@ Visao.ExamesOrientacoes = Backbone.View.extend({
          esteObj.exameOrientacaoUniaoDB.push(exameOrientacaoUniaoLocal);
          
          // Adicionamos as linhas da tabela
-         $('tbody#corpoTabelaExamesOrientacoes', esteObj.el).append(new Visao.exameLinhaTabela({model: exameOrientacaoUniaoLocal}).render().el); 
+         $('tbody#corpoTabelaExamesOrientacoes', esteObj.el).append(new Visao.ExameLinhaTabela({model: exameOrientacaoUniaoLocal}).render().el); 
          
          // Adicionamos o XML dos modais.
          $('div#orientacoesExmModais', esteObj.el).append(new Visao.ExameOrientacaoModal({model: exameOrientacaoUniaoLocal}).render().el); 
@@ -118,7 +118,7 @@ Visao.ExamesOrientacoes = Backbone.View.extend({
  *     </td>
  *  </tr>
  */
-Visao.exameLinhaTabela = Backbone.View.extend({
+Visao.ExameLinhaTabela = Backbone.View.extend({
 
   tagName: 'tr',
   
