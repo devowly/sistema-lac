@@ -104,7 +104,7 @@ Global.utilitarios = {
     }} );
   },
   
-  /* @função pegarImagem()
+  /* @função pegarImagemB64()
    * @Descrição retorna uma imagem em base64 para cada nome de arquivo
    */
   pegarImagemB64: function(arquivo) {
