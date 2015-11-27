@@ -196,7 +196,7 @@ Roteador.Sitio = Backbone.Router.extend({
           
           // Adicionamos escuta para os eventos.
           // Isto é necessário por causa do mapa que precisa receber resize.
-          visNossasUnidades.iniciarEventosParaAbas();
+          visNossasUnidades.iniciarEscutaEventos();
           
         });
       });
@@ -207,7 +207,7 @@ Roteador.Sitio = Backbone.Router.extend({
       $('#conteudo').html(this.visaoNossasUnidades.el);
       
       // Adicionamos escuta para os eventos.
-      this.visaoNossasUnidades.iniciarEventosParaAbas();
+      this.visaoNossasUnidades.iniciarEscutaEventos();
     }
     
     // Selecionamos o item unidades na barra de navegação

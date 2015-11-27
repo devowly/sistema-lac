@@ -312,8 +312,11 @@ Visao.NossasUnidades = Backbone.View.extend({
     }
   },
   
-  // Escutamos por eventos das abas.
-  iniciarEventosParaAbas: function(item) {
+  /* @função iniciarEscutaEventos()
+   * @descrição Iniciamos as escutas de eventos para esta visão. 
+   *  Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
+   */ 
+  iniciarEscutaEventos: function(item) {
     
     var esteObj = this;
     
