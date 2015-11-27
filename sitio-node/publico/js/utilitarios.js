@@ -105,15 +105,15 @@ Global.utilitarios = {
   },
   
   /* @função pegarImagemB64()
-   * @Descrição retorna uma imagem em base64 para cada nome de arquivo
+   * @Descrição retorna uma imagem em base64 para cada nome de arquivo em uma lista especificada.
    */
-  pegarImagemB64: function(arquivo) {
+  pegarImagemB64: function(arquivo, lista) {
     
     // Armazenamos aqui o tipo da imagem e sua representação em base 64
     var imgBase64 = null;
     
     // Percorremos cada uma das imagems
-    _.each(Global.IMAGEMS_BASE, function(imagem) {
+    _.each(Global.IMAGEMS_BASE[lista], function(imagem) {
       
       // Retornamos o valor da imagem de determinado arquivo.
       if (imagem.arquivo === arquivo) {

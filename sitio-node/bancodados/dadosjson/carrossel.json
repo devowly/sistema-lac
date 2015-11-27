@@ -6,7 +6,7 @@
       "titulo": "Vários exames laboratoriais",
       "texto": "Mais de 50 tipos de exames laboratoriais.",
       "texto_botao": "Ver lista de exames",
-      "imagem_dir": "./imagens/carrosselSlides/",
+      "imagem_dir": "./imagems/carrosselSlides/",
       "imagem_arquivo": "slide01.jpg",
       "endereco_botao": "#examesOrientacoes"
     }
@@ -18,7 +18,7 @@
       "titulo": "Acesso aos resultados à distância",
       "texto": "Resultados online: Você nem precisa mais sair de casa.",
       "texto_botao": "Ver meus resultados",
-      "imagem_dir": "./imagens/carrosselSlides/",
+      "imagem_dir": "./imagems/carrosselSlides/",
       "imagem_arquivo": "slide02.jpg",
       "endereco_botao": "#"
     }
@@ -30,7 +30,7 @@
       "titulo": "Atendimento Online",
       "texto": "Atendimento online gratuito de segunda a sábado em horário comercial.",
       "texto_botao": "Entrar em contato agora",
-      "imagem_dir": "./imagens/carrosselSlides/",
+      "imagem_dir": "./imagems/carrosselSlides/",
       "imagem_arquivo": "slide03.jpg",
       "endereco_botao": "#centralAtendimento"
     }

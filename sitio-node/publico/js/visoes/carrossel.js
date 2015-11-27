@@ -104,7 +104,7 @@ Visao.SlideItem = Backbone.View.extend({
     if (modelo.indice === 0) $(this.el).addClass('active');
     
     // pegamos a imagem na base 64.
-    modelo.imagem_b64 = Global.utilitarios.pegarImagemB64(modelo.imagem_arquivo);
+    modelo.imagem_b64 = Global.utilitarios.pegarImagemB64(modelo.imagem_arquivo, 'IMAGEMS_SLIDES');
     
     $(this.el).html(this.template(modelo));
     return this;
