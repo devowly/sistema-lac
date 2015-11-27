@@ -4,7 +4,7 @@
 
 /* Versão 0.0.1-beta
  * - Adicionar colunas e depois comentar. [FEITO]
- * - Remover a coluna ativo, passando está função para o código. [EM ANDAMENTO]
+ * - Remover a coluna ativo, passando está função para o código. (c88f6ed4fcfe3d105930820adc4537f7bffb3e10) [FEITO]
  */
 
 module.exports = function (database, DataTypes) {
