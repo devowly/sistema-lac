@@ -52,6 +52,22 @@ Visao.Carrossel = Backbone.View.extend({
     //$('.carousel').carousel(
     //  interval: 10000 // 10 segundos.
     //);
+  },
+
+  /* @função iniciarComponentes()
+   * @descrição Iniciamos componentes para esta visão. 
+   *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
+   */ 
+  iniciarComponentes: function(){
+    
+  },
+  
+  /* @função iniciarEscutaEventos()
+   * @descrição Iniciamos as escutas de eventos para esta visão. 
+   *  Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
+   */ 
+  iniciarEscutaEventos: function() {
+    
   }
 
 });

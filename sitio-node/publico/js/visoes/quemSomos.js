@@ -12,20 +12,30 @@ Visao.QuemSomos = Backbone.View.extend({
     return this;
   },
   
-  /* Aqui selecionamos um item do menu vertical */
-  iniciarEventosParaMenu: function(item) {
+  /* @função iniciarComponentes()
+   * @descrição Iniciamos componentes para esta visão. 
+   *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
+   */ 
+  iniciarComponentes: function(){
     
-    // Adicionamos o seletor e também o offset.
+    // Adicionamos o seletor e também o offset do componente scrollspy.
     $('div#' + 'textoQuemSomos').scrollspy({
       selector: 'a#rolagemId',
       offset: 30
     });
     
-    // Remove seleção atual
+    // Remove seleção de qualquer item ativo
     $('#menuVertEsquerdo .nav li').removeClass('active');
     
     // Aqui nós adicionamos a seleção ao item inicial.
-    $('li#' + item).addClass('active');
+    $('li#' + 'itemEmpresa').addClass('active');
+  },
+  
+  /* @função iniciarEscutaEventos()
+   * @descrição Iniciamos as escutas de eventos para esta visão. 
+   *  Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
+   */ 
+  iniciarEscutaEventos: function() {
     
     // Adicionamos o evento de clique nos links
     $('a#rolagemId').click(function(evento){
