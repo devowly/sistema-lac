@@ -100,16 +100,16 @@ Visao.NossasUnidades = Backbone.View.extend({
       var unidadeJson = null;
       
       // Para cada uma das nossas unidades
-      for (var i = 0; i < quantidadeUnidades; i++) {
+      for (var ca = 0; ca < quantidadeUnidades; ca++) {
         
         // Transforma em JSON para podermos manipular e acessar as propriedades do modelo.
-        unidadeJson = unidades[i].toJSON();
+        unidadeJson = unidades[ca].toJSON();
         
         // Pegamos o nome da nossa visão
         var nomeEl = unidadeJson.nome_elemento;
         
-        // Vai armazenar o nome de cada uma das visões em visoes[i].
-        visoes[i] = nomeEl;
+        // Vai armazenar o nome de cada uma das visões em visoes[ca].
+        visoes[ca] = nomeEl;
         
         // Para cada visão iremos armazenar aqui os templantes.
         this.listaTemplantes[nomeEl] = {};
@@ -122,17 +122,17 @@ Visao.NossasUnidades = Backbone.View.extend({
       quantidadeUnidades = this.unidade.length;
       
       // Faz a união dos objetos, simulando de forma bastante *simples* um JOIN na database. 
-      for (var i = 0; i < quantidadeUnidades; i++) {
-        if (this.unidade[i] && this.unidadeCoordenada[i] && this.unidadeMapa[i] && this.unidadeVisoes[i]) {
+      for (var ca = 0; ca < quantidadeUnidades; ca++) {
+        if (this.unidade[ca] && this.unidadeCoordenada[ca] && this.unidadeMapa[ca] && this.unidadeVisoes[ca]) {
           
           // Faz a união da(s) unidade(s)
-          this.unidadeUniao[i] = _.extend(this.unidade[i], this.unidadeCoordenada[i], this.unidadeMapa[i], this.unidadeVisoes[i]); 
+          this.unidadeUniao[ca] = _.extend(this.unidade[ca], this.unidadeCoordenada[ca], this.unidadeMapa[ca], this.unidadeVisoes[ca]); 
           
           // Pegamos o nome da nossa visão
-          var nomeEl = this.unidadeUniao[i].nome_elemento;
+          var nomeEl = this.unidadeUniao[ca].nome_elemento;
           
-          // Vai armazenar o nome de cada uma das visões em visoes[i].
-          visoes[i] = nomeEl;
+          // Vai armazenar o nome de cada uma das visões em visoes[ca].
+          visoes[ca] = nomeEl;
           
           // Para cada visão iremos armazenar aqui os templantes.
           this.listaTemplantes[nomeEl] = {};
@@ -211,20 +211,20 @@ Visao.NossasUnidades = Backbone.View.extend({
       
       quantidadeUnidades = this.unidadeUniao.length;
       
-      for (var i = 0; i < quantidadeUnidades; i++) {
+      for (var ca = 0; ca < quantidadeUnidades; ca++) {
       
         // Necessário por que vamos marcar o primeiro elemento como ativo.
-        this.unidadeUniao[i].indice = i;
+        this.unidadeUniao[ca].indice = i;
          
         // Armazenamos o templante.
-        this.unidadeUniao[i].minha_visao = this.listaTemplantes[this.unidadeUniao[i].nome_elemento]; 
+        this.unidadeUniao[ca].minha_visao = this.listaTemplantes[this.unidadeUniao[ca].nome_elemento]; 
          
-        if (this.unidadeUniao[i]) {
+        if (this.unidadeUniao[ca]) {
           // Adicionamos as abas.
-          $('ul.nav-tabs', this.el).append(new Visao.UnidadeAba({model: this.unidadeUniao[i]}).render().el);
+          $('ul.nav-tabs', this.el).append(new Visao.UnidadeAba({model: this.unidadeUniao[ca]}).render().el);
         
           // Adicionamos os conteúdos  
-          $('div.tab-content', this.el).append(new Visao.UnidadeAbaConteudo({model: this.unidadeUniao[i]}).render().el);
+          $('div.tab-content', this.el).append(new Visao.UnidadeAbaConteudo({model: this.unidadeUniao[ca]}).render().el);
         }
       }
       
