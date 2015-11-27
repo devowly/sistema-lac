@@ -6,7 +6,7 @@ module.exports = {
     "user": "leo",
     "password": "montes",
     "database": "database",
-    "maxConcurrentQueries": 100,
+    "maxConcurrentQueries": 200,
     "maxConnections": 1,
     "maxIdleTime": 30
   },
