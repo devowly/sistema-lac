@@ -3,7 +3,6 @@
 
 /* IMPORTAÇÃO DOS ESTILOS DE BASE
 -------------------------------------------*/
-@import url('temas/temaVerde.css');  /* Estilos do tema verde */
 @import url('global.css');           /* Estilos globais: São compartilhados por vários arquivos. */
 @import url('topo.css');
 @import url('barraNavegacao.css');
@@ -21,6 +20,10 @@
 @import url('paginas/pagNossaEquipe.css');        /* pág. nossaEquipe.html */
 @import url('paginas/pagNossasUnidades.css');     /* pág. unidades.html */    
       
+/* TEMAS 
+---------------------------------------------------------------*/
+@import url('temas/temaVerde.css');  /* Estilos do tema verde */
+
 /* ESTILOS DO BOOTSTRAP
 ---------------------------------------------------------------*/
 @import url('../bootstrap-3.3.5-dist/css/bootstrap.min.css');       /* CSS minificado e compilado */
@@ -36,6 +39,6 @@
 
 /* ESTILOS DO JQUERY UI
 -------------------------------------------------------------*/
-@import url('../jquery-ui-1.11.4.custom/jquery-ui.min.css');
-@import url('../jquery-ui-1.11.4.custom/jquery-ui.structure.min.css');
-@import url('../jquery-ui-1.11.4.custom/jquery-ui.theme.min.css');
+@import url('../jQuery-UI-Themas/jquery-ui-1.11.4.custom-South-Street/jquery-ui.min.css');
+@import url('../jQuery-UI-Themas/jquery-ui-1.11.4.custom-South-Street/jquery-ui.structure.min.css');
+@import url('../jQuery-UI-Themas/jquery-ui-1.11.4.custom-South-Street/jquery-ui.theme.min.css');
