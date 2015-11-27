@@ -1,6 +1,6 @@
 module.exports = {
   
-  // Armazenamento para os dados, este servidor utiliza sequeliza.
+  // Armazenamento para os dados, este servidor utiliza sequelize.
   "storage": {
     "dialect": "mysql",
     "user": "leo",
