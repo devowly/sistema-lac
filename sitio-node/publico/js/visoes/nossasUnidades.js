@@ -39,10 +39,10 @@ Visao.NossasUnidades = Backbone.View.extend({
       coordenadas: {lat: -16.7244327, lng: -43.8715339}   // Coordenadas da unidade do centro de Montes Claros
     },
     {
-      coordenadas: {lat: -16.7244327, lng: -43.8715339}   // Coordenadas da unidade do centro de Montes Claros
+      coordenadas: {lat: -16.7244327, lng: -43.8715339}   // Coordenadas do bairro Jardim Panorama de Montes Claros
     },
     {
-      coordenadas: {lat: -16.7244327, lng: -43.8715339}   // Coordenadas da unidade do centro de Montes Claros
+      coordenadas: {lat: -16.7244327, lng: -43.8715339}   // Coordenadas do bairro Todos os Santos de Montes Claros
     }
   ],
   

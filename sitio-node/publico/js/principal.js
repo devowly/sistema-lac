@@ -39,6 +39,7 @@ Roteador.Sitio = Backbone.Router.extend({
       this.visaoLogoBotoes = new Visao.LogoBotoes();
     }
     $('#topo').html(this.visaoLogoBotoes.el);
+    this.visaoLogoBotoes.iniciarComponentes();
     
     // Adiciona a barra de navegação
     if (!this.visaoBarraNavegacao) {

@@ -10,14 +10,30 @@ Visao.LogoBotoes = Backbone.View.extend({
     
     // Renderiza este template
     $(this.el).html(this.template({ imagem: Global.utilitarios.pegarImagemB64('logo.jpg', 'IMAGEMS_LOGO') }));
+    
     return this;
   },
 
+  /* EVENTOS DA NOSSA VISÃO
+  ---------------------------------------------*/
+  events: {
+    "click button#btaoResultados": "aoClicarBtoResultados"
+  },
+  
+  /* @funcao aoClicarBtoResultados()
+   * @descricao funcao chamada logo após ser disparado o evento de clique no botao de resultados. */
+  aoClicarBtoResultados: function() {
+    
+  },
+  
   /* @função iniciarComponentes()
    * @descrição Iniciamos componentes para esta visão. 
    *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
    */ 
   iniciarComponentes: function(){
+    
+    // Iniciamos o botão de resultados.
+    $( "button#btaoResultados").button();
     
   },
   

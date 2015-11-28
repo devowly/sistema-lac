@@ -39,6 +39,5 @@
 
 /* ESTILOS DO JQUERY UI
 -------------------------------------------------------------*/
-@import url('../jQuery-UI-Themas/jquery-ui-1.11.4.custom-South-Street/jquery-ui.min.css');
-@import url('../jQuery-UI-Themas/jquery-ui-1.11.4.custom-South-Street/jquery-ui.structure.min.css');
-@import url('../jQuery-UI-Themas/jquery-ui-1.11.4.custom-South-Street/jquery-ui.theme.min.css');
+@import url('../jQuery-UI-Themas/jquery-ui-themes-1.11.4/themes/south-street/jquery-ui.css');
+@import url('../jQuery-UI-Themas/jquery-ui-themes-1.11.4/themes/south-street/theme.css');
