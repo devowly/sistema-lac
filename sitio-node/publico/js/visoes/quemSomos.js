@@ -1,5 +1,12 @@
 'use strict'
 
+/* @Arquivo quemSomos.js
+ */
+
+/* @Visão: Visao.QuemSomos
+ *
+ * @Descriçao: Responsavel pela apresentação do texto 
+ */
 Visao.QuemSomos = Backbone.View.extend({
 
   initialize: function () {
@@ -12,11 +19,11 @@ Visao.QuemSomos = Backbone.View.extend({
     return this;
   },
   
-  /* @função iniciarComponentes()
+  /* @função _iniciarMeusComponentes()
    * @descrição Iniciamos componentes para esta visão. 
    *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  iniciarComponentes: function(){
+  _iniciarMeusComponentes: function(){
     
     // Adicionamos o seletor e também o offset do componente scrollspy.
     $('div#' + 'textoQuemSomos').scrollspy({
@@ -31,11 +38,11 @@ Visao.QuemSomos = Backbone.View.extend({
     $('li#' + 'itemEmpresa').addClass('active');
   },
   
-  /* @função iniciarEscutaEventos()
+  /* @função _iniciarMinhaEscutaEventos()
    * @descrição Iniciamos as escutas de eventos para esta visão. 
    *  Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  iniciarEscutaEventos: function() {
+  _iniciarMinhaEscutaEventos: function() {
     
     // Adicionamos o evento de clique nos links
     $('a#rolagemId').click(function(evento){
@@ -58,7 +65,12 @@ Visao.QuemSomos = Backbone.View.extend({
       );
       
     });
-    
+  },
+  
+  // reiniciar eventos e os componentes desta visão
+  reIniciarEventosComponentes: function (){
+    this._iniciarMeusComponentes();
+    this._iniciarMinhaEscutaEventos();
   }
   
 });

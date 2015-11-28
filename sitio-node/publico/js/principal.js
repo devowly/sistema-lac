@@ -150,11 +150,9 @@ Roteador.Sitio = Backbone.Router.extend({
     // Remove seleção de qualquer item da barra de navegacao
     this.visaoBarraNavegacao.selecionarItemMenu(null);
     
-    // Iniciamos os componentes desta visão
-    this.visaoQuemSomos.iniciarComponentes();
+    // reiniciar eventos e os componentes desta visão
+    this.visaoQuemSomos.reIniciarEventosComponentes();
     
-    // Iniciamos a escuta pelos eventos importantes para a visão.
-    this.visaoQuemSomos.iniciarEscutaEventos();
   },
   
   nossaEquipe: function() {
