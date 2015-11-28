@@ -3,8 +3,8 @@
 /* @arquivo examesOrientacoes.js */
 
 /* Versão 0.0.1-Beta
- * - Para cada templante carregado dinamicamento vamos criar uma nova visão. (issue #13)
- * - Remover conteúdo em HTML do código das visões. (issue #12)
+ * - Para cada templante carregado dinamicamento vamos criar uma nova visão. (issue #13) (9a990371680504c44e29ee36e6f1c1c4f5fc2cc6) [FEITO]
+ * - Remover conteúdo em HTML do código das visões. (issue #12) (9a990371680504c44e29ee36e6f1c1c4f5fc2cc6) [FEITO]
  */
 
 /* @Visão ExamesOrientacoes
