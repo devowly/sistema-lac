@@ -27,10 +27,10 @@ Visao.Topo = Backbone.View.extend({
     $('div.row div#paineltopo', this.el).append(new Visao.TopoPainel().render().el); 
     
     // Iniciamos aqui os nossos componentes
-    this._iniciarComponentes();
+    this._iniciarMeusComponentes();
     
     // Iniciamos aqui a escuta pelos eventos.
-    this._iniciarEscutaEventos();
+    this._iniciarMinhaEscutaEventos();
     
     return this;
   },
@@ -41,19 +41,19 @@ Visao.Topo = Backbone.View.extend({
     
   },
   
-  /* @função iniciarComponentes()
+  /* @função _iniciarMeusComponentes()
    * @descrição Iniciamos componentes para esta visão. 
    *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  _iniciarComponentes: function(){
+  _iniciarMeusComponentes: function(){
     
   },
   
-  /* @função iniciarEscutaEventos()
+  /* @função _iniciarMinhaEscutaEventos()
    * @descrição Iniciamos as escutas de eventos para esta visão. 
    *  Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  _iniciarEscutaEventos: function() {
+  _iniciarMinhaEscutaEventos: function() {
     
   }
 
@@ -99,7 +99,7 @@ Visao.TopoPainel = Backbone.View.extend({
   render: function () {
     
     // Iniciamos os nossos componentes
-    this._iniciarComponentes();
+    this._iniciarMeusComponentes();
     
     return this;
   },
@@ -107,26 +107,26 @@ Visao.TopoPainel = Backbone.View.extend({
   /* EVENTOS DA NOSSA VISÃO
   ---------------------------------------------*/
   events: {
-    "click": "_aoClicarBtoResultados"  // Clique neste elemento.
+    "click": "_aoReceberClique"  // Clique neste elemento.
   },
   
-  /* @funcao aoClicarBtoResultados()
-   * @descricao funcao chamada logo após ser disparado o evento de clique no botao de resultados. */
-  _aoClicarBtoResultados: function() {
+  /* @funcao _aoReceberClique()
+   * @descricao funcao chamada logo após ser disparado o evento de clique nesta visão. */
+  _aoReceberClique: function() {
     
   },
   
-  /* @função iniciarComponentes()
+  /* @função _iniciarMeusComponentes()
    * @descrição Iniciamos componentes para esta visão. 
    *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  _iniciarComponentes: function(){
+  _iniciarMeusComponentes: function(){
     
     // Iniciamos o botão de resultados.
     $(this.el).button({
       label: "Resultados"
     });
     
-  },
+  }
 
 });
