@@ -35,11 +35,10 @@ Roteador.Sitio = Backbone.Router.extend({
   initialize: function () {
     
     // Adiciona o logo e o botão de resultados
-    if (!this.visaoLogoBotoes) {
-      this.visaoLogoBotoes = new Visao.LogoBotoes();
+    if (!this.visaoTopo) {
+      this.visaoTopo = new Visao.Topo();
     }
-    $('#topo').html(this.visaoLogoBotoes.el);
-    this.visaoLogoBotoes.iniciarComponentes();
+    $('#topo').html(this.visaoTopo.el);
     
     // Adiciona a barra de navegação
     if (!this.visaoBarraNavegacao) {
@@ -232,7 +231,7 @@ Roteador.Sitio = Backbone.Router.extend({
 });
 
 // Carregamos o template em html de cada uma das visões.
-Global.utilitarios.carregarTemplantes(['LogoBotoes', 'BarraNavegacao', 'Carrossel', 'SlideItem', 
+Global.utilitarios.carregarTemplantes(['Topo', 'BarraNavegacao', 'Carrossel', 'SlideItem', 
                                'Rodape', 'ExamesOrientacoes', 'CentralAtendimento', 'Convenios', 
                                'QuemSomos', 'NossaEquipe', 'NossasUnidades', 'InfoConvenio'], 
   function() {
