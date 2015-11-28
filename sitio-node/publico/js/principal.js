@@ -227,7 +227,8 @@ Roteador.Sitio = Backbone.Router.extend({
 // Carregamos o template em html de cada uma das visões.
 Global.utilitarios.carregarTemplantes(['Topo', 'BarraNavegacao', 'Carrossel', 'SlideItem', 
                                'Rodape', 'ExamesOrientacoes', 'CentralAtendimento', 'Convenios', 
-                               'QuemSomos', 'NossaEquipe', 'NossasUnidades', 'InfoConvenio'], 
+                               'QuemSomos', 'NossaEquipe', 'NossasUnidades', 'UnidadeAba', 'InfoConvenio', 
+                               'ExameLinhaTabela'], 
   function() {
     // Assim que todos templantes forem carregados, iniciamos as nossas rotas.
     Sitio = new Roteador.Sitio();

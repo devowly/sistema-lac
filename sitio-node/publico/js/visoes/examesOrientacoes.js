@@ -4,7 +4,7 @@
 
 /* Versão 0.0.1-Beta
  * - Para cada templante carregado dinamicamento vamos criar uma nova visão. (issue #13)
- * - Remover conteúdo em HTML das visões. (issue #12)
+ * - Remover conteúdo em HTML do código das visões. (issue #12)
  */
 
 /* @Visão ExamesOrientacoes
@@ -19,6 +19,9 @@ Visao.ExamesOrientacoes = Backbone.View.extend({
   // Aqui armazenamos a lista do templante de modais que contem as orientações de cada exame.
   listaModais: [],
   
+  // Armazenamos as linhas da tabela
+  listaLinhaTabela: [],
+  
   initialize: function () {
     
   },
@@ -31,6 +34,8 @@ Visao.ExamesOrientacoes = Backbone.View.extend({
     var exames = this.model.models;  // Necessitamos dos modelos de exames desta coleção
     var quantidadeExames = exames.length;
     var exameJson = null;
+    
+    var ind = 0;  // Indice dos exames
     
     // Para cada um dos nossos exames
     for (var ca = 0; ca < quantidadeExames; ca++) {
@@ -50,8 +55,26 @@ Visao.ExamesOrientacoes = Backbone.View.extend({
          // Vai armazenar o nome de cada uma das visões em visoes[i].
          visoes[ca] = nomeElemento;
          
-         // Para cada visão iremos armazenar aqui os templantes.
-         this.listaModais[nomeElemento] = {};
+         // Contem a união dos dados necessarios para carregar os dados dos templantes.
+         var exameOrientacaoUniaoLocal = {
+           nome: exameJson.nome,                          // Nome do exame. Exemplo: 1,25 DIHIDROXI VITAMINA D3.
+           pagina_html: orientacaoJson.pagina_html,       // Página html desta orientação para exame. Exemplo: orientacao0001.html
+           nome_elemento: orientacaoJson.nome_elemento,   // Nome do elemento html utilizado para esta orientação. Exemplo: orientacao0001
+           minha_visao: orientacaoJson.minha_visao,
+           indice: ind                                    // Indice deste exame
+         };
+          
+         ind++;
+         
+         // Armazenamos os dados ao nivel global para serem utilizados por outros métodos
+         esteObj.exameOrientacaoUniaoDB.push(exameOrientacaoUniaoLocal);
+         
+         // Armazenamos cada uma das linhas
+         this.listaLinhaTabela[nomeElemento] = new Visao.ExameLinhaTabela({model: exameOrientacaoUniaoLocal});
+         
+         // Armazenar para depois carregar cada visão modal
+         this.listaModais[nomeElemento] = new Visao.ExameOrientacaoModal({model: exameOrientacaoUniaoLocal});
+         
       }
     }
      
@@ -69,7 +92,6 @@ Visao.ExamesOrientacoes = Backbone.View.extend({
     
     var esteObj = this;
     var exames = this.model.models; // Os modelos de exames desta coleção
-    var ind = 0;
     
     // Percorremos todos os exames.
     _.each(exames, function(exame) {
@@ -83,28 +105,13 @@ Visao.ExamesOrientacoes = Backbone.View.extend({
          // Armazenamos em json para podermos manipula-lo e ter acesso as suas propriedades.
          var exameOrientacaoJson = exameOrientacao.toJSON();
          
-         // Armazenamos o templante.
-         exameOrientacaoJson.minha_visao = esteObj.listaModais[exameOrientacaoJson.nome_elemento];  
-         
-         // Contem a união dos dados necessarios para carregar os dados dos templantes.
-         var exameOrientacaoUniaoLocal = {
-           nome: exameJson.nome,                               // Nome do exame. Exemplo: 1,25 DIHIDROXI VITAMINA D3.
-           pagina_html: exameOrientacaoJson.pagina_html,       // Página html desta orientação para exame. Exemplo: orientacao0001.html
-           nome_elemento: exameOrientacaoJson.nome_elemento,   // Nome do elemento html utilizado para esta orientação. Exemplo: orientacao0001
-           minha_visao: exameOrientacaoJson.minha_visao,
-           indice: ind                                         // Indice deste exame
-         };
-           
-         ind++;
-         
-         // Armazenamos os dados ao nivel global para serem utilizados por outros métodos
-         esteObj.exameOrientacaoUniaoDB.push(exameOrientacaoUniaoLocal);
+         var nome_elemento = exameOrientacaoJson.nome_elemento;
          
          // Adicionamos as linhas da tabela
-         $('tbody#corpoTabelaExamesOrientacoes', esteObj.el).append(new Visao.ExameLinhaTabela({model: exameOrientacaoUniaoLocal}).render().el); 
+         $('tbody#corpoTabelaExamesOrientacoes', esteObj.el).append(esteObj.listaLinhaTabela[nome_elemento].render().el); 
          
          // Adicionamos o XML dos modais.
-         $('div#orientacoesExmModais', esteObj.el).append(new Visao.ExameOrientacaoModal({model: exameOrientacaoUniaoLocal}).render().el); 
+         $('div#orientacoesExmModais', esteObj.el).append(esteObj.listaModais[nome_elemento].render().el); 
          
        });
     });
@@ -160,25 +167,7 @@ Visao.ExameLinhaTabela = Backbone.View.extend({
     
     var meuModelo = this.model;
     
-    // Coluna do nome do exame.    
-    var colunaNomeExame = '<td>'+ meuModelo.nome +'</td>';
-    
-    // Coluna de orientação do exame.
-    var colunaOrientacaoExame = '<td>';
-    
-    // Botão
-    var botaoOrientacao = '<button type="button" class="btn btn-success btn-sm" aria-label="Right Align" data-toggle="modal" data-target="#'+ meuModelo.nome_elemento +'">';
-    botaoOrientacao += 'Ver as instruções deste exame <span class="glyphicon glyphicon-modal-window"></span> ';
-    botaoOrientacao += '</button>';
-    
-    // Adicionamos o botão nessa coluna
-    colunaOrientacaoExame += botaoOrientacao; 
-    colunaOrientacaoExame += '</td>';
-    
-    var colunas = colunaNomeExame + colunaOrientacaoExame;
- 
-    // Adicionamos as duas colunas nesta linha
-    $(this.el).append(colunas);
+    $(this.el).html(this.template(meuModelo));
      
     return this;
   }
@@ -234,7 +223,7 @@ Visao.ExameOrientacaoModal = Backbone.View.extend({
     $(this.el).attr('aria-labelledby', meuModelo.nome_elemento);
 
     // Carregamos o templante
-    $(this.el).html(meuModelo.minha_visao.template(meuModelo));
+    $(this.el).html(this.template(meuModelo));
     
     return this;
   }

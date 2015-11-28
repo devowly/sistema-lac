@@ -7,7 +7,7 @@
  * - Adicionar forma de realizar o re-inicio do mapa para apenas a aba que estiver aberta. (issue #1) (f43ba72653466e6a9ce7dedf4128bdc240bccb66) [FEITO]
  * - Carregar dados das unidades pelo banco de dados. (issue #2) (9e832dd11688bfd27b51ca1a22a13d675388174a) [FEITO]
  * - Para cada templante carregado dinamicamento vamos criar uma nova visão. (issue #13)
- * - Remover conteúdo em HTML das visões. (issue #12)
+ * - Remover conteúdo em HTML do código das visões. (issue #12)
  */
 
 var UTILIZAR_BANCO_UNIDADE = true; // Você quer utilizar o banco de dados? 
@@ -357,12 +357,14 @@ Visao.NossasUnidades = Backbone.View.extend({
 });
 
 /* @Elemento 
- * <li role="presentation" class="active"> 
+ * <li role="presentation" class="active"> </li> 
+ *
+ * @Carrega:
  *   <a href="#Unidade1" aria-controls="Unidade1" role="tab" data-toggle="tab">
  *     CENTRO 
  *     <span class="fa fa-map-marker fa-1x" aria-hidden="true"></span>
  *   </a>
- * </li> 
+ * 
 **/
 Visao.UnidadeAba = Backbone.View.extend({
 
@@ -382,12 +384,8 @@ Visao.UnidadeAba = Backbone.View.extend({
     
     // Coloca classe active na primeira aba.
     if (meuModelo.indice == 0) $(this.el).addClass('active');
-     
-    var conteudoAba = '<a href="#' + meuModelo.nome_elemento + '" aria-controls="'+ meuModelo.nome_elemento +'" role="tab" data-toggle="tab">';
-    conteudoAba += meuModelo.nome_aba;
-    conteudoAba += ' <span class="fa fa-map-marker fa-1x" aria-hidden="true"></span></a>';
     
-    $(this.el).append(conteudoAba);
+    $(this.el).html(this.template(meuModelo));
      
     return this;
   }
