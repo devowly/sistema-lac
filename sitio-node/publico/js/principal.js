@@ -69,10 +69,12 @@ Roteador.Sitio = Backbone.Router.extend({
         esteObj.visaoCarrossel = new Visao.Carrossel({model: colCarrosselSlides});
         
         // Inserimos a visão no conteudo.
-        $("#conteudo").html(esteObj.visaoCarrossel.el);
+        $("#conteudo").html(esteObj.visaoCarrossel.$el);
+        
       });
       
     } else {
+      
       // Esta visão já foi iniciada, apenas inserimos ela na div conteudo.
       $("#conteudo").html(this.visaoCarrossel.el);
     }

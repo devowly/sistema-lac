@@ -6,6 +6,10 @@
  * - Remover a coluna ativo do banco de dados, passando está função para aqui. (c88f6ed4fcfe3d105930820adc4537f7bffb3e10) [FEITO]
  */
 
+/* @Visão: Visao.Carrossel
+ *
+ * @Descriçao: Responsável por os indicadores e slides do carrossel.
+ */
 Visao.Carrossel = Backbone.View.extend({
 
   initialize: function () {
@@ -24,7 +28,8 @@ Visao.Carrossel = Backbone.View.extend({
 
     // Carrega o conteúdo do carrossel.
     $(this.el).html(this.template());
-
+    this.$el.html(this.template());
+    
     for (var ca = 0; ca < quantidade; ca++) {
       
       // Pegamos o objeto em JSON para poder manipular e ter acesso a suas propriedades.
@@ -40,6 +45,12 @@ Visao.Carrossel = Backbone.View.extend({
       $('.carousel-inner', this.el).append(new Visao.SlideItem({model: slideJson}).render().el);
     }
 
+    // Iniciamos aqui os nossos componentes
+    this._iniciarMeusComponentes();
+    
+    // Iniciamos aqui a escuta pelos eventos.
+    this._iniciarMinhaEscutaEventos();
+    
     return this;
   },
   
@@ -54,31 +65,40 @@ Visao.Carrossel = Backbone.View.extend({
     //);
   },
 
-  /* @função iniciarComponentes()
+  /* @função _iniciarMeusComponentes()
    * @descrição Iniciamos componentes para esta visão. 
    *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  iniciarComponentes: function(){
+  _iniciarMeusComponentes: function(){
     
   },
   
-  /* @função iniciarEscutaEventos()
+  /* @função _iniciarMinhaEscutaEventos()
    * @descrição Iniciamos as escutas de eventos para esta visão. 
    *  Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  iniciarEscutaEventos: function() {
+  _iniciarMinhaEscutaEventos: function() {
     
   }
 
 });
 
-// @Elemento <li data-target="#oCarrossel" data-slide-to="0" class="active"></li>
+/* @Visão: IndicadorSlides
+ *
+ * @Descrição: Responsável por adicionar cada um dos indicadores do slide.
+ *
+ * @Elemento: <li data-target="#oCarrossel" data-slide-to="0" class="active"></li> 
+ */
 Visao.IndicadorSlides = Backbone.View.extend({
 
   tagName: 'li',
   
+  attributes: {
+    'data-target': '#oCarrossel'
+  },
+  
   initialize: function () {
-    $(this.el).attr('data-target', '#oCarrossel');
+ 
     $(this.el).attr('data-slide-to', this.model.indice);
   },
 
@@ -94,24 +114,32 @@ Visao.IndicadorSlides = Backbone.View.extend({
 
 });
 
-/* @Elemento:
- *  <div class="item active">  
- *    <img class="first-slide" alt="Exames laboratoriais" data-src="holder.js" src="imagem.jpg"/>
- *    <div class="container">
- *      <div class="carousel-caption">
- *        <h1>Vários exames laboratoriais</h1>
- *        <h2>Mais de 50 tipos de exames laboratoriais.</h2>
- *        <p><a class="btn btn-lg btn-success" href="examesOrientacoes.html" role="button">Ver lista de exames disponíveis</a></p>
- *      </div>
- *    </div>
- *  </div>
-*/ 
+/* @Visão: SlideItem
+ *
+ * @Descrição: para cada um dos indicadores nós temos um item do carrossel. 
+ * Este item contem a imagem de slide, titulo, sub-titulo e botão. 
+ *
+ * @Elemento: <div class="item active"> </div>
+ *
+ * @Carrega:
+ * <img class="first-slide" alt="Exames laboratoriais" data-src="holder.js" src="imagem.jpg"/>
+ * <div class="container">
+ *   <div class="carousel-caption">
+ *     <h1>Vários exames laboratoriais</h1>
+ *     <h2>Mais de 50 tipos de exames laboratoriais.</h2>
+ *     <p><!-- Botão de slide aqui--></p>
+ *   </div>
+ * </div> 
+ */ 
 Visao.SlideItem = Backbone.View.extend({
   tagName: 'div',
-  // className: 'item',
+  
+  attributes: {
+    'class': 'item'
+  },
   
   initialize: function () {
-    $(this.el).addClass('item');
+    
   },
 
   render: function () {
@@ -123,7 +151,86 @@ Visao.SlideItem = Backbone.View.extend({
     modelo.imagem_b64 = Global.utilitarios.pegarImagemB64(modelo.imagem_arquivo, 'IMAGEMS_SLIDES');
     
     $(this.el).html(this.template(modelo));
+    
+    // Adicionamos o botão
+    $('div.carousel-caption p', this.el).append(new Visao.SlideItemBotao({model: modelo}).render().el);
+      
     return this;
+  },
+  
+  /* EVENTOS DA NOSSA VISÃO
+  ---------------------------------------------*/
+  events: {
+    
+  },
+  
+  /* @função _iniciarMeusComponentes()
+   *
+   * @descrição Iniciamos componentes para esta visão. 
+   *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
+   */ 
+  _iniciarMeusComponentes: function(){
+    
+  },
+  
+  /* @função _iniciarMinhaEscutaEventos()
+   *
+   * @descrição Iniciamos as escutas de eventos para esta visão. 
+   *  Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
+   */ 
+  _iniciarMinhaEscutaEventos: function() {
+    
+  }
+
+});
+
+/* @descricao Botão do slide do carrossel.
+ *
+ * @Elemento 
+ * <button class="btn btn-lg btn-success" role="button"><%= texto_botao %></button>
+ */
+Visao.SlideItemBotao = Backbone.View.extend({
+
+  tagName: 'button',
+  
+  attributes: {
+    'class': 'btn btn-lg btn-success',
+    'role': 'button'
+  },
+  
+  initialize: function () {
+    
+  },
+    
+  render: function () {
+    var meuModelo = this.model;
+    
+    $(this.el).append(meuModelo.texto_botao);
+    
+    // Iniciamos os nossos componentes
+    this._iniciarMeusComponentes(meuModelo);
+    
+    return this;
+  },
+  
+  /* EVENTOS DA NOSSA VISÃO
+  ---------------------------------------------*/
+  events: {
+    "click": "_aoReceberClique"  // Clique neste elemento.
+  },
+  
+  /* @funcao _aoReceberClique()
+   * @descricao funcao chamada logo após ser disparado o evento de clique nesta visão. */
+  _aoReceberClique: function() {
+    
+  },
+  
+  /* @função _iniciarMeusComponentes()
+   * @descrição Iniciamos componentes para esta visão. 
+   *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
+   */ 
+  _iniciarMeusComponentes: function(meuModelo){
+    
   }
 
 });

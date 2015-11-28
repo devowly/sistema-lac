@@ -85,18 +85,24 @@ Visao.TopoLogo = Backbone.View.extend({
 /* @descricao Adicionamos aqui painel do topo do sitio
  *
  * @Elemento 
- * <button id="btaoResultados" class="pull-right">Resultados</button>
+ * <button class="btn btn-lg btn-success pull-right">Resultados</button>
 **/
 Visao.TopoPainel = Backbone.View.extend({
 
   tagName: 'button',
   
+  attributes: {
+    'class': 'btn btn-lg btn-success pull-right',
+    'role': 'button'
+  },
+  
   initialize: function () {
-    $(this.el).attr('class', 'pull-right');
-    $(this.el).attr('id', 'btaoResultados');
+    
   },
 
   render: function () {
+    
+    $(this.el).append('Resultados');
     
     // Iniciamos os nossos componentes
     this._iniciarMeusComponentes();
@@ -121,11 +127,6 @@ Visao.TopoPainel = Backbone.View.extend({
    *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
    */ 
   _iniciarMeusComponentes: function(){
-    
-    // Iniciamos o botão de resultados.
-    $(this.el).button({
-      label: "Resultados"
-    });
     
   }
 
