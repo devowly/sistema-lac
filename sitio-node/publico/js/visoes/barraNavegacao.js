@@ -22,19 +22,21 @@ Visao.BarraNavegacao = Backbone.View.extend({
     }
   },
 
-  /* @função iniciarComponentes()
+  /* @função _iniciarMeusComponentes()
+   *
    * @descrição Iniciamos componentes para esta visão. 
    *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  iniciarComponentes: function(){
+  _iniciarMeusComponentes: function(){
     
   },
   
-  /* @função iniciarEscutaEventos()
+  /* @função _iniciarMinhaEscutaEventos()
+   *
    * @descrição Iniciamos as escutas de eventos para esta visão. 
    *  Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  iniciarEscutaEventos: function() {
+  _iniciarMinhaEscutaEventos: function() {
     
   }
 
