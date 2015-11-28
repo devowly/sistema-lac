@@ -7,6 +7,7 @@
  */ 
 
 /* Versão 0.0.1-Beta
+ * - Resolver o problema de quando re-inserir o templante, manter os eventos da visão e também dos widgets. (issue #11).
  */
  
 Roteador.Sitio = Backbone.Router.extend({
@@ -60,21 +61,24 @@ Roteador.Sitio = Backbone.Router.extend({
     var esteObj = this;
     
     if (!this.visaoCarrossel) {
-      var colCarrosselSlides = new Colecao.CarrosselSlides();
+      // Mantemos os conteudos desta coleção para utilizar ao re-inserir o templante.
+      this.colCarrosselSlides = new Colecao.CarrosselSlides();
       
       // Carregamos esta coleção de slides.
-      Global.utilitarios.carregarColecao(colCarrosselSlides, null, function(){
+      Global.utilitarios.carregarColecao(this.colCarrosselSlides, null, function(){
         
         // Carregamos a nossa visão
-        esteObj.visaoCarrossel = new Visao.Carrossel({model: colCarrosselSlides});
+        esteObj.visaoCarrossel = new Visao.Carrossel({model: esteObj.colCarrosselSlides});
         
         // Inserimos a visão no conteudo.
-        $("#conteudo").html(esteObj.visaoCarrossel.$el);
+        $("#conteudo").html(esteObj.visaoCarrossel.el);
         
       });
       
     } else {
-      
+      // Carregamos a nossa visão com o conteudo que já possuimos.
+      this.visaoCarrossel = new Visao.Carrossel({model: this.colCarrosselSlides});
+        
       // Esta visão já foi iniciada, apenas inserimos ela na div conteudo.
       $("#conteudo").html(this.visaoCarrossel.el);
     }
@@ -194,14 +198,13 @@ Roteador.Sitio = Backbone.Router.extend({
           // Aqui adicionamos o conteúdo de nossas unidades.
           $('#conteudo').html(visNossasUnidades.el);
           
+          // reiniciar eventos
+          visNossasUnidades.reIniciarEventos();
+          
           // Caso a biblioteca do google maps já estiver carregada, iniciamos o mapa de cada unidade.
           if (Global.gglMapa.seMapaPronto()) {
             visNossasUnidades.iniciarCadaMapa();
           }
-          
-          // Adicionamos escuta para os eventos.
-          // Isto é necessário por causa do mapa que precisa receber resize.
-          visNossasUnidades.iniciarEscutaEventos();
           
         });
       });
@@ -211,8 +214,8 @@ Roteador.Sitio = Backbone.Router.extend({
       // Aqui adicionamos o conteúdo de nossas unidades.
       $('#conteudo').html(this.visaoNossasUnidades.el);
       
-      // Adicionamos escuta para os eventos.
-      this.visaoNossasUnidades.iniciarEscutaEventos();
+      // reiniciar eventos
+      this.visaoNossasUnidades.reIniciarEventos();
     }
     
     // Selecionamos o item unidades na barra de navegação

@@ -12,6 +12,10 @@
  */
 Visao.Carrossel = Backbone.View.extend({
 
+  attributes: {
+    
+  },
+  
   initialize: function () {
     // Renderizamos o html
     this.render();
@@ -222,7 +226,7 @@ Visao.SlideItemBotao = Backbone.View.extend({
   /* @funcao _aoReceberClique()
    * @descricao funcao chamada logo após ser disparado o evento de clique nesta visão. */
   _aoReceberClique: function() {
-    
+    alert(this.model.texto_botao);
   },
   
   /* @função _iniciarMeusComponentes()
