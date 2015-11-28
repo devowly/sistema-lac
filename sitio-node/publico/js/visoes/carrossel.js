@@ -57,17 +57,6 @@ Visao.Carrossel = Backbone.View.extend({
     
     return this;
   },
-  
-  iniciarCarrossel: function() {
-    // @AFAZER este código não funciona quando o layout é re-inserido.
-    
-    // Iniciamos o nosso carrossel com um intervalo de 10 segundos para cada slide.
-    // Isto é importante para fazer o nosso carrossel funcionar depois que o html for renderizado.
-    // Sem isso o carrossel para de funcionar.
-    //$('.carousel').carousel(
-    //  interval: 10000 // 10 segundos.
-    //);
-  },
 
   /* @função _iniciarMeusComponentes()
    * @descrição Iniciamos componentes para esta visão. 

@@ -11,8 +11,6 @@
  */
  
 Roteador.Sitio = Backbone.Router.extend({
-
-  seCarrosselIniciado: false,
   
   /* ROTAS DO NOSSO APLICATIVO 
    * Aqui vão ser realizadas o roteamento das visões.
@@ -60,7 +58,7 @@ Roteador.Sitio = Backbone.Router.extend({
   inicio: function () {
     var esteObj = this;
     
-    if (!this.visaoCarrossel) {
+    if (!this.visaoCarrossel || !this.colCarrosselSlides) {
       // Mantemos os conteudos desta coleção para utilizar ao re-inserir o templante.
       this.colCarrosselSlides = new Colecao.CarrosselSlides();
       
@@ -81,15 +79,6 @@ Roteador.Sitio = Backbone.Router.extend({
         
       // Esta visão já foi iniciada, apenas inserimos ela na div conteudo.
       $("#conteudo").html(this.visaoCarrossel.el);
-    }
-    
-    // @AFAZER rever este código, ele simplesmente não funciona porque quando o conteudo é
-    // inserido uma segunda vez, o carrossel para de funcionar.
-    if (!this.seCarrosselIniciado) {
-      // Iniciamos o nosso carrossel, apenas uma vez, com um intervalo de 8segundos para cada slide.
-      //this.visaoCarrossel.iniciarCarrossel();
-      
-      this.seCarrosselIniciado = true;
     }
     
     // Selecionamos o item inicio na barra de navegação.
