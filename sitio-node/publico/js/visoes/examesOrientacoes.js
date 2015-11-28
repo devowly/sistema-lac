@@ -5,6 +5,10 @@
 /* Versão 0.0.1-Beta
  */
 
+/* @Visão ExamesOrientacoes
+ *
+ * @Descrição Responsável pela apresentação dos exames aceitos por este laboratorio.
+ */
 Visao.ExamesOrientacoes = Backbone.View.extend({
 
   // União dos dados carregados do banco de dados.
@@ -103,40 +107,48 @@ Visao.ExamesOrientacoes = Backbone.View.extend({
        });
     });
     
+    this._iniciarMeusComponentes();
+    this._iniciarMinhaEscutaEventos();
+    
     cd(this);
   },
 
-  /* @função iniciarComponentes()
+  /* @função _iniciarMeusComponentes()
    * @descrição Iniciamos componentes para esta visão. 
    *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  iniciarComponentes: function(){
+  _iniciarMeusComponentes: function(){
     
   },
   
-  /* @função iniciarEscutaEventos()
+  /* @função _iniciarMinhaEscutaEventos()
    * @descrição Iniciamos as escutas de eventos para esta visão. 
    *  Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  iniciarEscutaEventos: function() {
+  _iniciarMinhaEscutaEventos: function() {
     
   }
 
 });
 
 /* @Elemento
- *  <tr>
- *    <td>1,25 DIHIDROXI VITAMINA D3</td>
- *     <td>
- *         <button type="button" class="btn btn-success btn-sm" aria-label="Right Align" data-toggle="modal" data-target="#ModalExemplo1">
- *           Ver as instruções deste exame <span class="glyphicon glyphicon-modal-window"></span> 
- *         </button>
- *     </td>
- *  </tr>
+ *  <tr> </tr>
+ *
+ * @Carrega
+ * <td>1,25 DIHIDROXI VITAMINA D3</td>
+ * <td>
+ *   <button type="button" class="btn btn-success btn-sm" aria-label="Right Align" data-toggle="modal" data-target="#ModalExemplo1">
+ *      Ver as instruções deste exame <span class="glyphicon glyphicon-modal-window"></span> 
+ *   </button>
+ * </td>
  */
 Visao.ExameLinhaTabela = Backbone.View.extend({
 
   tagName: 'tr',
+  
+  attributes: {
+    
+  },
   
   initialize: function () {
     
@@ -171,11 +183,12 @@ Visao.ExameLinhaTabela = Backbone.View.extend({
 
 }); 
  
-/* @Elemento:
+/* @Visao ExameOrientacaoModal
+ *
+ * @Elemento:
  * <div class="modal fade" id="ModalExemplo1" tabindex="-1" role="dialog" aria-labelledby="ModalExemplo1Etiqueta"> </div>
  *
  * @Carrega:
- * 
  *  <div class="modal-dialog" role="document">
  *    <div class="modal-content">
  *      <div class="modal-header" style="border-color: #5cb85c; color: #5cb85c;">
@@ -202,12 +215,14 @@ Visao.ExameLinhaTabela = Backbone.View.extend({
 Visao.ExameOrientacaoModal = Backbone.View.extend({
   tagName: 'div',
   
+  attributes: {
+    'class': 'modal fade',
+    'role': 'dialog',
+    'tabindex': '-1'
+  },
+  
   initialize: function () {
     
-    $(this.el).addClass('modal'); 
-    $(this.el).addClass('fade'); 
-    $(this.el).attr('role', 'dialog');
-    $(this.el).attr('tabindex', '-1');
   },
 
   render: function () {
@@ -215,7 +230,6 @@ Visao.ExameOrientacaoModal = Backbone.View.extend({
   
     $(this.el).attr('id', meuModelo.nome_elemento);
     $(this.el).attr('aria-labelledby', meuModelo.nome_elemento);
-    
 
     // Carregamos o templante
     $(this.el).html(meuModelo.minha_visao.template(meuModelo));

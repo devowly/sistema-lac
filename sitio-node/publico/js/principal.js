@@ -7,7 +7,7 @@
  */ 
 
 /* Versão 0.0.1-Beta
- * - Resolver o problema de quando re-inserir o templante, manter os eventos da visão e também dos widgets. (issue #11).
+ * - Resolver o problema de quando re-inserir o templante, manter os eventos da visão e também dos widgets. (issue #11) (f327b05fd021600484208996db01976beb709c9b) [FEITO]
  */
  
 Roteador.Sitio = Backbone.Router.extend({

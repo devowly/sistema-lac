@@ -230,6 +230,13 @@ Visao.NossasUnidades = Backbone.View.extend({
       
     }
     
+    // iniciar os componentes
+    this._iniciarMeusComponentes();
+    
+    // Adicionamos escuta para os eventos.
+    // Isto é necessário por causa do mapa que precisa receber resize.
+    this._iniciarMinhaEscutaEventos();
+    
     // Quando tudo estiver pronto nós chamamos esta função.
     cd(this);
   },
@@ -312,19 +319,19 @@ Visao.NossasUnidades = Backbone.View.extend({
     }
   },
   
-  /* @função iniciarComponentes()
+  /* @função _iniciarMeusComponentes()
    * @descrição Iniciamos componentes para esta visão. 
    *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  iniciarComponentes: function(){
+  _iniciarMeusComponentes: function(){
     
   },
   
-  /* @função iniciarEscutaEventos()
+  /* @função _iniciarMinhaEscutaEventos()
    * @descrição Iniciamos as escutas de eventos para esta visão. 
    *  Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
    */ 
-  iniciarEscutaEventos: function() {
+  _iniciarMinhaEscutaEventos: function() {
     
     var esteObj = this;
     
@@ -339,6 +346,10 @@ Visao.NossasUnidades = Backbone.View.extend({
       esteObj._reIniciarCadaMapa(abaAtiva);
     })
     
+  },
+  
+  reIniciarEventos: function() {
+    this._iniciarMinhaEscutaEventos();
   }
 
 });
@@ -355,9 +366,13 @@ Visao.UnidadeAba = Backbone.View.extend({
 
   tagName: 'li',
   
+  attributes: {
+    'id': 'aba',
+    'role': 'presentation'
+  },
+  
   initialize: function () {
-    $(this.el).attr('role', 'presentation');
-    $(this.el).attr('id', 'aba');
+    
   },
 
   render: function () {
@@ -402,9 +417,13 @@ Visao.UnidadeAba = Backbone.View.extend({
 Visao.UnidadeAbaConteudo = Backbone.View.extend({
   tagName: 'div',
   
+  attributes: {
+    'class': 'tab-pane',
+    'role': 'tabpanel'
+  },
+  
   initialize: function () {
-    $(this.el).addClass('tab-pane'); 
-    $(this.el).attr('role', 'tabpanel');
+    
   },
 
   render: function () {

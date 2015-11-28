@@ -191,15 +191,14 @@ Visao.SlideItem = Backbone.View.extend({
 /* @descricao Botão do slide do carrossel.
  *
  * @Elemento 
- * <button class="btn btn-lg btn-success" role="button"><%= texto_botao %></button>
+ * <button>texto_botao</button>
  */
 Visao.SlideItemBotao = Backbone.View.extend({
 
   tagName: 'button',
   
   attributes: {
-    'class': 'btn btn-lg btn-success',
-    'role': 'button'
+    
   },
   
   initialize: function () {
@@ -208,8 +207,6 @@ Visao.SlideItemBotao = Backbone.View.extend({
     
   render: function () {
     var meuModelo = this.model;
-    
-    $(this.el).append(meuModelo.texto_botao);
     
     // Iniciamos os nossos componentes
     this._iniciarMeusComponentes(meuModelo);
@@ -235,6 +232,9 @@ Visao.SlideItemBotao = Backbone.View.extend({
    */ 
   _iniciarMeusComponentes: function(meuModelo){
     
+    this.$el.button({
+      label: this.model.texto_botao 
+    });
   }
 
 });

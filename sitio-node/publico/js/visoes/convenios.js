@@ -2,6 +2,10 @@
 
 Visao.Convenios = Backbone.View.extend({
 
+  attributes: {
+    
+  },
+  
   initialize: function () {
     this.render();
   },

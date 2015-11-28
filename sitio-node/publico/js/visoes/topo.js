@@ -8,6 +8,10 @@
 
 Visao.Topo = Backbone.View.extend({
 
+  attributes: {
+    
+  },
+  
   initialize: function () {
     this.render();
   },
@@ -68,8 +72,12 @@ Visao.TopoLogo = Backbone.View.extend({
 
   tagName: 'img',
   
+  attributes: {
+    'data-src': 'holder.js'
+  },
+  
   initialize: function () {
-    $(this.el).attr('data-src', 'holder.js');
+    
   },
 
   render: function () {
@@ -85,15 +93,14 @@ Visao.TopoLogo = Backbone.View.extend({
 /* @descricao Adicionamos aqui painel do topo do sitio
  *
  * @Elemento 
- * <button class="btn btn-lg btn-success pull-right">Resultados</button>
+ * <button>Resultados</button>
 **/
 Visao.TopoPainel = Backbone.View.extend({
 
   tagName: 'button',
   
   attributes: {
-    'class': 'btn btn-lg btn-success pull-right',
-    'role': 'button'
+    'class': 'pull-right'
   },
   
   initialize: function () {
@@ -119,7 +126,7 @@ Visao.TopoPainel = Backbone.View.extend({
   /* @funcao _aoReceberClique()
    * @descricao funcao chamada logo após ser disparado o evento de clique nesta visão. */
   _aoReceberClique: function() {
-    
+    alert('ok');
   },
   
   /* @função _iniciarMeusComponentes()
@@ -128,6 +135,9 @@ Visao.TopoPainel = Backbone.View.extend({
    */ 
   _iniciarMeusComponentes: function(){
     
+    this.$el.button({
+      label: 'Resultados' 
+    });
   }
 
 });
