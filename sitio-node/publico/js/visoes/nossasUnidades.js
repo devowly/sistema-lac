@@ -6,6 +6,8 @@
  * - Adc caracteristicas básicas para a visão. [FEITO]
  * - Adicionar forma de realizar o re-inicio do mapa para apenas a aba que estiver aberta. (issue #1) (f43ba72653466e6a9ce7dedf4128bdc240bccb66) [FEITO]
  * - Carregar dados das unidades pelo banco de dados. (issue #2) (9e832dd11688bfd27b51ca1a22a13d675388174a) [FEITO]
+ * - Para cada templante carregado dinamicamento vamos criar uma nova visão. (issue #13)
+ * - Remover conteúdo em HTML das visões. (issue #12)
  */
 
 var UTILIZAR_BANCO_UNIDADE = true; // Você quer utilizar o banco de dados? 
