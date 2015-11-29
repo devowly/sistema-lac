@@ -12,6 +12,10 @@
 
 var UTILIZAR_BANCO_UNIDADE = true; // Você quer utilizar o banco de dados? 
  
+/* @Visão NossasUnidades
+ *
+ * @Descrição Responsável por apresentar as unidades com mapa.
+ */
 Visao.NossasUnidades = Backbone.View.extend({
 
   // União dos dados carregados do banco de dados.
@@ -356,7 +360,9 @@ Visao.NossasUnidades = Backbone.View.extend({
 
 });
 
-/* @Elemento 
+/* @Visão UnidadeAba
+ *
+ * @Elemento 
  * <li role="presentation" class="active"> </li> 
  *
  * @Carrega:
@@ -392,7 +398,9 @@ Visao.UnidadeAba = Backbone.View.extend({
 
 });
 
-/* @Elemento:
+/* @Visão UnidadeAbaConteudo
+ *
+ * @Elemento:
  * <div role="tabpanel" class="tab-pane active" id="Unidade1"> </div>
  *
  * @Carrega:

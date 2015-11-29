@@ -140,7 +140,9 @@ Visao.ExamesOrientacoes = Backbone.View.extend({
 
 });
 
-/* @Elemento
+/* @Visão ExameLinhaTabela
+ *
+ * @Elemento
  *  <tr> </tr>
  *
  * @Carrega

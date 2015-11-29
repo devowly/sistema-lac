@@ -1,5 +1,13 @@
 'use strict'
 
+/* @arquivo convenios.js */
+
+/* Versão 0.0.1-Beta */
+
+/* @Visão Convenios
+ *
+ * @Descrição Responsavel por lidar com a visão de convenios.
+ */
 Visao.Convenios = Backbone.View.extend({
 
   attributes: {

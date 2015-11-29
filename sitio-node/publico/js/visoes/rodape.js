@@ -1,5 +1,15 @@
 'use strict'
 
+/* @Arquivo rodape.js
+ */
+
+ /* Versão 0.0.1-Beta */
+
+/* @Visão: Rodape
+ *
+ * @Descriçao: Responsavel pela apresentação do rodape do sitio.
+ */
+
 Visao.Rodape = Backbone.View.extend({
 
   initialize: function () {

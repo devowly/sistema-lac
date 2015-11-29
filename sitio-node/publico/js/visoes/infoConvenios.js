@@ -1,5 +1,14 @@
 'use strict'
 
+/* @arquivo infoConvenios.js */
+
+/* Versão 0.0.1-Beta */
+
+/* @Visão InfoConvenio
+ *
+ * @Descrição Responsável por aprensentar informação  do convenio.
+ */
+
 Visao.InfoConvenio = Backbone.View.extend({
 
   initialize: function () {

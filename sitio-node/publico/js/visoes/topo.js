@@ -6,6 +6,8 @@
 /* versão 0.0.1-Beta
  */
 
+/* @Visão Topo()
+ */ 
 Visao.Topo = Backbone.View.extend({
 
   attributes: {
@@ -63,7 +65,9 @@ Visao.Topo = Backbone.View.extend({
 
 });
 
-/* @descricao Adicionamos aqui a imagem de logo do nossos sitio.
+/* @Visão TopoLogo()
+ *
+ * @descricao Adicionamos aqui a imagem de logo do nossos sitio.
  *
  * @Elemento 
  * <img data-src="holder.js" src="<%= imagem %>"/>
@@ -90,7 +94,9 @@ Visao.TopoLogo = Backbone.View.extend({
 
 });
 
-/* @descricao Adicionamos aqui painel do topo do sitio
+/* @Visão TopoPainel()
+ *
+ * @descricao Adicionamos aqui painel do topo do sitio
  *
  * @Elemento 
  * <a class="btn btn-success btn-lg pull-right">Resultados</a>

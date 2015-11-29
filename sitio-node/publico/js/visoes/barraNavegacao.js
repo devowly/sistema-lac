@@ -1,5 +1,13 @@
 'use strict'
 
+/* @arquivo barraNavegacao.js */
+
+/* Versão 0.0.1-Beta */
+
+/* @Visão BarraNavegacao
+ *
+ * @Descriçao Responsavel por lidar com a barra de navegação
+ */
 Visao.BarraNavegacao = Backbone.View.extend({
 
   initialize: function () {

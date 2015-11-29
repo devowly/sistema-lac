@@ -1,5 +1,14 @@
 'use strict'
 
+/* @arquivo nossaEquipe.js */
+
+/* Versão 0.0.1-Beta */
+
+/* @Visão NossaEquipe
+ *
+ * @Descrição Responsável por apresentar lista dos funcionários.
+ */
+
 Visao.NossaEquipe = Backbone.View.extend({
 
   initialize: function () {

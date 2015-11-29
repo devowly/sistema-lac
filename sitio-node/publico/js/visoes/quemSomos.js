@@ -3,7 +3,9 @@
 /* @Arquivo quemSomos.js
  */
 
-/* @Visão: Visao.QuemSomos
+ /* Versão 0.0.1-Beta */
+
+/* @Visão: QuemSomos
  *
  * @Descriçao: Responsavel pela apresentação do texto 
  */

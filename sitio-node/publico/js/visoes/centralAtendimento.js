@@ -1,5 +1,13 @@
 'use strict'
 
+/* @arquivo centralAtendimento.js */
+
+/* Versão 0.0.1-Beta */
+
+/* @Visão BarraNavegacao
+ *
+ * @Descrição Responsavel por lidar com a página da central de atendimento
+ */
 Visao.CentralAtendimento = Backbone.View.extend({
   
   attributes: {

@@ -177,7 +177,9 @@ Visao.SlideItem = Backbone.View.extend({
 
 });
 
-/* @descricao Botão do slide do carrossel.
+/* @Visão SlideItemBotao()
+ * 
+ * @descricao Botão do slide do carrossel.
  *
  * @Elemento 
  * <a class="btn btn-lg btn-success" href="examesOrientacoes.html" role="button">Ver lista de exames disponíveis</a> 
