@@ -8,8 +8,8 @@
   margin-top: 0px;
   margin-bottom: 0px;
   margin-right: 0px;
-  border-top: 1px solid #eee; /* Cinza bastante claro */
-  background-color: #ddd; /* Cinza claro */
+  border-top: 1px solid #d5f6cc; /* verve claro */
+  background-color: #d5f6cc; /* verve claro */
 }
 
 .footer .text-muted {
@@ -17,6 +17,6 @@
 }
 
 .footer .col-md-4 {
-  background-color: #ddd;  /* Cinza claro */
+  background-color: #d5f6cc;  /* verde claro */
   border: 0px;
 }
