@@ -58,15 +58,15 @@ Roteador.Sitio = Backbone.Router.extend({
   inicio: function () {
     var esteObj = this;
     
-    if (!this.visaoCarrossel || !this.colCarrosselSlides) {
+    if (!this.visaoCarrossel) {
       // Mantemos os conteudos desta coleção para utilizar ao re-inserir o templante.
-      this.colCarrosselSlides = new Colecao.CarrosselSlides();
+      var colCarrosselSlides = new Colecao.CarrosselSlides();
       
       // Carregamos esta coleção de slides.
-      Global.utilitarios.carregarColecao(this.colCarrosselSlides, null, function(){
+      Global.utilitarios.carregarColecao(colCarrosselSlides, null, function(){
         
         // Carregamos a nossa visão
-        esteObj.visaoCarrossel = new Visao.Carrossel({model: esteObj.colCarrosselSlides});
+        esteObj.visaoCarrossel = new Visao.Carrossel({model: colCarrosselSlides});
         
         // Inserimos a visão no conteudo.
         $("#conteudo").html(esteObj.visaoCarrossel.el);
@@ -74,9 +74,7 @@ Roteador.Sitio = Backbone.Router.extend({
       });
       
     } else {
-      // Carregamos a nossa visão com o conteudo que já possuimos.
-      this.visaoCarrossel = new Visao.Carrossel({model: this.colCarrosselSlides});
-        
+      
       // Esta visão já foi iniciada, apenas inserimos ela na div conteudo.
       $("#conteudo").html(this.visaoCarrossel.el);
     }

@@ -2311,7 +2311,7 @@ th {
   background-color: #f9f9f9;
 }
 .table-hover > tbody > tr:hover {
-  background-color: #f5f5f5;
+  background-color: #fbd6dc;
 }
 table col[class*="col-"] {
   position: static;
@@ -2336,14 +2336,14 @@ table th[class*="col-"] {
 .table > thead > tr.active > th,
 .table > tbody > tr.active > th,
 .table > tfoot > tr.active > th {
-  background-color: #f5f5f5;
+  background-color: #fbd6dc;
 }
 .table-hover > tbody > tr > td.active:hover,
 .table-hover > tbody > tr > th.active:hover,
 .table-hover > tbody > tr.active:hover > td,
 .table-hover > tbody > tr:hover > .active,
 .table-hover > tbody > tr.active:hover > th {
-  background-color: #e8e8e8;
+  background-color: #f9bfc8;
 }
 .table > thead > tr > td.success,
 .table > tbody > tr > td.success,
@@ -4020,7 +4020,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #eeeeee;
+  background-color: #c3fdd4;
 }
 .nav > li.disabled > a {
   color: #32b546;
@@ -4035,7 +4035,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-  background-color: #eeeeee;
+  background-color: #c3fdd4;
   border-color: #5136ea;
 }
 .nav .nav-divider {
@@ -4128,8 +4128,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
-  color: rgba(246, 246, 233, 0.95);
-  background-color: #31bf31;
+  color: rgba(255, 255, 255, 0.95);
+  background-color: #59d259;
 }
 .nav-stacked > li {
   float: none;
