@@ -148,7 +148,7 @@ Visao.NossasUnidades = Backbone.View.extend({
     
     // Procura no diretorio pagsEnderecosUnidades os templates e os carrega, salvando-os na listaTemplantes.
     // Logo após carregados nós chamamos o método render().
-    Global.utilitarios.carregarTemplantesDinamicamente(this.listaTemplantes, 'pagsEnderecosUnidades/', visoes, function(){
+    Global.utilitarios.carregarTemplantesExtras(this.listaTemplantes, 'pagsEnderecosUnidades/', visoes, function(){
       esteObj.render(cd);
     });
   },

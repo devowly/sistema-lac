@@ -80,7 +80,7 @@ Visao.ExamesOrientacoes = Backbone.View.extend({
      
     // Procura no diretorio pagsOrientacoesExames os templates dos modais e os carrega, salvando-os na listaModais.
     // Logo após carregados nós chamamos o método render().
-    Global.utilitarios.carregarTemplantesDinamicamente(this.listaModais, 'pagsOrientacoesExames/', visoes, function(){
+    Global.utilitarios.carregarTemplantesExtras(this.listaModais, 'pagsOrientacoesExames/', visoes, function(){
       esteObj.render(cd);
     });
   },
