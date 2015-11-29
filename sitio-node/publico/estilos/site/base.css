@@ -20,14 +20,16 @@
 @import url('paginas/pagNossaEquipe.css');        /* pág. nossaEquipe.html */
 @import url('paginas/pagNossasUnidades.css');     /* pág. unidades.html */    
       
-/* TEMAS 
----------------------------------------------------------------*/
-@import url('temas/temaVerde.css');  /* Estilos do tema verde */
-
 /* ESTILOS DO BOOTSTRAP
 ---------------------------------------------------------------*/
 @import url('../bootstrap-3.3.5-dist/css/bootstrap.min.css');       /* CSS minificado e compilado */
 @import url('../bootstrap-3.3.5-dist/css/bootstrap-theme.min.css'); /* Tema opcional */
+
+/* TEMAS 
+---------------------------------------------------------------*/
+@import url('temas/verde/temaVerde.css');                         /* Estilos do tema verde */
+@import url('../bootstrap-3.3.5-dist/verde/theme.css');           /* Estilos do tema verde @veja http://bootstrap-live-customizer.com/ */
+@import url('../bootstrap-3.3.5-dist/verde/variables.less');      /* Estilos do tema verde @veja http://bootstrap-live-customizer.com/ */
 
 /* ESTILOS DOS BOTÕES DE REDE SOCIAL
 ----------------------------------------------*/

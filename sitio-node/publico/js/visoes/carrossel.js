@@ -180,18 +180,24 @@ Visao.SlideItem = Backbone.View.extend({
 /* @descricao Botão do slide do carrossel.
  *
  * @Elemento 
- * <button>texto_botao</button>
+ * <a class="btn btn-lg btn-success" href="examesOrientacoes.html" role="button">Ver lista de exames disponíveis</a> 
  */
 Visao.SlideItemBotao = Backbone.View.extend({
 
-  tagName: 'button',
+  tagName: 'a',
   
   attributes: {
-    
+    'class': 'btn btn-lg btn-success',
+    'role': 'button'
   },
   
   initialize: function () {
     
+    // Coloca endereço do link
+    $(this.el).attr('href', this.model.endereco_botao);
+    
+    // Coloca o texto do link
+    $(this.el).append(this.model.texto_botao);
   },
     
   render: function () {
@@ -206,14 +212,6 @@ Visao.SlideItemBotao = Backbone.View.extend({
   /* EVENTOS DA NOSSA VISÃO
   ---------------------------------------------*/
   events: {
-    "click": "_aoReceberClique"  // Clique neste elemento.
-  },
-  
-  /* @funcao _aoReceberClique()
-   * @descricao funcao chamada logo após ser disparado o evento de clique nesta visão. */
-  _aoReceberClique: function() {
-    // navega para página
-    Sitio.navigate(this.model.endereco_botao, {trigger: true, replace: true});
     
   },
   
@@ -223,9 +221,6 @@ Visao.SlideItemBotao = Backbone.View.extend({
    */ 
   _iniciarMeusComponentes: function(meuModelo){
     
-    this.$el.button({
-      label: this.model.texto_botao 
-    });
   }
 
 });
