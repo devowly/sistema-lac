@@ -27,14 +27,14 @@ Global.utilitarios = {
     $.when.apply(null, deferidos).done(cd);
   },
   
-  /* @função carregarTemplantesDinamicamente()
+  /* @função carregarTemplantesExtras()
    * @descrição Carrega assincronamente o(s) template(s) encontrado(s) em arquivos .html separados do diretorio informado.
    * Ele armazena em cada objeto da lista um template. Depois de carregado ele chama a função cd().
    * Este método é designado para uso daquelas visões que precisam carregar mais arquivos quando não utiliza o banco de dados.
    * É interessante usa-lo pois isso faz o desenvolvimento ser mais produtivo porque não precisamos adicionar modelos e coleções e 
    * também faz com que não seja necessário carregar dados para o banco de dados.
    */
-  carregarTemplantesDinamicamente: function(lista, diretorio, visoes, cd) {
+  carregarTemplantesExtras: function(lista, diretorio, visoes, cd) {
 
     var deferidos = [];
  
@@ -122,6 +122,26 @@ Global.utilitarios = {
     });
     
     return imgBase64;
+  },
+ 
+  /* @metodo carregarArquivosXml
+   *
+   * @descricao Responsavel por carregar arquivos xml.
+   */
+  carregarArquivosXml: function(lista, diretorio, arquivos, cd) {
+
+    var deferidos = [];
+ 
+    $.each(arquivos, function(indice, arquivo) {
+      if (lista[arquivo]) {
+        deferidos.push($.get('templantes/' + diretorio + '.xml', function(dados) {
+          lista[arquivo].template = _.template(dados);
+        }));
+      } else {
+        console.log(arquivo + ' não foi encontrado');
+      }
+    });
+
+    $.when.apply(null, deferidos).done(cd);
   }
-  
 };
