@@ -7,7 +7,7 @@
 
 Global.utilitarios = {
 
-  /* @função carregarTemplantes()
+  /* @método carregarTemplantes()
    * @descrição Carrega assincronamente os templates encontrados em arquivos .html separados.
    * Depois de carregado ele chama a função cd().
    */
@@ -28,7 +28,7 @@ Global.utilitarios = {
     $.when.apply(null, deferidos).done(cd);
   },
   
-  /* @função carregarTemplantesExtras()
+  /* @método carregarTemplantesExtras()
    * @descrição Carrega assincronamente o(s) template(s) encontrado(s) em arquivos .html separados do diretorio informado.
    * Ele armazena em cada objeto da lista um template. Depois de carregado ele chama a função cd().
    * Este método é designado para uso daquelas visões que precisam carregar mais arquivos quando não utiliza o banco de dados.
@@ -52,7 +52,7 @@ Global.utilitarios = {
     $.when.apply(null, deferidos).done(cd);
   },
   
-  /* @funcao carregarColecaoAninhada()
+  /* @método carregarColecaoAninhada()
    * @descrição Carrega as coleções aninhadas de um determinado modelo
    * Chama funcao cd() se estiver carregado todas colecoes aninhadas.
    */
@@ -86,7 +86,7 @@ Global.utilitarios = {
     }
   },
   
-  /* @função carregarColecao()
+  /* @método carregarColecao()
    * @Descrição Carrega a coleção e depois as suas coleções aninhadas.
    */
   carregarColecao: function(colecao, colecoesAninhadas, cd) {
@@ -105,7 +105,7 @@ Global.utilitarios = {
     }} );
   },
   
-  /* @função pegarImagemB64()
+  /* @método pegarImagemB64()
    * @Descrição retorna uma imagem em base64 para cada nome de arquivo em uma lista especificada.
    */
   pegarImagemB64: function(arquivo, lista) {
