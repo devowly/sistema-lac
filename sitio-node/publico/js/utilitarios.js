@@ -2,6 +2,7 @@
 
 /* Versão 0.0.1-Beta
  * - Armazenado as variaveis das visões para a variavel global window.Visao. (4b8b93591a770d86e67f00fca33e90acb45a9e46) [FEITO]
+ * - Desenvolver o método carregarArquivosXml.
  */
 
 Global.utilitarios = {
@@ -128,20 +129,7 @@ Global.utilitarios = {
    *
    * @descricao Responsavel por carregar arquivos xml.
    */
-  carregarArquivosXml: function(lista, diretorio, arquivos, cd) {
+  carregarArquivosXml: function() {
 
-    var deferidos = [];
- 
-    $.each(arquivos, function(indice, arquivo) {
-      if (lista[arquivo]) {
-        deferidos.push($.get('templantes/' + diretorio + '.xml', function(dados) {
-          lista[arquivo].template = _.template(dados);
-        }));
-      } else {
-        console.log(arquivo + ' não foi encontrado');
-      }
-    });
-
-    $.when.apply(null, deferidos).done(cd);
   }
 };

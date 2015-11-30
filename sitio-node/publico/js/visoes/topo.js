@@ -117,7 +117,8 @@ Visao.TopoPainel = Backbone.View.extend({
     
     // Coloca endereço do link
     $(this.el).attr('href', '#');
-    
+
+    // Adiciona texto do botão    
     $(this.el).append('Resultados');
     
     // Iniciamos os nossos componentes
