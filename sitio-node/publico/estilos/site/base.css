@@ -27,7 +27,7 @@
 
 /* TEMAS 
 ---------------------------------------------------------------*/
-@import url('temas/tema001/temaVerde.css');                         /* Estilos do tema verde */
+@import url('temas/tema001/tema.css');                         /* Estilos do tema verde */
 @import url('../bootstrap-3.3.5-dist/tema001/variables.less');      /* Estilos do tema verde @veja http://bootstrap-live-customizer.com/ */
 @import url('../bootstrap-3.3.5-dist/tema001/theme.css');           /* Estilos do tema verde @veja http://bootstrap-live-customizer.com/ */
 
