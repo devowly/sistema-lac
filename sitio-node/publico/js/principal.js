@@ -63,7 +63,7 @@ Roteador.Sitio = Backbone.Router.extend({
       var colCarrosselSlides = new Colecao.CarrosselSlides();
       
       // Carregamos esta coleção de slides.
-      Global.utilitarios.carregarColecao(colCarrosselSlides, null, function(){
+      Global.utilitarios.carregarColecao([colCarrosselSlides], function(){
         
         // Carregamos a nossa visão
         esteObj.visaoCarrossel = new Visao.Carrossel({model: colCarrosselSlides});
@@ -92,7 +92,7 @@ Roteador.Sitio = Backbone.Router.extend({
       var colExames = new Colecao.Exames();
       
       // Carregamos esta coleção de exames e suas orientacoes.
-      Global.utilitarios.carregarColecao(colExames, ['exameOrientacoes'], function(){
+      Global.utilitarios.carregarColecao([colExames], function(){
         
         // Carregamos a nossa visão
         esteObj.visaoExamesOrientacoes = new Visao.ExamesOrientacoes({model: colExames});
@@ -172,7 +172,7 @@ Roteador.Sitio = Backbone.Router.extend({
       var colecaoUnidades = new Colecao.Unidades();
       
       // Carrega a coleção unidades e depois as coleções aninhadas aos modelos.
-      Global.utilitarios.carregarColecao(colecaoUnidades, ['unidadeMapas'], function() {
+      Global.utilitarios.carregarColecao([colecaoUnidades], function() {
           
         // Inicia a visão de cada unidade sendo chamado após a coleção de modelos e de mapas estiver carregado.
         esteObj.visaoNossasUnidades = new Visao.NossasUnidades({model: colecaoUnidades});

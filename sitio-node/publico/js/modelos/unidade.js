@@ -14,6 +14,12 @@ Modelo.Unidade = Backbone.Model.extend({
   // O endereço REST onde iremos pegar os dados.
   urlRoot: "/unidades",
 
+  // Isso vai ser utilizado para quando formos pegar os dados 
+  // das coleções aninhadas pertecentes a este modelo.
+  colecoesAninhadas: [
+    'unidadeMapas'
+  ], 
+  
   initialize: function () {
     
     // Cada uma das unidades possue um zoom e coordenadas para o mapa

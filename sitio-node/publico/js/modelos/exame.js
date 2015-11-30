@@ -14,6 +14,12 @@ Modelo.Exame = Backbone.Model.extend({
   // O endereço REST onde iremos pegar os dados.
   urlRoot: "/exames",
 
+  // Isso vai ser utilizado para quando formos pegar os dados 
+  // das coleções aninhadas pertecentes a este modelo.
+  colecoesAninhadas: [
+    'exameOrientacoes'
+  ],
+  
   initialize: function () {
     
     // Cada um dos exames possue uma orientação a ser informada.
