@@ -32,7 +32,6 @@ Visao.Carrossel = Backbone.View.extend({
 
     // Carrega o conteúdo do carrossel.
     $(this.el).html(this.template());
-    this.$el.html(this.template());
     
     for (var ca = 0; ca < quantidade; ca++) {
       
