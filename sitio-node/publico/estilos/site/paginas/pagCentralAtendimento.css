@@ -9,11 +9,6 @@
   margin-left: 0px;
 }
 
-/* Por algum motivo a cor do fundo da classe bg-info terá que ser forçada */
-#conteudoCentralAtendimento .bg-info  {
-  background-color: #d9edf7; /* Cor azul bem claro */
-}
-
 /* Essa coluna possui as abas de atendimento */
 #abasAtendimento .row .col-md-12 {
   background-color: #fff; /* Cor branco claro */

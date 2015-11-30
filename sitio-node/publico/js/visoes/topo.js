@@ -77,7 +77,8 @@ Visao.TopoLogo = Backbone.View.extend({
   tagName: 'img',
   
   attributes: {
-    'data-src': 'holder.js'
+    'data-src': 'holder.js',
+    'class': 'pull-left'
   },
   
   initialize: function () {
