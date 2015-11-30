@@ -39,6 +39,7 @@ Colecao.UnidadeMapas = Backbone.Collection.extend({
   model: Modelo.UnidadeMapa,
   
   // O endereço REST onde iremos pegar os dados. 
+  // Esta url será re-escrita pelo Modelo.Unidade 
   url: "/"
 
 });
