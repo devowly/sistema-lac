@@ -2,7 +2,7 @@
 
 /* Versão 0.0.1-Beta
  * - Armazenado as variaveis das visões para a variavel global window.Visao. (4b8b93591a770d86e67f00fca33e90acb45a9e46) [FEITO]
- * - Desenvolver o método carregarArquivosXml.
+ * - Desenvolver o método carregarArquivosXml. [AFAZER]
  */
 
 Global.utilitarios = {
