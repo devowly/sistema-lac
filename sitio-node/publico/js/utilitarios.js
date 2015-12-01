@@ -56,7 +56,7 @@ Global.utilitarios = {
    * @descrição Carrega apenas as coleções aninhadas de um determinado modelo
    * Chama funcao cd() se estiver carregado todas colecoes aninhadas.
    */
-  carregarColecaoAninhada: function(colecao, colecoesAninhadas, cd) {
+  carregarColecaoAninhada: function(colecao, colecoesAninhadas, cd) { /* <umdez> método obsoleto? */
     
     // Quantidade de modelos desta colecao.
     var quantidadeModelos = colecao.models.length;
@@ -123,6 +123,7 @@ Global.utilitarios = {
           for (var cc = 0; cc < quantidadeColecoesAninhadas; cc++) {
             var colecoesAninhadas = colecoes[ca].models[cb].colecoesAninhadas;
             
+            // Armazenamos as coleções que serão carregadas.
             listaColecoesParaCarregar.push(colecoes[ca].models[cb][colecoesAninhadas[cc]]);
             
           }  
