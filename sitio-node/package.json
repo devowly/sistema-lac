@@ -6,7 +6,6 @@
   "author": "Léo Felippe <leofelippedias@hotmail.com.br>",
   "main": "./iniciar.js",
   "dependencies": {
-    "backbone.paginator": "2.0.2",
     "bluebird": "2.9.25",
     "body-parser": "1.14.1",
     "bunyan": "1.3.5",
