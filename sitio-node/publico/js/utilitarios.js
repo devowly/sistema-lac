@@ -87,7 +87,7 @@ Global.utilitarios = {
   },
   
   /* @método carregarTodasColecoesAninhadas()
-   * @descrição Carrega todas as coleções aninhadas de um determinado modelo
+   * @descrição Carrega todas as coleções aninhadas de um determinado modelo de forma recursiva, então, 
    * Chama funcao cd() se estiver carregado todas colecoes aninhadas.
    */
   carregarTodasColecoesAninhadas: function(colecoes, cd) {
