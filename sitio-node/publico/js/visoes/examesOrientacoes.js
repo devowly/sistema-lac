@@ -58,9 +58,9 @@ Visao.ExamesOrientacoes = Backgrid.Extension.Paginator = Backbone.View.extend({
   initialize: function () {
     
     // Fica necessário zerarmos estas duas variaveis para fazer com que
-    // os botões modais funcionem em caso de mudança de visão.
+    // os botões modais sejam recarregados e funcionem em caso de mudança de visão.
     this.exameOrientacaoUniaoDB = [];
-    this.listaModais =[];
+    this.listaModais = [];
     
     // Renderiza este template
     this.render();
@@ -120,7 +120,7 @@ Visao.ExamesOrientacoes = Backgrid.Extension.Paginator = Backbone.View.extend({
       var exameOrientacoes = exame.exameOrientacoes;
      
       // Verificamos inicialmente se ele já possui modelos carregados.
-      if (exame.exameOrientacoes && exame.exameOrientacoes.models.length < 1) {
+      if (exame.exameOrientacoes && exame.exameOrientacoes.models && exame.exameOrientacoes.models.length < 1) {
         
         // Carregamos aqui todas as nossas coleções aninhadas da colecao informada
         Global.utilitarios.carregarColecao([exameOrientacoes], function(){
