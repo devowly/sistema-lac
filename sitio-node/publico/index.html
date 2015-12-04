@@ -12,7 +12,7 @@
       <link rel="stylesheet" href="..\..\estilos\site\base.css">
       
       <!-- Por causa do navegador Internet Explorer -->
-      <script src="bibliotecas/ie-emulation-modes-warning.js"></script>
+      <script src="bibliotecas/bootstrap-utils/ie-emulation-modes-warning.js"></script>
       
       <!-- Estilos únicos deste arquivo para extender. Usado apenas para teste -->
       <style>
@@ -27,12 +27,12 @@
     <![endif]-->
     
     <!-- BootStrap widgets -->
-    <script id="twitter-wjs" src="bibliotecas/widgets.js"></script>
+    <script id="twitter-wjs" src="bibliotecas/bootstrap-utils/widgets.js"></script>
    
-    <script type="text/javascript" charset="utf-8" async="" src="bibliotecas/button.6619238bf476cc3999511336bc046bfa.js"></script>
+    <script type="text/javascript" charset="utf-8" async="" src="bibliotecas/bootstrap-utils/button.6619238bf476cc3999511336bc046bfa.js"></script>
     
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="bibliotecas/ie10-viewport-bug-workaround.js"></script>
+    <script src="bibliotecas/bootstrap-utils/ie10-viewport-bug-workaround.js"></script>
    
   </head>
     
@@ -70,41 +70,41 @@
     </div>
 
     <!-- jQuery (Necessário para os plugins em javascript do bootstrap) -->
-    <script src="bibliotecas/jquery.v1_11_03.min.js" crossorigin="anonymous"></script>
+    <script src="bibliotecas/jQuery-v1.11.03/jquery.min.js" crossorigin="anonymous"></script>
    
     <!-- jQuery's scrollTo -->
-    <script src="bibliotecas/jquery.scrollTo.v2_1_1.min.js"></script> 
+    <script src="bibliotecas/jQuery-scrollTo-v2.1.1/jquery.scrollTo.min.js"></script> 
     
     <!-- jQuery UI -->
-    <script src="bibliotecas/jquery-ui-1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
+    <script src="bibliotecas/jquery-ui-v1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
     
     <!-- BootStrap -->
     <!-- Deve vir *após* a bibliotecao do *jQuery-UI* porque está acontecendo conflitos dos widgets. @veja https://github.com/twbs/bootstrap/issues/6094 -->
-    <script src="bibliotecas/bootstrap.v3_3_5.min.js" crossorigin="anonymous"></script>
+    <script src="bibliotecas/bootstrap-v3.3.5/bootstrap.min.js" crossorigin="anonymous"></script>
     
     <!-- UnderScore -->
-    <script src="bibliotecas/underscore-min.v1_8_3.js" crossorigin="anonymous"></script>
+    <script src="bibliotecas/underscore-v1.8.3/underscore.min.js" crossorigin="anonymous"></script>
     
     <!-- BackBone -->
-    <script src="bibliotecas/backbone-min.v1_2_3.js" crossorigin="anonymous"></script>
+    <script src="bibliotecas/backbone-v1.2.3/backbone.min.js" crossorigin="anonymous"></script>
     
     <!-- backgrid @veja http://backgridjs.com/ -->
-    <script src="bibliotecas/backgrid-0.3.5/lib/backgrid.js" crossorigin="anonymous"></script>
+    <script src="bibliotecas/backgrid-v0.3.5/lib/backgrid.js" crossorigin="anonymous"></script>
     
      <!-- Lunr @veja http://lunrjs.com/ -->
-    <script src="bibliotecas/lunr.min.js" crossorigin="anonymous"></script>
+    <script src="bibliotecas/lunr-v.0.6.0/lunr.min.js" crossorigin="anonymous"></script>
     
     <!-- BackGrid Filter @veja https://github.com/wyuenho/backgrid-filter -->
-    <script src="bibliotecas/backgrid-0.3.5/lib/backgrid-filter.js" crossorigin="anonymous"></script>
+    <script src="bibliotecas/backgrid-v0.3.5/lib/backgrid-filter.js" crossorigin="anonymous"></script>
     
     <!-- Paginator @veja https://github.com/backbone-paginator/backbone.paginator -->
-    <script src="bibliotecas/backgrid-0.3.5/lib/backbone.paginator.min.js" crossorigin="anonymous"></script>
+    <script src="bibliotecas/backgrid-v0.3.5/lib/backbone.paginator.min.js" crossorigin="anonymous"></script>
     
      <!-- BackGrid Paginator @veja https://github.com/wyuenho/backgrid-paginator -->
-    <script src="bibliotecas/backgrid-0.3.5/lib/backgrid-paginator.js" crossorigin="anonymous"></script>
+    <script src="bibliotecas/backgrid-v0.3.5/lib/backgrid-paginator.js" crossorigin="anonymous"></script>
     
     <!-- Nesting @veja https://gist.github.com/geddski/1610397 -->
-    <script src="bibliotecas/nesting.js" crossorigin="anonymous"></script>
+    <script src="bibliotecas/nesting/nesting.js" crossorigin="anonymous"></script>
     
     <!-- Variaveis globais -->
     <script src="js/global.js"></script>
@@ -146,5 +146,7 @@
     <!-- Mapa do Google (Chama método Global.gglMapa.carregouMapaApi() ). Lembre-se que isto deve ficar *depois* de carregarmos o principal.js e as *visões* -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbi1li8ie5oMqH5pjgok6Y0Xb-NUrW3ag&callback=Global.gglMapa.carregouMapaApi" async defer></script> 
     
+    <!-- requireJs -->
+    <script data-main="scripts/main" src="/bibliotecas/require-v.2.1.22/require.js"></script>
   </body>
 </html>
