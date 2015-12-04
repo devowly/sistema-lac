@@ -57,6 +57,8 @@ Visao.ExamesOrientacoes = Backgrid.Extension.Paginator = Backbone.View.extend({
   
   initialize: function () {
     
+    // Fica necessário zerarmos estas duas variaveis para fazer com que
+    // os botões modais funcionem em caso de mudança de visão.
     this.exameOrientacaoUniaoDB = [];
     this.listaModais =[];
     
@@ -143,7 +145,6 @@ Visao.ExamesOrientacoes = Backgrid.Extension.Paginator = Backbone.View.extend({
     var esteObj = this;
     
     var exames = this.model.models;  // Necessitamos dos modelos de exames desta coleção
-    var quantidadeExames = exames.length;
     var exameJson = null;
     
     var ind = 0;  // Indice dos exames
