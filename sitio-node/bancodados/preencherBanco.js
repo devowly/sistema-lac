@@ -56,16 +56,14 @@ Preencher.prototype.iniciar = function () {
     esteObj.carregarModelos();
     
     // Sincroniza os modelos com o banco de dados.
-    sequelize.sync()
-    .complete(function (err) {
-      if (err) {
-        registrador.error(err);
-        recusar(err);
-      } else {
-        registrador.debug('Banco de dados sincronizado.');
-        deliberar(esteObj);
-      }
-    });
+    sequelize.sync().then(function() {
+      registrador.debug('Banco de dados sincronizado.');
+      deliberar(esteObj);
+    }).catch(function(erro){
+      registrador.error(erro);
+      recusar(erro);
+    }); 
+    
   });
 }
 

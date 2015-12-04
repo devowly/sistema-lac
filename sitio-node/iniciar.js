@@ -10,6 +10,7 @@ var configuracao = require('jsconfig');
 var pastaConfiguracaoPadrao = pasta.join(__dirname, "/configuracao/configuracao.js");
 var express = require('express');
 var http = require('http');
+var morgan = require('morgan');
 
 // Carregamos o nosso registrador
 var registrador = require('./fonte/nucleo/registrador')('iniciar');
@@ -46,26 +47,25 @@ configuracao.load(function (args, opcs) {
   var bodyParser = require('body-parser');
   
   /* Configuração do express */
-  aplic.configure(function () {
-    aplic.set('port', process.env.PORT || configuracao.server.port);
-    aplic.use(express.logger(configuracao.server.logger));  
-    aplic.use(bodyParser.json());
-    aplic.use(bodyParser.urlencoded({ extended: false }));
-    aplic.use(express.static(pasta.join(__dirname, 'publico')));
-  });
+  aplic.set('port', process.env.PORT || configuracao.server.port);
+  aplic.use(bodyParser.json());
+  aplic.use(bodyParser.urlencoded({ extended: false }));
+  aplic.use(express.static(pasta.join(__dirname, 'publico')));
+  aplic.use(morgan('combined'));
   
   // Chamamos o arquivo principal, ele vai carregar os outros arquivos principais do servidor.
   var sitio = require('./fonte/iniciador/principal');
   sitio.prosseguir(configuracao, aplic, function() {
     
-    registrador.debug('Carregando servideo HTTP.');
+    registrador.debug('Carregando servidor HTTP.');
     
     // Inicia o servidor HTTP e começa a esperar por conexões
-    var servidorHTTP = http.createServer(aplic);
+    aplic.server = http.createServer(aplic);
     
-    servidorHTTP.listen(aplic.get('port'), function () {
+    aplic.server.listen(aplic.get('port'), function () {
       console.log("Servidor express carregado e escutando na porta " + aplic.get('port'));
     });
+    
   });
   
 });

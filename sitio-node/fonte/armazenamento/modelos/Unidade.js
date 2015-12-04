@@ -12,6 +12,11 @@ module.exports = function (database, DataTypes) {
   var VERSAO_BANCO_DADOS = 1;
   
   var Unidade = database.define('Unidade', {
+    id: { 
+      type: DataTypes.INTEGER, 
+      autoIncrement: true, 
+      primaryKey: true 
+    },
     titulo: {
       type: DataTypes.STRING, // Titulo da unidade. Exemplo: Nossa unidade do centro de Montes Claros.
       validate: {} 

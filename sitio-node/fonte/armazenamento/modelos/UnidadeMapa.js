@@ -11,6 +11,11 @@ module.exports = function (database, DataTypes) {
   var VERSAO_BANCO_DADOS = 1;
   
   var UnidadeMapa = database.define('UnidadeMapa', {
+    id: { 
+      type: DataTypes.INTEGER, 
+      autoIncrement: true, 
+      primaryKey: true 
+    },
     zoom: {
       type: DataTypes.STRING, // Zoom realizado no mapa.
       validate: {} 

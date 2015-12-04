@@ -73,29 +73,31 @@ Armazenamento.prototype.iniciar = function (opcsSincroniza) {
       opcoes.storage = esteObjeto.opc.storage;
     }
 
+    //opcoes.logging = (process.env.SEQ_LOG ? console.log : false);
+    
     // Inicia conexão com o banco de dados.
     var sequelize = new Sequelize(
       esteObjeto.opc.database,
       esteObjeto.opc.user,
-      esteObjeto.opc.password, 
+      esteObjeto.opc.password,
       opcoes
     );
       
+    // Armazenamos o sequelize para utilização das outras classes.
     esteObjeto.sequelize = sequelize;
 
     // Carrega os arquivos que contem os nossos modelos.
     esteObjeto.carregarModelos();
 
     // Sincroniza os modelos com o banco de dados.
-    sequelize.sync(opcsSincroniza)
-      .complete(function (err) {
-        if (err) {
-          registrador.error(err);
-          recusar(err);
-        } else {
-          deliberar(esteObjeto);
-        }
-      });
+    sequelize.sync(opcsSincroniza).then(function() {
+      
+      deliberar(esteObjeto);
+    }).catch(function(erro){
+      registrador.error(erro);
+      recusar(erro);
+    }); 
+   
   });
 };
 

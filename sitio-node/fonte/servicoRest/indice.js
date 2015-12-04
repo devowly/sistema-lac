@@ -54,7 +54,10 @@ ServicoRest.prototype.carregarModelos = function () {
       esteObjeto[mod.nome] = epilogue.resource({
         model: esteObjeto.bd[mod.nome],
         endpoints: mod.rotas,
-        associations: mod.associations
+        associations: mod.associations,
+        search: {
+          param: 'q'
+        }
       });
     } else {
       registrador.debug('Não encontramos o modelo (' + mod.nome + ') do banco de dados.');
@@ -77,9 +80,9 @@ ServicoRest.prototype.iniciar = function () {
     // Inicia o epilogue
     epilogue.initialize({
       app: esteObjeto.aplic,
-      sequelize: esteObjeto.bd
+      sequelize: esteObjeto.bd.sequelize
     });
-  
+    
     // Carrega os arquivos que contem os nossos modelos.
     esteObjeto.carregarModelos();
 

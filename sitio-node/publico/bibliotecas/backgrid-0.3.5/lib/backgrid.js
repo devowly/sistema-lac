@@ -1,22 +1,27 @@
 /*!
-  backgrid
+  backgrid 0.3.5
   http://github.com/wyuenho/backgrid
 
-  Copyright (c) 2014 Jimmy Yuen Ho Wong and contributors <wyuenho@gmail.com>
+  Copyright (c) 2015 Jimmy Yuen Ho Wong and contributors <wyuenho@gmail.com>
   Licensed under the MIT license.
 */
 
-(function (factory) {
+(function (root, factory) {
 
-  // CommonJS
-  if (typeof exports == "object") {
-    module.exports = factory(module.exports,
-                             require("underscore"),
-                             require("backbone"));
-  }
-  // Browser
-  else factory(this, this._, this.Backbone);
-}(function (root, _, Backbone) {
+  if (typeof define === "function" && define.amd) {
+    // AMD (+ global for extensions)
+    define(["underscore", "backbone"], function (_, Backbone) {
+      return (root.Backgrid = factory(_, Backbone));
+    });
+  } else if (typeof exports === "object") {
+    // CommonJS
+    var Backbone = require("backbone");
+    Backbone.$ = Backbone.$ || require("jquery");
+    module.exports = factory(require("underscore"), Backbone);
+  } else {
+    // Browser
+    root.Backgrid = factory(root._, root.Backbone);
+  }}(this, function (_, Backbone) {
 
   "use strict";
 
@@ -63,7 +68,7 @@ function lpad(str, length, padstr) {
 
 var $ = Backbone.$;
 
-var Backgrid = root.Backgrid = {
+var Backgrid = {
 
   Extension: {},
 
@@ -963,6 +968,59 @@ var Cell = Backgrid.Cell = Backbone.View.extend({
 });
 
 /**
+   ButtonModalCell Apresenta um botão com o conteúdo, esse botão abrirá uma janela modal do bootstrap.
+
+   @class Backgrid.ButtonModalCell
+   @extends Backgrid.Cell
+*/
+var ButtonModalCell = Backgrid.ButtonModalCell = Cell.extend({
+
+  /** @propriedade */
+  className: "buttonModal-cell",
+
+  /**
+     @property {string} [textContent] O texto do botão que será gerado.
+  */
+  textContent: "undefined",
+  
+  /**
+     @property {string} [target=""] O atributo da mira para uma janela modal.
+     anchor.
+  */
+  target: "",
+  
+  formatter: StringFormatter,
+  
+  initialize: function (options) {
+    ButtonModalCell.__super__.initialize.apply(this, arguments);
+    this.textContent = options.textContent || this.textContent;
+    this.target = options.target || this.target;
+  },
+
+  render: function () {
+    this.$el.empty();
+    
+    var rawValue = this.model.get(this.column.get("name"));
+    var formattedValue = this.formatter.fromRaw(rawValue, this.model);
+    this.target = '#modal' + this.column.get("idwindow") + this.model.get("id");
+    
+    //Criamos o botão 
+    var myButton = $("<button>", {
+      "type": "button",
+      "class": "btn btn-success btn-sm",
+      "aria-label": "Right Align",
+      "data-toggle": "modal",
+      "data-target": this.target
+    }).text(formattedValue);
+    
+    this.$el.append(myButton);
+    this.delegateEvents();
+    return this;
+  }
+
+});
+
+/**
    StringCell displays HTML escaped strings and accepts anything typed in.
 
    @class Backgrid.StringCell
@@ -1399,7 +1457,15 @@ var SelectCellEditor = Backgrid.SelectCellEditor = CellEditor.extend({
   },
 
   /** @property {function(Object, ?Object=): string} template */
-  template: _.template('<option value="<%- value %>" <%= selected ? \'selected="selected"\' : "" %>><%- text %></option>', null, {variable: null}),
+  template: _.template(
+    '<option value="<%- value %>" <%= selected ? \'selected="selected"\' : "" %>><%- text %></option>', 
+    null,
+    {
+        variable    : null,
+        evaluate    : /<%([\s\S]+?)%>/g,
+        interpolate : /<%=([\s\S]+?)%>/g,
+        escape      : /<%-([\s\S]+?)%>/g
+    }),
 
   setOptionValues: function (optionValues) {
     this.optionValues = optionValues;
@@ -2164,8 +2230,6 @@ var HeaderCell = Backgrid.HeaderCell = Backbone.View.extend({
  */
 var HeaderRow = Backgrid.HeaderRow = Backgrid.Row.extend({
 
-  requiredOptions: ["columns", "collection"],
-
   /**
      Initializer.
 
@@ -2317,6 +2381,7 @@ var Body = Backgrid.Body = Backbone.View.extend({
         emptyText: this.emptyText,
         columns: this.columns
       }));
+      return true;
     }
   },
 
@@ -2404,7 +2469,9 @@ var Body = Backgrid.Body = Backbone.View.extend({
     // removeRow() is called directly
     if (!options) {
       this.collection.remove(model, (options = collection));
-      this._unshiftEmptyRowMayBe();
+      if (this._unshiftEmptyRowMayBe()) {
+        this.render();
+      }
       return;
     }
 
@@ -2413,7 +2480,9 @@ var Body = Backgrid.Body = Backbone.View.extend({
     }
 
     this.rows.splice(options.index, 1);
-    this._unshiftEmptyRowMayBe();
+    if (this._unshiftEmptyRowMayBe()) {
+      this.render();
+    }
 
     return this;
   },
@@ -2494,7 +2563,7 @@ var Body = Backgrid.Body = Backbone.View.extend({
      Triggers a Backbone `backgrid:sorted` event from the collection when done
      with the column, direction and a reference to the collection.
 
-     @param {Backgrid.Column} column
+     @param {Backgrid.Column|string} column
      @param {null|"ascending"|"descending"} direction
 
      See [Backbone.Collection#comparator](http://backbonejs.org/#Collection-comparator)
@@ -2586,7 +2655,10 @@ var Body = Backgrid.Body = Backbone.View.extend({
     var i = this.collection.indexOf(model);
     var j = this.columns.indexOf(column);
     var cell, renderable, editable, m, n;
-
+    
+    // return if model being edited in a different grid
+    if (j === -1) return this;
+    
     this.rows[i].cells[j].exitEditMode();
 
     if (command.moveUp() || command.moveDown() || command.moveLeft() ||
@@ -2760,7 +2832,7 @@ var Grid = Backgrid.Grid = Backbone.View.extend({
     // Convert the list of column objects here first so the subviews don't have
     // to.
     if (!(options.columns instanceof Backbone.Collection)) {
-      options.columns = new Columns(options.columns);
+      options.columns = new Columns(options.columns || this.columns);
     }
     this.columns = options.columns;
 
@@ -2879,5 +2951,5 @@ var Grid = Backgrid.Grid = Backbone.View.extend({
   }
 
 });
-return Backgrid;
+  return Backgrid;
 }));

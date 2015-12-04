@@ -27,7 +27,7 @@
 
 /* TEMAS 
 ---------------------------------------------------------------*/
-@import url('temas/tema001/tema.css');                         /* Estilos do tema verde */
+@import url('temas/tema001/tema.css');                              /* Estilos do tema verde */
 @import url('../bootstrap-3.3.5-dist/tema001/variables.less');      /* Estilos do tema verde @veja http://bootstrap-live-customizer.com/ */
 @import url('../bootstrap-3.3.5-dist/tema001/theme.css');           /* Estilos do tema verde @veja http://bootstrap-live-customizer.com/ */
 
@@ -43,3 +43,8 @@
 -------------------------------------------------------------*/
 @import url('../jQuery-UI-Themas/jquery-ui-themes-1.11.4/themes/south-street/jquery-ui.css');
 @import url('../jQuery-UI-Themas/jquery-ui-themes-1.11.4/themes/south-street/theme.css');
+
+/* ESTILOS DAS TABELAS DO BACKGRID
+----------------------------------------------*/
+@import url('../backgrid/backgrid.css');
+@import url('../backgrid/backgrid-paginator.css');

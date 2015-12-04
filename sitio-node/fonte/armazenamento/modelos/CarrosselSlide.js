@@ -12,6 +12,11 @@ module.exports = function (database, DataTypes) {
   var VERSAO_BANCO_DADOS = 1;
   
   var CarrosselSlide = database.define('CarrosselSlide', {
+    id: { 
+      type: DataTypes.INTEGER, 
+      autoIncrement: true, 
+      primaryKey: true 
+    },
     titulo: {                      // Titulo que vai apresentar o slide
       type: DataTypes.STRING, 
       validate: {} 

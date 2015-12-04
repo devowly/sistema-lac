@@ -86,31 +86,20 @@ Roteador.Sitio = Backbone.Router.extend({
   examesOrientacoes: function() {
     var esteObj = this;
     
-    // Aqui adicionamos a tabela de exames e orientações e atualizamos a barra de navegacao.
-    if (!this.visaoExamesOrientacoes) {
+      this.colExames = new Colecao.Exames();
       
-      var colExames = new Colecao.Exames();
-      
-      // Carregamos esta coleção de exames e suas orientacoes.
-      Global.utilitarios.carregarColecao([colExames], function(){
+      // Carregamos esta coleção de exames e suas orientacoes. 
+      // Existe um limite de registros imposto em colecao.state.pageSize.
+      // Então não vai ser carregados todos os modelos desta coleção e sim o tamanho do colecao.state.pageSize.
+      Global.utilitarios.carregarColecao([this.colExames], function(){
         
         // Carregamos a nossa visão
-        esteObj.visaoExamesOrientacoes = new Visao.ExamesOrientacoes({model: colExames});
+        esteObj.visaoExamesOrientacoes = new Visao.ExamesOrientacoes({model: esteObj.colExames});
         
-        // Carregamos os templates dos modais do nosso exame.
-        esteObj.visaoExamesOrientacoes.carregarTemplantesModais( function(visExames) {
-          
-          // Quando tudo estiver carregado, inserimos a visão no conteudo.
-          $("#conteudo").html(visExames.el);
-          
-        });
+        // Quando tudo estiver carregado, inserimos a visão no conteudo.
+        $("#conteudo").html(esteObj.visaoExamesOrientacoes.el);
         
       });
-      
-    } else {
-      // Visão já está carregada, apenas iremos inseri-la no conteudo
-      $('#conteudo').html(this.visaoExamesOrientacoes.el);
-    }
   
     // Selecionamos o nosso item na barra de navegação.
     this.visaoBarraNavegacao.selecionarItemMenu('exames');
@@ -224,8 +213,7 @@ Roteador.Sitio = Backbone.Router.extend({
 Global.utilitarios.carregarTemplantes([
   'Topo', 'BarraNavegacao', 'Carrossel', 'SlideItem', 
   'Rodape', 'ExamesOrientacoes', 'CentralAtendimento', 'Convenios', 
-  'QuemSomos', 'NossaEquipe', 'NossasUnidades', 'UnidadeAba', 'InfoConvenio', 
-  'ExameLinhaTabela'], 
+  'QuemSomos', 'NossaEquipe', 'NossasUnidades', 'UnidadeAba', 'InfoConvenio'], 
   function() {
     // Assim que todos templantes forem carregados, iniciamos as nossas rotas.
     Sitio = new Roteador.Sitio();

@@ -71,15 +71,15 @@
 
     /** @property */
     tagName: "button",
-    
+
     /** @property */
     className: "btn btn-default",
-
+    
     /** @property */
     events: {
       "click": "changePage"
     },
-    
+
     attributes: {
       "role": "group"
     },
@@ -160,7 +160,6 @@
       this.label = (options.label || (firstPage ? pageIndex : pageIndex + 1)) + '';
       var title = options.title || this.title;
       this.title = _.isFunction(title) ? title({label: this.label}) : title;
-      
     },
 
     /**
@@ -233,7 +232,7 @@
 
      @class Backgrid.Extension.Paginator
   */
-  var Paginator = Backgrid.Extension.Paginator = Backbone.View.extend({
+  var Paginador = Backgrid.Extension.Paginador = Backbone.View.extend({
 
     /** @property */
     className: "backgrid-paginator",
@@ -271,12 +270,12 @@
         title: "Anterior"
       },
       forward: {
-        label: "Próximo",
-        title: "Próximo"
+        label: "Proximo",
+        title: "Proximo"
       },
       fastForward: {
-        label: "Último",
-        title: "Último"
+        label: "Ultimo",
+        title: "Ultimo"
       }
     },
 
@@ -304,7 +303,7 @@
     initialize: function (options) {
       var self = this;
       self.controls = _.defaults(options.controls || {}, self.controls,
-                                 Paginator.prototype.controls);
+                                 Paginador.prototype.controls);
 
       _.extend(self, _.pick(options || {}, "windowSize", "pageHandle",
                             "slideScale", "goBackFirstOnSort",
@@ -433,17 +432,17 @@
 
       var handles = this.handles = this.makeHandles();
 
-      // Contem grupo de botões da esquerda
+      // Contem grupo de botÃµes da esquerda
       var divEsquerda = document.createElement("div");
       $(divEsquerda).attr("role", "group");
       $(divEsquerda).addClass("btn-group");
       
-      // Contem grupo de botões do centro
+      // Contem grupo de botÃµes do centro
       var divCentro = document.createElement("div");
       $(divCentro).attr("role", "group");
       $(divCentro).addClass("btn-group");
       
-      // Contem grupo de botões da direita
+      // Contem grupo de botÃµes da direita
       var divDireita = document.createElement("div");
       $(divDireita).attr("role", "group");
       $(divDireita).addClass("btn-group");
@@ -451,20 +450,20 @@
       for (var i = 0; i < handles.length; i++) {
         
         if(handles[i].isBack || handles[i].isRewind) {
-          // Se for botões de voltar e inicio então adicionamos do grupo da esquerda
+          // Se for botÃµes de voltar e inicio entÃ£o adicionamos do grupo da esquerda
           divEsquerda.appendChild(handles[i].render().el);
           
         } else if (handles[i].isForward || handles[i].isFastForward) {
-          // Se for botões de próximo ou último então adicionamos no grupo da direita
+          // Se for botÃµes de prÃ³ximo ou Ãºltimo entÃ£o adicionamos no grupo da direita
           divDireita.appendChild(handles[i].render().el);
           
         } else {
-          // Botões de páginas
+          // BotÃµes de pÃ¡ginas
           divCentro.appendChild(handles[i].render().el);
         }
       }
    
-      // Adicionamos os tres grupos de botões
+      // Adicionamos os tres grupos de botÃµes
       this.el.appendChild(divEsquerda);
       this.el.appendChild(divCentro);
       this.el.appendChild(divDireita);

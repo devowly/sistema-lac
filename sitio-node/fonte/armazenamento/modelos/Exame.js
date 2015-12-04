@@ -1,5 +1,3 @@
-'use strict';
-
 /* @arquivo Exame.js */
 
 /* Versão 0.0.1-beta
@@ -11,9 +9,13 @@ module.exports = function (database, DataTypes) {
   var VERSAO_BANCO_DADOS = 1;
   
   var Exame = database.define('Exame', {
+    id: { 
+      type: DataTypes.INTEGER, 
+      autoIncrement: true, 
+      primaryKey: true 
+    },
     nome: {
-      type: DataTypes.STRING, // Nome do exame. Exemplo: 1,25 DIHIDROXI VITAMINA D3.
-      validate: {} 
+      type: DataTypes.STRING // Nome do exame. Exemplo: 1,25 DIHIDROXI VITAMINA D3.
     }
   }, 
    {

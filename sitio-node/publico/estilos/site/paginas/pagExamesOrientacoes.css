@@ -30,3 +30,18 @@
 .table > thead .tabColOr {
   width: 230px;
 }
+
+/* Adicionamos um espaço para cada grupo de botões */
+div#exameOrientacaoPaginacao .backgrid-paginator .btn-group {
+  padding-left: 5px;
+}
+
+/* A largura da coluna id da tabela de exames e orientações */
+div#tabelaExamesOrientacoes table.backgrid th.id {
+  width: 60px;
+}
+
+/* A largura da coluna nome_elemento da tabela de exames e orientações */
+div#tabelaExamesOrientacoes table.backgrid th.nome_elemento {
+  width: 180px;
+}
