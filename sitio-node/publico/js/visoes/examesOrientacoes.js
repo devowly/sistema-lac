@@ -291,7 +291,7 @@ Visao.ExamesOrientacoes = Backgrid.Extension.Paginator = Backbone.View.extend({
       collection: this.model,           // Nossa coleção
       name: "q",                        // O nome do parametro de pesquisa no servidor REST
       placeholder: "Filtrar exames...", // Nome para adicionar no input de escrita
-      valorbotao: "Filtrar"             // Valor do texto para o botão de pesquisa.
+      buttonText: "Filtrar"             // Valor do texto para o botão de pesquisa.
     });
     
     // inserimos o filtro

@@ -53,7 +53,7 @@
       var entrada = '<input type="search" ' + (data.placeholder ? 'placeholder="' + data.placeholder + '"' : '') + ' name="' + data.name + '" ' + (data.value ? 'value="' + data.value + '"' : '') + ' class="form-control" />';
       html += entrada;
       
-      var spanBotao = '<span class="input-group-btn"> <button id="btoPesquisaTabela" class="btn btn-default" type="button">'+ data.valorbotao  +'</button> <!-- <a class="clear" data-backgrid-action="clear" href="#">&times;</a>--></span>';  
+      var spanBotao = '<span class="input-group-btn"> <button id="btoPesquisaTabela" class="btn btn-default" type="button">'+ data.buttonText  +'</button> <!-- <a class="clear" data-backgrid-action="clear" href="#">&times;</a>--></span>';  
       html += spanBotao;
       
       return html;
@@ -79,7 +79,7 @@
     */
     placeholder: null,
     
-    valorbotao: 'Indefinido',
+    buttonText: 'Indefinido',
 
     /**
        @param {Object} options
@@ -95,7 +95,7 @@
       this.value = options.value || this.value;
       this.placeholder = options.placeholder || this.placeholder;
       this.template = options.template || this.template;
-      this.valorbotao = options.valorbotao || this.valorbotao;
+      this.buttonText = options.buttonText || this.buttonText;
 
       // Persist the query on pagination
       var collection = this.collection, self = this;
@@ -206,7 +206,7 @@
         name: this.name,
         placeholder: this.placeholder,
         value: this.value,
-        valorbotao: this.valorbotao
+        buttonText: this.buttonText
       }));
       this.showClearButtonMaybe();
       this.delegateEvents();
