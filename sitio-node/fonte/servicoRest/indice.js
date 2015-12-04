@@ -52,11 +52,11 @@ ServicoRest.prototype.carregarModelos = function () {
       --------------------------------------*/
       
       esteObjeto[mod.nome] = epilogue.resource({
-        model: esteObjeto.bd[mod.nome],
-        endpoints: mod.rotas,
-        associations: mod.associations,
+        model: esteObjeto.bd[mod.nome],   // Nosso modelo do banco de dados 
+        endpoints: mod.rotas,             // Nossas rotas REST
+        associations: mod.associations,   // Relações 
         search: {
-          param: 'q'
+          param: 'q'                      // Realizaremos a pesquisa utilizando o padrao modelo?q=valor
         }
       });
     } else {
