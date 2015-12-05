@@ -265,7 +265,7 @@ Visao.ExamesOrientacoes = Backbone.View.extend({
     $("div#tabelaExamesOrientacoes", this.el).append(this.tabela.render().el);
 
     // Vamos realizar a paginação
-    this.paginacao = new Backgrid.Extension.Paginador({
+    this.paginacao = new Backgrid.Extension.Paginator({
       // Nossa coleção
       collection: this.model,           
       

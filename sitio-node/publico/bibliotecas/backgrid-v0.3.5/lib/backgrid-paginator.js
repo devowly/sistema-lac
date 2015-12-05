@@ -232,7 +232,7 @@
 
      @class Backgrid.Extension.Paginator
   */
-  var Paginador = Backgrid.Extension.Paginador = Backbone.View.extend({
+  var Paginator = Backgrid.Extension.Paginator = Backbone.View.extend({
 
     /** @property */
     className: "backgrid-paginator",
