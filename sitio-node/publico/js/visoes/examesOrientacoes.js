@@ -16,7 +16,7 @@
  *
  * @Descrição Responsável pela apresentação dos exames aceitos por este laboratorio.
  */
-Visao.ExamesOrientacoes = Backgrid.Extension.Paginator = Backbone.View.extend({
+Visao.ExamesOrientacoes = Backbone.View.extend({
 
   // União dos dados carregados do banco de dados.
   exameOrientacaoUniaoDB: [],
