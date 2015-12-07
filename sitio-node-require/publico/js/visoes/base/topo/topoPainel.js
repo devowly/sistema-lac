@@ -10,7 +10,8 @@ define([
   'underscore'
 ], function($, Backbone, _){
  
-  /* Adicionamos aqui painel do topo do sitio
+  /* Adicionamos aqui o painel do topo do sitio. O painel pode ter conteudo
+   * diferente, depende de que o usuário possa estar autenticado ou não autenticado.
    *
    * @Elemento 
    * <a class="btn btn-success btn-lg pull-right">Resultados</a>

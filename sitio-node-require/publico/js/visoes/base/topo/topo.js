@@ -19,7 +19,7 @@ define([
   /* Nossa visão do topo da página - Apresentamos aqui a visão do topo.
    * Esta visão possui mais duas outras, que são, a visão do logotipo, e a
    * visão do painel. A visão do painel pode modificar dependendo se o usuário
-   * realizou login ou se não realizou.
+   * realizou autenticação ou se não realizou.
    *
    * @Elemento
    * <div> </div>
