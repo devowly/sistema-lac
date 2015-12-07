@@ -77,7 +77,7 @@ require.config({
     'nesting': ['backbone'],
     
     'underscore': {
-      exports: '_'
+      exports: '_'  // exporta _
     },
     
     // Vamos utilizar o backgrid estensivamente neste projeto.
@@ -96,6 +96,7 @@ require.config({
     // vou manter o jquery UI como uma dependencia, ele será carregado antes do bootstrap.
     // Sendo assim, os métodos do bootstrap irão prevalecer.
     // @veja https://github.com/twbs/bootstrap/issues/6094
+    // Lembre-se que o bootstrap não exporta.
     'bootstrap': {
       deps: ['jquery', 'jquery-ui'],
     },
