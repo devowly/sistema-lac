@@ -3,6 +3,11 @@
  * @Arquivo configuracao.js 
  */
 
+/* Aqui temos a configuração do nosso serviço.
+ *
+ * @Diretiva {storage} O nosso sistema de armazenamento.
+ * @Diretiva {server} O nosso servidor http.
+ */
 module.exports = {
   
   // Armazenamento para os dados, este servidor utiliza Sequelize.
