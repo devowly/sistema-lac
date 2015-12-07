@@ -116,15 +116,24 @@ require.config({
 });
 
 require([
-  // Carrega o modulo do aplicativo e o passa para nossa função de definição
-  'aplicativo',
-  'domReady'
-], function(Aplicativo, domReady) {
+  'aplicativo',  // Carrega o modulo do aplicativo e o passa para nossa função de definição
+  'domReady',    // Vamos esperar o DOM estiver apresentado e carregado.
   
-  domReady(function () {
+  /* Abaixo nós carregamos o bootstrap e algumas extenções necessárias.
+   * Isto é bastante necessário para o funcionamento correto do sitio.
+   * Não remova as dependencias abaixo.
+   */
+  'bootstrap',
+  'bootstrap-widgets',
+  'button.6619238bf476cc3999511336bc046bfa',
+  'ie10-viewport-bug-workaround',
+  'ie-emulation-modes-warning'
+], function(Aplicativo, DomReady, Bootstrap) {
+  
+  DomReady(function () {
     // Esta função é chamada após a página estiver apresentada e carregada.
-    // A dependencia 'aplicativo' é passada como Aplicativo
-    // Iniciamos aqui nosso aplicativo.
+
+    // Logo após nós iniciamos aqui nosso aplicativo.
     Aplicativo.inicializar();
   });
 });

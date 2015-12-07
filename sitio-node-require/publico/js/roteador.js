@@ -17,10 +17,11 @@ define([
   'visoes/base/barraNavegacao/barraNavegacao',
   'visoes/base/topo/topo',
   'visoes/paginas/carrossel/carrossel',
+  'visoes/paginas/quemsomos/quemSomos',
   'colecoes/carrosselSlides'
 ], function($, Backbone, Utilitarios, VisaoRodape, 
-  VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, 
-  ColCarrosselSlides){
+  VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, VisaoQuemSomos, 
+  ColecaoCarrosselSlides){
   
   var SitioRoteador = Backbone.Router.extend({
     
@@ -30,7 +31,8 @@ define([
     routes: {
       
       /* PAGINAS BASE DO NOSSO SITIO. */
-      "": "inicio"                               // Caso seja a extenção inicial, adicionamos o conteúdo de início.
+      "": "inicio",                              // Caso seja a extenção inicial, adicionamos o conteúdo de início.
+      "quemSomos": "quemSomos"                   // Página de quem somos.
     },
     
     /* É chamado já na inicialização, assim adicionamos o básico (topo, barra de navegação rodape) ao nosso sitio.
@@ -63,7 +65,7 @@ define([
       if (!this.visaoCarrossel) {
         
         // Pegamos o conteudo da coleção do carrossel.
-        var colCarrosselSlides = new ColCarrosselSlides();
+        var colCarrosselSlides = new ColecaoCarrosselSlides();
         
         // Carregamos esta coleção de slides.
         Utilitarios.carregarColecao([colCarrosselSlides], function(){
@@ -83,6 +85,21 @@ define([
       }
       // Selecionamos o item inicio na barra de navegação.
       this.visaoBarraNavegacao.selecionarItemMenu('inicio');
+    },
+  
+    quemSomos: function() {
+      // Aqui adicionamos o conteúdo de quem somos.
+      if (!this.visaoQuemSomos) {
+        this.visaoQuemSomos = new VisaoQuemSomos();
+      }
+      $('#conteudo').html(this.visaoQuemSomos.el);
+      
+      // Remove seleção de qualquer item da barra de navegacao
+      this.visaoBarraNavegacao.selecionarItemMenu(null);
+      
+      // reiniciar eventos e os componentes desta visão
+      this.visaoQuemSomos.reIniciarEventosComponentes();
+      
     }
     
   });
