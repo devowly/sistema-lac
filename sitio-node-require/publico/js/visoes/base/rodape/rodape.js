@@ -12,9 +12,7 @@ define([
   'text!/js/templantes/base/rodape/Visao.Rodape.html'
 ], function($, Backbone, _, Templante){
   
-  /* @Visão: Rodape
-   *
-   * @Descriçao: Responsavel pela apresentação do rodape do sitio.
+  /* Responsavel pela apresentação do rodape do sitio.
    */
   var Rodape = Backbone.View.extend({
     
@@ -29,19 +27,15 @@ define([
       this.$el.html(this.templante());
     },
 
-    /* @função _iniciarMeusComponentes()
-     *
-     * @descrição Iniciamos componentes para esta visão. 
-     *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
+    /* Iniciamos componentes para esta visão. 
+     * Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
      */ 
     _iniciarMeusComponentes: function(){
       
     },
 
-    /* @função _iniciarMinhaEscutaEventos()
-     *
-     * @descrição Iniciamos as escutas de eventos para esta visão. 
-     *  Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
+    /* Iniciamos as escutas de eventos para esta visão. 
+     * Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
      */ 
     _iniciarMinhaEscutaEventos: function() {
       
