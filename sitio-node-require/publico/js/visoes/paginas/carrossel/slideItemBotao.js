@@ -10,9 +10,7 @@ define([
   'underscore'
 ], function($, Backbone, _){
 
-  /* @Visão SlideItemBotao()
-   * 
-   * @descricao Botão do slide do carrossel.
+  /* O botão do slide do carrossel.
    *
    * @Elemento 
    * <a class="btn btn-lg btn-success" href="examesOrientacoes.html" role="button">Ver lista de exames disponíveis</a> 
@@ -39,22 +37,20 @@ define([
       var meuModelo = this.model;
       
       // Iniciamos os nossos componentes
-      this._iniciarMeusComponentes(meuModelo);
+      this._iniciarMeusComponentes();
       
       return this;
     },
     
-    /* EVENTOS DA NOSSA VISÃO
-    ---------------------------------------------*/
+    /* Os eventos desta visão */
     events: {
       
     },
     
-    /* @função _iniciarMeusComponentes()
-     * @descrição Iniciamos componentes para esta visão. 
-     *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
+    /* Iniciamos componentes para esta visão. 
+     * Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
      */ 
-    _iniciarMeusComponentes: function(meuModelo){
+    _iniciarMeusComponentes: function(){
       
     }
 

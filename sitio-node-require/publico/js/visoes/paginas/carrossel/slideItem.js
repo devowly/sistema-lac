@@ -8,8 +8,10 @@ define([
   'jquery',
   'backbone',
   'underscore',
-  'utilitarios'
-], function($, Backbone, _, Utilitarios){
+  'utilitarios',
+  'visoes/paginas/carrossel/slideItemBotao',
+  'text!/js/templantes/paginas/carrossel/Visao.SlideItem.html'
+], function($, Backbone, _, Utilitarios, SlideItemBotao, Templante){
   
   /* Para cada um dos indicadores nós temos um item do carrossel. 
    * Este item contem a imagem de slide, titulo, sub-titulo e botão. 
@@ -27,6 +29,8 @@ define([
    * </div> 
    */ 
   var SlideItem = Backbone.View.extend({
+    
+    templante: _.template(Templante),
     
     tagName: 'div',
     
@@ -47,7 +51,7 @@ define([
       // pegamos a imagem na base 64.
       modelo.imagem_b64 = Utilitarios.pegarImagemB64(modelo.imagem_arquivo, 'IMAGEMS_SLIDES');
       
-      $(this.el).html(this.template(modelo));
+      $(this.el).html(this.templante(modelo));
       
       // Adicionamos o botão
       $('div.carousel-caption p', this.el).append(new SlideItemBotao({model: modelo}).render().el);
