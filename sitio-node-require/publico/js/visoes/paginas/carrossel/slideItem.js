@@ -7,17 +7,16 @@
 define([
   'jquery',
   'backbone',
-  'underscore'
-], function($, Backbone, _){
+  'underscore',
+  'utilitarios'
+], function($, Backbone, _, Utilitarios){
   
-  /* @Visão: SlideItem
-   *
-   * @Descrição: para cada um dos indicadores nós temos um item do carrossel. 
+  /* Para cada um dos indicadores nós temos um item do carrossel. 
    * Este item contem a imagem de slide, titulo, sub-titulo e botão. 
    *
-   * @Elemento: <div class="item active"> </div>
+   * @Elemento <div class="item active"> </div>
    *
-   * @Carrega:
+   * @Carrega
    * <img class="first-slide" alt="Exames laboratoriais" data-src="holder.js" src="imagem.jpg"/>
    * <div class="container">
    *   <div class="carousel-caption">
@@ -31,6 +30,7 @@ define([
     
     tagName: 'div',
     
+    /* Os atributos desta visão */
     attributes: {
       'class': 'item'
     },
@@ -45,35 +45,30 @@ define([
       if (modelo.indice === 0) $(this.el).addClass('active');
       
       // pegamos a imagem na base 64.
-      modelo.imagem_b64 = Global.utilitarios.pegarImagemB64(modelo.imagem_arquivo, 'IMAGEMS_SLIDES');
+      modelo.imagem_b64 = Utilitarios.pegarImagemB64(modelo.imagem_arquivo, 'IMAGEMS_SLIDES');
       
       $(this.el).html(this.template(modelo));
       
       // Adicionamos o botão
-      $('div.carousel-caption p', this.el).append(new Visao.SlideItemBotao({model: modelo}).render().el);
+      $('div.carousel-caption p', this.el).append(new SlideItemBotao({model: modelo}).render().el);
         
       return this;
     },
     
-    /* EVENTOS DA NOSSA VISÃO
-    ---------------------------------------------*/
+    /* Os eventos desta visão */
     events: {
       
     },
     
-    /* @função _iniciarMeusComponentes()
-     *
-     * @descrição Iniciamos componentes para esta visão. 
-     *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
+    /* Iniciamos componentes para esta visão. 
+     * Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
      */ 
     _iniciarMeusComponentes: function(){
       
     },
     
-    /* @função _iniciarMinhaEscutaEventos()
-     *
-     * @descrição Iniciamos as escutas de eventos para esta visão. 
-     *  Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
+    /* Iniciamos as escutas de eventos para esta visão. 
+     * Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
      */ 
     _iniciarMinhaEscutaEventos: function() {
       
