@@ -15,9 +15,12 @@ define([
   'utilitarios',
   'visoes/base/rodape/rodape',
   'visoes/base/barraNavegacao/barraNavegacao',
-  'visoes/base/topo/topo'//,
- // 'visoes/paginas/carrossel/carrossel'
-], function($, Backbone, Utilitarios, Rodape, BarraNavegacao, Topo/*, Carrossel*/){
+  'visoes/base/topo/topo',
+  'visoes/paginas/carrossel/carrossel',
+  'colecoes/carrosselSlides'
+], function($, Backbone, Utilitarios, VisaoRodape, 
+  VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, 
+  ColCarrosselSlides){
   
   var SitioRoteador = Backbone.Router.extend({
     
@@ -36,26 +39,48 @@ define([
       
       // Adiciona o logo e o botão de resultados
       if (!this.visaoTopo) {
-        this.visaoTopo = new Topo();
+        this.visaoTopo = new VisaoTopo();
       }
       $('#topo').html(this.visaoTopo.el);
       
       // Adiciona a barra de navegação
       if (!this.visaoBarraNavegacao) {
-        this.visaoBarraNavegacao = new BarraNavegacao();
+        this.visaoBarraNavegacao = new VisaoBarraNavegacao();
       }
       $('#barra-navegacao').html(this.visaoBarraNavegacao.el);
       
       // Adiciona o rodape
       if (!this.visaoRodape) {
-        this.visaoRodape = new Rodape();
+        this.visaoRodape = new VisaoRodape();
       }
       $('#rodape').html(this.visaoRodape.el);
       
     },
     
     inicio: function() {
-      
+      var esteObj = this;
+    
+      if (!this.visaoCarrossel) {
+        
+        // Pegamos o conteudo da coleção do carrossel.
+        var colCarrosselSlides = new ColCarrosselSlides();
+        
+        // Carregamos esta coleção de slides.
+        Utilitarios.carregarColecao([colCarrosselSlides], function(){
+          
+          // Carregamos a nossa visão
+          esteObj.visaoCarrossel = new VisaoCarrossel({model: colCarrosselSlides});
+          
+          // Inserimos a visão no conteudo.
+          $("#conteudo").html(esteObj.visaoCarrossel.el);
+          
+        });
+        
+      } else {
+        
+        // Esta visão já foi iniciada, apenas re-inserimos ela na div conteudo.
+        $("#conteudo").html(this.visaoCarrossel.el);
+      }
       // Selecionamos o item inicio na barra de navegação.
       this.visaoBarraNavegacao.selecionarItemMenu('inicio');
     }

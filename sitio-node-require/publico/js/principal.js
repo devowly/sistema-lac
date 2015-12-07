@@ -58,7 +58,9 @@ require.config({
     'jquery.scrollTo': '../bibliotecas/jquery.scrollTo',
     
     // Pasta dos nossos templantes
-    'templantes': '../templantes'
+    'templantes': '../templantes',
+    
+    'domReady': '../bibliotecas/domReady'
   },
   
   // Lembre-se: Somente usar o shim para aqueles scripts que não são AMD.
@@ -115,10 +117,14 @@ require.config({
 
 require([
   // Carrega o modulo do aplicativo e o passa para nossa função de definição
-  'aplicativo'
-], function(Aplicativo) {
+  'aplicativo',
+  'domReady'
+], function(Aplicativo, domReady) {
   
-  // A dependencia 'aplicativo' é passada como Aplicativo
-  // Iniciamos aqui nosso aplicativo.
-  Aplicativo.inicializar();
+  domReady(function () {
+    // Esta função é chamada após a página estiver apresentada e carregada.
+    // A dependencia 'aplicativo' é passada como Aplicativo
+    // Iniciamos aqui nosso aplicativo.
+    Aplicativo.inicializar();
+  });
 });

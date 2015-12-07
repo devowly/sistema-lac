@@ -9,9 +9,10 @@ define([
   'backbone',
   'underscore',
   'utilitarios',
+  'bootstrap',
   'visoes/paginas/carrossel/slideItemBotao',
   'text!/js/templantes/paginas/carrossel/Visao.SlideItem.html'
-], function($, Backbone, _, Utilitarios, SlideItemBotao, Templante){
+], function($, Backbone, _, Utilitarios, Bootstrap, VisaoSlideItemBotao, Templante){
   
   /* Para cada um dos indicadores nós temos um item do carrossel. 
    * Este item contem a imagem de slide, titulo, sub-titulo e botão. 
@@ -54,7 +55,7 @@ define([
       $(this.el).html(this.templante(modelo));
       
       // Adicionamos o botão
-      $('div.carousel-caption p', this.el).append(new SlideItemBotao({model: modelo}).render().el);
+      $('div.carousel-caption p', this.el).append(new VisaoSlideItemBotao({model: modelo}).render().el);
         
       return this;
     },

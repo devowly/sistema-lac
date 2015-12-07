@@ -7,8 +7,9 @@
 define([
   'jquery',
   'backbone',
-  'underscore'
-], function($, Backbone, _){
+  'underscore',
+  'bootstrap'
+], function($, Backbone, _, Bootstrap){
 
   /* O botão do slide do carrossel.
    *

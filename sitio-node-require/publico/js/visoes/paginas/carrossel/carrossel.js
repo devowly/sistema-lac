@@ -11,10 +11,11 @@
   'backbone',
   'underscore',
   'utilitarios',
+  'bootstrap',
   'visoes/paginas/carrossel/indicadorSlides',
   'visoes/paginas/carrossel/slideItem',
   'text!/js/templantes/paginas/carrossel/Visao.Carrossel.html'
-], function($, Backbone, _, Utilitarios, IndicadorSlides, SlideItem, Templante){
+], function($, Backbone, _, Utilitarios, Bootstrap, VisaoIndicadorSlides, VisaoSlideItem, Templante){
   
   /* Responsável pelos indicadores e os slides do carrossel.
    *
@@ -62,7 +63,7 @@
       var quantidade = slides.length;
 
       // Carrega o conteúdo do carrossel.
-      $(this.el).html(this.templante());
+      this.$el.html(this.templante());
       
       for (var ca = 0; ca < quantidade; ca++) {
         
@@ -73,10 +74,10 @@
         slideJson.indice = ca;
          
         // Adicionamos os indicadores
-        $('.carousel-indicators', this.el).append(new IndicadorSlides({model: slideJson}).render().el);
+        $('.carousel-indicators', this.el).append(new VisaoIndicadorSlides({model: slideJson}).render().el);
         
         // Adicionamos os items 
-        $('.carousel-inner', this.el).append(new SlideItem({model: slideJson}).render().el);
+        $('.carousel-inner', this.el).append(new VisaoSlideItem({model: slideJson}).render().el);
       }
 
       // Iniciamos aqui os nossos componentes
@@ -104,5 +105,6 @@
 
   });
 
-  return Carrossel;
+  return Carrossel;   
+ 
 });
