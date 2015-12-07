@@ -1,0 +1,25 @@
+/* @arquivo pagCentralAtendimento.css */
+
+/* ESTILOS PARA O CONTEÚDO
+---------------------------------------------------------------------------*/
+
+/* Estilo das linhas */
+#conteudoCentralAtendimento .row {
+  margin-right: 0px; 
+  margin-left: 0px;
+}
+
+/* Essa coluna possui as abas de atendimento */
+#abasAtendimento .row .col-md-12 {
+  background-color: #fff; /* Cor branco claro */
+  border-top: 0px;
+}
+
+/* cor de fundo dos formulários de atendimento */
+.tab-content .row .col-md-6 {
+  background-color: #fff; /* Cor branca */
+}
+
+.tab-content .row .col-md-6 .btn {
+  float: right !important;
+}

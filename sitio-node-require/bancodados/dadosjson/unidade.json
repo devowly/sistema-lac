@@ -1,0 +1,62 @@
+[
+  {
+    "model": "Unidade",
+    "data": {
+      "id": 1,
+      "titulo": "Nossa unidade do centro de Montes Claros",
+      "pagina_endereco": "mapaUnidade001.html",
+      "nome_elemento": "mapaUnidade001",
+      "nome_aba": "CENTRO"
+    }
+  },
+  {
+    "model": "UnidadeMapa",
+    "data": {
+      "id": 1,
+      "lat": "-16.7244327",
+      "lng": "-43.8715339",
+      "zoom": "15",
+      "unidade_id": 1
+    }
+  },
+  {
+    "model": "Unidade",
+    "data": {
+      "id": 2,
+      "titulo": "Nossa unidade do bairro Jardim Panorama de Montes Claros",
+      "pagina_endereco": "mapaUnidade002.html",
+      "nome_elemento": "mapaUnidade002",
+      "nome_aba": "JARDIM PANORAMA"
+    }
+  },
+  {
+    "model": "UnidadeMapa",
+    "data": {
+      "id": 2,
+      "lat": "-16.7244327",
+      "lng": "-43.8715339",
+      "zoom": "15",
+      "unidade_id": 2
+    }
+  },
+  {
+    "model": "Unidade",
+    "data": {
+      "id": 3,
+      "titulo": "Nossa unidade do bairro Todos os Santos de Montes Claros",
+      "pagina_endereco": "mapaUnidade003.html",
+      "nome_elemento": "mapaUnidade003",
+      "nome_aba": "TODOS OS SANTOS"
+    }
+  },
+  {
+    "model": "UnidadeMapa",
+    "data": {
+      "id": 3,
+      "lat": "-16.7244327",
+      "lng": "-43.8715339",
+      "zoom": "15",
+      "unidade_id": 3
+    }
+  }
+]
