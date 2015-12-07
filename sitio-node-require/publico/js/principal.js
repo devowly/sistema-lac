@@ -27,23 +27,23 @@ require.config({
   // Os caminhos de cada um dos nossos modulos.
   paths: {
     
-    'async': '../bibliotecas/async/async',
-    'gmapas': '../bibliotecas/async/gmapas',  // @veja http://blog.millermedeiros.com/requirejs-2-0-delayed-module-evaluation-and-google-maps/
+    'async': '../bibliotecas/async/async',    // Para carregar scripts assincronamente.
+    'gmapas': '../bibliotecas/async/gmapas',  // Mapa do Google. @veja http://blog.millermedeiros.com/requirejs-2-0-delayed-module-evaluation-and-google-maps/
     
-    'text': '../bibliotecas/text',
+    'text': '../bibliotecas/text', // Para carregamento de arquivos em texto. por exemplo, arquivos .html.
     
     'underscore': '../bibliotecas/underscore',
     
     // Backbone e suas extenções
     'backbone': '../bibliotecas/backbone',
-    'backbone.paginator': '../bibliotecas/backbone.paginator',
-    'nesting': '../bibliotecas/nesting',
+    'backbone.paginator': '../bibliotecas/backbone.paginator',  // Adicionar paginação ao BackBone. @veja https://github.com/backbone-paginator/backbone.paginator
+    'nesting': '../bibliotecas/nesting',   // Para utilizarmos nos modelos. @veja https://gist.github.com/geddski/1610397
     
     // Backgrid e suas extenções e dependencias.
-    'backgrid': '../bibliotecas/backgrid',
-    'backgrid-filter': '../bibliotecas/backgrid-filter',
-    'backgrid-paginator': '../bibliotecas/backgrid-paginator',
-    'lunr': '../bibliotecas/lunr',
+    'backgrid': '../bibliotecas/backgrid',  // backgrid @veja http://backgridjs.com/
+    'backgrid-filter': '../bibliotecas/backgrid-filter',  // Oferece filtro para o BackGrid.  @veja https://github.com/wyuenho/backgrid-filter
+    'backgrid-paginator': '../bibliotecas/backgrid-paginator', // Oferece paginação ao BackGrid. @veja https://github.com/wyuenho/backgrid-paginator
+    'lunr': '../bibliotecas/lunr',  // lunr. @veja http://lunrjs.com/
     
     // BootStrap e suas extenções
     'bootstrap': '../bibliotecas/bootstrap',
@@ -95,6 +95,7 @@ require.config({
     // O bootstrap e jQuery UI possuem métodos que se colidem, por isso,
     // vou manter o jquery UI como uma dependencia, ele será carregado antes do bootstrap.
     // Sendo assim, os métodos do bootstrap irão prevalecer.
+    // @veja https://github.com/twbs/bootstrap/issues/6094
     'bootstrap': {
       deps: ['jquery', 'jquery-ui'],
     },
