@@ -10,9 +10,7 @@ define([
   'underscore'
 ], function($, Backbone, _){
   
-  /* @Visão TopoLogo()
-   *
-   * @descricao Adicionamos aqui a imagem de logo do nossos sitio.
+  /* Adicionamos aqui a imagem de logo do nossos sitio.
    *
    * @Elemento 
    * <img data-src="holder.js" src="<%= imagem %>"/>

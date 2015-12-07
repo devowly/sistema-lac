@@ -10,13 +10,11 @@ define([
   'underscore'
 ], function($, Backbone, _){
  
-  /* @Visão TopoPainel()
-   *
-   * @descricao Adicionamos aqui painel do topo do sitio
+  /* Adicionamos aqui painel do topo do sitio
    *
    * @Elemento 
    * <a class="btn btn-success btn-lg pull-right">Resultados</a>
-  **/
+   */
   var TopoPainel = Backbone.View.extend({
 
     tagName: 'button',
@@ -43,15 +41,13 @@ define([
       return this;
     },
     
-    /* EVENTOS DA NOSSA VISÃO
-    ---------------------------------------------*/
+    /* Os eventos desta visão */
     events: {
       
     },
     
-    /* @função _iniciarMeusComponentes()
-     * @descrição Iniciamos componentes para esta visão. 
-     *  Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
+    /* Iniciamos componentes para esta visão. 
+     * Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
      */ 
     _iniciarMeusComponentes: function(){
       
