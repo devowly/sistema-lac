@@ -45,7 +45,7 @@ define([
       // Coloca classe active na primeira aba.
       if (meuModelo.indice == 0) $(this.el).addClass('active');
       
-      $(this.el).html(this.templante(meuModelo));
+      this.$el.html(this.templante(meuModelo));
        
       return this;
     }

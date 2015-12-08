@@ -54,10 +54,10 @@ define([
       // Coloca classe active no primeiro painel.
       if (meuModelo.indice == 0) $(this.el).addClass('active');
       
-      $(this.el).attr('id', meuModelo.nome_elemento);
+      this.$el.attr('id', meuModelo.nome_elemento);
       
       // Carregamos o templante
-      $(this.el).html(meuModelo.minha_visao.template(meuModelo));
+      this.$el.html(meuModelo.minha_visao.template(meuModelo));
       
       return this;
     }
