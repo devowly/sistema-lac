@@ -22,12 +22,13 @@ define([
   'visoes/paginas/nossasUnidades/nossasUnidades',
   'visoes/paginas/centralAtendimento/centralAtendimento',
   'visoes/paginas/convenios/convenios',
+  'visoes/paginas/examesOrientacoes/examesOrientacoes',
   'colecoes/carrosselSlides',
   'colecoes/unidades',
   'colecoes/exames'
 ], function($, Backbone, Utilitarios, VisaoRodape, 
   VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, VisaoQuemSomos, VisaoNossaEquipe, 
-  VisaoNossasUnidades, VisaoCentralAtendimento, VisaoConvenios,
+  VisaoNossasUnidades, VisaoCentralAtendimento, VisaoConvenios, VisaoExamesOrientacoes,
   ColecaoCarrosselSlides, ColecaoUnidades, ColecaoExames){
   
   var SitioRoteador = Backbone.Router.extend({
@@ -43,7 +44,8 @@ define([
       "nossaEquipe": "nossaEquipe",                 // Página da nossa equipe.
       "nossasUnidades": "nossasUnidades",           // Página das nossas unidades.
       "centralAtendimento": "centralAtendimento",   // Página da central de atendimento.
-      "convenios": "convenios"                      // Página dos convênios.
+      "convenios": "convenios",                     // Página dos convênios.
+      "examesOrientacoes": "examesOrientacoes"      // Página contendo a tabela de exames e suas orientações.
     },
     
     /* É chamado já na inicialização, assim adicionamos o básico (topo, barra de navegação rodape) ao nosso sitio.
@@ -185,6 +187,28 @@ define([
       
       // Selecionamos o item convênios na barra de navegação.
       this.visaoBarraNavegacao.selecionarItemMenu('convenios');
+    },
+    
+    examesOrientacoes: function() {
+      var esteObj = this;
+      
+        this.colExames = new ColecaoExames();
+        
+        // Carregamos esta coleção de exames e suas orientacoes. 
+        // Existe um limite de registros imposto em colecao.state.pageSize.
+        // Então não vai ser carregados todos os modelos desta coleção e sim o tamanho do colecao.state.pageSize.
+        Utilitarios.carregarColecao([this.colExames], function(){
+          
+          // Carregamos a nossa visão
+          esteObj.visaoExamesOrientacoes = new VisaoExamesOrientacoes({model: esteObj.colExames});
+          
+          // Quando tudo estiver carregado, inserimos a visão no conteudo.
+          $("#conteudo").html(esteObj.visaoExamesOrientacoes.el);
+          
+        });
+    
+      // Selecionamos o nosso item na barra de navegação.
+      this.visaoBarraNavegacao.selecionarItemMenu('exames');
     }
     
   });

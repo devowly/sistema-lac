@@ -303,7 +303,7 @@
     initialize: function (options) {
       var self = this;
       self.controls = _.defaults(options.controls || {}, self.controls,
-                                 Paginador.prototype.controls);
+                                 Paginator.prototype.controls);
 
       _.extend(self, _.pick(options || {}, "windowSize", "pageHandle",
                             "slideScale", "goBackFirstOnSort",
