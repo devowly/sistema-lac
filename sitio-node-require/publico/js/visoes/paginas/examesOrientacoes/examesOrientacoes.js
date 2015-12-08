@@ -78,7 +78,7 @@
       // Renderiza este template
       this.render();
       
-       // nossa coleção
+      // nossa coleção
       var colecao = this.model;
       
       var esteObj = this;

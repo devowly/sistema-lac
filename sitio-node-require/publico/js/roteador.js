@@ -25,11 +25,12 @@ define([
   'visoes/paginas/examesOrientacoes/examesOrientacoes',
   'colecoes/carrossel/carrosselSlides',
   'colecoes/unidades/unidades',
-  'colecoes/exames/exames'
+  'colecoes/exames/exames',
+  'colecoes/convenios/convenios'
 ], function($, Backbone, Utilitarios, VisaoRodape, 
   VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, VisaoQuemSomos, VisaoNossaEquipe, 
   VisaoNossasUnidades, VisaoCentralAtendimento, VisaoConvenios, VisaoExamesOrientacoes,
-  ColecaoCarrosselSlides, ColecaoUnidades, ColecaoExames){
+  ColecaoCarrosselSlides, ColecaoUnidades, ColecaoExames, ColecaoConvenios){
   
   var SitioRoteador = Backbone.Router.extend({
     
@@ -45,7 +46,8 @@ define([
       "nossasUnidades": "nossasUnidades",           // Página das nossas unidades.
       "centralAtendimento": "centralAtendimento",   // Página da central de atendimento.
       "convenios": "convenios",                     // Página dos convênios.
-      "examesOrientacoes": "examesOrientacoes"      // Página contendo a tabela de exames e suas orientações.
+      "examesOrientacoes": "examesOrientacoes",     // Página contendo a tabela de exames e suas orientações.
+      "infoConvenio": "infoConvenio"                // Pág. de informações de cada convênio.
     },
     
     /* É chamado já na inicialização, assim adicionamos o básico (topo, barra de navegação rodape) ao nosso sitio.
@@ -178,12 +180,21 @@ define([
     },
     
     convenios: function() {
-      // Aqui adicionamos o conteúdo de convenios.
-      if (!this.visaoConvenios) {
-        this.visaoConvenios = new VisaoConvenios();
-      }
-      // Inserindo conteudo dos convênios.
-      $('#conteudo').html(this.visaoConvenios.el);
+      var esteObj = this;
+      
+      var colConvenios = new ColecaoConvenios();
+      
+      // Carregamos esta coleção de convenios e suas informações. 
+      // Existe um limite de registros imposto em colecao.state.pageSize.
+      // Então não vão ser carregados todos os modelos desta coleção e sim o tamanho do colecao.state.pageSize.
+      Utilitarios.carregarColecao([colConvenios], function(){
+        
+        // Aqui adicionamos o conteúdo de convenios.
+        esteObj.visaoConvenios = new VisaoConvenios({model: colConvenios });
+        
+        // Inserindo conteudo dos convênios.
+        $('#conteudo').html(esteObj.visaoConvenios.el);
+      });
       
       // Selecionamos o item convênios na barra de navegação.
       this.visaoBarraNavegacao.selecionarItemMenu('convenios');
@@ -209,6 +220,17 @@ define([
     
       // Selecionamos o nosso item na barra de navegação.
       this.visaoBarraNavegacao.selecionarItemMenu('exames');
+    },
+  
+    infoConvenio: function() {
+      // Aqui adicionamos o conteúdo.
+      if (!this.visaoInfoConvenio) {
+        this.visaoInfoConvenio = new VisaoInfoConvenio();
+      }
+      $('#conteudo').html(this.visaoInfoConvenio.el);
+      
+      // Remove selecao de qualquer item da barra de navegação.
+      this.visaoBarraNavegacao.selecionarItemMenu(null);
     }
     
   });
