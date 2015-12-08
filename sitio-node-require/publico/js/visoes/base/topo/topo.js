@@ -14,7 +14,7 @@ define([
   'visoes/base/topo/topoPainel',
   'visoes/base/topo/topoLogo',
   'text!/js/templantes/base/topo/Visao.Topo.html'
-], function($, Backbone, _, Utilitarios, TopoPainel, TopoLogo, Templante) {
+], function($, Backbone, _, Utilitarios, VisaoTopoPainel, VisaoTopoLogo, Templante) {
 
   /* Nossa visão do topo da página - Apresentamos aqui a visão do topo.
    * Esta visão possui mais duas outras, que são, a visão do logotipo, e a
@@ -60,10 +60,10 @@ define([
       //var logo = { imagem: '/js/imagems/logo.jpg'}; 
       
       // Adicionamos o logo ao conteudo do topo.
-      $('div.row div#logotipo', this.el).append(new TopoLogo({model: logo }).render().el); 
+      $('div.row div#logotipo', this.el).append(new VisaoTopoLogo({model: logo }).render().el); 
       
       // Adicionamos o painel do topo da nossa página
-      $('div.row div#painel-topo', this.el).append(new TopoPainel().render().el); 
+      $('div.row div#painel-topo', this.el).append(new VisaoTopoPainel().render().el); 
       
       // Iniciamos aqui os nossos componentes
       this._iniciarMeusComponentes();

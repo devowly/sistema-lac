@@ -17,11 +17,14 @@ define([
   'visoes/base/barraNavegacao/barraNavegacao',
   'visoes/base/topo/topo',
   'visoes/paginas/carrossel/carrossel',
-  'visoes/paginas/quemsomos/quemSomos',
-  'colecoes/carrosselSlides'
+  'visoes/paginas/quemSomos/quemSomos',
+  'visoes/paginas/nossaEquipe/nossaEquipe',
+  'visoes/paginas/nossasUnidades/nossasUnidades',
+  'colecoes/carrosselSlides',
+  'colecoes/unidades'
 ], function($, Backbone, Utilitarios, VisaoRodape, 
-  VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, VisaoQuemSomos, 
-  ColecaoCarrosselSlides){
+  VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, VisaoQuemSomos, VisaoNossaEquipe, VisaoNossasUnidades,
+  ColecaoCarrosselSlides, ColecaoUnidades){
   
   var SitioRoteador = Backbone.Router.extend({
     
@@ -32,7 +35,9 @@ define([
       
       /* PAGINAS BASE DO NOSSO SITIO. */
       "": "inicio",                              // Caso seja a extenção inicial, adicionamos o conteúdo de início.
-      "quemSomos": "quemSomos"                   // Página de quem somos.
+      "quemSomos": "quemSomos",                  // Página de quem somos.
+      "nossaEquipe": "nossaEquipe",              // Página da nossa equipe.
+      "nossasUnidades": "nossasUnidades"         // Página das nossas unidades.
     },
     
     /* É chamado já na inicialização, assim adicionamos o básico (topo, barra de navegação rodape) ao nosso sitio.
@@ -100,6 +105,58 @@ define([
       // reiniciar eventos e os componentes desta visão
       this.visaoQuemSomos.reIniciarEventosComponentes();
       
+    },
+  
+    nossaEquipe: function() {
+      // Aqui adicionamos o conteúdo de nossa equipe.
+      if (!this.visaoNossaEquipe) {
+        this.visaoNossaEquipe = new VisaoNossaEquipe();
+      }
+      $('#conteudo').html(this.visaoNossaEquipe.el);
+      
+      // Remove seleção de qualquer item da barra de navegacao
+      this.visaoBarraNavegacao.selecionarItemMenu(null);
+    },
+  
+    nossasUnidades: function() {
+      var esteObj = this;
+    
+      if (!this.visaoNossasUnidades) {
+        
+        var colecaoUnidades = new ColecaoUnidades();
+        
+        // Carrega a coleção unidades e depois as coleções aninhadas aos modelos.
+        Utilitarios.carregarColecao([colecaoUnidades], function() {
+            
+          // Inicia a visão de cada unidade sendo chamado após a coleção de modelos e de mapas estiver carregado.
+          esteObj.visaoNossasUnidades = new VisaoNossasUnidades({model: colecaoUnidades});
+          
+          // Carregamos os templates das nossas unidades.
+          esteObj.visaoNossasUnidades.carregarTemplantes( function(visNossasUnidades) {
+            
+            // Aqui adicionamos o conteúdo de nossas unidades.
+            $('#conteudo').html(visNossasUnidades.el);
+            
+            // reiniciar eventos
+            visNossasUnidades.reIniciarEventos();
+            
+            // Aqui nós iniciamos o mapa de cada unidade.
+            visNossasUnidades.iniciarCadaMapa();
+             
+          });
+        });
+        
+      } else {
+        
+        // Aqui adicionamos o conteúdo de nossas unidades.
+        $('#conteudo').html(this.visaoNossasUnidades.el);
+        
+        // reiniciar eventos
+        this.visaoNossasUnidades.reIniciarEventos();
+      }
+      
+      // Selecionamos o item unidades na barra de navegação
+      this.visaoBarraNavegacao.selecionarItemMenu('unidades');
     }
     
   });

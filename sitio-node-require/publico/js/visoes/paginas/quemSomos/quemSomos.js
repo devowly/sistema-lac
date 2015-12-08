@@ -11,7 +11,7 @@ define([
   'underscore',
   'bootstrap',
   'jquery.scrollTo',
-  'text!/js/templantes/paginas/quemsomos/Visao.QuemSomos.html'
+  'text!/js/templantes/paginas/quemSomos/Visao.QuemSomos.html'
 ], function($, Backbone, _, Bootstrap, scrollTo, Templante){
   
   /* Responsavel pela apresentação do texto que descreve as diversas informações da empresa.
