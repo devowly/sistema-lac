@@ -23,13 +23,14 @@ define([
   'visoes/paginas/centralAtendimento/centralAtendimento',
   'visoes/paginas/convenios/convenios',
   'visoes/paginas/examesOrientacoes/examesOrientacoes',
+  'visoes/paginas/infoConvenio/infoConvenio',
   'colecoes/carrossel/carrosselSlides',
   'colecoes/unidades/unidades',
   'colecoes/exames/exames',
   'colecoes/convenios/convenios'
 ], function($, Backbone, Utilitarios, VisaoRodape, 
   VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, VisaoQuemSomos, VisaoNossaEquipe, 
-  VisaoNossasUnidades, VisaoCentralAtendimento, VisaoConvenios, VisaoExamesOrientacoes,
+  VisaoNossasUnidades, VisaoCentralAtendimento, VisaoConvenios, VisaoExamesOrientacoes, VisaoInfoConvenio,
   ColecaoCarrosselSlides, ColecaoUnidades, ColecaoExames, ColecaoConvenios){
   
   var SitioRoteador = Backbone.Router.extend({
@@ -40,14 +41,14 @@ define([
     routes: {
       
       /* PAGINAS BASE DO NOSSO SITIO. */
-      "": "inicio",                                 // Caso seja a extenção inicial, adicionamos o conteúdo de início.
-      "quemSomos": "quemSomos",                     // Página de quem somos.
-      "nossaEquipe": "nossaEquipe",                 // Página da nossa equipe.
-      "nossasUnidades": "nossasUnidades",           // Página das nossas unidades.
-      "centralAtendimento": "centralAtendimento",   // Página da central de atendimento.
-      "convenios": "convenios",                     // Página dos convênios.
-      "examesOrientacoes": "examesOrientacoes",     // Página contendo a tabela de exames e suas orientações.
-      "infoConvenio": "infoConvenio"                // Pág. de informações de cada convênio.
+      "": "inicio",                                   // Caso seja a extenção inicial, adicionamos o conteúdo de início.
+      "quemSomos": "quemSomos",                       // Página de quem somos.
+      "nossaEquipe": "nossaEquipe",                   // Página da nossa equipe.
+      "nossasUnidades": "nossasUnidades",             // Página das nossas unidades.
+      "centralAtendimento": "centralAtendimento",     // Página da central de atendimento.
+      "convenios": "convenios",                       // Página dos convênios.
+      "examesOrientacoes": "examesOrientacoes",       // Página contendo a tabela de exames e suas orientações.
+      "infoConvenio/:idConvenio": "infoConvenio"  // Pág. de informações de cada convênio.
     },
     
     /* É chamado já na inicialização, assim adicionamos o básico (topo, barra de navegação rodape) ao nosso sitio.
@@ -222,12 +223,17 @@ define([
       this.visaoBarraNavegacao.selecionarItemMenu('exames');
     },
   
-    infoConvenio: function() {
-      // Aqui adicionamos o conteúdo.
-      if (!this.visaoInfoConvenio) {
-        this.visaoInfoConvenio = new VisaoInfoConvenio();
-      }
-      $('#conteudo').html(this.visaoInfoConvenio.el);
+    infoConvenio: function(idConvenio) {
+      
+      if (idConvenio) {
+        
+        // Aqui adicionamos o conteúdo.
+        if (!this.visaoInfoConvenio) {
+          this.visaoInfoConvenio = new VisaoInfoConvenio();
+        }
+        $('#conteudo').html(this.visaoInfoConvenio.el);
+        
+      } 
       
       // Remove selecao de qualquer item da barra de navegação.
       this.visaoBarraNavegacao.selecionarItemMenu(null);

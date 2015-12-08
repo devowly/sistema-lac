@@ -1021,6 +1021,51 @@ var ButtonModalCell = Backgrid.ButtonModalCell = Cell.extend({
 });
 
 /**
+   ButtonCell Apresenta um botão com o conteúdo, ele vai abrir um link passando um valor de identificação.
+
+   @class Backgrid.ButtonCell
+   @extends Backgrid.Cell
+*/
+var ButtonCell = Backgrid.ButtonCell = Cell.extend({
+
+  /** @propriedade */
+  className: "button-cell",
+
+  /**
+     @property {string} [textContent] O texto do botão que será gerado.
+  */
+  textContent: "undefined",
+  
+  formatter: StringFormatter,
+  
+  initialize: function (options) {
+    ButtonCell.__super__.initialize.apply(this, arguments);
+    this.textContent = options.textContent || this.textContent;
+  },
+
+  render: function () {
+    this.$el.empty();
+    
+    var rawValue = this.model.get(this.column.get("name"));
+    var formattedValue = this.formatter.fromRaw(rawValue, this.model);
+    this.target = '#' + this.column.get("route") + '/' + this.model.get("id");
+    
+    console.log(this.column.toJSON());
+    
+    //Criamos o botão 
+    var myButton = $("<a>", {
+      "class": "btn btn-success btn-sm",
+      'role': 'button',
+      'href': this.target
+    }).text(formattedValue);
+    
+    this.$el.append(myButton);
+    this.delegateEvents();
+    return this;
+  }
+});
+
+/**
    StringCell displays HTML escaped strings and accepts anything typed in.
 
    @class Backgrid.StringCell

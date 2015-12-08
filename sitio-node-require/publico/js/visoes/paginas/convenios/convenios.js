@@ -2,7 +2,9 @@
 
 /* @arquivo convenios.js */
 
-/* Versão 0.0.1-Beta */
+/* Versão 0.0.1-Beta 
+ * - Remover o código das novas células do núcleo do Backgrid e adiciona-las em plugins separados. (issue #15) [AFAZER]
+ */
 
 define([
   'jquery',
@@ -49,8 +51,8 @@ define([
         label: "Visualizar",                 // Nome para mostrar na coluna
         editable: false,                     // por padrão, cada celula em uma coluna é editavel. Mas não queremos neste caso.
         sortable: false,                     // O Servidor REST Epilogue não é compativel com esta forma de organização.
-        idwindow: 'orientacao',              // O nome da janela modal que queremos abrir.
-        cell: "buttonModal"                  // O tipo da celula é botão modal
+        route: 'infoConvenio',              // O nome da janela modal que queremos abrir.
+        cell: "button"                       // O tipo da celula é botão 
       }
     ],
     
