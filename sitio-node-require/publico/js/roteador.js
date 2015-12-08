@@ -21,10 +21,12 @@ define([
   'visoes/paginas/nossaEquipe/nossaEquipe',
   'visoes/paginas/nossasUnidades/nossasUnidades',
   'visoes/paginas/centralAtendimento/centralAtendimento',
+  'visoes/paginas/convenios/convenios',
   'colecoes/carrosselSlides',
   'colecoes/unidades'
 ], function($, Backbone, Utilitarios, VisaoRodape, 
-  VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, VisaoQuemSomos, VisaoNossaEquipe, VisaoNossasUnidades, VisaoCentralAtendimento,
+  VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, VisaoQuemSomos, VisaoNossaEquipe, 
+  VisaoNossasUnidades, VisaoCentralAtendimento, VisaoConvenios,
   ColecaoCarrosselSlides, ColecaoUnidades){
   
   var SitioRoteador = Backbone.Router.extend({
@@ -35,11 +37,12 @@ define([
     routes: {
       
       /* PAGINAS BASE DO NOSSO SITIO. */
-      "": "inicio",                                // Caso seja a extenção inicial, adicionamos o conteúdo de início.
-      "quemSomos": "quemSomos",                    // Página de quem somos.
-      "nossaEquipe": "nossaEquipe",                // Página da nossa equipe.
-      "nossasUnidades": "nossasUnidades",          // Página das nossas unidades.
-      "centralAtendimento": "centralAtendimento"   // Página da central de atendimento.
+      "": "inicio",                                 // Caso seja a extenção inicial, adicionamos o conteúdo de início.
+      "quemSomos": "quemSomos",                     // Página de quem somos.
+      "nossaEquipe": "nossaEquipe",                 // Página da nossa equipe.
+      "nossasUnidades": "nossasUnidades",           // Página das nossas unidades.
+      "centralAtendimento": "centralAtendimento",   // Página da central de atendimento.
+      "convenios": "convenios"                      // Página dos convênios.
     },
     
     /* É chamado já na inicialização, assim adicionamos o básico (topo, barra de navegação rodape) ao nosso sitio.
@@ -169,6 +172,18 @@ define([
       $('#conteudo').html(this.visaoCentralAtendimento.el);
       
       this.visaoBarraNavegacao.selecionarItemMenu('centralAtendimento');
+    },
+    
+    convenios: function() {
+      // Aqui adicionamos o conteúdo de convenios.
+      if (!this.visaoConvenios) {
+        this.visaoConvenios = new VisaoConvenios();
+      }
+      // Inserindo conteudo dos convênios.
+      $('#conteudo').html(this.visaoConvenios.el);
+      
+      // Selecionamos o item convênios na barra de navegação.
+      this.visaoBarraNavegacao.selecionarItemMenu('convenios');
     }
     
   });
