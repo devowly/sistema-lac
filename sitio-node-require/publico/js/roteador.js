@@ -23,11 +23,12 @@ define([
   'visoes/paginas/centralAtendimento/centralAtendimento',
   'visoes/paginas/convenios/convenios',
   'colecoes/carrosselSlides',
-  'colecoes/unidades'
+  'colecoes/unidades',
+  'colecoes/exames'
 ], function($, Backbone, Utilitarios, VisaoRodape, 
   VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, VisaoQuemSomos, VisaoNossaEquipe, 
   VisaoNossasUnidades, VisaoCentralAtendimento, VisaoConvenios,
-  ColecaoCarrosselSlides, ColecaoUnidades){
+  ColecaoCarrosselSlides, ColecaoUnidades, ColecaoExames){
   
   var SitioRoteador = Backbone.Router.extend({
     

@@ -4,10 +4,10 @@
 /* IMPORTAÇÃO DOS ESTILOS DE BASE
 -------------------------------------------*/
 @import url('global.css');           /* Estilos globais: São compartilhados por vários arquivos. */
-@import url('topo.css');
-@import url('barraNavegacao.css');
+@import url('base/topo.css');
+@import url('base/barraNavegacao.css');
+@import url('base/rodape.css');
 @import url('corpo.css');
-@import url('rodape.css');
 @import url('grid.css');
 
 /* ESTILOS ÚNICOS DE CADA ARQUIVO
