@@ -174,7 +174,7 @@ define([
       }
       $('#conteudo').html(this.visaoCentralAtendimento.el);
       
-      this.visaoBarraNavegacao.selecionarItemMenu('centralAtendimento');
+      this.visaoBarraNavegacao.selecionarItemMenu('central-atendimento');
     },
     
     convenios: function() {
