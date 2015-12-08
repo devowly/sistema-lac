@@ -3,8 +3,31 @@
 /* ESTILOS PARA O CONTEÚDO
 ---------------------------------------------------------------------------*/
 
+/* Coluna onde iremos apresentar os exames */
+#conteudo-convenios {
+  margin-right: 0px; 
+  margin-left: 0px;"
+} 
+
+#conteudo-convenios > .col-md-6 {
+  background-color: #fff; /* branco */
+  border: 0px solid;
+} 
+
+/* Filtro dos exames e orientações */
+#conteudo-convenios > #filtro-convenios {
+  background-color: #fff;  /* branco */
+  border: 0px solid; 
+  padding-right: 0px;
+}
+
+/* Cor de fundo para o conteúdo */
+#conteudo-convenios > .col-md-12 {
+  background-color: #fff; /* branco*/
+}
+
 /* Texto de apresentação */
-#conteudoFiltro .col-md-6 {
+#filtro-convenios .col-md-6 {
   padding-left: 10px; 
   background-color: #fff; /* Branco */
   border:0px; 
@@ -13,47 +36,14 @@
 } 
 
 /* filtro dos convênios */
-#conteudoFiltro .col-lg-6 {
+#filtro-convenios .col-lg-6 {
   background-color: #fff; /* branco */
   border:0px; 
   padding-top: 0px; 
   padding-bottom: 0px;
 }
 
-#conteudoGradeConvenios {
-  border: solid 0px;
-}
-
-#conteudoGradeConvenios > .col-sm-6,
-#conteudoGradeConvenios > .col-md-3 {
-  background-color: #fff; 
-  border-color: #fff; 
-  height: 322px; 
-  width:290px;
-}
-
-/* Imagem do convênio */
-#conteudoGradeConvenios img {
-  display: block; 
-  height:97px; 
-  width:114px;
-}
-
-/* Altura mínima do subtítulo */
-#conteudoGradeConvenios .caption {
-  min-height: 186px;
-}
-
-/* Botão de carregar mais convênios */
-#conteudoGradeConvenios > .col-md-12{
-  background-color: #fff; 
-  border: solid 0px; 
-  text-align: center;
-}
-
-/* Contêm botão de carregar mais convenios */
-#conteudoCarregarConvenio {
- background-color: #fff; 
- border: solid 0px; 
- text-align: center;"
+/* A largura da coluna id da tabela de convênios */
+div#tabela-convenios table.backgrid th.id {
+  width: 60px;
 }

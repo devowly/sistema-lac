@@ -4,24 +4,24 @@
 ---------------------------------------------------------------------------*/
 
 /* Precisamos de menos margem no titulo inicial */
-#textoQuemSomos #aEmpresa .page-header{
+#texto-quem-somos #sobre-a-empresa .page-header{
   margin-top: 3px;
 }
 
 /* Estilo das linha */
-#quemSomosConteudo .row {
+#conteudo-quem-somos .row {
   min-height: 370px; 
   margin-right: 0px;
 }
 
 /* Menu vertical esquerdo */
-#quemSomosConteudo .row .col-md-3 {
+#conteudo-quem-somos .row .col-md-3 {
   background-color: #fff;  /* Cor de fundo branco */
   border: 0px;
 }
 
 /* O conteúdo que amazenam o texto */
-#quemSomosConteudo .row .col-md-9 {
+#conteudo-quem-somos .row .col-md-9 {
   padding-top: 15px; 
   padding-bottom: 15px;
   background-color: #fff; /* Branco */

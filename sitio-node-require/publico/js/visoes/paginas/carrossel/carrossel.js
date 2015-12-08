@@ -20,7 +20,7 @@
   /* Responsável pelos indicadores e os slides do carrossel.
    *
    * @Carrega
-   * <div id="oCarrossel" class="carousel slide" data-ride="carousel">
+   * <div id="carrossel-apresentacao" class="carousel slide" data-ride="carousel">
    *   <!-- Indicators -->
    *   <ol class="carousel-indicators">
    *       
@@ -30,11 +30,11 @@
    *       
    *   </div>
    *     
-   *  <a class="left carousel-control" href="#oCarrossel" role="button" data-slide="prev">
+   *  <a class="left carousel-control" href="#carrossel-apresentacao" role="button" data-slide="prev">
    *     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
    *     <span class="sr-only">Anterior</span>
    *   </a>
-   *   <a class="right carousel-control" href="#oCarrossel" role="button" data-slide="next">
+   *   <a class="right carousel-control" href="#carrossel-apresentacao" role="button" data-slide="next">
    *     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
    *     <span class="sr-only">Próximo</span>
    *   </a>

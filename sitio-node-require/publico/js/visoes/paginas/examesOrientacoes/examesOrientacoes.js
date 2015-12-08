@@ -240,7 +240,7 @@
                 
                 if (typeof esteObj.listaModais[pagina].template !== 'undefined') {
                   // Acrescentamos o XML dos modais.
-                  $('div#orientacoesExmModais', esteObj.el).append(esteObj.listaModais[pagina].render().el); 
+                  $('div#orientacoes-exames-modais', esteObj.el).append(esteObj.listaModais[pagina].render().el); 
                    
                   // Nós precisaremos saber quando o XML desta visão já foi acrescentado.
                   esteObj.listaModais[pagina].seXmlAcrescentado = true;
@@ -278,7 +278,7 @@
       });  
       
       // Renderiza a nossa tabela e insere ela na div da tabela.
-      $("div#tabelaExamesOrientacoes", this.el).append(this.tabela.render().el);
+      $("div#tabela-exames-orientacoes", this.el).append(this.tabela.render().el);
 
       // Vamos realizar a paginação
       this.paginacao = new Backgrid.Extension.Paginator({
@@ -300,7 +300,7 @@
       });
       
       // inserimos a paginação
-      $("div#exameOrientacaoPaginacao", this.el).append(this.paginacao.render().el);
+      $("div#exame-orientacao-paginacao", this.el).append(this.paginacao.render().el);
       
       // Filtro do lado servidor delegando a pesquisa para o servidor quando enviar os parametros da pesquisa.
       this.filtroLadoServidor = new Backgrid.Extension.ServerSideFilter({
@@ -311,7 +311,7 @@
       });
       
       // inserimos o filtro
-      $("div#entradaPesquisa", this.el).before(this.filtroLadoServidor.render().el);
+      $("div#entrada-exames-pesquisa", this.el).before(this.filtroLadoServidor.render().el);
       
       this._iniciarMeusComponentes();
       this._iniciarMinhaEscutaEventos();

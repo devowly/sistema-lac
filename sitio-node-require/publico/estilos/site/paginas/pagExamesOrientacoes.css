@@ -4,25 +4,25 @@
 ---------------------------------------------------------------------------*/
 
 /* Coluna onde iremos apresentar os exames */
-#conteudoExames {
+#conteudo-exames {
   margin-right: 0px; 
   margin-left: 0px;"
 } 
 
-#conteudoExames > .col-md-6 {
+#conteudo-exames > .col-md-6 {
   background-color: #fff; /* branco */
   border: 0px solid;
 } 
 
 /* Filtro dos exames e orientações */
-#conteudoExames > #filtroExames {
+#conteudo-exames > #filtro-exames {
   background-color: #fff;  /* branco */
   border: 0px solid; 
   padding-right: 0px;
 }
 
 /* Cor de fundo para o conteúdo */
-#conteudoExames > .col-md-12 {
+#conteudo-exames > .col-md-12 {
   background-color: #fff; /* branco*/
 }
 
@@ -32,16 +32,16 @@
 }
 
 /* Adicionamos um espaço para cada grupo de botões */
-div#exameOrientacaoPaginacao .backgrid-paginator .btn-group {
+div#exame-orientacao-paginacao .backgrid-paginator .btn-group {
   padding-left: 5px;
 }
 
 /* A largura da coluna id da tabela de exames e orientações */
-div#tabelaExamesOrientacoes table.backgrid th.id {
+div#tabela-exames-orientacoes table.backgrid th.id {
   width: 60px;
 }
 
 /* A largura da coluna nome_elemento da tabela de exames e orientações */
-div#tabelaExamesOrientacoes table.backgrid th.nome_elemento {
+div#tabela-exames-orientacoes table.backgrid th.nome_elemento {
   width: 180px;
 }

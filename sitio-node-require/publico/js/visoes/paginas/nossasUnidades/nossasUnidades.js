@@ -35,7 +35,7 @@ define([
    * <h1 class="page-header">Nossas Unidades de Coleta</h1>
    * <p class="lead">Encontre o laboratório mais próximo de você.</p>
    *
-   * <div id="conteudoUnidades">
+   * <div id="conteudo-unidade">
    *   <ul class="nav nav-tabs" role="tablist">
    *
    *   </ul> 

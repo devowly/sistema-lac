@@ -13,14 +13,14 @@ define([
   
   /* Responsável por adicionar cada um dos indicadores do slide.
    *
-   * @Elemento: <li data-target="#oCarrossel" data-slide-to="0" class="active"></li> 
+   * @Elemento: <li data-target="#carrossel-apresentacao" data-slide-to="0" class="active"></li> 
    */
   var IndicadorSlides = Backbone.View.extend({
 
     tagName: 'li',
     
     attributes: {
-      'data-target': '#oCarrossel'
+      'data-target': '#carrossel-apresentacao'
     },
     
     initialize: function () {

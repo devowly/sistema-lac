@@ -36,16 +36,16 @@ define([
     _iniciarMeusComponentes: function(){
       
       // Adicionamos o seletor e também o offset do componente scrollspy.
-      $('div#' + 'textoQuemSomos').scrollspy({
-        selector: 'a#rolagemId',
+      $('div#' + 'texto-quem-somos').scrollspy({
+        selector: 'a#rolagem-identificador',
         offset: 30
       });
       
       // Remove seleção de qualquer item ativo
-      $('#menuVertEsquerdo .nav li').removeClass('active');
+      $('#menu-vertical-esquerdo .nav li').removeClass('active');
       
       // Aqui nós adicionamos a seleção ao item inicial.
-      $('li#' + 'itemEmpresa').addClass('active');
+      $('li#' + 'item-empresa').addClass('active');
     },
     
     /* Iniciamos aqui as escutas de eventos para esta visão. 
@@ -54,21 +54,21 @@ define([
     _iniciarMinhaEscutaEventos: function() {
       
       // Adicionamos o evento de clique nos links
-      $('a#rolagemId').click(function(evento){
+      $('a#rolagem-identificador').click(function(evento){
         // Fazemos com que o link não prossiga para barra de endereços.
         // Isto é importante para que a rolagem funcione.
         evento.preventDefault();
         evento.stopPropagation();
           
         // Remove seleção atual
-        $('#menuVertEsquerdo .nav li').removeClass('active');
+        $('#menu-vertical-esquerdo .nav li').removeClass('active');
       
         // Pegamos o elemento que miramos.
         var mira = $(this).attr('mira');
         
         // É importante utilizarmos este método porque não podemos
         // fazer a rolagem utilizando o método do scrollspy.
-        $('div#' + 'textoQuemSomos').scrollTo(
+        $('div#' + 'texto-quem-somos').scrollTo(
           mira, 
           {duration: 500, offset: -30}
         );
