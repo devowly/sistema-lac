@@ -192,20 +192,20 @@ define([
     examesOrientacoes: function() {
       var esteObj = this;
       
-        this.colExames = new ColecaoExames();
+      this.colExames = new ColecaoExames();
+      
+      // Carregamos esta coleção de exames e suas orientacoes. 
+      // Existe um limite de registros imposto em colecao.state.pageSize.
+      // Então não vai ser carregados todos os modelos desta coleção e sim o tamanho do colecao.state.pageSize.
+      Utilitarios.carregarColecao([this.colExames], function(){
         
-        // Carregamos esta coleção de exames e suas orientacoes. 
-        // Existe um limite de registros imposto em colecao.state.pageSize.
-        // Então não vai ser carregados todos os modelos desta coleção e sim o tamanho do colecao.state.pageSize.
-        Utilitarios.carregarColecao([this.colExames], function(){
-          
-          // Carregamos a nossa visão
-          esteObj.visaoExamesOrientacoes = new VisaoExamesOrientacoes({model: esteObj.colExames});
-          
-          // Quando tudo estiver carregado, inserimos a visão no conteudo.
-          $("#conteudo").html(esteObj.visaoExamesOrientacoes.el);
-          
-        });
+        // Carregamos a nossa visão
+        esteObj.visaoExamesOrientacoes = new VisaoExamesOrientacoes({model: esteObj.colExames});
+        
+        // Quando tudo estiver carregado, inserimos a visão no conteudo.
+        $("#conteudo").html(esteObj.visaoExamesOrientacoes.el);
+        
+      });
     
       // Selecionamos o nosso item na barra de navegação.
       this.visaoBarraNavegacao.selecionarItemMenu('exames');

@@ -51,7 +51,8 @@ configuracao.load(function (args, opcs) {
   
   var bodyParser = require('body-parser');
   
-  // Configuração do express 
+  // Realiza a configuração do express 
+  // Iremos servir as páginas do diretorio "/publico" 
   aplic.set('port', process.env.PORT || configuracao.server.port);
   aplic.use(bodyParser.json());
   aplic.use(bodyParser.urlencoded({ extended: false }));
