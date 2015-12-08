@@ -25,6 +25,28 @@ define([
   var UTILIZAR_BANCO_UNIDADE = true; // Você quer utilizar o banco de dados? 
    
   /* Responsável por apresentar as unidades com mapa.
+   *
+   * @Carrega
+   * <ol class="breadcrumb">
+   *   <li><a href="#">Página inicial</a></li>
+   *   <li class="active">Unidades</li>
+   * </ol>
+   *
+   * <h1 class="page-header">Nossas Unidades de Coleta</h1>
+   * <p class="lead">Encontre o laboratório mais próximo de você.</p>
+   *
+   * <div id="conteudoUnidades">
+   *   <ul class="nav nav-tabs" role="tablist">
+   *
+   *   </ul> 
+   *     
+   *   <div class="row">
+   * 
+   *     <div class="tab-content">
+   *   
+   *     </div>  
+   *   </div>
+   * </div>
    */
   var NossasUnidades = Backbone.View.extend({
 
