@@ -7,7 +7,7 @@
   'backbone',
   'nesting',
   'underscore',
-  'colecoes/unidadeMapas'
+  'colecoes/unidades/unidadeMapas'
 ], function($, Backbone, nesting, _, ColecaoUnidadeMapas){
  
   /* Metodos básicos dos modelos são

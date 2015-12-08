@@ -7,7 +7,7 @@ define([
   'backbone',
   'nesting',
   'underscore',
-  'colecoes/exameOrientacoes'
+  'colecoes/exames/exameOrientacoes'
 ], function($, Backbone, Nesting, _, ColecaoExameOrientacoes){
   
   /* Metodos básicos dos modelos são

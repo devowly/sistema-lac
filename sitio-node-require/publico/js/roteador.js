@@ -23,9 +23,9 @@ define([
   'visoes/paginas/centralAtendimento/centralAtendimento',
   'visoes/paginas/convenios/convenios',
   'visoes/paginas/examesOrientacoes/examesOrientacoes',
-  'colecoes/carrosselSlides',
-  'colecoes/unidades',
-  'colecoes/exames'
+  'colecoes/carrossel/carrosselSlides',
+  'colecoes/unidades/unidades',
+  'colecoes/exames/exames'
 ], function($, Backbone, Utilitarios, VisaoRodape, 
   VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, VisaoQuemSomos, VisaoNossaEquipe, 
   VisaoNossasUnidades, VisaoCentralAtendimento, VisaoConvenios, VisaoExamesOrientacoes,

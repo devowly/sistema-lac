@@ -1,13 +1,13 @@
 'use strict'
 
-/* @arquivo unidadeMapa.js */
+/* @arquivo unidades.js */
 
  define([
   'jquery',
   'backbone',
   'underscore',
-  'modelos/unidadeMapa'
-], function($, Backbone, _, ModeloUnidadeMapa){
+  'modelos/unidade/unidade'
+], function($, Backbone, _, ModeloUnidade){
   
   /* Metodos básicos da coleção são
    *
@@ -15,15 +15,14 @@
    * remove   (Remove o modelo da coleção)
    * fetch    (União dos dados já obtidos dos modelos desta coleção com os novos do banco de dados) 
    */
-  var UnidadeMapas = Backbone.Collection.extend({
+  var Unidades = Backbone.Collection.extend({
 
-    model: ModeloUnidadeMapa,
+    model: ModeloUnidade,
     
     // O endereço REST onde iremos pegar os dados. 
-    // Esta url será re-escrita pelo Modelo.Unidade 
-    url: "/"
+    url: "/unidades"
 
   });
   
-  return UnidadeMapas;
+  return Unidades;
 });

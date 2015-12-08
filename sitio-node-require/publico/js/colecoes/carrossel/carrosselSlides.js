@@ -6,7 +6,7 @@
   'jquery',
   'backbone',
   'underscore',
-  'modelos/carrosselSlide'
+  'modelos/carrossel/carrosselSlide'
 ], function($, Backbone, _, ModeloCarrosselSlide){
   
   /* Metodos básicos da coleção são

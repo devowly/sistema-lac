@@ -11,7 +11,7 @@
   'backbone',
   'backbone.paginator',
   'underscore',
-  'modelos/exame'
+  'modelos/exame/exame'
 ], function($, Backbone, BackbonePaginator, _, ModeloExame){
   
  
