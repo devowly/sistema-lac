@@ -20,10 +20,11 @@ define([
   'visoes/paginas/quemSomos/quemSomos',
   'visoes/paginas/nossaEquipe/nossaEquipe',
   'visoes/paginas/nossasUnidades/nossasUnidades',
+  'visoes/paginas/centralAtendimento/centralAtendimento',
   'colecoes/carrosselSlides',
   'colecoes/unidades'
 ], function($, Backbone, Utilitarios, VisaoRodape, 
-  VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, VisaoQuemSomos, VisaoNossaEquipe, VisaoNossasUnidades,
+  VisaoBarraNavegacao, VisaoTopo, VisaoCarrossel, VisaoQuemSomos, VisaoNossaEquipe, VisaoNossasUnidades, VisaoCentralAtendimento,
   ColecaoCarrosselSlides, ColecaoUnidades){
   
   var SitioRoteador = Backbone.Router.extend({
@@ -34,10 +35,11 @@ define([
     routes: {
       
       /* PAGINAS BASE DO NOSSO SITIO. */
-      "": "inicio",                              // Caso seja a extenção inicial, adicionamos o conteúdo de início.
-      "quemSomos": "quemSomos",                  // Página de quem somos.
-      "nossaEquipe": "nossaEquipe",              // Página da nossa equipe.
-      "nossasUnidades": "nossasUnidades"         // Página das nossas unidades.
+      "": "inicio",                                // Caso seja a extenção inicial, adicionamos o conteúdo de início.
+      "quemSomos": "quemSomos",                    // Página de quem somos.
+      "nossaEquipe": "nossaEquipe",                // Página da nossa equipe.
+      "nossasUnidades": "nossasUnidades",          // Página das nossas unidades.
+      "centralAtendimento": "centralAtendimento"   // Página da central de atendimento.
     },
     
     /* É chamado já na inicialização, assim adicionamos o básico (topo, barra de navegação rodape) ao nosso sitio.
@@ -157,6 +159,16 @@ define([
       
       // Selecionamos o item unidades na barra de navegação
       this.visaoBarraNavegacao.selecionarItemMenu('unidades');
+    },
+    
+    centralAtendimento: function() {
+      // Aqui adicionamos o conteúdo da central de atendimento.
+      if (!this.visaoCentralAtendimento) {
+        this.visaoCentralAtendimento = new VisaoCentralAtendimento();
+      }
+      $('#conteudo').html(this.visaoCentralAtendimento.el);
+      
+      this.visaoBarraNavegacao.selecionarItemMenu('centralAtendimento');
     }
     
   });
