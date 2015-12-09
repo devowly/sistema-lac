@@ -21,6 +21,13 @@
   padding-right: 0px;
 }
 
+/* Filtro dos exames e orientações */
+#linha-inicio-pagina-convenios > #filtro-de-convenios {
+  background-color: #fff;  /* branco */
+  border: 0px solid; 
+  padding-right: 0px;
+}
+
 /* Cor de fundo para o conteúdo */
 #conteudo-convenios > .col-md-12 {
   background-color: #fff; /* branco*/

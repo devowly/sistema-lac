@@ -142,7 +142,7 @@ define([
       $("div#convenio-paginacao", this.el).append(this.paginacao.render().el);
       
       // Filtro do lado servidor delegando a pesquisa para o servidor quando enviar os parametros da pesquisa.
-      this.filtroLadoServidor = new Backgrid.Extension.ServerSideFilter({
+      this.filtroAutomaticoLadoServidor = new Backgrid.Extension.ServerSideAutomaticFilter({
         collection: this.model,              // Nossa coleção
         name: "q",                           // O nome do parametro de pesquisa no servidor REST
         placeholder: "Filtrar convênios...", // Nome para adicionar no input de escrita
@@ -150,7 +150,7 @@ define([
       });
       
       // inserimos o filtro
-      $("div#entrada-convenios-pesquisa", this.el).before(this.filtroLadoServidor.render().el);
+      $("div#entrada-convenios-pesquisa", this.el).before(this.filtroAutomaticoLadoServidor.render().el);
       
       this._iniciarMeusComponentes();
       this._iniciarMinhaEscutaEventos();
