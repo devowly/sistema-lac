@@ -3,7 +3,7 @@
 /* @arquivo convenios.js */
 
 /* Versão 0.0.1-Beta 
- * - Remover o código das novas células do núcleo do Backgrid e adiciona-las em plugins separados. (issue #15) [AFAZER]
+ * - Remover o código das novas células do núcleo do Backgrid e adiciona-las em plugins separados. (issue #15) (9132a0ba4177833c2098f66f38817e6aae277a6a) [FEITO]
  */
 
 define([
