@@ -31,7 +31,7 @@
     // Modo infinito, é um hibrido do modo cliente e modo servidor.
     // Quando navegado para trás utilizara os dados do tipo cliente,
     // Quando navegado para frente irá realizar paginação dos dados pelo servidor REST Epilogue.
-    mode: 'infinite',
+    mode: 'server',
 
     // Estados iniciais da paginação
     state: {
@@ -71,6 +71,10 @@
       offset: function () { 
         return this.state.currentPage * this.state.pageSize; 
       }
+    },
+      
+    parseState: function (resp, queryParams, state, options) {
+      return { totalRecords: parseInt( options.xhr.getResponseHeader("X-total")) };
     }
     
   });

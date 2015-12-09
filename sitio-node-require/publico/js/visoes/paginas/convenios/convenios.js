@@ -67,18 +67,13 @@ define([
       // Disparado Quando é adicionado modelo a nossa coleçao
       this.listenTo(colecao, "add", function () {
        
-        esteObj._carregarColecoesAninhadas( colecao, function() {
-          
-        }); 
-        
+        esteObj._carregarColecoesAninhadas( colecao, function() { }); 
       });
       
       // Ocorreu reset na coleçao
       this.listenTo(colecao, "reset",function () {
         
-        esteObj._carregarColecoesAninhadas( colecao, function() {
-          
-        }); 
+        esteObj._carregarColecoesAninhadas( colecao, function() { }); 
       });
       
     },
@@ -130,15 +125,16 @@ define([
       // Renderiza a nossa tabela e insere ela na div da tabela.
       $("div#tabela-convenios", this.el).append(this.tabela.render().el);
 
-      // Vamos realizar a paginação
+      /* Aqui nós vamos realizar a paginação
+       * 
+       * Outros parametros suportados são:       
+       * - renderIndexedPageHandles: false  (Quando nós não queremos os botões de indice)
+       * - controls: { rewind: null, fastForward: null }  (Remove o controle de primeiro e ultimo botões)
+       */
       this.paginacao = new Backgrid.Extension.Paginator({
-        collection: this.model,           // Nossa coleção    
-        goBackFirstOnSort: true,          // Quando sortear deve voltar para primeira página.
-        renderIndexedPageHandles: false,  // Não queremos o indice.
-        controls: {                       // Remove o controle de primeiro e ultimo botões.
-          rewind: null,
-          fastForward: null
-        }
+        collection: this.model,     // Nossa coleção    
+        goBackFirstOnSort: true,    // Quando sortear deve voltar para primeira página.
+        windowSize: 10              // Valor da quantidade de botões de indice para esta paginação
       });
       
       // inserimos a paginação

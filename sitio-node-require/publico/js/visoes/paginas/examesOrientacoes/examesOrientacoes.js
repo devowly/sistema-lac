@@ -98,9 +98,7 @@
       });
       
       // Disparado quando é removido algum modelo da coleçao
-      this.listenTo(colecao, "remove", function () {
-        
-      });
+      this.listenTo(colecao, "remove", function () { });
       
       // Ocorreu reset na coleçao
       this.listenTo(colecao, "reset",function () {
@@ -281,23 +279,16 @@
       // Renderiza a nossa tabela e insere ela na div da tabela.
       $("div#tabela-exames-orientacoes", this.el).append(this.tabela.render().el);
 
-      // Vamos realizar a paginação
+      /* Aqui nós vamos realizar a paginação
+       * 
+       * Outros parametros suportados são:       
+       * - renderIndexedPageHandles: false  (Quando nós não queremos os botões de indice)
+       * - controls: { rewind: null, fastForward: null }  (Remove o controle de primeiro e ultimo botões)
+       */
       this.paginacao = new Backgrid.Extension.Paginator({
-        // Nossa coleção
-        collection: this.model,           
-        
-        // Quando sortear deve voltar para primeira página.
-        goBackFirstOnSort: true, 
-        
-        // Não queremos o indice.
-        renderIndexedPageHandles: false,
-        
-        // Remove o controle de primeiro e ultimo botões.
-        controls: {
-          rewind: null,
-          fastForward: null
-        }
-       
+        collection: this.model,     // Nossa coleção
+        goBackFirstOnSort: true,    // Quando sortear deve voltar para primeira página.
+        windowSize: 10              // Valor da quantidade de botões de indice para esta paginação.
       });
       
       // inserimos a paginação

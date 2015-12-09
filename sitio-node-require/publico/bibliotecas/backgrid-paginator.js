@@ -270,12 +270,12 @@
         title: "Anterior"
       },
       forward: {
-        label: "Proximo",
-        title: "Proximo"
+        label: "Próximo",
+        title: "Próximo"
       },
       fastForward: {
-        label: "Ultimo",
-        title: "Ultimo"
+        label: "Último",
+        title: "Último"
       }
     },
 

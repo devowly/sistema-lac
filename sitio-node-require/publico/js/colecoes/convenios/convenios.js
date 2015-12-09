@@ -31,7 +31,7 @@
     // Modo infinito, é um hibrido do modo cliente e modo servidor.
     // Quando navegado para trás utilizara os dados do tipo cliente,
     // Quando navegado para frente irá realizar paginação dos dados pelo servidor REST Epilogue.
-    mode: 'infinite',
+    mode: 'server',
 
     // Estados iniciais da paginação
     state: {
@@ -48,7 +48,7 @@
       
       // número total de registros.
       // <umdez> Acho que poderiamos pegar essa informação do servidor REST. 
-      totalRecords: 13
+      totalRecords: 0
     },
     
     // Aqui ajustamos para ficar compativel com as chaves de chamada que nosso servidor REST suporta.
@@ -61,8 +61,9 @@
       totalPages: null,
       totalRecords: null,
       
-      // Não utilizaremos o &sort=valor
-      sortKey: null,
+      // O servidor Epilogue necessita que o sorteio seja passado da seguinte
+      // forma: rota?sort=-coluna
+      sortKey: 'sort',
       
       // Registro de onde iremos começar
       currentPage: 'offset',
@@ -71,6 +72,10 @@
       offset: function () { 
         return this.state.currentPage * this.state.pageSize; 
       }
+    },
+      
+    parseState: function (resp, queryParams, state, options) {
+      return { totalRecords: parseInt( options.xhr.getResponseHeader("X-total")) };
     }
     
   });
