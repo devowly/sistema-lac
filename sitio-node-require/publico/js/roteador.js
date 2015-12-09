@@ -232,7 +232,6 @@ define([
           this.visaoInfoConvenio = new VisaoInfoConvenio();
         }
         $('#conteudo').html(this.visaoInfoConvenio.el);
-        
       } 
       
       // Remove selecao de qualquer item da barra de navegação.

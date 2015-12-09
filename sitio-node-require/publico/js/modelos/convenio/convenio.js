@@ -36,9 +36,10 @@ define([
     
     // Aqui os atributos padrões deste modelo de exame.
     defaults: {
-      id: null,   // Identificador
-      nome: "",    //Nome do convenio. Exemplo: Arcelor Mittal - Associação beneficiente dos empregados da Arcelor Mittal Brasil.
-      nome_elemento: "Ver as informações do convênio"
+      id: null,                                        // Identificador deste convenio.
+      nome: "",                                        //Nome do convenio. Exemplo: Arcelor Mittal
+      nome_elemento: "Ver as informações do convênio",
+      descricao: ""                                    // Descrição do convenio. Exemplo: Arcelor Mittal - Associação beneficiente dos empregados da Arcelor Mittal Brasil.
     }
   });
   

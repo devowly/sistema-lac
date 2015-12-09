@@ -30,7 +30,7 @@ define([
       pagina_html: "",    // Página html desta informação para o convenio. Exemplo: infoconvenio0001.html
       nome_elemento: "",  // Nome do elemento html utilizado para esta informação. Exemplo: infoconvenio0001
       imagem: "",         // Nome do arquivo que contêm a imagem do convênio. Exemplo: imgConvenio0001.jpeg
-      convenio_id: ""     // Chave extrangeira do convenio a que esta informação pertence.
+      convenio_id: ""    // Chave extrangeira do convenio a que esta informação pertence.
     }
   });
 

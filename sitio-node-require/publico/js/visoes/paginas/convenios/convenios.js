@@ -40,8 +40,8 @@ define([
         })
       }, 
       {
-        name: "nome",                       // O atributo de chave do modelo
-        label: "Nome do convênio",          // Nome para mostrar na coluna
+        name: "descricao",                  // O atributo de chave do modelo
+        label: "Convênio",                  // Nome para mostrar na coluna
         editable: false,                    // por padrão, cada celula em uma coluna é editavel. Mas não queremos neste caso.
         sortable: false,                    // O Servidor REST Epilogue não é compativel com esta forma de organização.
         cell: "string"                      // Tipo da celula, string.
@@ -51,7 +51,7 @@ define([
         label: "Visualizar",                 // Nome para mostrar na coluna
         editable: false,                     // por padrão, cada celula em uma coluna é editavel. Mas não queremos neste caso.
         sortable: false,                     // O Servidor REST Epilogue não é compativel com esta forma de organização.
-        route: 'infoConvenio',              // O nome da janela modal que queremos abrir.
+        route: 'infoConvenio',               // O nome da janela modal que queremos abrir.
         cell: "button"                       // O tipo da celula é botão 
       }
     ],

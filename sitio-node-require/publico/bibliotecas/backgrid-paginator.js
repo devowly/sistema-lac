@@ -1,4 +1,4 @@
-/*
+﻿/*
   backgrid-paginator
   http://github.com/wyuenho/backgrid
 

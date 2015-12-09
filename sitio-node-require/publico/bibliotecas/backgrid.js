@@ -1050,8 +1050,6 @@ var ButtonCell = Backgrid.ButtonCell = Cell.extend({
     var formattedValue = this.formatter.fromRaw(rawValue, this.model);
     this.target = '#' + this.column.get("route") + '/' + this.model.get("id");
     
-    console.log(this.column.toJSON());
-    
     //Criamos o botão 
     var myButton = $("<a>", {
       "class": "btn btn-success btn-sm",

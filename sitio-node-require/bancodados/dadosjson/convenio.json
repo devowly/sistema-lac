@@ -3,7 +3,8 @@
     "model": "Convenio",
     "data": {
       "id": 1,
-      "nome": "Arcelor Mittal - Associação beneficiente dos empregados da Arcelor Mittal Brasil."
+      "nome": "Arcelor Mittal",
+      "descricao": "Arcelor Mittal - Associação beneficiente dos empregados da Arcelor Mittal Brasil."
     }
   },
   {
@@ -20,7 +21,8 @@
     "model": "Convenio",
     "data": {
       "id": 2,
-      "nome": "Saúde - Convênio da saúde."
+      "nome": "Saúde",
+      "descricao": "Saúde - Convênio da saúde."
     }
   },
   {
@@ -37,7 +39,8 @@
     "model": "Convenio",
     "data": {
       "id": 3,
-      "nome": "Correios - Convênio da Empresa Brasileira de Correios e Telégrafos."
+      "nome": "Correios",
+      "descricao": "Correios - Convênio da Empresa Brasileira de Correios e Telégrafos."
     }
   },
   {
@@ -54,7 +57,8 @@
     "model": "Convenio",
     "data": {
       "id": 4,
-      "nome": "Amil - Convênio da Assistência Médica Internacional S/A."
+      "nome": "Amil",
+      "descricao": "Amil - Convênio da Assistência Médica Internacional S/A."
     }
   },
   {
@@ -71,7 +75,8 @@
     "model": "Convenio",
     "data": {
       "id": 5,
-      "nome": "EMBRAPA - Convênio da EMBRAPA."
+      "nome": "EMBRAPA",
+      "descricao": "EMBRAPA - Convênio da EMBRAPA."
     }
   },
   {
@@ -88,7 +93,8 @@
     "model": "Convenio",
     "data": {
       "id": 6,
-      "nome": "CEMIG - Convênio da Companhia de energia de Minas Gerais."
+      "nome": "CEMIG",
+      "descricao": "CEMIG - Convênio da Companhia de energia de Minas Gerais."
     }
   },
   {
@@ -105,7 +111,8 @@
     "model": "Convenio",
     "data": {
       "id": 7,
-      "nome": "Copass Saúde - Convênio da Copass Saúde."
+      "nome": "Copass Saúde",
+      "descricao": "Copass Saúde - Convênio da Copass Saúde."
     }
   },
   {
@@ -122,7 +129,8 @@
     "model": "Convenio",
     "data": {
       "id": 8,
-      "nome": "CAPESESP - Convênio da CAPESESP."
+      "nome": "CAPESESP",
+      "descricao": "CAPESESP - Convênio da CAPESESP."
     }
   },
   {
@@ -139,7 +147,8 @@
     "model": "Convenio",
     "data": {
       "id": 9,
-      "nome": "BHTrans Convênio da Empresa de transporte de Belo Horizonte"
+      "nome": "BHTrans",
+      "descricao": "BHTrans - Convênio da Empresa de transporte de Belo Horizonte"
     }
   },
   {
@@ -156,7 +165,8 @@
     "model": "Convenio",
     "data": {
       "id": 10,
-      "nome": "BHTrans - Convênio da Empresa de transporte de Belo Horizonte"
+      "nome": "BHTrans - Convênio da Empresa de transporte de Belo Horizonte",
+      "descricao": "BHTrans - Convênio da Empresa de transporte de Belo Horizonte"
     }
   },
   {
@@ -173,7 +183,8 @@
     "model": "Convenio",
     "data": {
       "id": 11,
-      "nome": "Bradesco Saúde - Convênio do Bradesco Seguros S/A."
+      "nome": "Bradesco Saúde",
+      "descricao": "Bradesco Saúde - Convênio do Bradesco Seguros S/A."
     }
   },
   {
@@ -190,7 +201,8 @@
     "model": "Convenio",
     "data": {
       "id": 12,
-      "nome": "Allianz - Convênio da Allianz saúde S/A."
+      "nome": "Allianz",
+      "descricao": "Allianz - Convênio da Allianz saúde S/A."
     }
   },
   {
@@ -207,7 +219,8 @@
     "model": "Convenio",
     "data": {
       "id": 13,
-      "nome": "Agros - Convênio para funcionários da Agros."
+      "nome": "Agros",
+      "descricao": "Agros - Convênio para funcionários da Agros."
     }
   },
   {

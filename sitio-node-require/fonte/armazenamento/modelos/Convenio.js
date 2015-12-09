@@ -15,7 +15,10 @@ module.exports = function (database, DataTypes) {
       primaryKey: true 
     },
     nome: {
-      type: DataTypes.STRING // Nome do convênio. Exemplo: Arcelor Mittal - Associação beneficiente dos empregados da Arcelor Mittal Brasil.
+      type: DataTypes.STRING // Nome do convênio. Exemplo: Arcelor Mittal.
+    },
+    descricao: {
+      type: DataTypes.STRING // Descricao do convênio. Exemplo: Arcelor Mittal - Associação beneficiente dos empregados da Arcelor Mittal Brasil.
     }
   }, 
    {
