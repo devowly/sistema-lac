@@ -60,7 +60,8 @@ ServicoRest.prototype.carregarServicoRest = function () {
         associations: mod.associations,          // Relações entre os modelos.
         search: {
           param: 'q'                             // Realizaremos a pesquisa utilizando o padrao rota?q=valor
-        }
+        },
+        pagination: true                         // <umdez> Falta verificar se esta opção existe mesmo.
       });
     } else {
       registrador.debug('Não encontramos o modelo (' + mod.nome + ') do banco de dados.');
