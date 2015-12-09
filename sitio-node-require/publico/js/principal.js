@@ -43,6 +43,7 @@ require.config({
     'backgrid': '../bibliotecas/backgrid',  // backgrid @veja http://backgridjs.com/
     'backgrid-filter': '../bibliotecas/backgrid-filter',  // Oferece filtro para o BackGrid.  @veja https://github.com/wyuenho/backgrid-filter
     'backgrid-paginator': '../bibliotecas/backgrid-paginator', // Oferece paginação ao BackGrid. @veja https://github.com/wyuenho/backgrid-paginator
+    'backgrid-cellbuttons': '../bibliotecas/backgrid-cellbuttons', // Oferece células de botões ao BackGrid. 
     'lunr': '../bibliotecas/lunr',  // lunr. @veja http://lunrjs.com/
     
     // BootStrap e suas extenções
@@ -90,7 +91,7 @@ require.config({
     },
     'backgrid-filter': ['backgrid', 'lunr'], // Extenção para o backgrid, não exporta.
     'backgrid-paginator': ['backgrid'],      // Extenção para o backgrid, não exporta.
-    
+    'backgrid-cellbuttons': ['backgrid'],    // Extenção para o backgrid, não exporta.
     // O backbone-filter necessita disso.
     'lunr': { },
     

@@ -22,9 +22,10 @@
   'backgrid',
   'backgrid-filter',
   'backgrid-paginator',
+  'backgrid-cellbuttons',
   'visoes/paginas/examesOrientacoes/exameOrientacaoModal',
   'text!/js/templantes/paginas/examesOrientacoes/Visao.ExamesOrientacoes.html'
-], function($, Backbone, _, Utilitarios, Bootstrap, Backgrid, BackgridFilter, BackgridPaginator, VisaoExameOrientacaoModal, Templante){
+], function($, Backbone, _, Utilitarios, Bootstrap, Backgrid, BackgridFilter, BackgridPaginator, BackgridCellButtons, VisaoExameOrientacaoModal, Templante){
   
   /* Responsável pela apresentação dos exames aceitos por este laboratorio.
    */
