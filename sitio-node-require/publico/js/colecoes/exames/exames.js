@@ -37,6 +37,8 @@
     state: {
       // Numero de registros apresentados a cada página.
       pageSize: 7,
+      
+      // A direção do ordenamento.
       order: -1,
       
       // A primeira página tem indice 0
@@ -67,8 +69,10 @@
       // Registro de onde iremos começar
       currentPage: 'offset',
       
+      // a palavra utilizada para o ordenamento
       order: 'order',
       
+      // Lembre-se que os valores devem mesmo serem em maiusculas.
       directions: { 
         "-1": "ASC", 
         "1": "DESC" 
@@ -79,7 +83,8 @@
         return this.state.currentPage * this.state.pageSize; 
       }
     },
-      
+    
+    // Recebemos o valor total de registros aqui.
     parseState: function (resp, queryParams, state, options) {
       return { totalRecords: parseInt( options.xhr.getResponseHeader("X-total")) };
     }

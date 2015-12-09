@@ -184,7 +184,7 @@ define([
       var esteObj = this;
       
       var colConvenios = new ColecaoConvenios();
-      
+        
       // Carregamos esta coleção de convenios e suas informações. 
       // Existe um limite de registros imposto em colecao.state.pageSize.
       // Então não vão ser carregados todos os modelos desta coleção e sim o tamanho do colecao.state.pageSize.

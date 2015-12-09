@@ -53,7 +53,7 @@
       var entrada = '<input type="search" ' + (data.placeholder ? 'placeholder="' + data.placeholder + '"' : '') + ' name="' + data.name + '" ' + (data.value ? 'value="' + data.value + '"' : '') + ' class="form-control" />';
       html += entrada;
       
-      var spanBotao = '<span class="input-group-btn"> <button id="btoPesquisaTabela" class="btn btn-default" type="button">'+ data.buttonText  +'</button> <!-- <a class="clear" data-backgrid-action="clear" href="#">&times;</a>--></span>';  
+      var spanBotao = '<span class="input-group-btn"> <button id="btao-pesquisar" class="btn btn-default" type="button">'+ data.buttonText  +'</button> <!-- <a class="clear" data-backgrid-action="clear" href="#">&times;</a>--></span>';  
       html += spanBotao;
       
       return html;
@@ -63,7 +63,7 @@
     events: {
       "keyup input[type=search]": "showClearButtonMaybe",
       "click a[data-backgrid-action=clear]": "clear",
-      "click button[id=btoPesquisaTabela]": "search",
+      "click button[id=btao-pesquisar]": "search",
       "submit": "search"
     },
 
