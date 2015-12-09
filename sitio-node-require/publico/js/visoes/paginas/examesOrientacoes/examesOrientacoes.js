@@ -297,10 +297,11 @@
       
       // Filtro do lado servidor delegando a pesquisa para o servidor quando enviar os parametros da pesquisa.
       this.filtroAutomaticoLadoServidor = new Backgrid.Extension.ServerSideAutomaticFilter({
-        collection: this.model,           // Nossa coleção
-        name: "q",                        // O nome do parametro de pesquisa no servidor REST
-        placeholder: "Filtrar exames...", // Nome para adicionar no input de escrita
-        buttonText: "Filtrar"             // Valor do texto para o botão de pesquisa.
+        collection: this.model,            // Nossa coleção
+        name: "q",                         // O nome do parametro de pesquisa no servidor REST
+        placeholder: "Filtrar exames...",  // Nome para adicionar no input de escrita
+        buttonText: "Filtrar",             // Valor do texto para o botão de pesquisa.
+        wait: 245                          // Quantidade de milisegundos esperar até fazer nova pesquisa automatica.
       });
       
       // inserimos o filtro

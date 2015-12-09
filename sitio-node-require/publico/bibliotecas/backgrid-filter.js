@@ -516,9 +516,9 @@
     }
 
   });
-
+  
   /* Tem tudo que o filtro do lado servidor possui, só que faz o filtro funcionar com qualquer entrada digitada, 
-   * fazendo o filtro automaticamente. Além disso, acrescenta as classes do bootstrap.
+   * realizando o filtro automaticamente. Além disso, acrescenta as classes do bootstrap.
    */
   var ServerSideAutomaticFilter = Backgrid.Extension.ServerSideAutomaticFilter = ServerSideFilter.extend({
     
@@ -558,7 +558,8 @@
       this.placeholder = options.placeholder || this.placeholder;
       this.template = options.template || this.template;
       this.buttonText = options.buttonText || this.buttonText;
-
+      this.wait = options.wait || this.wait;
+      
       // Mantem os dados da pesquisa ao realizar a paginação.
       // Ele faz isso apenas no modo servidor.
       var collection = this.collection, self = this;
