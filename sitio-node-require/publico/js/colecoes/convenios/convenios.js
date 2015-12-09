@@ -37,7 +37,7 @@
     state: {
       // Numero de registros apresentados a cada página.
       pageSize: 7,
-      order: 1,
+      order: -1,
       
       // A primeira página tem indice 0
       // Você pode utilizar indice base 0 ou 1
@@ -64,6 +64,13 @@
       // O servidor Epilogue necessita que o sorteio seja passado da seguinte
       // forma: rota?sort=-coluna
       sortKey: 'sort',
+      
+      order: 'order',
+      
+      directions: { 
+        "-1": "ASC", 
+        "1": "DESC" 
+      },
       
       // Registro de onde iremos começar
       currentPage: 'offset',

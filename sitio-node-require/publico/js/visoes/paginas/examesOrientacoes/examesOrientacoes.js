@@ -47,7 +47,7 @@
         name: "id",                         // O atributo de chave do modelo
         label: "#",                         // Nome para mostrar na coluna
         editable: false,                    // por padrão, cada celula em uma coluna é editavel, mas a celula chave não deve.
-        sortable: false,                    // O Servidor REST Epilogue não é compativel com esta forma de organização.
+        sortable: true,                    // O Servidor REST Epilogue não é compativel com esta forma de organização.
         cell: Backgrid.IntegerCell.extend({ // Definição de tipo da celula de ID
           orderSeparator: ''
         })

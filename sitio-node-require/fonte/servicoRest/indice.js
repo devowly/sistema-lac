@@ -61,7 +61,13 @@ ServicoRest.prototype.carregarServicoRest = function () {
         search: {
           param: 'q'                             // Realizaremos a pesquisa utilizando o padrao rota?q=valor
         },
-        pagination: true                         // <umdez> Falta verificar se esta opção existe mesmo.
+        order: {
+          param: 'order'                         // Definimos aqui o parametro responsável pela ordenação. (Ascendente e decrescente).
+        },
+        resource: {
+          pagination: true                       // Modo de paginação. É importante 
+                                                 // para passar o valor total de registros para o Backbone.Paginator 
+        }
       });
     } else {
       registrador.debug('Não encontramos o modelo (' + mod.nome + ') do banco de dados.');

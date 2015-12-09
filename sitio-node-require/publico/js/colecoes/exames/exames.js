@@ -37,7 +37,7 @@
     state: {
       // Numero de registros apresentados a cada página.
       pageSize: 7,
-      order: 1,
+      order: -1,
       
       // A primeira página tem indice 0
       // Você pode utilizar indice base 0 ou 1
@@ -62,10 +62,17 @@
       totalRecords: null,
       
       // Não utilizaremos o &sort=valor
-      sortKey: null,
+      sortKey: 'sort',
       
       // Registro de onde iremos começar
       currentPage: 'offset',
+      
+      order: 'order',
+      
+      directions: { 
+        "-1": "ASC", 
+        "1": "DESC" 
+      },
       
       // Importante para utilizarmos na nossa paginação.
       offset: function () { 
