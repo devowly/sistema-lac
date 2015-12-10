@@ -1,3 +1,5 @@
+'use strict'
+
 /*
   backgrid-filter
   http://github.com/wyuenho/backgrid
@@ -5,29 +7,13 @@
   Copyright (c) 2013 Jimmy Yuen Ho Wong and contributors
   Licensed under the MIT @license.
 */
-(function (root, factory) {
 
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define(["underscore", "backbone", "backgrid"], factory);
-  } else if (typeof exports == "object") {
-    // CommonJS
-    (function () {
-      var lunr;
-      try { lunr = require("lunr"); } catch (e) {}
-      module.exports = factory(require("underscore"),
-                               require("backbone"),
-                               require("backgrid"),
-                               lunr);
-    }());
-  } else {
-    // Browser
-    factory(root._, root.Backbone, root.Backgrid, root.lunr);
-  }
-
-}(this, function (_, Backbone, Backgrid, lunr) {
-
-  "use strict";
+define([
+  'jquery',
+  'backbone',
+  'underscore',
+  'backgrid'
+], function($, Backbone, _,  Backgrid){
 
   /**
      ServerSideFilter is a search form widget that submits a query to the server
@@ -517,4 +503,9 @@
 
   });
   
-}));
+  return {
+    ServerSideFilter: ServerSideFilter,
+    ClientSideFilter: ClientSideFilter,
+    LunrFilter: LunrFilter
+  };
+});

@@ -1,23 +1,11 @@
-(function (root, factory) {
-
-  if (typeof define === 'function' && define.amd) {
-    // Registramos como um módulo anonimo.
-    define(["underscore", "backbone", "backgrid"], factory);
-  } else if (typeof exports == "object") {
-    // CommonJS
-    (function () {
-      module.exports = factory(require("underscore"),
-                               require("backbone"),
-                               require("backgrid"));
-    }());
-  } else {
-    // Navegador
-    factory(root._, root.Backbone, root.Backgrid);
-  }
-
-}(this, function (_, Backbone, Backgrid) {
+'use strict'
   
-  'use strict';
+define([
+  'jquery',
+  'backbone',
+  'underscore',
+  'backgrid'
+], function($, Backbone, _,  Backgrid){
   
   /* Irá apresentar um botão com o conteúdo, esse botão abrirá uma janela modal do bootstrap.
    * Esta classe extendeo backgrid oferencendo um tipo de célula que imprimirá um botão.
@@ -42,6 +30,14 @@
       this.target = options.target || this.target;
     },
 
+    events: {
+      'click': '_aoClicar'  
+    },
+    
+    _aoClicar: function() {
+      alert(this.target)
+    },
+    
     render: function () {
       this.$el.empty();
       
@@ -118,4 +114,4 @@
     }
   });
   
-}));
+});

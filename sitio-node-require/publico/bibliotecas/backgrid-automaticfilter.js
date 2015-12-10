@@ -1,26 +1,12 @@
-(function (root, factory) {
+'use strict';
 
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Registramos como um módulo anonimo.
-    define(["underscore", "backbone", "backgrid"], factory);
-  } else if (typeof exports == "object") {
-    // CommonJS
-    (function () {
-      var lunr;
-      try { lunr = require("lunr"); } catch (e) {}
-      module.exports = factory(require("underscore"),
-                               require("backbone"),
-                               require("backgrid"),
-                               require('backgrid-filter'));
-    }());
-  } else {
-    // Browser
-    factory(root._, root.Backbone, root.Backgrid);
-  }
-
-}(this, function (_, Backbone, Backgrid) {
-
-  "use strict";
+define([
+  'jquery',
+  'backbone',
+  'underscore',
+  'backgrid',
+  'backgrid-filter'
+], function($, Backbone, _, Backgrid, BackgridFilter) {
   
   /* Tem tudo que o filtro do lado servidor possui, só que faz o filtro funcionar com qualquer entrada digitada, 
    * realizando o filtro automaticamente. Além disso, acrescenta as classes do bootstrap.
@@ -113,4 +99,4 @@
     
   });
   
-}));
+});
