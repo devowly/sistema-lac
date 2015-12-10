@@ -1,32 +1,21 @@
-﻿/*
+﻿'use strict'
+
+/*
   backgrid-paginator
   http://github.com/wyuenho/backgrid
 
   Copyright (c) 2013 Jimmy Yuen Ho Wong and contributors
   Licensed under the MIT @license.
 */
-(function (root, factory) {
-
-  // CommonJS
-  if (typeof exports == "object") {
-    module.exports = factory(require("underscore"),
-                             require("backbone"),
-                             require("backgrid"),
-                             require("backbone.paginator"));
-  }
-  // AMD. Register as an anonymous module.
-  else if (typeof define === 'function' && define.amd) {
-    define(['underscore', 'backbone', 'backgrid', 'backbone.paginator'], factory);
-  }
-  // Browser
-  else {
-    factory(root._, root.Backbone, root.Backgrid);
-  }
-
-}(this, function (_, Backbone, Backgrid) {
-
-  "use strict";
-
+  
+define([
+  'jquery',
+  'backbone',
+  'underscore',
+  'backgrid',
+  'backbone.paginator'
+], function($, Backbone, _, Backgrid, BackbonePaginator){
+  
   /**
      PageHandle is a class that renders the actual page handles and reacts to
      click events for pagination.
@@ -473,4 +462,4 @@
 
   });
 
-}));
+});
