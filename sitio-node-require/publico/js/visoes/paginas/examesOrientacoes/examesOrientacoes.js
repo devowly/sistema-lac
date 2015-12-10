@@ -49,7 +49,7 @@
         name: "id",                         // O atributo de chave do modelo
         label: "#",                         // Nome para mostrar na coluna
         editable: false,                    // por padrão, cada celula em uma coluna é editavel, mas a celula chave não deve.
-        sortable: true,                    // O Servidor REST Epilogue não é compativel com esta forma de organização.
+        sortable: true,                     // Iremos aceitar o sorteio pelo identificador.
         cell: Backgrid.IntegerCell.extend({ // Definição de tipo da celula de ID
           orderSeparator: ''
         })
@@ -58,14 +58,14 @@
         name: "nome",                       // O atributo de chave do modelo
         label: "Nome do exame",             // Nome para mostrar na coluna
         editable: false,                    // por padrão, cada celula em uma coluna é editavel. Mas não queremos neste caso.
-        sortable: false,                    // O Servidor REST Epilogue não é compativel com esta forma de organização.
+        sortable: false,                    // Não é necessário sortear esta coluna
         cell: "string"                      // Tipo da celula, string.
       }, 
       {
         name: "nome_elemento",               // O atributo de chave do modelo
         label: "Visualizar",                 // Nome para mostrar na coluna
         editable: false,                     // por padrão, cada celula em uma coluna é editavel. Mas não queremos neste caso.
-        sortable: false,                     // O Servidor REST Epilogue não é compativel com esta forma de organização.
+        sortable: false,                     // Não é necessário sortear esta coluna
         idwindow: 'orientacao',              // O nome da janela modal que queremos abrir.
         cell: "buttonModal"                  // O tipo da celula é botão modal
       }
