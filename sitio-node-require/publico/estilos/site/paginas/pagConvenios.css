@@ -4,37 +4,37 @@
 ---------------------------------------------------------------------------*/
 
 /* Coluna onde iremos apresentar os exames */
-#conteudo-convenios {
+div#conteudo-convenios {
   margin-right: 0px; 
   margin-left: 0px;"
 } 
 
-#conteudo-convenios > .col-md-6 {
+div#conteudo-convenios > .col-md-6 {
   background-color: #fff; /* branco */
   border: 0px solid;
 } 
 
-/* Filtro dos exames e orientações */
-#conteudo-convenios > #linha-inicio-pagina-convenios {
+/* A coluna do sub-titulo  */
+div#conteudo-convenios > div#coluna-titulo-convenios {
   background-color: #fff;  /* branco */
   border: 0px solid; 
   padding-right: 0px;
 }
 
-/* Filtro dos exames e orientações */
-#linha-inicio-pagina-convenios > #filtro-de-convenios {
+/* A coluna do filtro dos convenios. */
+div#conteudo-convenios > div#filtro-de-convenios {
   background-color: #fff;  /* branco */
   border: 0px solid; 
   padding-right: 0px;
 }
 
 /* Cor de fundo para o conteúdo */
-#conteudo-convenios > .col-md-12 {
+div#conteudo-convenios > .col-md-12 {
   background-color: #fff; /* branco*/
 }
 
 /* Texto de apresentação */
-#linha-inicio-pagina-convenios .col-md-6 {
+div#conteudo-convenios div#coluna-titulo-convenios {
   padding-left: 10px; 
   background-color: #fff; /* Branco */
   border:0px; 
@@ -43,7 +43,7 @@
 } 
 
 /* filtro dos convênios */
-#linha-inicio-pagina-convenios .col-lg-6 {
+div#conteudo-convenios div#filtro-de-convenios {
   background-color: #fff; /* branco */
   border:0px; 
   padding-top: 0px; 
