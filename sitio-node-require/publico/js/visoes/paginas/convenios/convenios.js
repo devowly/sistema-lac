@@ -16,8 +16,9 @@ define([
   'backgrid-filter',
   'backgrid-paginator',
   'backgrid-cellbuttons',
+  'backgrid-automaticfilter',
   'text!/js/templantes/paginas/convenios/Visao.Convenios.html'
-], function($, Backbone, _, Utilitarios, Bootstrap, Backgrid, BackgridFilter, BackgridPaginator, BackgridCellButtons, Templante){
+], function($, Backbone, _, Utilitarios, Bootstrap, Backgrid, BackgridFilter, BackgridPaginator, BackgridCellButtons, BackgridAutomaticFilter, Templante){
   
   /* Responsavel por lidar com a apresentação e controle da visão de convenios.
    */

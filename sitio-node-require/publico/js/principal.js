@@ -42,6 +42,7 @@ require.config({
     // Backgrid e suas extenções e dependencias.
     'backgrid': '../bibliotecas/backgrid',  // backgrid @veja http://backgridjs.com/
     'backgrid-filter': '../bibliotecas/backgrid-filter',  // Oferece filtro para o BackGrid.  @veja https://github.com/wyuenho/backgrid-filter
+    'backgrid-automaticfilter': '../bibliotecas/backgrid-automaticfilter',
     'backgrid-paginator': '../bibliotecas/backgrid-paginator', // Oferece paginação ao BackGrid. @veja https://github.com/wyuenho/backgrid-paginator
     'backgrid-cellbuttons': '../bibliotecas/backgrid-cellbuttons', // Oferece células de botões ao BackGrid. 
     'lunr': '../bibliotecas/lunr',  // lunr. @veja http://lunrjs.com/
@@ -89,6 +90,7 @@ require.config({
       deps: ['backbone', 'jquery'], // Estas dependencias devem ser carregadas antes de carregar o backgrid.js
       exports: 'Backgrid'           // Ao ser carregado, use a variavel global 'Backgrid' como valor do modulo.
     },
+    'backgrid-automaticfilter': ['backgrid', 'backgrid-filter'],  // Extenção para o backgrid e para o backgrid-filter.
     'backgrid-filter': ['backgrid', 'lunr'], // Extenção para o backgrid, não exporta.
     'backgrid-paginator': ['backgrid'],      // Extenção para o backgrid, não exporta.
     'backgrid-cellbuttons': ['backgrid'],    // Extenção para o backgrid, não exporta.
