@@ -61,6 +61,7 @@ configuracao.load(function (args, opcs) {
   
   // Chamamos o arquivo principal, ele vai carregar os outros arquivos principais do servidor.
   var sitio = require('./fonte/iniciador/principal');
+  
   sitio.prosseguir(configuracao, aplic, function() {
     
     registrador.debug('Carregando servidor HTTP.');
