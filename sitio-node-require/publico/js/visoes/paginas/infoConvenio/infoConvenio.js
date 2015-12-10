@@ -28,7 +28,7 @@ define([
       this.$el.html(this.templante());
       
       // Adicionamos o titulo.
-      $('div#informacao-convenio-titulo', this.el).append(new VisaoInfoConvenioTitulo().render().el); 
+      //$('div#informacao-convenio-titulo', this.el).append(new VisaoInfoConvenioTitulo().render().el); 
       
       // Iniciamos aqui os nossos componentes
       this._iniciarMeusComponentes();

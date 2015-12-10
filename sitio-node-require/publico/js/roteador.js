@@ -48,7 +48,7 @@ define([
       "centralAtendimento": "centralAtendimento",     // Página da central de atendimento.
       "convenios": "convenios",                       // Página dos convênios.
       "examesOrientacoes": "examesOrientacoes",       // Página contendo a tabela de exames e suas orientações.
-      "infoConvenio/:idConvenio": "infoConvenio"  // Pág. de informações de cada convênio.
+      "infoConvenio/:idConvenio": "infoConvenio"      // Pág. de informações de cada convênio.
     },
     
     /* É chamado já na inicialização, assim adicionamos o básico (topo, barra de navegação rodape) ao nosso sitio.
