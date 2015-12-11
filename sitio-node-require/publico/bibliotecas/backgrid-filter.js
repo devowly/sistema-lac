@@ -12,8 +12,9 @@ define([
   'jquery',
   'backbone',
   'underscore',
-  'backgrid'
-], function($, Backbone, _,  Backgrid){
+  'backgrid',
+  'lunr'
+], function($, Backbone, _,  Backgrid, lunr){
 
   /**
      ServerSideFilter is a search form widget that submits a query to the server

@@ -43,6 +43,10 @@ define([
       'tabindex': '-1'
     },
     
+    events: {
+     
+    },
+    
     initialize: function () {
       
     },

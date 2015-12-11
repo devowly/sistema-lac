@@ -42,7 +42,7 @@ require.config({
     // Backgrid e suas extenções e dependencias.
     'backgrid': '../bibliotecas/backgrid',  // backgrid @veja http://backgridjs.com/
     'backgrid-filter': '../bibliotecas/backgrid-filter',  // Oferece filtro para o BackGrid.  @veja https://github.com/wyuenho/backgrid-filter
-    'backgrid-automaticfilter': '../bibliotecas/backgrid-automaticfilter',
+    'backgrid-automaticfilter': '../bibliotecas/backgrid-automaticfilter',  // Extenção para o backgrid e para o backgrid-filter.
     'backgrid-paginator': '../bibliotecas/backgrid-paginator', // Oferece paginação ao BackGrid. @veja https://github.com/wyuenho/backgrid-paginator
     'backgrid-cellbuttons': '../bibliotecas/backgrid-cellbuttons', // Oferece células de botões ao BackGrid. 
     'lunr': '../bibliotecas/lunr',  // lunr. @veja http://lunrjs.com/
@@ -74,28 +74,12 @@ require.config({
       exports: 'Backbone'             // Ao ser carregado, use a variavel global 'Backbone' como valor do modulo.
     },
     
-    // Extenção do backbone, não exporta.
-    'backbone.paginator': ['backbone'],
-    
     // Extenção para o backbone, não exporta.
     'nesting': ['backbone'],
     
     'underscore': {
       exports: '_'  // exporta _
     },
-    
-    // Vamos utilizar o backgrid estensivamente neste projeto.
-    // Ele é responsável pela criação de tabelas.
-    'backgrid': {
-      deps: ['backbone', 'jquery'], // Estas dependencias devem ser carregadas antes de carregar o backgrid.js
-      exports: 'Backgrid'           // Ao ser carregado, use a variavel global 'Backgrid' como valor do modulo.
-    },
-    'backgrid-automaticfilter': ['backgrid', 'backgrid-filter'],  // Extenção para o backgrid e para o backgrid-filter.
-    'backgrid-filter': ['backgrid', 'lunr'], // Extenção para o backgrid, não exporta.
-    'backgrid-paginator': ['backgrid'],      // Extenção para o backgrid, não exporta.
-    'backgrid-cellbuttons': ['backgrid'],    // Extenção para o backgrid, não exporta.
-    // O backbone-filter necessita disso.
-    'lunr': { },
     
     // O bootstrap e jQuery UI possuem métodos que se colidem, por isso,
     // vou manter o jquery UI como uma dependencia, ele será carregado antes do bootstrap.
