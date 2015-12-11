@@ -12,13 +12,13 @@ define([
    */
   var ButtonModalCell = Backgrid.Extension.ButtonModalCell = Backgrid.Cell.extend({
 
-    className: "buttonModal-cell",
+    className: 'buttonModal-cell',
 
     // O texto do botão que será gerado.
-    textContent: "undefined",
+    textContent: 'undefined',
     
     // O atributo da mira para uma janela modal.
-    target: "",
+    target: '',
     
     // Para nossa segurança, nós iremos fazer a formatação do conteúdo do botão.
     // Transformando qualquer valor passado em texto.
@@ -35,14 +35,14 @@ define([
     },
     
     _aoClicar: function() {
-      alert(this.target)
+      
     },
     
     render: function () {
       this.$el.empty();
       
       // O valor bruto não é nada mais que o valor que está sem formatação.
-      var valorBruto = this.model.get(this.column.get("name"));
+      var valorBruto = this.model.get(this.column.get('name'));
       
       // Passamos o valor para o formatador que formatará como texto.
       // Isso é importante para a segurança.
@@ -51,15 +51,15 @@ define([
       // A nossa mira no modal que será aberto.
       // Para se único nós adicionamos um nome para a janela e acrescentamos o 
       // identificador referente ao registro que será utilizado neste modal.
-      this.target = '#modal' + this.column.get("idwindow") + this.model.get("id");
+      this.target = '#modal' + this.column.get('idwindow') + this.model.get('id');
       
       // Criamos o aqui o botão que abrirá um modal.
-      var myButton = $("<button>", {
-        "type": "button",
-        "class": "btn btn-success btn-sm",  // Adicionamos algumas classes do bootstrap.
-        "aria-label": "Right Align",        // O alinhamento deste botão.
-        "data-toggle": "modal",               
-        "data-target": this.target          // O valor de mira que será utilizado para mostrar a nossa janela modal.
+      var myButton = $('<button>', {
+        'type': 'button',
+        'class': 'btn btn-success btn-sm',  // Adicionamos algumas classes do bootstrap.
+        'aria-label': 'Right Align',        // O alinhamento deste botão.
+        'data-toggle': 'modal',               
+        'data-target': this.target          // O valor de mira que será utilizado para mostrar a nossa janela modal.
       }).text(formattedValue);
       
       this.$el.append(myButton);            // Acrescentamos o botão.
@@ -73,10 +73,10 @@ define([
    */
   var ButtonCell = Backgrid.Extension.ButtonCell = Backgrid.Cell.extend({
 
-    className: "button-cell",
+    className: 'button-cell',
 
     // O texto do botão que será gerado.
-    textContent: "undefined",
+    textContent: 'undefined',
     
     // Para nossa segurança, nós iremos fazer a formatação do conteúdo do botão.
     // Transformando qualquer valor passado em texto.
@@ -91,7 +91,7 @@ define([
       this.$el.empty();
       
       // O valor bruto não é nada mais que o valor que está sem formatação.
-      var valorBruto = this.model.get(this.column.get("name"));
+      var valorBruto = this.model.get(this.column.get('name'));
       
       // Passamos o valor para o formatador que formatará como texto.
       // Isso é importante para a segurança.
@@ -99,11 +99,11 @@ define([
       
       // Criamos aqui o link que mira em uma rota qualquer que será passada um id 
       // Este id poderá ser utilizado em uma visão.
-      this.target = '#' + this.column.get("route") + '/' + this.model.get("id");
+      this.target = '#' + this.column.get('route') + '/' + this.model.get('id');
       
       //Criamos o nosso botão 
-      var myButton = $("<a>", {
-        "class": "btn btn-success btn-sm",  // Algumas classes do bootstrap.
+      var myButton = $('<a>', {
+        'class': 'btn btn-success btn-sm',  // Algumas classes do bootstrap.
         'role': 'button',
         'href': this.target                 // O endereço que será acessado ao clicar neste botão.
       }).text(formattedValue);
