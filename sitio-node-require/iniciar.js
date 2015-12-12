@@ -72,8 +72,13 @@ configuracao.load(function (args, opcs) {
     
     aplic.server.listen(aplic.get('port'), function () {
       console.log("Servidor express carregado e escutando na porta " + aplic.get('port'));
-      ServidorXmpp.carregar()
     });
+    
+    ServidorXmpp.inicializar().then(){
+      ServidorXmpp.carregar(function() {
+        console.log('Iniciou servidor xmpp com sucesso!');
+      });
+    };
     
   });
   
