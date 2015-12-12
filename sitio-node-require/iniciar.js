@@ -74,11 +74,11 @@ configuracao.load(function (args, opcs) {
       console.log("Servidor express carregado e escutando na porta " + aplic.get('port'));
     });
     
-    ServidorXmpp.inicializar().then(){
+    ServidorXmpp.inicializar(configuracao).then(function(){
       ServidorXmpp.carregar(function() {
         console.log('Iniciou servidor xmpp com sucesso!');
       });
-    };
+    });
     
   });
   
