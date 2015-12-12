@@ -12,6 +12,7 @@
     "bunyan-logstash-tcp": "0.3.4",
     "cors": "2.6.0",
     "epilogue": "umdez/epilogue",
+    "servidor-xmpp": "umdez/servidor-xmpp",
     "express": "4.13.3",
     "jsconfig": "0.2.0",
     "lodash": "3.10.1",

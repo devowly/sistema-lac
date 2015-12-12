@@ -11,6 +11,7 @@ var pastaConfiguracaoPadrao = pasta.join(__dirname, "/configuracao/configuracao.
 var express = require('express');
 var http = require('http');
 var morgan = require('morgan');
+var ServidorXmpp = require('servidor-xmpp');
 
 // Carregamos o nosso registrador
 var registrador = require('./fonte/nucleo/registrador')('iniciar');
@@ -71,6 +72,7 @@ configuracao.load(function (args, opcs) {
     
     aplic.server.listen(aplic.get('port'), function () {
       console.log("Servidor express carregado e escutando na porta " + aplic.get('port'));
+      ServidorXmpp.carregar()
     });
     
   });
