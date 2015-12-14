@@ -57,7 +57,7 @@ ServicoRest.prototype.carregarServicoRest = function () {
       esteObjeto[mod.nome] = epilogue.resource({
         model: esteObjeto.bd[mod.nome],          // Nosso modelo do banco de dados 
         endpoints: mod.rotas,                    // Nossas rotas REST
-        associations: mod.associations,          // Relações entre os modelos.
+        associations: mod.associacoes,           // Relações entre os modelos.
         search: {
           param: 'q'                             // Realizaremos a pesquisa utilizando o padrao rota?q=valor
         },

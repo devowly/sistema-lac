@@ -4,7 +4,7 @@
 
 /* Versão 0.0.2-Beta
  * - Adicionar carregamento preguiçoso dos modais. [FEITO]
- * - Corrigir quando realizar uma pesquisa, o seu valor continuar na paginação. Porque quando paginamos o filtro não funciona. [AFAZER]
+ * - Corrigir quando realizar uma pesquisa, o seu valor continuar na paginação. Porque quando paginamos o filtro não funciona. [FEITO]
  * - Adicionar listagem, paginação e filtro de pesquisas. (issues #7 e #8) [FEITO]
  * - Remover o código das novas células do núcleo do Backgrid e adiciona-las em plugins separados. (issue #15) (9132a0ba4177833c2098f66f38817e6aae277a6a) [FEITO]
  *
@@ -184,11 +184,11 @@
           // Contem a união dos dados necessarios para carregar os dados dos templantes.
           var exameOrientacaoUniaoLocal = {
             id: exameOrientacaoJson.id,
-            nome: exameJson.nome,                          // Nome do exame. Exemplo: 1,25 DIHIDROXI VITAMINA D3.
+            nome: exameJson.nome,                               // Nome do exame. Exemplo: 1,25 DIHIDROXI VITAMINA D3.
             pagina_html: exameOrientacaoJson.pagina_html,       // Página html desta orientação para exame. Exemplo: orientacao0001.html
             nome_elemento: exameOrientacaoJson.nome_elemento,   // Nome do elemento html utilizado para esta orientação. Exemplo: orientacao0001
             minha_visao: exameOrientacaoJson.minha_visao,
-            indice: ind                                    // Indice deste exame
+            indice: ind                                         // Indice deste exame
           };
             
           ind++;
