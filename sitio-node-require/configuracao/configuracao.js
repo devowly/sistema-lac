@@ -6,17 +6,17 @@
 /* Aqui temos a configuração do nosso serviço.
  *
  * @Diretiva {storage} O nosso sistema de armazenamento.
- *  - dialect (Obrigatório) O dialeto usado. Podendo ser: MySQL, PostGres ou então SQlite.
- *  - port (Opcional e Recomendado) A porta utilizada para conexão com o nosso banco de dados. Não é necessário para o SQlite.
- *  - host (Opcional e Recomendado) O endereço do nosso banco de dados. Não é necessário para o SQlite.
- *  - password (Obrigatório) A nossa senha de conexão com o banco. Não é necessário para o SQlite.
- *  - database (Obrigatório) O nome do banco utilizado.
- *  - user (Obrigatório) O nome do usuário do banco. Não necessário para o SQLite.
+ *  - storage.dialect (Obrigatório) O dialeto usado. Podendo ser: MySQL, PostGres ou então SQlite.
+ *  - storage.port (Opcional e Recomendado) A porta utilizada para conexão com o nosso banco de dados. Não é necessário para o SQlite.
+ *  - storage.host (Opcional e Recomendado) O endereço do nosso banco de dados. Não é necessário para o SQlite.
+ *  - storage.password (Obrigatório) A nossa senha de conexão com o banco. Não é necessário para o SQlite.
+ *  - storage.database (Obrigatório) O nome do banco utilizado.
+ *  - storage.user (Obrigatório) O nome do usuário do banco. Não necessário para o SQLite.
  *
  * @Diretiva {server} O nosso servidor http.
- *  - port (Opcional e recomendado) A porta onde o serviço irá escutar.
- *  - cors (Opcional) Se iremos oferecer o serviço cors.
- *  - logger (Opcional) O tipo de registro. podendo ser: 'default', 'short', 'tiny', 'dev' 
+ *  - server.port (Opcional e recomendado) A porta onde o serviço irá escutar.
+ *  - server.cors (Opcional) Se iremos oferecer o serviço cors.
+ *  - server.logger (Opcional) O tipo de registro. podendo ser: 'default', 'short', 'tiny', 'dev' 
  */
 module.exports = {
   
