@@ -14,7 +14,7 @@
  *  - user (Obrigatório) O nome do usuário do banco. Não necessário para o SQLite.
  *
  * @Diretiva {server} O nosso servidor http.
- *  - port (Opcional) A porta onde o serviço irá escutar.
+ *  - port (Opcional e recomendado) A porta onde o serviço irá escutar.
  *  - cors (Opcional) Se iremos oferecer o serviço cors.
  *  - logger (Opcional) O tipo de registro. podendo ser: 'default', 'short', 'tiny', 'dev' 
  */
