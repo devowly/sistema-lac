@@ -20,7 +20,7 @@
  */
 module.exports = {
   
-  // Armazenamento para os dados, este servidor utiliza Sequelize.
+  // Armazenamento: Armazenamento para os dados, este servidor utiliza Sequelize.
   "storage": {
     "dialect": "mysql",               // Dialeto utilizado, pode ser MySQL, SQlite e Postgres.
     "user": "leo",                    // Nome do usuário do banco de dados, não é necessário para o SQlite.
@@ -33,7 +33,7 @@ module.exports = {
     "port": 3306                      // A porta ao qual utilizaremos para a conexão com o banco de dados.
   },
   
-  // configurações para o Express
+  // Servidor: As configurações para o Express
   "server": {
     "logger": "dev",                  // Valores permitidos: 'default', 'short', 'tiny', 'dev' 
     "port": 8080,                     // A porta ao qual o servidor irá escutar por requisições http.
