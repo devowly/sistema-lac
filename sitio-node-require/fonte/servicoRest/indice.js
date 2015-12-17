@@ -13,7 +13,7 @@ var util = require('util');
 var EmissorEvento = require('events').EventEmitter;
 var Promessa = require('bluebird');
 var modelos = require('./modelos/indice');
-var registrador = require('../nucleo/registrador')('servicorest');
+var registrador = require('../nucleo/registrador')('ServicoRest');
 var epilogue = require('epilogue');
 
 /* Abstração da gerencia das rotas do serviço REST. 

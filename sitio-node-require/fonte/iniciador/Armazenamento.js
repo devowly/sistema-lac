@@ -7,7 +7,7 @@
 
 var baseSitio = require('../indice');
 var Armazenamento = baseSitio.Armazenamento;
-var registrador = require('../nucleo/registrador')('armazenamento'); 
+var registrador = require('../nucleo/registrador')('Armazenamento'); 
 
 function CarregaArmazenamento() {}
 
