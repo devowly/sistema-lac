@@ -16,6 +16,7 @@
  * @Diretiva {server} O nosso servidor http.
  *  - server.port (Opcional e recomendado) A porta onde o serviço irá escutar.
  *  - server.cors (Opcional) Se iremos oferecer o serviço cors.
+ *  - server.cors.hosts (Obrigatório) Endereços permitidos pelo cors. Por questões de segurança, não utilize * para o uso final.
  *  - server.logger (Opcional) O tipo de registro. podendo ser: 'default', 'short', 'tiny', 'dev' 
  */
 module.exports = {
