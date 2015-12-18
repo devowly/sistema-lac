@@ -274,6 +274,8 @@
        * 1) className: A classe utilizada
        * 2) columns: Uma pilha contendo os objetos das colunas.
        * 3) collection: A coleção que iremos utilizar na tabela.
+       *
+       * @veja http://backgridjs.com/
        */
       this.tabela = new Backgrid.Grid({
         className: 'backgrid table table-hover table-bordered',  // Adicionamos nossas classes, estou utilizando o CSS do BootStrap.
@@ -295,6 +297,8 @@
        * Outros parametros suportados são:       
        * 1) renderIndexedPageHandles: false  (Quando nós não queremos os botões de indice)
        * 2) controls: { rewind: null, fastForward: null }  (Remove o controle de primeiro e ultimo botões)
+       *
+       * @veja http://backgridjs.com/ref/extensions/paginator.html
        */
       this.paginacao = new Backgrid.Extension.Paginator({
         collection: this.model,     // Nossa coleção
@@ -311,6 +315,8 @@
        * 1) collection: A coleção que iremos utilizar no filtro.
        * 2) name: O nome utilizado para a requisição.
        * 3) wait: O valor em milisegundos que irá esperar da ultima vez que houve o clique e o inicio para a pesquisa.
+       *
+       * @veja http://backgridjs.com/ref/extensions/filter.html
        */
       this.filtroAutomaticoLadoServidor = new Backgrid.Extension.ServerSideAutomaticFilter({
         collection: this.model,            // Nossa coleção

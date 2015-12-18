@@ -117,8 +117,7 @@ require([
   'ie-emulation-modes-warning'
 ], function(Aplicativo, DomReady, Bootstrap) {
   
-  DomReady(function () {
-    // Esta função é chamada após a página estiver apresentada e carregada.
+  DomReady(function () {  // Esta função é chamada após a página estiver toda carregada e apresentada.
 
     // Logo após nós iniciamos aqui nosso aplicativo.
     Aplicativo.inicializar();
