@@ -25,7 +25,10 @@ define([
     /* O tempo de espera em milisegundos desde a ultima mudança no campo de pesquisa.
      * Este valor poderá ser ajustado dependendo da frequencia com que o campo de pesquisa é utilizado
      * e o tamanho da quantidade de registros no indice de pesquisa.  
-     * Recomendado utilizar BackBone.Paginator em modo servidor, utilizando um limite de resultados retornados.     
+     *
+     * Para tornar a pesquisa mais rápida e com menos consumo de dados, é recomendado utilizar em conjunto com 
+     * o BackBone.Paginator em modo servidor, utilizando também um limite de resultados retornados.     
+     *
      * O padrão será de 245 milisegundos.     
      */
     wait: 245,
