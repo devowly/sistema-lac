@@ -18,6 +18,8 @@ define([
    * destroy (Deleta o modelo)
    * get     (Requisita o valor de um atributo de um modelo) 
    * sync    (Faz persistir o estado de um modelo para com o servidor. Pode ser substituido com algum método customizado) 
+   *
+   * @veja http://backbonejs.org/#Model
    */
   var InfoConvenio = Backbone.Model.extend({
 
