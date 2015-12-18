@@ -10,11 +10,16 @@ define([
   'colecoes/exames/exameOrientacoes'
 ], function($, Backbone, Nesting, _, ColecaoExameOrientacoes){
   
-  /* Metodos básicos dos modelos são
+  /* Os modelos são a parte central de um aplicativo, contendo os dados e também uma parte longa de toda logica que a cerca:
+   * Conversões, validações, propriedades e controle de acesso. Um modelo possue funcionalidades básicas para a gerencia dos dados.
+   *
+   * Alguns dos métodos dos modelos são listados abaixo.
    *
    * fetch   (União dos dados já obtidos com os novos do banco de dados)
    * save    (Salva o modelo)
    * destroy (Deleta o modelo)
+   * get     (Requisita o valor de um atributo de um modelo) 
+   * sync    (Faz persistir o estado de um modelo para com o servidor. Pode ser substituido com algum método customizado) 
    */
   var Exame = Backbone.Model.extend({
 
@@ -30,6 +35,7 @@ define([
     initialize: function () {
       
       // Cada um dos exames possue uma orientação a ser informada.
+      // Aqui nós substituimos a url de ColecaoExameOrientacoes.
       this.exameOrientacoes = nestCollection(this, 'exameOrientacoes', new ColecaoExameOrientacoes(this.get('exameOrientacoes')));
       this.exameOrientacoes.url = '/exames/' + this.id + '/ExameOrientacao';
     },
