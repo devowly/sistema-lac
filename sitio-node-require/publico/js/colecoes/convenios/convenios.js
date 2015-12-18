@@ -3,7 +3,7 @@
 /* @arquivo convenios.js */
 
 /* Versão 0.0.1-Beta
- * - Pegar o valor de state.totalRecords diretamente do servidor REST. [AFAZER]
+ * - Pegar o valor de state.totalRecords diretamente do servidor REST. [FEITO]
  */
  
  define([
