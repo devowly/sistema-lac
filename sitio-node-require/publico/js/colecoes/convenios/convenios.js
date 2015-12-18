@@ -6,7 +6,7 @@
  * - Pegar o valor de state.totalRecords diretamente do servidor REST. [FEITO]
  */
  
- define([
+define([
   'jquery',
   'backbone',
   'backbone.paginator',
@@ -14,7 +14,6 @@
   'modelos/convenio/convenio'
 ], function($, Backbone, BackbonePaginator, _, ModeloConvenio){
   
- 
   /* O Backbone.PageableCollection é 100% compativel com o BackBone.Collection. Por causa disso, 
    * todos os métodos básicos irão funcionar. Além disso, novos métodos serão adicionados.
    * @Veja https://github.com/backbone-paginator/backbone.paginator
@@ -29,6 +28,15 @@
    * getPreviousPage (Pega a página anterior a atual)
    * getNextPage     (Pega próxima página a atual)
    * getLastPage     (Pega registros da última página)
+   * getPage         (Pega uma página em especifico)
+   *
+   * Lembre-se que todos os métodos get*Page, quando no modo servidor,  delegam para o fetch.
+   * Por causa disso, você pode anexar o callback para o objeto jqXHR retornado, utilizando método done.
+   * Por exemplo:
+   *
+   * books.getPage(2).done(function () {
+   *   // fazer algo...
+   * });
    */
   var Convenios = Backbone.PageableCollection.extend({
 
