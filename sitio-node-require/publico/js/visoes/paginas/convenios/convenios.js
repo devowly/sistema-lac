@@ -115,7 +115,12 @@ define([
       // Renderiza este template
       this.$el.html(this.templante());
       
-      // Iniciados uma nova instancia da nossa tabela.
+      /* Iniciados uma nova instancia da nossa tabela. Listamos abaixo alguns parametros suportados:
+       *
+       * 1) className: A classe utilizada
+       * 2) columns: Uma pilha contendo os objetos das colunas.
+       * 3) collection: A coleção que iremos utilizar na tabela.
+       */
       this.tabela = new Backgrid.Grid({
         className: 'backgrid table table-hover table-bordered',  // Adicionamos nossas classes, estou utilizando o CSS do BootStrap.
         columns: this.colunas,                                   // Nossas colunas
@@ -124,14 +129,18 @@ define([
         footer: ''                                               // Rodapé da tabela.
       });  
       
-      // Renderiza a nossa tabela e insere ela na div da tabela.
+      // Acrescenta a nossa tabela e insere ela na div da tabela.
       $("div#tabela-convenios", this.el).append(this.tabela.render().el);
 
-      /* Aqui nós vamos realizar a paginação
-       * 
+      /* Aqui nós iremos realizar a paginação. Listamos abaixo os parametros suportados:
+       *
+       * 1) collection: A coleção que a paginação irá utilizar. Nós usamos o Backbone.PageableCollection.
+       * 2) goBackFirstOnSort: Retorna para a primeira página ao ocorrer sorteio.
+       * 3) windowSize: quantos botões de indice irão ser apresentados.
+       *
        * Outros parametros suportados são:       
-       * - renderIndexedPageHandles: false  (Quando nós não queremos os botões de indice)
-       * - controls: { rewind: null, fastForward: null }  (Remove o controle de primeiro e ultimo botões)
+       * 1) renderIndexedPageHandles: false  (Quando nós não queremos os botões de indice)
+       * 2) controls: { rewind: null, fastForward: null }  (Remove o controle de primeiro e ultimo botões)
        */
       this.paginacao = new Backgrid.Extension.Paginator({
         collection: this.model,     // Nossa coleção    
@@ -139,10 +148,16 @@ define([
         windowSize: 10              // Valor da quantidade de botões de indice para esta paginação
       });
       
-      // inserimos a paginação
+      // Acrescentamos a paginação ao DOM a paginação
       $("div#convenio-paginacao", this.el).append(this.paginacao.render().el);
       
-      // Filtro do lado servidor delegando a pesquisa para o servidor quando enviar os parametros da pesquisa.
+      /* O nosso filtro do lado servidor delegando a pesquisa para o servidor quando enviar os parametros da pesquisa.
+       * Utilizaremos os parametros de requisição que são suportados pelo nosso servidor REST Epilogue.
+       * Alguns dos parametros suportados são:
+       * 1) collection: A coleção que iremos utilizar no filtro.
+       * 2) name: O nome utilizado para a requisição.
+       * 3) wait: O valor em milisegundos que irá esperar da ultima vez que houve o clique e o inicio para a pesquisa.
+       */
       this.filtroAutomaticoLadoServidor = new Backgrid.Extension.ServerSideAutomaticFilter({
         collection: this.model,              // Nossa coleção
         name: "q",                           // O nome do parametro de pesquisa no servidor REST
