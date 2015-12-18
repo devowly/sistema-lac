@@ -28,7 +28,7 @@
         
     },
 
-    // Aqui os atributos padrões deste modelo de slide.
+    // Aqui os atributos padrões deste modelo de unidadeMapa.
     defaults: {
       id: null,      // Identificador
       lat: "",       // Latitude da coordenada do nosso mapa.
