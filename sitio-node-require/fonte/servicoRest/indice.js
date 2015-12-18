@@ -47,26 +47,29 @@ ServicoRest.prototype.carregarServicoRest = function () {
     
     if (esteObjeto.bd.hasOwnProperty(mod.nome)) {
       
-      /* Abaixo Criamos a fonte do serviço RESTFUL, Ele possuirá as funções de:
-       * GET (Pega dados)
-       * POST (Envio de dados)
-       * PUT (Atualização de dados)
-       * DELETE (Apaga uma entrada)
+      /* Abaixo Criamos a fonte do serviço RESTFUL para implementação de operações CRUD.
+       * Ele possuirá as funções de:
+       * POST (Envio de dados) (Create)
+       * GET (Pega dados) (Read)
+       * PUT (Atualização de dados) (Update)
+       * DELETE (Apaga uma entrada) (Delete)
       --------------------------------------*/
-      
       esteObjeto[mod.nome] = epilogue.resource({
-        model: esteObjeto.bd[mod.nome],          // Nosso modelo do banco de dados 
-        endpoints: mod.rotas,                    // Nossas rotas REST
-        associations: mod.associacoes,           // Relações entre os modelos.
+        model: esteObjeto.bd[mod.nome],                         // Nosso modelo do banco de dados. 
+        endpoints: mod.rotas,                                   // Nossas rotas REST. Estas rotas irão fornecer os resultados,
+                                                                // Cada uma das rotas poderá apresentar um ou mais registros.
+        associations: mod.sePossuirAssociacoes ? true : false,  // Relações entre os modelos.
         search: {
-          param: 'q'                             // Realizaremos a pesquisa utilizando o padrao rota?q=valor
+          param: mod.parametroPesquisa || 'q'                   // Realizaremos a pesquisa utilizando o padrao rota?q=valor
+                                                                // Assim realiza a pesquisa de qualquer coluna de texto que possui o valor procurado.
         },
         order: {
-          param: 'order'                         // Definimos aqui o parametro responsável pela ordenação. (Ascendente e decrescente).
+          param: mod.parametroOrdenamento || 'order'            // Definimos aqui o parametro responsável pela ordenação (Ascendente e descendente).
+                                                                // Ex. order=ASC
         },
         resource: {
-          pagination: true                       // Modo de paginação. É importante 
-                                                 // para passar o valor total de registros para o Backbone.Paginator 
+          pagination: mod.seRealizarPaginacao ? true : false    // Modo de paginação. É importante para retornar o valor total
+                                                                // de registros para o Backbone.Paginator por meio de variavel no header.
         }
       });
     } else {
