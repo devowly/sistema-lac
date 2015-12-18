@@ -69,7 +69,7 @@ ServicoRest.prototype.carregarServicoRest = function () {
         },
         resource: {
           pagination: mod.seRealizarPaginacao ? true : false    // Modo de paginação. É importante para retornar o valor total
-                                                                // de registros para o Backbone.Paginator por meio de variavel no header.
+                                                                // de registros para o Backbone.Paginator por meio da variavel X-total no header.
         }
       });
     } else {
