@@ -37,6 +37,13 @@ define([
    * books.getPage(2).done(function () {
    *   // fazer algo...
    * });
+   *
+   * Com relação aos métodos get*Page, tenha em mente que é possível a realização de filtro com o parametro de pesquisa.
+   * Assim, fica possível a utilização do método get*Page da seguinte forma:
+   * 
+   * var parametroPesquisa = 'q';
+   * var dados[parametroPesquisa] = 'o texto a pesquisar';
+   * colecao.getFirstPage({data: dados, reset: true, fetch: true});
    */
   var Convenios = Backbone.PageableCollection.extend({
 
