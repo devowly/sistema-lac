@@ -95,9 +95,9 @@ require.config({
    
      // Utilitários do bootstrap. Não exportam.
     'bootstrap-widgets': ['bootstrap'],
-    'button.6619238bf476cc3999511336bc046bfa': ['bootstrap'],
-    'ie10-viewport-bug-workaround': ['bootstrap'],             // IE10 viewport hack for Surface/desktop Windows 8 bug.
-    'ie-emulation-modes-warning': ['bootstrap']                // Por causa do navegador Internet Explorer 
+    'button.6619238bf476cc3999511336bc046bfa': ['bootstrap', 'ie10-viewport-bug-workaround'],
+    'ie10-viewport-bug-workaround': ['bootstrap', 'ie-emulation-modes-warning'],  // IE10 viewport hack for Surface/desktop Windows 8 bug.
+    'ie-emulation-modes-warning': ['bootstrap']                                   // Por causa do navegador Internet Explorer 
   }
 
 });
