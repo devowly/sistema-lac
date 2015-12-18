@@ -3,6 +3,7 @@
 /* @arquivo iniciar.js */
 
 /* Versão 0.0.1-Beta
+ * - Adicionar caracteristica para tratar erros. (issue #18) [AFAZER]
  */
 
 var pasta = require('path');
