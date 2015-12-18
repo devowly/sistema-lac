@@ -15,72 +15,131 @@
 ], function($, Backbone, BackbonePaginator, _, ModeloConvenio){
   
  
-  /* Metodos básicos da coleção são
+  /* O Backbone.PageableCollection é 100% compativel com o BackBone.Collection. Por causa disso, 
+   * todos os métodos básicos irão funcionar. Além disso, novos métodos serão adicionados.
+   * @Veja https://github.com/backbone-paginator/backbone.paginator
    *
+   * Os métodos básicos do BackBone.Collection são:
    * add      (Adiciona novo modelo à coleção)
    * remove   (Remove o modelo da coleção)
    * fetch    (União dos dados já obtidos dos modelos desta coleção com os novos do banco de dados) 
+   *
+   * Os métodos básicos do Backbone.PageableCollection são:
+   * getFirstPage    (Pega os registros da primeira página)
+   * getPreviousPage (Pega a página anterior a atual)
+   * getNextPage     (Pega próxima página a atual)
+   * getLastPage     (Pega registros da última página)
    */
   var Convenios = Backbone.PageableCollection.extend({
 
     model: ModeloConvenio,
     
-    // O endereço REST onde iremos pegar os dados. 
+    /* A url não é nada mais que uma rota que temos no serviço REST Epilogue. Neste endereço, iremos
+     * realizar a listagem dos registros do banco.
+     */
     url: "/convenios",
     
-    // Modo infinito, é um hibrido do modo cliente e modo servidor.
-    // Quando navegado para trás utilizara os dados do tipo cliente,
-    // Quando navegado para frente irá realizar paginação dos dados pelo servidor REST Epilogue.
+   /* Existem três tipos de modos no Paginator, listo cada um deles abaixo:
+    *
+    * 1) O modo cliente é utilizado quando o número de registros a serem baixados é pequeno.
+    *    Podendo assim, baixar todos os registros no lado cliente de uma só vez. Neste modo, 
+    *    também possui o suporte bi-direcional.
+    *
+    * 2) O modo servidor se diferencia do modo cliente, porque ele baixa apenas uma parte de registros por vez.
+    *    Este modo é adequado quando nós temos uma grande quantidade de registros e necessitamos pagina-los.
+    *    Neste modo também é possível modificarmos o valor do totalRecords a cada pesquisa.
+    *
+    * 3) O Modo infinito, é um hibrido do modo cliente e modo servidor.
+    *    Quando navegado para trás utilizara os dados da mesma forma que o modo cliente,
+    *    Quando navegado para frente irá realizar paginação dos dados da mesma forma que no modo servidor.
+    *    Vale lembrar, que no modo infinito, não é possível mudarmos o valor do totalRecords.
+    */
     mode: 'server',
 
-    // Estados iniciais da paginação
+    /* Aqui nós configuramos os estados iniciais da nossa paginação. Apesar dos estados puderem ser acessados, 
+     * após a inicialização os estados se tornam somente leitura. Existem diversos métodos para modificar o valor 
+     * de um estado, é recomendado utilizar estes métodos ao invez de tentar acesso direto. Abaixo a lista de métodos:
+     *
+     * 1) setPageSize: Faz mudar o número de registros por página.
+     * 2) setSorting: Realiza o sorteio.
+     * 3) switchMode: Faz a troca entre modos, valor possiveis são: infinite, server ou client.
+     * 4) state: Quando se quer acessar o estado interno.
+     * 5) get*Page: Utilizado quando se quer ir para outra página.
+     * 6) hasPreviousPage e hasNextPage: Verifica se a paginação para trás ou para frente é possível.
+     */
     state: {
-      // Numero de registros apresentados a cada página.
+      // Informe aqui no pageSize, o número total de registros que serão apresentados a cada paginação.
       pageSize: 7,
+      
+      // Informe aqui o tipo de ordenamento inicial dos registros. 
+      // Podendo ser -1 para ordem ascendente ou 1 para descendente.
       order: -1,
       
-      // A primeira página tem indice 0
-      // Você pode utilizar indice base 0 ou 1
+      // Informe aqui a base da página de inicio. Você pode ser informar o indice 0 ou indice 1.
       firstPage: 0,
       
-      // Informe o valor da página inicial de onde iremos começar diferente do firstPage
+      // Aqui você pode informar o valor de onde iremos começar a paginação. No nosso caso, iremos
+      // informar o valor 0 (zero), porque queremos começar a listagem desde o primeiro registro.
+      // Esse valor será o valor informado no parametro de pesquisa offset.
       currentPage: 0,
       
-      // número total de registros.
-      // <umdez> Acho que poderiamos pegar essa informação do servidor REST. 
+      // Aqui você poderá informar o valor total de registros no banco de dados, ou o valor
+      // total de registros para a pesquisa atual. No modo servidor e no modo cliente, este valor será
+      // informado pelo proprio servidor REST Epilogue. O Epilogue informará atravez do header, passando o valor X-total.
       totalRecords: 0
     },
     
-    // Aqui ajustamos para ficar compativel com as chaves de chamada que nosso servidor REST suporta.
-    // Informando valor null em algum parametro istá remover ele das requisições.
+    /* Ajustamos aqui os valores dos parametros de requisição para adaptar e ficar compativel com o 
+     * servidor REST utilizado neste projeto.
+     * No nosso caso, estaremos utilizando os valores que o servidor REST Epilogue trabalha.
+     * Se você quiser remover algum parametro de requisição, apenas informe o valor nulo para ele.
+     */
     queryParams: {
-      // utilizaremos o &count=valor para o tamanho de registros retornados para cada página
+      
+      // Utilizaremos o &count=valor para o tamanho de registros retornados para cada página
       pageSize: 'count',
       
-      // Em modo infinito não é importante informar o número total de páginas e ou valor do total de registros.
+      /* O valor de  totalPages e totalRecords, vai depender do modo que você escolher. Por exemplo:
+       * 1) Em modo infinito não é importante informar o número total de páginas e ou valor do total de registros.
+       * 2) Em modo servidor e ou no modo cliente, estas duas variaveis serão atualizadas a cada nova requisição no servidor REST.
+       */
       totalPages: null,
       totalRecords: null,
       
-      // O servidor Epilogue necessita que o sorteio seja passado da seguinte
-      // forma: rota?sort=-coluna
+      // A chave utilizada para sorteio será o sort.
       sortKey: 'sort',
       
+      // O valor de requisição utilizado para o ordenamento.
       order: 'order',
       
+      /* As direções que utilizaremos para o ordenamento. Podendo ser:
+       * 1) Ascendente: Faz o sorteio do menor para o maior.
+       * 2) Descendente: Faz o sorteio do maior para o menor.
+       *
+       * Lembre-se que os valores devem mesmo serem em maiusculas.
+       */
       directions: { 
         "-1": "ASC", 
         "1": "DESC" 
       },
       
-      // Registro de onde iremos começar
+      // O currentPage armazenará o valor inicial da nossa página. 
       currentPage: 'offset',
       
-      // Importante para utilizarmos na nossa paginação.
+      // Importante para utilizarmos na paginação. Faz o calculo da página em que estamos.
       offset: function () { 
         return this.state.currentPage * this.state.pageSize; 
       }
     },
-      
+     
+    /* Os métodos de análise disponíveis são:
+     * 1) parse
+     * 2) parseRecords
+     * 3) parseState
+     * 4) parseLinks
+     */
+     
+    // A cada nova requisição, nós iremos pegar o valor total de registros para esta requisição.     
     parseState: function (resp, queryParams, state, options) {
       return { totalRecords: parseInt( options.xhr.getResponseHeader("X-total")) };
     }
