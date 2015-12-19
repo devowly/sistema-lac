@@ -3,6 +3,7 @@
 /* @arquivo iniciar.js */
 
 /* Versão 0.0.1-Beta
+ * - Servir as páginas do painel de administração utilizando o Express. (issue #19) [AFAZER]
  * - Adicionar caracteristica para tratar erros. (issue #18) [AFAZER]
  */
 
