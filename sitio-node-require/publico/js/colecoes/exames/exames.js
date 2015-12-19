@@ -26,7 +26,7 @@
    * remove   (Remove o modelo da coleção)
    * fetch    (União dos dados já obtidos dos modelos desta coleção com os novos do banco de dados) 
    * sync     (Faz persistir o estado de uma coleção com o servidor. Pode ser substituido por uma customização)
-   * toJSON   (Retorna uma pilha contendo os atributos de cada modelo no estilo hash) 
+   * toJSON   (Retorna uma pilha contendo os atributos de cada modelo no estilo chave valor) 
    * reset    (Adiciona e remove os modelos um de cada vez, isso faz com que uma coleção nova de modelos seja atribuida à coleção)
    * set      (Este método realiza uma atualização da coleção com a lista de modelos informada)
    * get      (Requesita um modelo desta coleção, especificado por um id ou cid ou passando um modelo) 
