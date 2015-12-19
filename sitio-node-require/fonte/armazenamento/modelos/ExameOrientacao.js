@@ -23,7 +23,7 @@ module.exports = function (database, DataTypes) {
   }, 
    {
     associate: function (modelos) {
-
+      
     },
     instanceMethods: {
     
