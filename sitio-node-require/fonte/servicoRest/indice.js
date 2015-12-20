@@ -3,7 +3,7 @@
 /* @arquivo indice.js 
  *
  * @descrição Realiza o carregamento do nosso serviço REST.
- **/
+ */
 
 /* Versão 0.0.1-Beta
  * - Adicionar requisição de autenticação para acesso aos dados do serviço REST. (issue #4) [AFAZER]
@@ -47,13 +47,51 @@ ServicoRest.prototype.carregarServicoRest = function () {
     
     if (esteObjeto.bd.hasOwnProperty(mod.nome)) {
       
-      /* Abaixo Criamos a fonte do serviço RESTFUL para implementação de operações CRUD.
-       * Ele possuirá as funções de:
-       * POST (Envio de dados) (Create)
-       * GET (Pega dados) (Read)
-       * PUT (Atualização de dados) (Update)
-       * DELETE (Apaga uma entrada) (Delete)
-      --------------------------------------*/
+      /* Abaixo nós criamos a fonte do serviço RESTFUL para implementação de operações CRUD.
+       * 
+       * Um serviço CRUD como o proprio nome indica, deve fornecer serviços de Criar, Ler, Requisitar e Deletar
+       * entradas no nosso banco de dados.
+       * 
+       * Imagine que para um modelo chamado 'usuarios', teremos alguns controladores listados abaixo:
+       * - usuarios.create
+       * - usuarios.list
+       * - usuarios.read
+       * - usuarios.update
+       * - usuarios.delete
+       *
+       * Os controladores listados acima serão chamados sempre que houver uma requisição http em algum dos nossos endpoints.
+       * Os endpoints são as rotas associadas a um determinado modelo. Por exemplo, imagine o modelo 'usuarios', ele
+       * terá os seguintes endpoints:
+       * 
+       * POST /usuarios                  (Cria um registro de usuário) (Create)
+       * GET /usuarios                   (Pega uma lista de registros de usuarios) (Read)
+       * GET /usuarios/:identificador    (Pega um unico registro de usuarios passando um identificador) (Read)
+       * PUT /usuarios/:identificador    (Atualização de um registro de usuários) (Update)
+       * DELETE /usuarios/:identificador (Apaga um registro dos usuários) (Delete)
+       *
+       * O nosso modelo ficticio 'usuarios' possue os controladores já listados acima, e para cada um destes controladores, 
+       * o modelo possue também alguns hooks. Os hooks podem ser utilizados para acrescentar ou substituiro comportamento
+       * para cada requisição nos endpoints. Abaixo listamos os hooks disponíveis:
+       * 
+       * - start
+       * - auth
+       * - fetch
+       * - data
+       * - write
+       * - send
+       * - complete
+       * 
+       * Nós podemos utilizar os hooks aceima para uma diversidade de coisa, no exemplo abaixo apresentamos uma forma de 
+       * proibir qualquer tentativa de apagar um registro no modelo 'usuarios'
+       *
+       * // Não permitir remoção do registro do usuario
+       * usuarios.delete.auth(function(req, res, context) {
+       *   // Pode ser por maio de um throw
+       *   throw new ForbiddenError("Não é possível deletar este usuário");
+       *   // Ou pode ser retornando um erro:
+       *   // return context.error(403, "Não é possível deletar este usuário");
+       * })
+      --------------------------------------------------------------------------------------------------------------------------------*/
       esteObjeto[mod.nome] = epilogue.resource({
         model: esteObjeto.bd[mod.nome],                         // Nosso modelo do banco de dados. 
         endpoints: mod.rotas,                                   // Nossas rotas REST. Estas rotas irão fornecer os resultados,
