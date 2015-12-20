@@ -30,7 +30,7 @@
     
     // O endereço REST onde iremos pegar os dados. 
     // Esta url será substituida pelo Modelo.Unidade 
-    url: "/"
+    url: "/UnidadeMapas"
 
   });
   

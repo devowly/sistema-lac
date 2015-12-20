@@ -30,7 +30,7 @@ define([
     
     // O endereço REST onde iremos pegar os dados. 
     // Esta url será substituida pelo Modelo.Exame 
-    url: "/ExameOrientacao"
+    url: "/ExameOrientacoes"
 
   });
   
