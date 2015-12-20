@@ -85,4 +85,24 @@ configuracao.load(function (args, opcs) {
     
   });
   
+  /* Este evento é disparado sempre que houver uma excessão que não foi possivel de ser tratada.
+   * É importantissimo para verificarmos erros no nosso sistema. A partir das informações que
+   * foram informadas, podemos utilizar para a descoberta dos erros no nosso sistema.
+   *
+   * Aqui temos algumas ações a serem feitas. Por exemplo:
+   * - Realizamos o registro do erro para ser apurado mais tarde.
+   * - Informar em tempo real os desenvolvedores reponsáveis o erro ocorrido, atravéz de uma mensagem e email?
+   * - Executar ações para que haja um encerramento elegante deste sistema.
+   *
+   * Após as ações acima serem realizadas, podemos utilizar o módulo forever. Com este módulo o sistema é
+   * Automaticamente re-ligado após o encerramento elegante. @Veja https://github.com/nodejitsu/forever
+   *
+   * @Parametro {erro} Um objeto contendo informações da excessão ocorrida. Podendo ser utilizada para o registro 
+   *                   do erro que aconteceu. Este objeto também possui uma propriedade (erro.stack) que é uma pilha
+   *                   que pode ser utilizada para mostrar o caminho do erro desta excessão.
+   */
+  process.addListener("uncaughtException", function (erro) {
+    
+  });
+  
 });
