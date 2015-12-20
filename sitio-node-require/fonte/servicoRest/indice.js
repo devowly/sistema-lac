@@ -91,6 +91,8 @@ ServicoRest.prototype.carregarServicoRest = function () {
        *   // Ou pode ser retornando um erro:
        *   // return context.error(403, "Não é possível deletar este usuário");
        * })
+       *
+       * @Veja https://github.com/dchester/epilogue
       --------------------------------------------------------------------------------------------------------------------------------*/
       esteObjeto[mod.nome] = epilogue.resource({
         model: esteObjeto.bd[mod.nome],                         // Nosso modelo do banco de dados. 
