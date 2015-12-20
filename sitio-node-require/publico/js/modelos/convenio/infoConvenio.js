@@ -24,7 +24,7 @@ define([
   var InfoConvenio = Backbone.Model.extend({
 
     // O endereço REST onde iremos pegar os dados.
-    urlRoot: "/",
+    urlRoot: "/InfoConvenio",
 
     initialize: function () {
         

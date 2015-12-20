@@ -24,7 +24,7 @@
   var UnidadeMapa = Backbone.Model.extend({
 
     // O endereço REST onde iremos pegar os dados.
-    urlRoot: "/",
+    urlRoot: "/UnidadeMapa",
 
     initialize: function () {
         
