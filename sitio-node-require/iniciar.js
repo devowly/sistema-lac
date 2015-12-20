@@ -86,12 +86,12 @@ configuracao.load(function (args, opcs) {
   });
   
   /* Este evento é disparado sempre que houver uma excessão que não foi possivel de ser tratada.
-   * É importantissimo para verificarmos erros no nosso sistema. A partir das informações que
-   * foram informadas, podemos utilizar para a descoberta dos erros no nosso sistema.
+   * É importantissimo para descobrirmos novos erros no nosso sistema. A partir das informações que nos
+   * foram informadas, podemos utilizar para a remoção de erros do sistema.
    *
    * Aqui temos algumas ações a serem feitas. Por exemplo:
    * - Realizamos o registro do erro para ser apurado mais tarde.
-   * - Informar em tempo real os desenvolvedores reponsáveis o erro ocorrido, atravéz de uma mensagem e email?
+   * - Informar em tempo real os desenvolvedores reponsáveis o erro ocorrido, atravéz de uma mensagem de email?
    * - Executar ações para que haja um encerramento elegante deste sistema.
    *
    * Após as ações acima serem realizadas, podemos utilizar o módulo forever. Com este módulo o sistema é
@@ -99,7 +99,7 @@ configuracao.load(function (args, opcs) {
    *
    * @Parametro {erro} Um objeto contendo informações da excessão ocorrida. Podendo ser utilizada para o registro 
    *                   do erro que aconteceu. Este objeto também possui uma propriedade (erro.stack) que é uma pilha
-   *                   que pode ser utilizada para mostrar o caminho do erro desta excessão.
+   *                   que pode ser utilizada para mostrar o caminho do erro que gerou esta excessão.
    */
   process.addListener("uncaughtException", function (erro) {
     
