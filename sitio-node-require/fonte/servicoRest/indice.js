@@ -49,8 +49,8 @@ ServicoRest.prototype.carregarServicoRest = function () {
       
       /* Abaixo nós criamos a fonte do serviço RESTFUL para implementação de operações CRUD.
        * 
-       * Um serviço CRUD como o proprio nome indica, deve fornecer serviços de Criar, Ler, Requisitar e Deletar
-       * entradas no nosso banco de dados.
+       * Um serviço CRUD é um acrônimo de Create, Read, Upadate e Delete. Ou seja, ele fornecerá os 
+       * serviços de Ler, Requisitar, atualizar e Deletar as entradas do nosso banco de dados.
        * 
        * Imagine que para um modelo chamado 'usuarios', teremos alguns controladores listados abaixo:
        * - usuarios.create
@@ -70,7 +70,7 @@ ServicoRest.prototype.carregarServicoRest = function () {
        * DELETE /usuarios/:identificador (Apaga um registro dos usuários) (Delete)
        *
        * O nosso modelo ficticio 'usuarios' possue os controladores já listados acima, e para cada um destes controladores, 
-       * o modelo possue também alguns hooks. Os hooks podem ser utilizados para acrescentar ou substituiro comportamento
+       * o modelo possue também alguns hooks. Os hooks podem ser utilizados para acrescentar ou substituir o comportamento
        * para cada requisição nos endpoints. Abaixo listamos os hooks disponíveis:
        * 
        * - start
@@ -81,13 +81,13 @@ ServicoRest.prototype.carregarServicoRest = function () {
        * - send
        * - complete
        * 
-       * Nós podemos utilizar os hooks aceima para uma diversidade de coisa, no exemplo abaixo apresentamos uma forma de 
+       * Nós podemos utilizar os hooks acima para uma diversidade de coisas, no exemplo abaixo apresentamos uma forma de 
        * proibir qualquer tentativa de apagar um registro no modelo 'usuarios'
        *
        * // Não permitir remoção do registro do usuario
        * usuarios.delete.auth(function(req, res, context) {
-       *   // Pode ser por maio de um throw
-       *   throw new ForbiddenError("Não é possível deletar este usuário");
+       *   // Pode ser por meio de um throw
+       *   // throw new ForbiddenError("Não é possível deletar este usuário");
        *   // Ou pode ser retornando um erro:
        *   // return context.error(403, "Não é possível deletar este usuário");
        * })
@@ -96,20 +96,21 @@ ServicoRest.prototype.carregarServicoRest = function () {
         model: esteObjeto.bd[mod.nome],                         // Nosso modelo do banco de dados. 
         endpoints: mod.rotas,                                   // Nossas rotas REST. Estas rotas irão fornecer os resultados,
                                                                 // Cada uma das rotas poderá apresentar um ou mais registros.
-        associations: mod.sePossuirAssociacoes ? true : false,  // Relações entre os modelos.
+        associations: mod.sePossuirAssociacoes ? true : false,  // Relações entre os modelos, podendo ser: BelongsTo, HasOne, HasMany e BelongsToMany. 
         search: {
-          param: mod.parametroPesquisa || 'q'                   // Realizaremos a pesquisa utilizando o padrao rota?q=valor
-                                                                // Assim realiza a pesquisa de qualquer coluna de texto que possui o valor procurado.
+          param: mod.parametroPesquisa || 'q'                   // Realizaremos a pesquisa utilizando o padrao 'endpoint?q=valor'
+                                                                // Assim realiza a pesquisa de qualquer coluna de texto que possui o valor informado.
         },
         order: {
           param: mod.parametroOrdenamento || 'order'            // Definimos aqui o parametro responsável pela ordenação (Ascendente e descendente).
-                                                                // Ex. order=ASC
+                                                                // Ex. order=ASC ou order=DESC
         },
         resource: {
           pagination: mod.seRealizarPaginacao ? true : false    // Modo de paginação. É importante para retornar o valor total
                                                                 // de registros para o Backbone.Paginator por meio da variavel X-total no header.
         },
-        reloadInstances: false
+        reloadInstances: false                                  // Recomendado não utilizar esta opção, porque com ela ativada, o serviço CRUD 
+                                                                // não funciona corretamente.
       });
     } else {
       registrador.debug('Não encontramos o modelo (' + mod.nome + ') do banco de dados.');
