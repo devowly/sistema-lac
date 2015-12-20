@@ -91,7 +91,7 @@ configuracao.load(function (args, opcs) {
    * serem realizadas para um encerramento elegante.
    */
   var encerrarElegantemente = function () {
-    
+    return SAIDA_EXITO;
   };
   
   /* Este evento é disparado sempre que houver uma excessão que não foi possivel de ser tratada.
@@ -112,8 +112,8 @@ configuracao.load(function (args, opcs) {
    */
    
   process.addListener('uncaughtException', function (erro) {
-    encerrarElegantemente();
-    process.exit(SAIDA_EXITO);
+    var codigo = encerrarElegantemente();
+    process.exit(codigo);
   });
   
   /* Nos sistemas compativeis com o padrão POSIX, é utilizado o padrão básico de sinais. Os sinais geralmente são pre-fixados com SIG.
@@ -135,37 +135,37 @@ configuracao.load(function (args, opcs) {
   // O SIGINT é tipicamente relacionado ao uso do CTRL + C.
   process.addListener('SIGINT', function() {
     console.log('SIGNIT recebido.');
-    encerrarElegantemente();
-    process.exit(SAIDA_EXITO);
+    var codigo = encerrarElegantemente();
+    process.exit(codigo);
   });
   
   // O SIGHUP é tipicamente relacionado com o fechamento do terminal.
   process.addListener('SIGHUP', function() {
     console.log('SIGHUP recebido.');
-    encerrarElegantemente();
-    process.exit(SAIDA_EXITO);
+    var codigo = encerrarElegantemente();
+    process.exit(codigo);
   });
   
   // O SIGQUIT é enviado ao processo pelo seu terminal de controle quando o usuário requisita que seu processa saia e realize um core dump.
   process.addListener('SIGQUIT', function() {
     console.log('SIGQUIT recebido.');
-    encerrarElegantemente();
-    process.exit(SAIDA_EXITO);
+    var codigo = encerrarElegantemente();
+    process.exit(codigo);
   });
   
   // O SIGABRT é tipicamente enviado ao processo para ele abortar.
   process.addListener('SIGABRT', function() {
     console.log('SIGABRT recebido.');
-    encerrarElegantemente();
-    process.exit(SAIDA_EXITO);
+    var codigo = encerrarElegantemente();
+    process.exit(codigo);
   });
 
   // O SIGTERM é enviado ao processo para a requisição de seu termino. Ao contrário do SIGKILL, esse sinal pode ser manipulado
   // e interpretado ou até mesmo ser ignorado pelo processo. Aqui podemos realizar tranquilamente o termino do nosso processo. 
   process.addListener('SIGTERM', function() {
     console.log('SIGTERM recebido.');
-    encerrarElegantemente();
-    process.exit(SAIDA_EXITO);
+    var codigo = encerrarElegantemente();
+    process.exit(codigo);
   });
   
   // Realizamos o termino do nosso processo.
