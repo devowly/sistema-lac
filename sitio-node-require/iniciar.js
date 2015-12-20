@@ -85,6 +85,15 @@ configuracao.load(function (args, opcs) {
     
   });
   
+  var SAIDA_EXITO = 0, SAIDA_FRACASSO = 1; // Códigos de saida
+  
+  /* Função chamada antes do encerramento completo do processo. Aqui temos as rotinas a 
+   * serem realizadas para um encerramento elegante.
+   */
+  var encerrarElegantemente = function () {
+    
+  };
+  
   /* Este evento é disparado sempre que houver uma excessão que não foi possivel de ser tratada.
    * É importantissimo para descobrirmos novos erros no nosso sistema. A partir das informações que nos
    * foram informadas, podemos utilizar para a remoção de erros do sistema.
@@ -101,8 +110,66 @@ configuracao.load(function (args, opcs) {
    *                   do erro que aconteceu. Este objeto também possui uma propriedade (erro.stack) que é uma pilha
    *                   que pode ser utilizada para mostrar o caminho do erro que gerou esta excessão.
    */
-  process.addListener("uncaughtException", function (erro) {
-    
+   
+  process.addListener('uncaughtException', function (erro) {
+    encerrarElegantemente();
+    process.exit(SAIDA_EXITO);
   });
   
+  /* Nos sistemas compativeis com o padrão POSIX, é utilizado o padrão básico de sinais. Os sinais geralmente são pre-fixados com SIG.
+   * Aqui estaremos interessados em esperar por 5 sinais, eles são: SIGINT, SIGHUP, SIGQUIT, SIGABRT e o SIGTERM. 
+   *
+   * Cada um deles *sinaliza* para uma condição que é enviada do Sistema Operacional para o nosso processo. 
+   * Quando o sinal for recebido, geralmente iniciaremos o desligamento do nosso processo. 
+   *
+   * Assim que todas as rotinas necessárias para um desligamento elegante forem realizadas, nós iremos chamar o process.exit().
+   * Sem o process.exit() o processo não irá desligar, portanto, é importante utilizarmos este método. Lembre-se que existem dois
+   * tipos de códigos utilizados no encerramento que são o SAIDA_EXITO para informar sucesso e o SAIDA_FRACASSO para informar que houve erro.
+   *
+   * @Veja http://heyrod.com/snippets/node-js-process-on-sigint.html
+   * @Veja https://en.wikipedia.org/wiki/Unix_signal#Handling_signals
+   *
+   * Obervação: Todos estes sinais farão o nosso processo ser desligado. Podemos tentar realizar então o desligamento elegante do nosso processo.
+   */
+
+  // O SIGINT é tipicamente relacionado ao uso do CTRL + C.
+  process.addListener('SIGINT', function() {
+    console.log('SIGNIT recebido.');
+    encerrarElegantemente();
+    process.exit(SAIDA_EXITO);
+  });
+  
+  // O SIGHUP é tipicamente relacionado com o fechamento do terminal.
+  process.addListener('SIGHUP', function() {
+    console.log('SIGHUP recebido.');
+    encerrarElegantemente();
+    process.exit(SAIDA_EXITO);
+  });
+  
+  // O SIGQUIT é enviado ao processo pelo seu terminal de controle quando o usuário requisita que seu processa saia e realize um core dump.
+  process.addListener('SIGQUIT', function() {
+    console.log('SIGQUIT recebido.');
+    encerrarElegantemente();
+    process.exit(SAIDA_EXITO);
+  });
+  
+  // O SIGABRT é tipicamente enviado ao processo para ele abortar.
+  process.addListener('SIGABRT', function() {
+    console.log('SIGABRT recebido.');
+    encerrarElegantemente();
+    process.exit(SAIDA_EXITO);
+  });
+
+  // O SIGTERM é enviado ao processo para a requisição de seu termino. Ao contrário do SIGKILL, esse sinal pode ser manipulado
+  // e interpretado ou até mesmo ser ignorado pelo processo. Aqui podemos realizar tranquilamente o termino do nosso processo. 
+  process.addListener('SIGTERM', function() {
+    console.log('SIGTERM recebido.');
+    encerrarElegantemente();
+    process.exit(SAIDA_EXITO);
+  });
+  
+  // Realizamos o termino do nosso processo.
+  process.addListener('exit', function(codigo) {
+    console.log('Encerrando o processo com ' + (codigo === SAIDA_EXITO ? 'sucesso' : 'falha') + '.');
+  });
 });
