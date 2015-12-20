@@ -85,12 +85,21 @@ configuracao.load(function (args, opcs) {
     
   });
   
-  var SAIDA_EXITO = 0, SAIDA_FRACASSO = 1; // Códigos de saida
+  /* Os códigos de saida para sistema POSIX. 0 para exito e 1 para fracasso.
+   */
+  var SAIDA_EXITO = 0, SAIDA_FRACASSO = 1; 
   
   /* Função chamada antes do encerramento completo do processo. Aqui temos as rotinas a 
    * serem realizadas para um encerramento elegante.
+   *
+   * Neste caso, temos algumas ações a serem feitas. Por exemplo:
+   * - Realizamos o registro do sinal recebido e o horário. 
+   * - Informar em tempo real os desenvolvedores reponsáveis que o sistema está sendo encerrado, atravéz de uma mensagem de email?
+   * - Executar ações para que haja um encerramento elegante deste sistema. (Desligar os serviços, armazenamento de qualquer dados necessário etc).
+   *
+   * Após tudo estiver completo, se não houve nada de errado nós retornamos SAIDA_EXITO. Em caso de qualquer erro nós retornamos SAIDA_FRACASSO.
    */
-  var encerrarElegantemente = function () {
+  var aoReceberSinalEncerrarElegantemente = function () {
     return SAIDA_EXITO;
   };
   
@@ -98,22 +107,28 @@ configuracao.load(function (args, opcs) {
    * É importantissimo para descobrirmos novos erros no nosso sistema. A partir das informações que nos
    * foram informadas, podemos utilizar para a remoção de erros do sistema.
    *
+   * É importante lembrar que uma vez que uma excessão não tratada aparecer, o aplicativo vai estar em um estado indefinido.
+   * É possivel que aquela parte do código onde houve o erro, nunca irá completar, e seu aplicativo não vai recomeçar.
+   * Também existe uma variedade de coisas estranhas que podem acontecer. (Pode ser um problema com o banco de dados? Sistema de arquivos? Memoria corrompida?).
+   * Algumas destas situações podem ser incrivelmente dificeis de se diagnosticar, muito menos de se resolver. Por este motivo, 
+   * é recomendado e mais seguro apenas encerrar rapidamente e re-ligar o aplicativo rapidamente.
+   *
    * Aqui temos algumas ações a serem feitas. Por exemplo:
-   * - Realizamos o registro do erro para ser apurado mais tarde.
-   * - Informar em tempo real os desenvolvedores reponsáveis o erro ocorrido, atravéz de uma mensagem de email?
-   * - Executar ações para que haja um encerramento elegante deste sistema.
+   * - Realizamos *rapidamente* o registro do erro para ser apurado mais tarde. 
+   * - Desligar *rapidamente* o sistema.
    *
    * Após as ações acima serem realizadas, podemos utilizar o módulo forever. Com este módulo o sistema é
-   * Automaticamente re-ligado após o encerramento elegante. @Veja https://github.com/nodejitsu/forever
+   * Automaticamente re-ligado após o encerramento do processo. @Veja https://github.com/nodejitsu/forever
    *
    * @Parametro {erro} Um objeto contendo informações da excessão ocorrida. Podendo ser utilizada para o registro 
    *                   do erro que aconteceu. Este objeto também possui uma propriedade (erro.stack) que é uma pilha
    *                   que pode ser utilizada para mostrar o caminho do erro que gerou esta excessão.
    */
-   
   process.addListener('uncaughtException', function (erro) {
-    var codigo = encerrarElegantemente();
-    process.exit(codigo);
+    // <umdez> Falta apenas realizar registro do erro. para leitura posterior.
+    
+    // Neste caso, sempre retornar valor de fracasso.
+    process.exit(SAIDA_FRACASSO); 
   });
   
   /* Nos sistemas compativeis com o padrão POSIX, é utilizado o padrão básico de sinais. Os sinais geralmente são pre-fixados com SIG.
@@ -135,28 +150,28 @@ configuracao.load(function (args, opcs) {
   // O SIGINT é tipicamente relacionado ao uso do CTRL + C.
   process.addListener('SIGINT', function() {
     console.log('SIGNIT recebido.');
-    var codigo = encerrarElegantemente();
+    var codigo = aoReceberSinalEncerrarElegantemente();
     process.exit(codigo);
   });
   
   // O SIGHUP é tipicamente relacionado com o fechamento do terminal.
   process.addListener('SIGHUP', function() {
     console.log('SIGHUP recebido.');
-    var codigo = encerrarElegantemente();
+    var codigo = aoReceberSinalEncerrarElegantemente();
     process.exit(codigo);
   });
   
   // O SIGQUIT é enviado ao processo pelo seu terminal de controle quando o usuário requisita que seu processa saia e realize um core dump.
   process.addListener('SIGQUIT', function() {
     console.log('SIGQUIT recebido.');
-    var codigo = encerrarElegantemente();
+    var codigo = aoReceberSinalEncerrarElegantemente();
     process.exit(codigo);
   });
   
   // O SIGABRT é tipicamente enviado ao processo para ele abortar.
   process.addListener('SIGABRT', function() {
     console.log('SIGABRT recebido.');
-    var codigo = encerrarElegantemente();
+    var codigo = aoReceberSinalEncerrarElegantemente();
     process.exit(codigo);
   });
 
@@ -164,11 +179,11 @@ configuracao.load(function (args, opcs) {
   // e interpretado ou até mesmo ser ignorado pelo processo. Aqui podemos realizar tranquilamente o termino do nosso processo. 
   process.addListener('SIGTERM', function() {
     console.log('SIGTERM recebido.');
-    var codigo = encerrarElegantemente();
+    var codigo = aoReceberSinalEncerrarElegantemente();
     process.exit(codigo);
   });
   
-  // Realizamos o termino do nosso processo.
+  // Realizamos o termino do nosso processo. Neste caso, apenas informamos o valor de encerramento.
   process.addListener('exit', function(codigo) {
     console.log('Encerrando o processo com ' + (codigo === SAIDA_EXITO ? 'sucesso' : 'falha') + '.');
   });
