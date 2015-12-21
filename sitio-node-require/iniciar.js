@@ -126,7 +126,7 @@ configuracao.load(function (args, opcs) {
    * Após as ações acima serem realizadas, podemos utilizar o módulo forever. Com este módulo o sistema é
    * Automaticamente re-ligado após o encerramento do processo. @Veja https://github.com/nodejitsu/forever
    *
-   * Apesar de não é o nosso caso, mas uma forma de manter o aplicativo executando - mesmo quando ocorrer uma excessão não tratada - seria
+   * Apesar de não ser o nosso caso, mas uma forma de manter o aplicativo executando - mesmo quando ocorrer uma excessão não tratada - seria
    * a utilização do modulo cluster, assim você terá vários (usualmente o número de núcleos do CPU) processos em execução paralela, então, quando um 
    * encerrar com erro, os outros ainda estarão em execução. Mantendo assim o aplicativo em execução. @Veja https://nodejs.org/api/cluster.html
    *   
