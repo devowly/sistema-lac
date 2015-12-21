@@ -38,7 +38,8 @@ exame.controladores = function(utilitarios) {
   ,   ACESSO_LER =       0x00000004   // Chave de acesso necessária para ler algum registro.
   ,   ACESSO_ATUALIZAR = 0x00000008   // Chave de acesso necessária para atualizar algum registro.
   ,   ACESSO_DELETAR =   0x00000010   // Chave de acesso necessária para deletar algum registro.
-  ,   ACESSO_LIVRE =     0x00000020;  // Chave de acesso livre, assim o controlador irá aceitar qualquer requisição.
+  ,   ACESSO_LIVRE =     0x00000020   // Chave de acesso livre, assim o controlador irá aceitar qualquer requisição.
+  ,   ACESSO_TOTAL =     0x00000040;  // Chave de acesso do usuário raiz, com esta chave é possível acessar todas as rotas.
 
   ACESSO_LISTAR |= ACESSO_LIVRE;  // Geralmente o acesso a listagem é livre.
   ACESSO_LER |=    ACESSO_LIVRE;  // Geralmente o acesso a leitura é livre.
@@ -81,7 +82,6 @@ exame.controladores = function(utilitarios) {
    * @Parametro {cd} Função que será chamada assim que a verificação estiver terminada.
    */
   var verificarAcesso = function(usuario, senha, cd) { 
-    
     utilitarios.verificarUsuario(this.moduloNome, usuario, senha, function(seConfere, dadosUsuario) {
       cd(seConfere, dadosUsuario); 
     });
