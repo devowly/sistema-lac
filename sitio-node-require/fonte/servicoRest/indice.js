@@ -49,8 +49,8 @@ ServicoRest.prototype.carregarServicoRest = function () {
       
       /* Abaixo nós criamos a fonte do serviço RESTFUL, utilizando o Epilogue, para implementação de operações CRUD.
        * 
-       * Um serviço CRUD é um acrônimo de Create, Read, Upadate e Delete. Ou seja, ele fornecerá os 
-       * serviços de Cria, Ler, Atualizar e Deletar as entradas do nosso banco de dados.
+       * Um serviço CRUD é um acrônimo de Create, Read, Update e Delete. Ou seja, ele fornecerá os 
+       * serviços de Criar, Ler, Atualizar e Deletar as entradas do nosso banco de dados.
        * 
        * Imagine que para um modelo chamado 'usuarios', teremos alguns controladores listados abaixo:
        * - usuarios.create
