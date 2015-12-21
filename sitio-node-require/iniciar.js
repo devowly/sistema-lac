@@ -103,7 +103,8 @@ configuracao.load(function (args, opcs) {
    * - Informar em tempo real os desenvolvedores reponsáveis que o sistema está sendo encerrado, atravéz de uma mensagem de email?
    * - Executar ações para que haja um encerramento elegante deste sistema. (Desligar os serviços, armazenamento de qualquer dados necessário etc).
    *
-   * Após tudo estiver completo, se não houve nada de errado nós retornamos SAIDA_EXITO. Em caso de qualquer erro nós retornamos SAIDA_FRACASSO.
+   * @Retorna {codigo} Após tudo estiver completo, se não houve nada de errado nós retornamos SAIDA_EXITO.
+   *                   Em caso de qualquer erro nós retornamos SAIDA_FRACASSO.
    */
   var aoReceberSinalEncerrarElegantemente = function () {
     return SAIDA_EXITO;
@@ -193,7 +194,10 @@ configuracao.load(function (args, opcs) {
     process.exit(codigo);
   });
   
-  // Realizamos o termino do nosso processo. Neste caso, apenas informamos o valor de encerramento.
+  /* Realizamos o termino do nosso processo. Neste caso, apenas informamos o valor de encerramento.
+   *
+   * @Parametro {codigo} Contendo valor de sucesso ou fracasso.
+   */
   process.addListener('exit', function(codigo) {
     console.log('Encerrando o processo com ' + (codigo === SAIDA_EXITO ? 'sucesso' : 'falha') + '.');
   });
