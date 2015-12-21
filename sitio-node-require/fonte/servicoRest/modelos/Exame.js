@@ -91,9 +91,29 @@ exame.controladores = function() {
   */
   return {
     'create': {
-      fetch: function(req, res, context) {
-        // Manipulamos aqui a chamada fetch.
-        return context.continue;
+      auth: {
+        fetch: function(req, res, context) {
+          // Manipulamos aqui a chamada fetch.
+          return context.continue;
+        },
+        before: function(req, res, context) {
+          // Podemos modificar aqui os dados antes da listagem.
+          if (seAcessoLivre(ACESSO_LISTAR)) {
+            // Acesso livre para a listagem. Podemos continuar.
+            return context.continue;
+          } else {
+            
+          }
+          return context.continue;
+        },
+        action: function(req, res, context) {
+          // Podemos mudar aqui o comportamento da escrita atual dos dados.
+          return context.continue;
+        },
+        after: function(req, res, context) {
+          // Podemos mudar aqui algo após a escrita da listagem dos dados.
+          return context.continue;
+        }
       }
     },
     'list': {
@@ -121,15 +141,20 @@ exame.controladores = function() {
     'read': {
       auth: {
         before: function(req, res, context) {
-          // Podemos modificar aqui os dados antes da listagem.
+          if (seAcessoLivre(ACESSO_LER)) {
+            // Acesso livre para a leitura. Podemos continuar.
+            return context.continue;
+          } else {
+            
+          }
           return context.continue;
         },
         action: function(req, res, context) {
-          // Podemos mudar aqui o comportamento da escrita atual dos dados.
+          
           return context.continue;
         },
         after: function(req, res, context) {
-          // Podemos mudar aqui algo após a escrita da listagem dos dados.
+         
           return context.continue;
         }
       }
@@ -137,15 +162,15 @@ exame.controladores = function() {
     'update': {
       auth: {
         before: function(req, res, context) {
-          // Podemos modificar aqui os dados antes da listagem.
+          
           return context.continue;
         },
         action: function(req, res, context) {
-          // Podemos mudar aqui o comportamento da escrita atual dos dados.
+          
           return context.continue;
         },
         after: function(req, res, context) {
-          // Podemos mudar aqui algo após a escrita da listagem dos dados.
+          
           return context.continue;
         }
       }
@@ -153,15 +178,15 @@ exame.controladores = function() {
     'delete': {
       auth: {
         before: function(req, res, context) {
-          // Podemos modificar aqui os dados antes da listagem.
+         
           return context.continue;
         },
         action: function(req, res, context) {
-          // Podemos mudar aqui o comportamento da escrita atual dos dados.
+          
           return context.continue;
         },
         after: function(req, res, context) {
-          // Podemos mudar aqui algo após a escrita da listagem dos dados.
+          
           return context.continue;
         }
       }
