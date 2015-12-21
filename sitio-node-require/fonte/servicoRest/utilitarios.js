@@ -11,7 +11,8 @@ utilitarios.inicializar = function(bancoDados) {
 
 utilitarios.verificarUsuario = function(moduloNome, usuario, senha, cd) {
   var i = this.bd;
-  var dadosUsuario = null;
+  var dadosUsuario = {};
+  dadosUsuario.bandeira = 0x00000040;
   //bcrypt.compare(password, this.password, function(err, isMatch) {
   //  if (err) return cb(err);
   //  cb(null, isMatch);

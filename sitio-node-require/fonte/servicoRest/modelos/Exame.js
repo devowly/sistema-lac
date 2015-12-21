@@ -74,6 +74,11 @@ exame.controladores = function(utilitarios) {
     return bandeira & ACESSO_DELETAR;
   };
   
+  // Verificamos se possui o acesso total as rotas.
+  var seAcessoTotal = function(bandeira) {
+    return bandeira & ACESSO_TOTAL;
+  };
+  
   /* Verificamos aqui se o usuário possui acesso a este modulo. Se o usuário conferir, 
    * vamos retornar suas informações para o callback, juntamente com o valor da sua bandeira de acesso a este módulo.
    *
@@ -144,7 +149,13 @@ exame.controladores = function(utilitarios) {
           } else {
             verificarAcesso(usuario, senha, function(seConfere, dadosUsuario) {
               if (seConfere) {
-                return context.continue;
+                if (seAcessoTotal(dadosUsuario.bandeira)) {
+                  return context.continue;
+                } else if (seAcessoListar(dadosUsuario.bandeira)) {
+                  return context.continue;
+                } else {
+                  return context.error(403, "Acesso proibido a listagem. Contacte o administrador.");
+                }
               } else {
                 return context.error(403, "Acesso proibido a listagem. Contacte o administrador.");
               }
