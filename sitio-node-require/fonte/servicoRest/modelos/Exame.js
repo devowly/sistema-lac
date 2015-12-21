@@ -21,6 +21,9 @@ var exame = {
 
 exame.controladores = function(utilitarios) {
   
+  // Nome deste módulo, Geralmente é o nome dessa tabela no banco de dados.
+  var moduloNome = exame.nome;
+  
  /* As bandeiras de acesso a esta fonte, nós utilizaremos nestas bandeiras operadores bit a bit.
   * Exemplo de como manipular as bandeiras:
   * - bandeira & bandeira (Comparação).
@@ -70,15 +73,17 @@ exame.controladores = function(utilitarios) {
     return bandeira & ACESSO_DELETAR;
   };
   
+  /* Verificamos aqui se o usuário possui acesso a este modulo. Se o usuário conferir, 
+   * vamos retornar suas informações para o callback, juntamente com o valor da sua bandeira de acesso a este módulo.
+   *
+   * @Parametro {usuario} Nome do usuário.
+   * @Parametro {senha} A senha deste usuário.
+   * @Parametro {cd} Função que será chamada assim que a verificação estiver terminada.
+   */
   var verificarAcesso = function(usuario, senha, cd) { 
     
-    utilitarios.verificarSenha(usuario, senha, function(seConfere) {
-      
-      if (seConfere) {
-        cd(true);
-      } else {
-        cd(false);
-      }
+    utilitarios.verificarUsuario(this.moduloNome, usuario, senha, function(seConfere, dadosUsuario) {
+      cd(seConfere, dadosUsuario); 
     });
   };
   
@@ -135,14 +140,16 @@ exame.controladores = function(utilitarios) {
           // Podemos modificar aqui os dados antes da listagem.
           if (seAcessoLivre(ACESSO_LISTAR)) {
             // Acesso livre para a listagem. Podemos continuar.
-            
-            verificarAcesso(null, null);
-            
             return context.continue;
           } else {
-            
+            verificarAcesso(usuario, senha, function(seConfere, dadosUsuario) {
+              if (seConfere) {
+                return context.continue;
+              } else {
+                return context.error(403, "Acesso proibido a listagem. Contacte o administrador.");
+              }
+            });
           }
-          return context.continue;
         },
         action: function(req, res, context) {
           // Podemos mudar aqui o comportamento da escrita atual dos dados.
