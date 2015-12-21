@@ -118,7 +118,7 @@ ServicoRest.prototype.carregarServicoRest = function () {
       
       // Acrescentamos aqui a nossa fonte os seus controladores.
       if (mod.controladores){
-        var ponteRest = mod.controladores(utilitarios.verificarSenha);
+        var ponteRest = mod.controladores(utilitarios);
         esteObjeto[mod.nome].use(ponteRest);
       }
       
@@ -147,6 +147,9 @@ ServicoRest.prototype.iniciar = function () {
       app: esteObjeto.aplic,               // Aplicativo Express.
       sequelize: esteObjeto.bd.sequelize   // Nosso banco de dados Sequelize.
     });
+    
+    // Iniciamos aqui os utilitários.
+    utilitarios.inicializar(esteObjeto.bd.sequelize);
     
     // Carrega os arquivos que contem os nossos modelos.
     esteObjeto.carregarServicoRest();

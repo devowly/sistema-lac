@@ -19,7 +19,7 @@ var exame = {
   , seRecarregarInstancias: false      // É importante não ligar esta opção, porque causa um comportamento estranho ao atualizar e ou criar registros.
 };
 
-exame.controladores = function(verificarSenha) {
+exame.controladores = function(utilitarios) {
   
  /* As bandeiras de acesso a esta fonte, nós utilizaremos nestas bandeiras operadores bit a bit.
   * Exemplo de como manipular as bandeiras:
@@ -70,18 +70,17 @@ exame.controladores = function(verificarSenha) {
     return bandeira & ACESSO_DELETAR;
   };
   
-  var verificarAcesso = function(usuario, senha) {
-    var seVerificado = false; 
+  var verificarAcesso = function(usuario, senha, cd) { 
     
-    verificarSenha(usuario, senha, function(seConfere) {
+    utilitarios.verificarSenha(usuario, senha, function(seConfere) {
+      
       if (seConfere) {
-        seVerificado = true;
+        cd(true);
       } else {
-        seVerificado = false;
+        cd(false);
       }
     });
     
-    return seVerificado;
   };
   
  /* Para esta fonte, teremos alguns controladores listados abaixo:
