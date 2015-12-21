@@ -114,6 +114,13 @@ ServicoRest.prototype.carregarServicoRest = function () {
         reloadInstances: false                                  // Recomendado não utilizar esta opção, porque com ela ativada, o serviço CRUD 
                                                                 // não funciona corretamente.
       });
+      
+      // Acrescentamos aqui a nossa fonte os seus controladores.
+      if (mod.controladores){
+        var ponteRest = mod.controladores();
+        esteObjeto[mod.nome].use(ponteRest);
+      }
+      
     } else {
       registrador.debug('Não encontramos o modelo (' + mod.nome + ') do banco de dados.');
     }

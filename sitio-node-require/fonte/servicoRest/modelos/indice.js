@@ -28,7 +28,7 @@ module.exports = function ()  {
       // Carregamos o modelo.
       var modelo = require(pasta.join(__dirname, arquivo));
       
-	    // Adiciona modelo para o array
+      // Adiciona modelo para o array
       modelos.push(modelo);
     });
 

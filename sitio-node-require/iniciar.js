@@ -79,13 +79,13 @@ configuracao.load(function (args, opcs) {
     // Inicia o servidor HTTP e começa a esperar por conexões
     aplic.server = http.createServer(aplic);
     aplic.server.listen(aplic.get('port'), function () {
-      console.log("Servidor express carregado e escutando na porta " + aplic.get('port'));
+      registrador.debug("Servidor express carregado e escutando na porta " + aplic.get('port'));
     });
     
     // Iniciar servidor XMPP.
     ServidorXmpp.inicializar(configuracao).then(function(){
       ServidorXmpp.carregar(function() {
-        console.log('Iniciou servidor xmpp com sucesso!');
+        registrador.debug('Iniciou servidor xmpp com sucesso!');
       });
     });
     
