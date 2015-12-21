@@ -15,6 +15,7 @@ var Promessa = require('bluebird');
 var modelos = require('./modelos/indice');
 var registrador = require('../nucleo/registrador')('ServicoRest');
 var epilogue = require('epilogue');
+var utilitarios = require('./utilitarios');
 
 /* Abstração da gerencia das rotas do serviço REST. 
  * Realiza o carregamento das rotas REST do nosso servidor.
@@ -117,7 +118,7 @@ ServicoRest.prototype.carregarServicoRest = function () {
       
       // Acrescentamos aqui a nossa fonte os seus controladores.
       if (mod.controladores){
-        var ponteRest = mod.controladores();
+        var ponteRest = mod.controladores(utilitarios.verificarSenha);
         esteObjeto[mod.nome].use(ponteRest);
       }
       

@@ -16,9 +16,10 @@ var exame = {
   , parametroOrdenamento: 'order'      // Parametro de ordenamento.
   , seRealizarPaginacao: true          // Caso seja necessário possuir suporte à paginação.
   , controladores: null                // Os controladores desta rota.
+  , seRecarregarInstancias: false      // É importante não ligar esta opção, porque causa um comportamento estranho ao atualizar e ou criar registros.
 };
 
-exame.controladores = function() {
+exame.controladores = function(verificarSenha) {
   
  /* As bandeiras de acesso a esta fonte, nós utilizaremos nestas bandeiras operadores bit a bit.
   * Exemplo de como manipular as bandeiras:
@@ -67,6 +68,20 @@ exame.controladores = function() {
   // Verificamos se possui o acesso a deletar.
   var seAcessoDeletar = function(bandeira) {
     return bandeira & ACESSO_DELETAR;
+  };
+  
+  var verificarAcesso = function(usuario, senha) {
+    var seVerificado = false; 
+    
+    verificarSenha(usuario, senha, function(seConfere) {
+      if (seConfere) {
+        seVerificado = true;
+      } else {
+        seVerificado = false;
+      }
+    });
+    
+    return seVerificado;
   };
   
  /* Para esta fonte, teremos alguns controladores listados abaixo:
@@ -122,6 +137,9 @@ exame.controladores = function() {
           // Podemos modificar aqui os dados antes da listagem.
           if (seAcessoLivre(ACESSO_LISTAR)) {
             // Acesso livre para a listagem. Podemos continuar.
+            
+            verificarAcesso(null, null);
+            
             return context.continue;
           } else {
             
