@@ -1,6 +1,10 @@
 'use strict';
 
-/* @arquivo indice.js */
+/* @arquivo indice.js 
+ *
+ * Implementação do nosso armazenamento de dados. Oferecendo o suporte completo de um
+ * Banco de Dados relacional ao nosso aplicativo. @Veja http://docs.sequelizejs.com/en/latest/
+ */
 
 /* Versão 0.0.1-Beta */
 

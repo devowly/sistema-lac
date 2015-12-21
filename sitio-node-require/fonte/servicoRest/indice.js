@@ -47,10 +47,10 @@ ServicoRest.prototype.carregarServicoRest = function () {
     
     if (esteObjeto.bd.hasOwnProperty(mod.nome)) {
       
-      /* Abaixo nós criamos a fonte do serviço RESTFUL para implementação de operações CRUD.
+      /* Abaixo nós criamos a fonte do serviço RESTFUL, utilizando o Epilogue, para implementação de operações CRUD.
        * 
        * Um serviço CRUD é um acrônimo de Create, Read, Upadate e Delete. Ou seja, ele fornecerá os 
-       * serviços de Ler, Requisitar, atualizar e Deletar as entradas do nosso banco de dados.
+       * serviços de Cria, Ler, Atualizar e Deletar as entradas do nosso banco de dados.
        * 
        * Imagine que para um modelo chamado 'usuarios', teremos alguns controladores listados abaixo:
        * - usuarios.create
