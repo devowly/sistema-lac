@@ -30,7 +30,7 @@ module.exports = {
     "database": "database",           // Nome do nosso banco de dados.
     "maxConcurrentQueries": 200,      // Valor máximo de consultas concorrentes.
     "maxConnections": 1,              // Valo máximo de conexões.
-    "maxIdleTime": 30,                
+    "maxIdleTime": 30,                // Tempo máximo inativo.
     "host": "127.0.0.1",              // Endereço ao qual utilizaremos para a conexão com o banco de dados.
     "port": 3306                      // A porta ao qual utilizaremos para a conexão com o banco de dados.
   },

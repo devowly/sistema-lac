@@ -1,5 +1,9 @@
 'use strict';
 
+/* @arquivo indice.js */
+
+/* Versão 0.0.1-Beta */
+
 var util = require('util');
 var EmissorEvento = require('events').EventEmitter;
 var Sequelize = require('sequelize');
@@ -30,43 +34,45 @@ Armazenamento.prototype.carregarModelos = function () {
   modelos(this.sequelize, this);
 };
 
-/* Inicia o nosso banco de dados e sincroniza as tabelas se elas não estiverem lá
+/* Inicia o nosso banco de dados e sincroniza as tabelas se elas não estiverem lá.
  *
- * @Parametro {opcsSincroniza} Contem as opções de configuração.
+ * @Parametro {opcsSincroniza} Contem as opções de configuração em um objeto chave valor.
  * @Retorna {Promessa} Promessa de recusa ou deliberação.
  */
 Armazenamento.prototype.iniciar = function (opcsSincroniza) {
 
   registrador.debug('Iniciando');
 
-  opcsSincroniza = opcsSincroniza ||  {};
+  opcsSincroniza = opcsSincroniza || {};
   var esteObjeto = this;
 
   return new Promessa(function (deliberar, recusar) {
 
-    var maxConcurrentQueries = esteObjeto.opc.maxConcurrentQueries ||  100;
-    var maxConnections = esteObjeto.opc.maxConnections ||  1;
-    var maxIdleTime = esteObjeto.opc.maxIdleTime ||  30;
+    var maxConcurrentQueries = esteObjeto.opc.maxConcurrentQueries ||  100; // Valor máximo de consultas concorrentes.
+    var maxConnections = esteObjeto.opc.maxConnections ||  1;               // Valo máximo de conexões.
+    var maxIdleTime = esteObjeto.opc.maxIdleTime ||  30;                    // Tempo máximo inativo.
 
-    // opções base
+    // As opções base
     var opcoes = {
       language: 'en',
-      maxConcurrentQueries: maxConcurrentQueries,
+      maxConcurrentQueries: maxConcurrentQueries, // Valor máximo de consultas concorrentes.
       pool: {
-        maxConnections: maxConnections,
-        maxIdleTime: maxIdleTime
+        maxConnections: maxConnections,           // Valo máximo de conexões.
+        maxIdleTime: maxIdleTime                  // Tempo máximo inativo.
       }
     };
 
-    // Poderia ser sqlite, postgres e mysql
+    // O dialeto utilizado. Poderia ser sqlite, postgres ou mysql.
     if (esteObjeto.opc.dialect) {
       opcoes.dialect = esteObjeto.opc.dialect;
     }
 
+    // Endereço do banco de dados.
     if (esteObjeto.opc.host) {
       opcoes.host = esteObjeto.opc.host;
     }
 
+    // Porta do banco de dados.
     if (esteObjeto.opc.port) {
       opcoes.port = esteObjeto.opc.port;
     }
@@ -75,8 +81,6 @@ Armazenamento.prototype.iniciar = function (opcsSincroniza) {
     if (esteObjeto.opc.storage) {
       opcoes.storage = esteObjeto.opc.storage;
     }
-
-    //opcoes.logging = (process.env.SEQ_LOG ? console.log : false);
     
     // Inicia conexão com o banco de dados.
     var sequelize = new Sequelize(
