@@ -19,33 +19,35 @@ var ServidorXmpp = require('servidor-xmpp');
 // Carregamos o nosso registrador
 var registrador = require('./fonte/nucleo/registrador')('iniciar');
 
-configuracao.defaults(pastaConfiguracaoPadrao);
-
 // Parametros do ambiente
 configuracao.set('env', {
   DOMAIN: 'domain',
   PORT: ['port', parseInt],
 });
 
+/* Nossas opções para configuração pela linha de comando. 
+ */
 configuracao.cli({
-  configuracao: ['c', "pasta para carregar arquivo de configuracao", 'path', pastaConfiguracaoPadrao],
-  storage: ['storage', [false, "Não utilizar armazenamento"]],
-  server: ['server', [false, "Não oferecer servidor express"]]
+  configuracao: ['c', "pasta de onde iremos carregar o arquivo de configuracao", 'path', pastaConfiguracaoPadrao],
+  porta: ['server.port', ['p', "porta do servidor http", 'int']]
 });
 
-/* Carregamos a configuração e prosseguimos com nossos serviços.
+// Aqui carregamos o arquivo de configuração
+configuracao.defaults(pastaConfiguracaoPadrao);
+
+/* Carregamos a assincronamente a nossa configuração e prosseguimos com nossos serviços.
  *
  * @Parametro {args} Argumento passados
  * @Parametro {opcs} As opções dos argumentos.
  */
 configuracao.load(function (args, opcs) {
 
-  // Carrega um arquivo de configuração pelo argv preservando o padrão
+  // Carrega um arquivo de configuração pelos argumentos.
   if(args.length > 0) {
     opcs.configuracao = args[args.length - 1];
   }
 
-  // Faz a união da configuração com os dados informados pelo usuário.
+  // Faz a união ou substituição da configuração com os dados informados pelo usuário.
   if(opcs.configuracao !== pastaConfiguracaoPadrao) {
     configuracao.merge(require(opcs.configuracao));
   }
@@ -53,14 +55,18 @@ configuracao.load(function (args, opcs) {
   // Iniciamos o servidor express
   var aplic = express();
   
+  // Utilizamos isso para receber requisições POST ou PUT.
   var bodyParser = require('body-parser');
-  
-  // Realiza a configuração do express 
-  // Iremos servir as páginas do diretorio "/publico" 
-  aplic.set('port', process.env.PORT || configuracao.server.port);
   aplic.use(bodyParser.json());
   aplic.use(bodyParser.urlencoded({ extended: false }));
+  
+  // Porta ao qual iremos receber conexões.  
+  aplic.set('port', process.env.PORT || configuracao.server.port);
+  
+  // Iremos servir as páginas do diretorio "/publico"
   aplic.use(express.static(pasta.join(__dirname, 'publico')));
+  
+  // Adicionamos isso para realizar o registro de requisições.
   aplic.use(morgan('combined'));
   
   // Chamamos o arquivo principal, ele vai carregar os outros arquivos principais do servidor.
@@ -68,15 +74,15 @@ configuracao.load(function (args, opcs) {
   
   sitio.prosseguir(configuracao, aplic, function() {
     
-    registrador.debug('Carregando servidor HTTP.');
+    registrador.debug('Carregando o servidor HTTP e XMPP.');
     
     // Inicia o servidor HTTP e começa a esperar por conexões
     aplic.server = http.createServer(aplic);
-    
     aplic.server.listen(aplic.get('port'), function () {
       console.log("Servidor express carregado e escutando na porta " + aplic.get('port'));
     });
     
+    // Iniciar servidor XMPP.
     ServidorXmpp.inicializar(configuracao).then(function(){
       ServidorXmpp.carregar(function() {
         console.log('Iniciou servidor xmpp com sucesso!');
