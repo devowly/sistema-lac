@@ -20,18 +20,54 @@ var exame = {
 
 exame.controladores = function() {
   
-  /* Para cada requisição a um dos nossos endpoints será necessário que o usuário tenha uma bandeira de acesso.
-   * As bandeiras irão servir como uma chave de acesso as requisições. As bandeiras são:
-   */
-  var ACESSO_CRIAR = 0      // Chave de acesso necessária para criar um registro.
-  ,   ACESSO_LISTAR = 0     // Chave de acesso necessária para listar registros.
-  ,   ACESSO_LER = 0        // Chave de acesso necessária para ler algum registro.
-  ,   ACESSO_ATUALIZAR = 0  // Chave de acesso necessária para atualizar algum registro.
-  ,   ACESSO_DELETAR = 0    // Chave de acesso necessária para deletar algum registro.
-  ,   ACESSO_LIVRE = 0;     // Chave de acesso livre, assim o controlador irá aceitar qualquer requisição.
+ /* As bandeiras de acesso a esta fonte, nós utilizaremos nestas bandeiras operadores bit a bit.
+  * Exemplo de como manipular as bandeiras:
+  * - bandeira & bandeira (Comparação).
+  * - bandeira |= bandeira (Adição).
+  * - bandeira &= ~bandeira (Remoção).
+  *
+  * Para cada requisição a um dos nossos endpoints será necessário que o usuário tenha uma bandeira de acesso.
+  * As bandeiras irão servir como uma chave de acesso as requisições. As bandeiras são:
+  */
+  var ACESSO_CRIAR =     0x00000001   // Chave de acesso necessária para criar um registro. 
+  ,   ACESSO_LISTAR =    0x00000002   // Chave de acesso necessária para listar registros.
+  ,   ACESSO_LER =       0x00000004   // Chave de acesso necessária para ler algum registro.
+  ,   ACESSO_ATUALIZAR = 0x00000008   // Chave de acesso necessária para atualizar algum registro.
+  ,   ACESSO_DELETAR =   0x00000010   // Chave de acesso necessária para deletar algum registro.
+  ,   ACESSO_LIVRE =     0x00000020;  // Chave de acesso livre, assim o controlador irá aceitar qualquer requisição.
+
+  ACESSO_LISTAR |= ACESSO_LIVRE;  // Geralmente o acesso a listagem é livre.
+  ACESSO_LER |=    ACESSO_LIVRE;  // Geralmente o acesso a leitura é livre.
+    
+  // Verificamos se o acesso a determinado controlador é livre.
+  var seAcessoLivre = function(bandeira) {
+    return bandeira & ACESSO_LIVRE;
+  };
   
-  ACESSO_LISTAR = ACESSO_LIVRE;  // O acesso a listagem é livre.
-  ACESSO_LER = ACESSO_LIVRE;     // O acesso a leitura é livre.
+  // Verificamos se possui o acesso à criação.
+  var seAcessoCriar = function(bandeira) {
+    return bandeira & ACESSO_CRIAR;
+  };
+  
+  // Verificamos se possui o acesso à listagem.
+  var seAcessoListar = function(bandeira) {
+    return bandeira & ACESSO_LISTAR;
+  };
+  
+  // Verificamos se possui o acesso à leitura.
+  var seAcessoLer = function(bandeira) {
+    return bandeira & ACESSO_LER;
+  };
+  
+  // Verificamos se possui o acesso a atualização.
+  var seAcessoAtualizar = function(bandeira) {
+    return bandeira & ACESSO_ATUALIZAR;
+  };
+  
+  // Verificamos se possui o acesso a deletar.
+  var seAcessoDeletar = function(bandeira) {
+    return bandeira & ACESSO_DELETAR;
+  };
   
  /* Para esta fonte, teremos alguns controladores listados abaixo:
   * - Exame.create
@@ -43,6 +79,9 @@ exame.controladores = function() {
   * E para cada um dos controladores acima listados, nós temos os hooks:
   * auth, start, auth, fetch, data, write, send e complete.
   *
+  * E para cada um dos hooks, possuimos os milestones. Estes milestones são:
+  * before, action, after, fetch etc.
+  *
   * Os valores retornados podem ser o valor em JSON, ou em alguns casos, nós iremos retornar um código de status informando
   * o ocorrido. Os valores de status poderão ser:
   * - [status 403] Retornamos este valor sempre que o acesso a uma fonte é proibida.
@@ -50,7 +89,6 @@ exame.controladores = function() {
   *
   * @Veja https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
   */
-  
   return {
     'create': {
       fetch: function(req, res, context) {
@@ -62,7 +100,7 @@ exame.controladores = function() {
       auth: {
         before: function(req, res, context) {
           // Podemos modificar aqui os dados antes da listagem.
-          if (ACESSO_LISTAR === ACESSO_LIVRE) {
+          if (seAcessoLivre(ACESSO_LISTAR)) {
             // Acesso livre para a listagem. Podemos continuar.
             return context.continue;
           } else {
