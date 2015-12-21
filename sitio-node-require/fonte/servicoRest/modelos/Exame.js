@@ -80,7 +80,6 @@ exame.controladores = function(utilitarios) {
         cd(false);
       }
     });
-    
   };
   
  /* Para esta fonte, teremos alguns controladores listados abaixo:
