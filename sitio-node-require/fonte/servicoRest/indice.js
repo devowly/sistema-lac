@@ -149,7 +149,7 @@ ServicoRest.prototype.iniciar = function () {
     });
     
     // Iniciamos aqui os utilitários.
-    utilitarios.inicializar(esteObjeto.bd.sequelize);
+    utilitarios.inicializar(esteObjeto.bd);
     
     // Carrega os arquivos que contem os nossos modelos.
     esteObjeto.carregarServicoRest();

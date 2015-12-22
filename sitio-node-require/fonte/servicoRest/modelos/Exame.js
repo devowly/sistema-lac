@@ -1,5 +1,7 @@
 'use strict';
 
+var deasync = require('deasync');
+
 /* Aqui possuimos tudo relativo a nossa fonte REST exame. Temos aqui definido o controle de acesso a esta fonte.
  *
  * @Arquivo Exame.js 
@@ -22,7 +24,13 @@ var exame = {
 exame.controladores = function(utilitarios) {
   
   // Nome deste módulo, Geralmente é o nome dessa tabela no banco de dados.
-  var moduloNome = exame.nome;
+  exame.moduloRota = exame.nome;
+  
+  // Nome do modelo onde iremos buscar verificar os dados do usuário.
+  exame.modeloVerificacao = 'Usuario';
+  
+  // Nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
+  exame.modeloAcesso = 'AcessoRota';
   
  /* As bandeiras de acesso a esta fonte, nós utilizaremos nestas bandeiras operadores bit a bit.
   * Exemplo de como manipular as bandeiras:
@@ -82,14 +90,12 @@ exame.controladores = function(utilitarios) {
   /* Verificamos aqui se o usuário possui acesso a este modulo. Se o usuário conferir, 
    * vamos retornar suas informações para o callback, juntamente com o valor da sua bandeira de acesso a este módulo.
    *
-   * @Parametro {usuario} Nome do usuário.
+   * @Parametro {usuarioJid} O identificador do usuário. Composto de local@dominio.
    * @Parametro {senha} A senha deste usuário.
    * @Parametro {cd} Função que será chamada assim que a verificação estiver terminada.
    */
-  var verificarAcesso = function(usuario, senha, cd) { 
-    utilitarios.verificarUsuario(this.moduloNome, usuario, senha, function(seConfere, dadosUsuario) {
-      cd(seConfere, dadosUsuario); 
-    });
+  var verificarAcesso = function(usuarioJid, senha, cd) { 
+    return utilitarios.verificarUsuario(exame.modeloVerificacao, exame.modeloAcesso, exame.moduloRota, usuarioJid, senha, cd);
   };
   
  /* Para esta fonte, teremos alguns controladores listados abaixo:
@@ -142,24 +148,44 @@ exame.controladores = function(utilitarios) {
     'list': {
       auth: {
         before: function(req, res, context) {
-          // Podemos modificar aqui os dados antes da listagem.
+          var seRealizado = false; 
+          var seValidado = false;
+          var dadosUsuario = null;
+          
+          // Aqui iremos ver se o usuário possui acesso a esta fonte. Esta verificação é realizada antes da listagem  começar.
+          // De qualquer forma, podemos aqui adicionar a verificação do cliente (para saber se ele possui ou não acesso).
           if (seAcessoLivre(ACESSO_LISTAR)) {
             // Acesso livre para a listagem. Podemos continuar.
             return context.continue;
           } else {
-            verificarAcesso(usuario, senha, function(seConfere, dadosUsuario) {
+            // Verificamos se o usuário confere com os dados informados.
+            verificarAcesso('leo@localhost', 'montes', function(seConfere, usuario){
               if (seConfere) {
-                if (seAcessoTotal(dadosUsuario.bandeira)) {
-                  return context.continue;
-                } else if (seAcessoListar(dadosUsuario.bandeira)) {
-                  return context.continue;
-                } else {
-                  return context.error(403, "Acesso proibido a listagem. Contacte o administrador.");
-                }
+                dadosUsuario = usuario;
+                // Nosso usuário foi validado com sucesso.
+                seValidado = true;
+              } 
+              // Quando realizado nossa verificação então continuamos a execução.
+              seRealizado = true;
+            });
+            
+            // Percorre laço enquanto não estiver realizado tudo. Infelizmente, isso é necessário porque o sequelize é assincrono.
+            deasync.loopWhile(function(){
+              return !seRealizado;
+            });
+            
+            // Aqui verificamos se o usuário é valido e se possui algum acesso a esta fonte. Caso não possua acesso é retornado erro.
+            if (seValidado) {
+              if (seAcessoTotal(dadosUsuario.bandeira)) {
+                return context.continue;
+              } else if (seAcessoListar(dadosUsuario.bandeira)) {
+                return context.continue;
               } else {
                 return context.error(403, "Acesso proibido a listagem. Contacte o administrador.");
               }
-            });
+            } else {
+              return context.error(403, "Acesso proibido a listagem. Contacte o administrador.");
+            }
           }
         },
         action: function(req, res, context) {
