@@ -1,4 +1,4 @@
-/* Um utilitário para gerar bandeiras de acesso para usuários.
+/* Uma ferramenta para gerar bandeiras de acesso para usuários.
  *
  * @Arquivo gerarBandeiraAcesso.js
  */
