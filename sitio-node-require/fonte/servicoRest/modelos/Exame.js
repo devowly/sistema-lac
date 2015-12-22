@@ -161,9 +161,9 @@ exame.controladores = function(utilitarios) {
             // Verificamos se o usuário confere com os dados informados.
             verificarAcesso('leo@localhost', 'montes', function(seConfere, usuario){
               if (seConfere) {
-                dadosUsuario = usuario;
                 // Nosso usuário foi validado com sucesso.
-                seValidado = true;
+                dadosUsuario = usuario;
+                seValidado = seConfere;
               } 
               // Quando realizado nossa verificação então continuamos a execução.
               seRealizado = true;

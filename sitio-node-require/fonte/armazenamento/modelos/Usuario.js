@@ -40,6 +40,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     instanceMethods: {
       verificarSenha: function(password) {
+        // Verificamos a senha de forma sincrona. Retorna true se cofere com a nossa senha.
         return bcrypt.compareSync(password, this.password);
       }
     }

@@ -1,6 +1,6 @@
 'use strict'
 
-/* Utilitarios diversos.
+/* Utilitarios diversos para nossas fontes REST.
  *
  * @Arquivo utilitarios.js
  */
@@ -16,6 +16,7 @@ utilitarios.inicializar = function(bancoDados) {
 };
 
 /* Verificamos o usuário. A verificação é realizada comparando a senha com a senha que temos.
+ * @Veja http://brianmajewski.com/2015/02/25/relearning-backbone-part-9/
  *
  * @Parametro {modeloVerificacao} O nome do modelo em que iremos verificar o nosso usuário.
  * @Parametro {modeloAcessoRota} O nome do modelo que contem as bandeiras de acesso para as rotas.
@@ -31,10 +32,11 @@ utilitarios.verificarUsuario = function(modeloVerificacao, modeloAcessoRota, mod
       jid: usuarioJid
     }
   }).then(function (usuario) {
-    // Se usuário conferir nós iremos aqui chamar a função informando seus dados.
+    // Se não houver um usuário, é provavel que os dados informados estejam incorretos. Retornamos assim o valor false.
     if (!usuario) {
       cd(false, null);
     } else {
+      // Iremos verificar aqui se os dados informados realmente conferem com os dados que temos.
       var seConfere = usuario.verificarSenha(senha);
       if (seConfere) {
         // Se o usuário conferir com os dados, então agora queremos acessar sua bandeira de acesso a esta rota.
@@ -55,29 +57,28 @@ utilitarios.verificarUsuario = function(modeloVerificacao, modeloAcessoRota, mod
  */
 utilitarios.verificarUsuarioAcessoRota = function(modeloRota, modeloAcessoRota, usuario, cd) {
   var usuarioAcesso = {};
-  
+  // Aqui nós iremos procurar pelas bandeiras que este usuário possui para a rota (modelo) informada.
   this.bd[modeloAcessoRota].findOne({
     where: {
       usuario_id: usuario.id,       // Identificador do usuário.
       modelo: modeloRota            // Modelo onde queremos descobrir as bandeiras de acesso.
     }
   }).then(function (acessoRota) {
-    
     if (!acessoRota) {
       // Aqui, caso o usuário não possua nenhuma bandeira para este modelo, retornamos o valor de false. Isso
       // faz com que o usuário não tenha acesso as rotas que necessitem de uma bandeira de acesso.
       // As rotas de livre acesso não necessitam de nenhuma verificação.
       cd(false, null);
     } else {
-      usuarioAcesso.id = usuario.id;       // Id: identificador do nosso usuário.
-      usuarioAcesso.jid = usuario.jid;     // jid: Identificador do nosso usuário. (local@dominio).
-      usuarioAcesso.uuid = usuario.uuid;   // uuid: Identificador unico do usuário.
+      // Copiamos alguns dados necessário para usuarioAcesso e depois iremos retorna-los.
+      usuarioAcesso.id = usuario.id;       // id: Identificador e também chave primária do nosso usuário.
+      usuarioAcesso.jid = usuario.jid;     // jid: Identificador Jabber do nosso usuário. (local@dominio).
+      usuarioAcesso.uuid = usuario.uuid;   // uuid: Identificador único do usuário.
       usuarioAcesso.name = usuario.name;   // name: Nome do usuário.
       usuarioAcesso.bandeira = parseInt(acessoRota.bandeira, 16);  // bandeira: A bandeira de acesso deste usuário.
       cd(true, usuarioAcesso);
     }
   });
-  
 };
 
 module.exports = utilitarios;
