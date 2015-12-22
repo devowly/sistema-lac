@@ -67,7 +67,7 @@ configuracao.load(function (args, opcs) {
     console.log( 'O valor real da bandeira '+ bandeira +' é de : '+ valor);
     
   } else if (opcs.todas) {
-    var somaTotal = ACESSO_CRIAR |= ACESSO_LISTAR |= ACESSO_LER |= ACESSO_ATUALIZAR |= ACESSO_DELETAR |= ACESSO_LIVRE |= ACESSO_TOTAL;
+    var somaTotal = ACESSO_CRIAR |= ACESSO_LISTAR |= ACESSO_LER |= ACESSO_ATUALIZAR |= ACESSO_DELETAR;
     var somaTotalTexto = somaTotal.toString(16);
     var somaTotalInt = parseInt(somaTotalTexto, 16);
     
