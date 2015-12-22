@@ -23,7 +23,7 @@ var utilitarios = require('./utilitarios');
  * @Parametro {aplicativo} O nosso servidor Express.
  * @Parametro {bancoDados} Objeto do nosso banco de dados.
  */
-var ServicoRest = function (aplicativo, bancoDados) {
+var ServicoRest = function (aplicativo, bancoDados, jwt) {
   
   EmissorEvento.call(this);
 
@@ -32,6 +32,9 @@ var ServicoRest = function (aplicativo, bancoDados) {
   
   // Armazena aplicativo express
   this.aplic = aplicativo;
+  
+  // Utilizaremos os tokens para autenticação.
+  this.jsonWebToken = jwt;
 };
 
 util.inherits(ServicoRest, EmissorEvento);
@@ -112,8 +115,8 @@ ServicoRest.prototype.carregarServicoRest = function () {
           pagination: mod.seRealizarPaginacao ? true : false    // Modo de paginação. É importante para retornar o valor total
                                                                 // de registros para o Backbone.Paginator por meio da variavel X-total no header.
         },
-        reloadInstances: false                                  // Recomendado não utilizar esta opção, porque com ela ativada, o serviço CRUD 
-                                                                // não funciona corretamente.
+        reloadInstances: mod.seRecarregarInstancias  ? true : false  // Recomendado não utilizar esta opção, porque com ela ativada, o serviço CRUD 
+                                                                     // não funciona corretamente.
       });
       
       // Acrescentamos aqui a nossa fonte os seus controladores.
@@ -149,7 +152,7 @@ ServicoRest.prototype.iniciar = function () {
     });
     
     // Iniciamos aqui os utilitários.
-    utilitarios.inicializar(esteObjeto.bd);
+    utilitarios.inicializar(esteObjeto.bd, esteObjeto.jsonWebToken);
     
     // Carrega os arquivos que contem os nossos modelos.
     esteObjeto.carregarServicoRest();

@@ -19,7 +19,7 @@ var ServicoRest = require('./ServicoRest');                      // O nosso serv
  * @Parametro {aplicativo} O objeto do aplicativo do servidor Express.
  * @Parametro {pronto} A função que será chamada ao realizarmos todas as nossas funções.
  */
-exports.prosseguir = function(configuracao, aplicativo, pronto) {
+exports.prosseguir = function(configuracao, aplicativo, jwt, pronto) {
   var esteObjeto = {};
   
   esteObjeto.armazenamento = new Armazenamento(configuracao);
@@ -34,7 +34,7 @@ exports.prosseguir = function(configuracao, aplicativo, pronto) {
   })
   .then(function () {
     // Para cada modelo de tabela nós carregamos as rotas RESTFUL.
-    return esteObjeto.srvcRest.carregar(aplicativo, esteObjeto.armazenamento);
+    return esteObjeto.srvcRest.carregar(aplicativo, esteObjeto.armazenamento, jwt);
   })
   .then(function () {
     // parece que tudo ocorreu bem

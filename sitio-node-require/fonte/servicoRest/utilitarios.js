@@ -11,8 +11,12 @@ var utilitarios = {
   bd: null
 };
 
-utilitarios.inicializar = function(bancoDados) {
+utilitarios.inicializar = function(bancoDados, jwt) {
+  // Acesso ao banco de dados.
   this.bd = bancoDados;
+  
+  // Acesso ao nosso método Json Web Token de autorização as nossas rotas.
+  this.jsonWebToken = jwt;
 };
 
 /* Verificamos o usuário. A verificação é realizada comparando a senha com a senha que temos.

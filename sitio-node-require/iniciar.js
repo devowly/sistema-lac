@@ -15,6 +15,7 @@ var express = require('express');
 var http = require('http');
 var morgan = require('morgan');
 var ServidorXmpp = require('servidor-xmpp');
+var jwt = require('jsonwebtoken');
 
 // Carregamos o nosso registrador
 var registrador = require('./fonte/nucleo/registrador')('iniciar');
@@ -72,7 +73,7 @@ configuracao.load(function (args, opcs) {
   // Chamamos o arquivo principal, ele vai carregar os outros arquivos principais do servidor.
   var sitio = require('./fonte/iniciador/principal');
   
-  sitio.prosseguir(configuracao, aplic, function() {
+  sitio.prosseguir(configuracao, aplic, jwt, function() {
     
     registrador.debug('Carregando o servidor HTTP e XMPP.');
     

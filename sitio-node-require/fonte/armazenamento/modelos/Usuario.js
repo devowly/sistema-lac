@@ -3,7 +3,6 @@
 /* @arquivo Usuario.js */
 
 var uuid = require('node-uuid');
-var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt-nodejs');
 
 module.exports = function (sequelize, DataTypes) {
