@@ -156,7 +156,7 @@ exame.controladores = function(utilitarios) {
           
           // Aqui iremos ver se o usuário possui acesso a esta fonte. Esta verificação é realizada antes da listagem  começar.
           // De qualquer forma, podemos aqui adicionar a verificação do cliente (para saber se ele possui ou não acesso).
-          if (sePossuiAcesso('Listar', ACESSO_LIVRE) && false) {
+          if (sePossuiAcesso('Listar', ACESSO_LIVRE)) {
             // Acesso livre para a listagem. Podemos continuar.
             return context.continue;
           } else {
