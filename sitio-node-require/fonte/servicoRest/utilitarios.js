@@ -10,6 +10,12 @@ var utilitarios = {
   jsonWebToken: null
 };
 
+/* Utilitários diversos para as fontes Rest.
+ *
+ * @Parametro {bancoDados} Objeto do nosso banco de dados.
+ * @Parametro {jwt} Nosso módulo Json Web Token.
+ * @Parametro {superSecreto} Segredo utilizado ao codificar e decodificar os tokens.
+ */
 utilitarios.inicializar = function(bancoDados, jwt, superSecreto) {
   // Acesso ao banco de dados.
   this.bd = bancoDados;

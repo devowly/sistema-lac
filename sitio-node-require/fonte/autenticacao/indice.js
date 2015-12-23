@@ -18,6 +18,7 @@ var registrador = require('../nucleo/registrador')('Autenticacao');
  * @Parametro {aplicativo} O nosso servidor Express.
  * @Parametro {bancoDados} Objeto do nosso banco de dados.
  * @Parametro {jwt} Módulo para tratar as requisições em Json Web Token.
+ * @Parametro {autenticacao} Configuração de autenticação.
  */
 var Autenticacao = function (aplicativo, bancoDados, jwt, autenticacao) {
   

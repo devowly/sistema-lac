@@ -6,7 +6,7 @@
  */
 
 /* Versão 0.0.1-Beta
- * - Adicionar requisição de autenticação para acesso aos dados do serviço REST. (issue #4) [AFAZER]
+ * - Adicionar requisição de autenticação para acesso aos dados do serviço REST. (issue #4) [FEITO]
  */
 
 var util = require('util');
@@ -22,6 +22,8 @@ var utilitarios = require('./utilitarios');
  *
  * @Parametro {aplicativo} O nosso servidor Express.
  * @Parametro {bancoDados} Objeto do nosso banco de dados.
+ * @Parametro {jwt} Nosso módulo Json Web Token.
+ * @Parametro {autenticacao} Configuração de autenticação.
  */
 var ServicoRest = function (aplicativo, bancoDados, jwt, autenticacao) {
   
