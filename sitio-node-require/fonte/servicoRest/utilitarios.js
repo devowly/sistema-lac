@@ -6,17 +6,19 @@
  */
  
 var utilitarios = {
-  inicializar: null,
-  verificarSenha: null,
-  bd: null
+  bd: null,
+  jsonWebToken: null
 };
 
-utilitarios.inicializar = function(bancoDados, jwt) {
+utilitarios.inicializar = function(bancoDados, jwt, superSecreto) {
   // Acesso ao banco de dados.
   this.bd = bancoDados;
   
   // Acesso ao nosso método Json Web Token de autorização as nossas rotas.
   this.jsonWebToken = jwt;
+  
+  // O valor super secreto para a codificação e decodificação dos tokens.
+  this.superSecreto = superSecreto;
 };
 
 /* Realiza verificação do nosso usuário pelo token. 
@@ -31,7 +33,7 @@ utilitarios.inicializar = function(bancoDados, jwt) {
 utilitarios.verificarUsuarioToken = function(token, modeloAcessoRota, modeloRota, cd) {
   var esteObjeto = this;
   
-  this.jsonWebToken.verify(token, 'SenhaSuperSecreta', function (erro, decodificado) {
+  this.jsonWebToken.verify(token, this.superSecreto, function (erro, decodificado) {
     if (erro) {
       cd(false, null);
     } else {
@@ -42,7 +44,7 @@ utilitarios.verificarUsuarioToken = function(token, modeloAcessoRota, modeloRota
         esteObjeto.bd[modeloAcessoRota].findOne({
           where: {
             usuario_id: decodificado.id,  // Identificador do usuário.
-            modelo: modeloRota             // Modelo onde queremos descobrir as bandeiras de acesso.
+            modelo: modeloRota            // Modelo onde queremos descobrir as bandeiras de acesso.
           }
         }).then(function (acessoRota) {
           if (!acessoRota) {

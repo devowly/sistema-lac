@@ -36,11 +36,11 @@ exports.prosseguir = function(configuracao, aplicativo, jwt, pronto) {
   })
   .then(function () {
     // Para cada modelo de tabela nós carregamos as rotas RESTFUL.
-    return esteObjeto.srvcRest.carregar(aplicativo, esteObjeto.armazenamento, jwt);
+    return esteObjeto.srvcRest.carregar(aplicativo, esteObjeto.armazenamento, jwt, configuracao.authentication);
   })
   .then(function(){
     // Carregamos nosso serviço de autenticacao JWT.
-    return esteObjeto.autenticacao.carregar(aplicativo, esteObjeto.armazenamento, jwt);
+    return esteObjeto.autenticacao.carregar(aplicativo, esteObjeto.armazenamento, jwt, configuracao.authentication);
   })
   .then(function () {
     // parece que tudo ocorreu bem

@@ -115,8 +115,8 @@ exame.controladores = function(utilitarios) {
   *
   * Os valores retornados podem ser o valor em JSON, ou em alguns casos, nós iremos retornar um código de status informando
   * o ocorrido. Os valores de status poderão ser:
+  * - [status 401] Não autorizado. Quando a autenticação é requerida e falhou ou dados necessários não foram providos.
   * - [status 403] Retornamos este valor sempre que o acesso a uma fonte é proibida.
-  * - [status 404] Retornamos este valor sempre que, por algum motivo, a fonte não está disponível no momento.
   *
   * @Veja https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
   */
@@ -150,7 +150,6 @@ exame.controladores = function(utilitarios) {
     'list': {
       auth: {
         before: function(req, res, context) {
-          var seRealizado = false; 
           var seValidado = false;
           var dadosUsuario = null;
           
@@ -164,6 +163,8 @@ exame.controladores = function(utilitarios) {
             var token = req.body.token || req.params.token || req.headers['x-access-token'];
             
             if (token) {
+              var seRealizado = false; 
+              
               utilitarios.verificarUsuarioToken(token, exame.modeloAcesso, exame.moduloRota, function(seConfere, usuario) {
                 if (seConfere) {
                   // Nosso usuário foi validado com sucesso.

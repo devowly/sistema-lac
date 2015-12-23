@@ -19,6 +19,9 @@
  *  - server.cors.hosts (Obrigatório) Endereços permitidos pelo cors. Por questões de segurança, 
  *                                    utilize * apenas para a fase de desenvolvimento e testes.
  *  - server.logger (Opcional) O tipo de registro. podendo ser: 'default', 'short', 'tiny', 'dev' 
+ *
+ * @Diretiva {authentication} O nosso sistema de autenticação.
+ *  - authentication.supersecret (Obrigatório) Super segredo para codificar e decoficar os tokens.
  */
 module.exports = {
   
@@ -35,7 +38,7 @@ module.exports = {
     "port": 3306                      // A porta ao qual utilizaremos para a conexão com o banco de dados.
   },
   
-  // Servidor: As configurações para o Express
+  // Servidor: As configurações para o Express.
   "server": {
     "logger": "dev",                  // Valores permitidos: 'default', 'short', 'tiny', 'dev' 
     "port": 8080,                     // A porta ao qual o servidor irá escutar por requisições http.
@@ -43,6 +46,11 @@ module.exports = {
       "hosts": ["*"]                  // Os hosts permitidos, utilize * apenas na fase de desenvolvimento e testes, 
                                       // por questões de segurança.
     }
+  },
+  
+  // Autenticação: As configurações para as autenticações.
+  "authentication": {
+    "supersecret": "abcd1234"           // Segredo do Json Web Token (JWT).
   }
   
 };

@@ -17,10 +17,10 @@ function CarregaServicoAutenticacao() {}
  * @Parametro {jwt} Serviço Json Web Token.
  * @Retorna {Promessa} Uma promessa que pode ser de recusa ou deliberação.
  */
-CarregaServicoAutenticacao.prototype.carregar = function (aplicativo, bancoDados, jwt) {
+CarregaServicoAutenticacao.prototype.carregar = function (aplicativo, bancoDados, jwt, autenticacao) {
 
   // Inicia o módulo de serviço de Autenticacao.
-  var srvcAut = new Autenticacao(aplicativo, bancoDados, jwt);
+  var srvcAut = new Autenticacao(aplicativo, bancoDados, jwt, autenticacao);
 
   // Inicia o serviço de autenticacao e retorna promessa
   return srvcAut.iniciar();

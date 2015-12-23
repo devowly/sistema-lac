@@ -17,10 +17,10 @@ function CarregaServicoRest() {}
  * @Parametro {jwt} Serviço Json Web Token.
  * @Retorna {Promessa} Uma promessa que pode ser de recusa ou deliberação.
  */
-CarregaServicoRest.prototype.carregar = function (aplicativo, bancoDados, jwt) {
+CarregaServicoRest.prototype.carregar = function (aplicativo, bancoDados, jwt, autenticacao) {
 
   // Inicia o módulo de serviço REST
-  var srvcRest = new ServicoRest(aplicativo, bancoDados, jwt);
+  var srvcRest = new ServicoRest(aplicativo, bancoDados, jwt, autenticacao);
 
   // Inicia o serviço REST e retorna promessa
   return srvcRest.iniciar();

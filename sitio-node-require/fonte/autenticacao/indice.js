@@ -19,7 +19,7 @@ var registrador = require('../nucleo/registrador')('Autenticacao');
  * @Parametro {bancoDados} Objeto do nosso banco de dados.
  * @Parametro {jwt} Módulo para tratar as requisições em Json Web Token.
  */
-var Autenticacao = function (aplicativo, bancoDados, jwt) {
+var Autenticacao = function (aplicativo, bancoDados, jwt, autenticacao) {
   
   EmissorEvento.call(this);
 
@@ -34,6 +34,9 @@ var Autenticacao = function (aplicativo, bancoDados, jwt) {
   
   // Nome do modelo onde iremos buscar verificar os dados do usuário.
   this.modeloVerificacao = 'Usuario';
+  
+  // Configuração da autenticação.
+  this.autentic = autenticacao;
 };
 
 util.inherits(Autenticacao, EmissorEvento);
@@ -68,7 +71,7 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
             id: usuario.id,
             uuid: usuario.uuid,
             name: usuario.name
-          }, 'SenhaSuperSecreta', {
+          }, esteObjeto.autentic.supersecret, {
             // O token vai expirar em 24 horas.
             expiresInMinutes: 1440
           });

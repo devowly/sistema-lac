@@ -23,7 +23,7 @@ var utilitarios = require('./utilitarios');
  * @Parametro {aplicativo} O nosso servidor Express.
  * @Parametro {bancoDados} Objeto do nosso banco de dados.
  */
-var ServicoRest = function (aplicativo, bancoDados, jwt) {
+var ServicoRest = function (aplicativo, bancoDados, jwt, autenticacao) {
   
   EmissorEvento.call(this);
 
@@ -35,6 +35,9 @@ var ServicoRest = function (aplicativo, bancoDados, jwt) {
   
   // Utilizaremos os tokens para autenticação.
   this.jsonWebToken = jwt;
+  
+  // Configuração da autenticação.
+  this.autentic = autenticacao;
 };
 
 util.inherits(ServicoRest, EmissorEvento);
@@ -152,7 +155,7 @@ ServicoRest.prototype.iniciar = function () {
     });
     
     // Iniciamos aqui os utilitários.
-    utilitarios.inicializar(esteObjeto.bd, esteObjeto.jsonWebToken);
+    utilitarios.inicializar(esteObjeto.bd, esteObjeto.jsonWebToken, esteObjeto.autentic.supersecret);
     
     // Carrega os arquivos que contem os nossos modelos.
     esteObjeto.carregarServicoRest();
