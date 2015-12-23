@@ -39,6 +39,7 @@ var Autenticacao = function (aplicativo, bancoDados, jwt) {
 util.inherits(Autenticacao, EmissorEvento);
 
 /* Realiza o inicio do serviço de autenticação de nossos usuários.
+ * @Veja http://brianmajewski.com/2015/02/25/relearning-backbone-part-9/
  */
 Autenticacao.prototype.carregarServicoAutenticacao = function () {
   var esteObjeto = this;

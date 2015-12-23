@@ -19,7 +19,9 @@ utilitarios.inicializar = function(bancoDados, jwt) {
   this.jsonWebToken = jwt;
 };
 
-/* Realiza verificação do nosso usuário pelo token.
+/* Realiza verificação do nosso usuário pelo token. 
+ * @Veja https://github.com/auth0/node-jsonwebtoken
+ * @Veja http://brianmajewski.com/2015/02/25/relearning-backbone-part-9/
  *
  * @Parametro {token} O token informado pelo usuário.
  * @Parametro {modeloAcessoRota} O nome do modelo que contem as bandeiras de acesso para as rotas.
