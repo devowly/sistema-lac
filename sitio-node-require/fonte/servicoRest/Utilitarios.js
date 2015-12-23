@@ -112,7 +112,7 @@ Utilitarios.prototype.autenticarPeloJid = function(modeloRota, usrjid, senha, cd
   }
 
   // Verificamos jid e senha.
-  this.verificarUsuarioPeloJid(modeloRota, usrjid, senha, ponte);
+  this.autenticacaoUsuario.verificarUsuarioPeloJid(modeloRota, usrjid, senha, ponte);
   
   // Percorre laço enquanto não estiver realizado tudo. Infelizmente, 
   // isso é necessário porque o sequelize é assincrono.
