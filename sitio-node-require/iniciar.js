@@ -56,16 +56,20 @@ configuracao.load(function (args, opcs) {
   // Iniciamos o servidor express
   var aplic = express();
   
-  // Utilizamos isso para receber requisições POST ou PUT.
+  // Utilizamos o bodyParser para receber requisições POST ou PUT.
+  // Lembre-se de manter o limit do body em 100kb para nos precaver dos ataques de negação de serviço.
   var bodyParser = require('body-parser');
-  aplic.use(bodyParser.json());
-  aplic.use(bodyParser.urlencoded({ extended: false }));
+  aplic.use(bodyParser.json({limit: '100kb'}));
+  aplic.use(bodyParser.urlencoded({limit: '100kb', extended: false}));
   
   // Porta ao qual iremos receber conexões.  
   aplic.set('port', process.env.PORT || configuracao.server.port);
   
+  // Iremos servir as páginas do diretorio "/admin"
+  aplic.use('/admin', express.static(pasta.join(__dirname, 'admin')));  
+  
   // Iremos servir as páginas do diretorio "/publico"
-  aplic.use(express.static(pasta.join(__dirname, 'publico')));
+  aplic.use('/', express.static(pasta.join(__dirname, 'publico')));
   
   // Adicionamos isso para realizar o registro de requisições.
   aplic.use(morgan('combined'));
