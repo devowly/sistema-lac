@@ -14,12 +14,13 @@ function CarregaServicoRest() {}
  *
  * @Parametro {aplicativo} O aplicativo Express.
  * @Parametro {bancoDados} Objeto contendo o banco de dados Sequelize.
+ * @Parametro {jwt} Serviço Json Web Token.
  * @Retorna {Promessa} Uma promessa que pode ser de recusa ou deliberação.
  */
-CarregaServicoRest.prototype.carregar = function (aplicativo, bancoDados) {
+CarregaServicoRest.prototype.carregar = function (aplicativo, bancoDados, jwt) {
 
   // Inicia o módulo de serviço REST
-  var srvcRest = new ServicoRest(aplicativo, bancoDados);
+  var srvcRest = new ServicoRest(aplicativo, bancoDados, jwt);
 
   // Inicia o serviço REST e retorna promessa
   return srvcRest.iniciar();

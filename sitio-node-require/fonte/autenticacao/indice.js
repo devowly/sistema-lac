@@ -31,9 +31,61 @@ var Autenticacao = function (aplicativo, bancoDados, jwt) {
   
   // Utilizaremos os tokens para autenticação.
   this.jsonWebToken = jwt;
+  
+  // Nome do modelo onde iremos buscar verificar os dados do usuário.
+  this.modeloVerificacao = 'Usuario';
 };
 
 util.inherits(Autenticacao, EmissorEvento);
+
+/* Realiza o inicio do serviço de autenticação de nossos usuários.
+ */
+Autenticacao.prototype.carregarServicoAutenticacao = function () {
+  var esteObjeto = this;
+  
+  // Obs: Se utilizar o Postman, não utilize 'application/json' no header de requisição
+  // @Veja https://stackoverflow.com/questions/29006170/error-invalid-json-with-multer-and-body-parser
+  
+  // Acrescentamos a nossa rota de autenticação e esperamos por requisições do tipo POST.
+  this.aplic.post('/autenticar', function (req, res) {
+    // Aqui procuramos o usuário pelo jid fornecido.
+    esteObjeto.bd[esteObjeto.modeloVerificacao].findOne({
+      where: {
+        jid: req.body.usuarioJid
+      }
+    }).then(function (usuario) {
+      // Se não houver um usuário, é provavel que os dados informados estejam incorretos. Informamos que o JID é incorreto.
+      if (!usuario) {
+        res.json({ success: false, message: 'Você informou um JID que não confere. Contacte o administrador.' });
+      } else {
+        // Iremos verificar aqui se os dados informados realmente conferem com os dados que temos.
+        var seConfere = usuario.verificarSenha(req.body.senha);
+        if (seConfere) {
+          // Se o usuário conferir com os dados, agora podemos criar seu token de acesso.
+          var token = esteObjeto.jsonWebToken.sign({
+            jid: usuario.jid,
+            id: usuario.id,
+            uuid: usuario.uuid,
+            name: usuario.name
+          }, 'SenhaSuperSecreta', {
+            // O token vai expirar em 24 horas.
+            expiresInMinutes: 1440
+          });
+
+          res.json({
+            success: true,
+            message: 'Autorização permitida, seu access token foi criado.',
+            token: token,
+            id: usuario.id
+          });
+          
+        } else {
+          res.json({ success: false, message: 'Você informou uma senha que não confere. Contacte o administrador.' });
+        }
+      }
+    });  
+  });
+};
 
 /* Realizamos aqui o inicio do nosso serviço de autenticação e autorização.
  *
@@ -47,18 +99,9 @@ Autenticacao.prototype.iniciar = function () {
 
   return new Promessa(function (deliberar, recusar) {
 
-    // Inicia o serviço REST Epilogue.
-    epilogue.initialize({
-      app: esteObjeto.aplic,               // Aplicativo Express.
-      sequelize: esteObjeto.bd.sequelize   // Nosso banco de dados Sequelize.
-    });
+    // Carregamos nosso serviço.
+    esteObjeto.carregarServicoAutenticacao();
     
-    // Iniciamos aqui os utilitários.
-    utilitarios.inicializar(esteObjeto.bd, esteObjeto.jsonWebToken);
-    
-    // Carrega os arquivos que contem os nossos modelos.
-    esteObjeto.carregarServicoRest();
-
     // Se tudo ocorreu bem.
     deliberar(esteObjeto);
     

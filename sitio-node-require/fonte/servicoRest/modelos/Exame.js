@@ -156,25 +156,31 @@ exame.controladores = function(utilitarios) {
           
           // Aqui iremos ver se o usuário possui acesso a esta fonte. Esta verificação é realizada antes da listagem  começar.
           // De qualquer forma, podemos aqui adicionar a verificação do cliente (para saber se ele possui ou não acesso).
-          if (sePossuiAcesso('Listar', ACESSO_LIVRE)) {
+          if (sePossuiAcesso('Listar', ACESSO_LIVRE) && false) {
             // Acesso livre para a listagem. Podemos continuar.
             return context.continue;
           } else {
-            // Verificamos se o usuário confere com os dados informados.
-            verificarAcesso('leo@localhost', 'montes', function(seConfere, usuario){
-              if (seConfere) {
-                // Nosso usuário foi validado com sucesso.
-                dadosUsuario = usuario;
-                seValidado = seConfere;
-              } 
-              // Quando realizado nossa verificação então continuamos a execução.
-              seRealizado = true;
-            });
+            // Pegamos inicialmente o token.
+            var token = req.body.token || req.params.token || req.headers['x-access-token'];
             
-            // Percorre laço enquanto não estiver realizado tudo. Infelizmente, isso é necessário porque o sequelize é assincrono.
-            deasync.loopWhile(function(){
-              return !seRealizado;
-            });
+            if (token) {
+              utilitarios.verificarUsuarioToken(token, exame.modeloAcesso, exame.moduloRota, function(seConfere, usuario) {
+                if (seConfere) {
+                  // Nosso usuário foi validado com sucesso.
+                  dadosUsuario = usuario;
+                  seValidado = seConfere;
+                } 
+                // Quando realizado nossa verificação então continuamos a execução.
+                seRealizado = true;
+              });
+              
+              // Percorre laço enquanto não estiver realizado tudo. Infelizmente, isso é necessário porque o sequelize é assincrono.
+              deasync.loopWhile(function(){
+                return !seRealizado;
+              });
+            } else {
+              return context.error(401, "Não informado nenhum token. Contacte o administrador.");
+            }
             
             // Aqui verificamos se o usuário é valido e se possui algum acesso a esta fonte.
             // Caso não possua acesso é retornado um erro 403 de acesso proibido.

@@ -12,6 +12,7 @@ var baseSitio = require('../indice');  // Requisitamos os arquivos base da nossa
 var registrador = require('../nucleo/registrador')('principal'); // O nosso registrador
 var Armazenamento = require('./Armazenamento');                  // Modulo de armazenamento.
 var ServicoRest = require('./ServicoRest');                      // O nosso serviço REST para cada um dos modelos de armazenamento.
+var Autenticacao = require('./Autenticacao');                    // Nosso serviço de autenticacao Json Web Token.
 
 /* Realiza o inicio dos nossos serviços principais.
  * 
@@ -24,6 +25,7 @@ exports.prosseguir = function(configuracao, aplicativo, jwt, pronto) {
   
   esteObjeto.armazenamento = new Armazenamento(configuracao);
   esteObjeto.srvcRest = new ServicoRest();
+  esteObjeto.autenticacao = new Autenticacao();
   
   registrador.debug('Carregando os módulos da base do nosso servidor.');
   
@@ -35,6 +37,10 @@ exports.prosseguir = function(configuracao, aplicativo, jwt, pronto) {
   .then(function () {
     // Para cada modelo de tabela nós carregamos as rotas RESTFUL.
     return esteObjeto.srvcRest.carregar(aplicativo, esteObjeto.armazenamento, jwt);
+  })
+  .then(function(){
+    // Carregamos nosso serviço de autenticacao JWT.
+    return esteObjeto.autenticacao.carregar(aplicativo, esteObjeto.armazenamento, jwt);
   })
   .then(function () {
     // parece que tudo ocorreu bem
