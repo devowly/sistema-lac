@@ -1,7 +1,5 @@
 'use strict';
 
-var deasync = require('deasync');
-
 /* Aqui possuimos tudo relativo a nossa fonte REST exame. Temos aqui definido o controle de acesso a esta fonte.
  *
  * @Arquivo Exame.js 
@@ -24,13 +22,7 @@ var exame = {
 exame.controladores = function(utilitarios) {
   
   // Nome deste módulo, Geralmente é o nome dessa tabela no banco de dados.
-  exame.moduloRota = exame.nome;
-  
-  // Nome do modelo onde iremos buscar verificar os dados do usuário.
-  exame.modeloVerificacao = 'Usuario';
-  
-  // Nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
-  exame.modeloAcesso = 'AcessoRota';
+  exame.esteModelo = exame.nome;
   
  /* As bandeiras de acesso a esta fonte, nós utilizaremos nestas bandeiras operadores bit a bit.
   * Exemplo de como manipular as bandeiras:
@@ -52,54 +44,16 @@ exame.controladores = function(utilitarios) {
   ACESSO_LISTAR |= ACESSO_LIVRE;  // Geralmente o acesso a listagem é livre.
   ACESSO_LER |=    ACESSO_LIVRE;  // Geralmente o acesso a leitura é livre.
     
-    
-  /* Verificamos aqui as bandeiras de acesso a este modelo.
-   *
-   * @Parametro {tipo} O tipo de acesso requisitado. Por exemplo 'Listar'.
-   * @Parametro {bandeira} O valor da bandeira que será comparada com o tipo de acesso informado. 
-   * @Retorna falso se não houver acesso, verdadeiro caso contrário.
-   */
-  var sePossuiAcesso = function (tipo, bandeira) {
-    var seSim = false;
-    
-    switch (tipo) {
-      case 'Livre':  // Verificamos se o acesso a determinado controlador é livre.
-        seSim = (bandeira & ACESSO_LIVRE);
-      break;
-      case 'Criar':  // Verificamos se possui o acesso à criação.
-        seSim = (bandeira & ACESSO_CRIAR)
-      break;
-      case 'Listar':  // Verificamos se possui o acesso à listagem.
-        seSim = (bandeira & ACESSO_LISTAR);
-      break;
-      case 'Ler':  // Verificamos se possui o acesso à leitura.
-        seSim = (bandeira & ACESSO_LER);
-      break;
-      case 'Atualizar':  // Verificamos se possui o acesso a atualização.
-        seSim = (bandeira & ACESSO_ATUALIZAR);
-      break;
-      case 'Deletar':  // Verificamos se possui o acesso a deletar.
-        seSim = (bandeira & ACESSO_DELETAR);
-      break;
-      case 'Total':  // Verificamos se possui o acesso total as rotas.
-        seSim = (bandeira & ACESSO_TOTAL);
-      break;
-    }
-    
-    return seSim;
-  }
-    
-  /* Verificamos aqui se o usuário possui acesso a este modulo. Se o usuário conferir, 
-   * vamos retornar suas informações para o callback, juntamente com o valor da sua bandeira de acesso a este módulo.
-   *
-   * @Parametro {usuarioJid} O identificador do usuário. Composto de local@dominio.
-   * @Parametro {senha} A senha deste usuário.
-   * @Parametro {cd} Função que será chamada assim que a verificação estiver terminada.
-   */
-  var verificarAcesso = function(usuarioJid, senha, cd) { 
-    return utilitarios.verificarUsuario(exame.modeloVerificacao, exame.modeloAcesso, exame.moduloRota, usuarioJid, senha, cd);
-  };
-  
+  // Adicionamos aqui as nossas bandeiras suportadas por este modelo.
+  // Lembre-se que cada modelo pode possir bandeiras de acesso diferentes.
+  utilitarios.adcUmaBandeiraParaModelo(exame.esteModelo, 'ACESSO_CRIAR', 'Criar', ACESSO_CRIAR);  
+  utilitarios.adcUmaBandeiraParaModelo(exame.esteModelo, 'ACESSO_LISTAR', 'Listar', ACESSO_LISTAR);  
+  utilitarios.adcUmaBandeiraParaModelo(exame.esteModelo, 'ACESSO_LER', 'Ler', ACESSO_LER);  
+  utilitarios.adcUmaBandeiraParaModelo(exame.esteModelo, 'ACESSO_ATUALIZAR', 'Atualizar', ACESSO_ATUALIZAR);  
+  utilitarios.adcUmaBandeiraParaModelo(exame.esteModelo, 'ACESSO_DELETAR', 'Deletar', ACESSO_DELETAR);  
+  utilitarios.adcUmaBandeiraParaModelo(exame.esteModelo, 'ACESSO_LIVRE', 'Livre', ACESSO_LIVRE);  
+  utilitarios.adcUmaBandeiraParaModelo(exame.esteModelo, 'ACESSO_TOTAL', 'Total', ACESSO_TOTAL);  
+        
  /* Para esta fonte, teremos alguns controladores listados abaixo:
   * - Exame.create
   * - Exame.list
@@ -150,12 +104,12 @@ exame.controladores = function(utilitarios) {
     'list': {
       auth: {
         before: function(req, res, context) {
-          var seValidado = false;
-          var dadosUsuario = null;
+          var seValidado = false;   // Informamos se o usuário foi validado.
+          var dadosUsuario = null;  // Dados do usuário.
           
           // Aqui iremos ver se o usuário possui acesso a esta fonte. Esta verificação é realizada antes da listagem  começar.
           // De qualquer forma, podemos aqui adicionar a verificação do cliente (para saber se ele possui ou não acesso).
-          if (sePossuiAcesso('Listar', ACESSO_LIVRE)) {
+          if (utilitarios.verificarSePossuiAcesso(exame.esteModelo, ['Listar'], ACESSO_LIVRE)  && false) {
             // Acesso livre para a listagem. Podemos continuar.
             return context.continue;
           } else {
@@ -163,21 +117,13 @@ exame.controladores = function(utilitarios) {
             var token = req.body.token || req.params.token || req.headers['x-access-token'];
             
             if (token) {
-              var seRealizado = false; 
-              
-              utilitarios.verificarUsuarioToken(token, exame.modeloAcesso, exame.moduloRota, function(seConfere, usuario) {
+              // Autenticamos aqui o usuário utilizando o token informado.
+              utilitarios.autenticarPeloToken(token, exame.esteModelo, function(seConfere, usuario) {
                 if (seConfere) {
                   // Nosso usuário foi validado com sucesso.
                   dadosUsuario = usuario;
                   seValidado = seConfere;
                 } 
-                // Quando realizado nossa verificação então continuamos a execução.
-                seRealizado = true;
-              });
-              
-              // Percorre laço enquanto não estiver realizado tudo. Infelizmente, isso é necessário porque o sequelize é assincrono.
-              deasync.loopWhile(function(){
-                return !seRealizado;
               });
             } else {
               return context.error(401, "Não informado nenhum token. Contacte o administrador.");
@@ -186,15 +132,13 @@ exame.controladores = function(utilitarios) {
             // Aqui verificamos se o usuário é valido e se possui algum acesso a esta fonte.
             // Caso não possua acesso é retornado um erro 403 de acesso proibido.
             if (seValidado) {
-              if (sePossuiAcesso('Listar', dadosUsuario.bandeira)) {
-                return context.continue;
-              } else if (sePossuiAcesso('Total', dadosUsuario.bandeira)) {
+              if(utilitarios.verificarSePossuiAcesso(exame.esteModelo, ['Listar', 'Total'], dadosUsuario.bandeira)) {
                 return context.continue;
               } else {
                 return context.error(403, "Acesso proibido a listagem. Contacte o administrador.");
               }
             } else {
-              return context.error(403, "Acesso proibido a listagem. Contacte o administrador.");
+              return context.error(401, "Tentativa de acesso sem sucesso. Verifique seu token de acesso.");
             }
           }
         },

@@ -34,6 +34,27 @@ Utilitarios.prototype.inicializar = function () {
   
 };
 
+/* Acrescenta uma bandeira na lista. 
+ *
+ * @Parametro {modelo} O modelo que possui as bandeiras.
+ * @Parametro {bandeira} O nome desta bandeira.
+ * @Parametro {tipo} O tipo de acesso da bandeira. Por exemplo: 'Criar'.
+ * @Parametro {valor} O valor em hexadecimal desta bandeira.
+ */
+Utilitarios.prototype.adcUmaBandeiraParaModelo = function(modelo, bandeira, tipo, valor) {
+  this.bandeiras.adcBandeiraParaModelo(modelo, bandeira, tipo, valor);
+};
+
+/* Verificamos aqui as bandeiras de acesso a este determinado modelo.
+ *
+ * @Parametro {modelo} O modelo que possui as bandeiras.
+ * @Parametro {tipos} Os tipos de acesso requisitado. Por exemplo 'Listar'.
+ * @Retorna falso se não houver acesso, verdadeiro caso contrário.
+ */
+Utilitarios.prototype.verificarSePossuiAcesso = function(modelo, tipos, valor) {
+  return this.bandeiras.sePossuiAcesso(modelo, tipos, valor);
+};
+
 /* Realiza a autenticação de deteminado usuário pelo token informado.
  *
  * @Parametro {token} Aquele token utilizado para autenticação.

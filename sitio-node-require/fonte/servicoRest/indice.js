@@ -15,7 +15,7 @@ var Promessa = require('bluebird');
 var modelos = require('./modelos/indice');
 var registrador = require('../nucleo/registrador')('ServicoRest');
 var epilogue = require('epilogue');
-var utilitarios = require('./utilitarios');
+var Utilitarios = require('./Utilitarios');
 
 /* Abstração da gerencia das rotas do serviço REST. 
  * Realiza o carregamento das rotas REST do nosso servidor.
@@ -40,6 +40,9 @@ var ServicoRest = function (aplicativo, bancoDados, jwt, autenticacao) {
   
   // Configuração da autenticação.
   this.autentic = autenticacao;
+  
+  // Iniciamos aqui os utilitários.
+  this.utilitarios = new Utilitarios(bancoDados, jwt, autenticacao);
 };
 
 util.inherits(ServicoRest, EmissorEvento);
@@ -126,7 +129,7 @@ ServicoRest.prototype.carregarServicoRest = function () {
       
       // Acrescentamos aqui a nossa fonte os seus controladores.
       if (mod.controladores){
-        var ponteRest = mod.controladores(utilitarios);
+        var ponteRest = mod.controladores(esteObjeto.utilitarios);
         esteObjeto[mod.nome].use(ponteRest);
       }
       
@@ -155,9 +158,6 @@ ServicoRest.prototype.iniciar = function () {
       app: esteObjeto.aplic,               // Aplicativo Express.
       sequelize: esteObjeto.bd.sequelize   // Nosso banco de dados Sequelize.
     });
-    
-    // Iniciamos aqui os utilitários.
-    utilitarios.inicializar(esteObjeto.bd, esteObjeto.jsonWebToken, esteObjeto.autentic.supersecret);
     
     // Carrega os arquivos que contem os nossos modelos.
     esteObjeto.carregarServicoRest();
