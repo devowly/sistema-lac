@@ -52,41 +52,43 @@ exame.controladores = function(utilitarios) {
   ACESSO_LISTAR |= ACESSO_LIVRE;  // Geralmente o acesso a listagem é livre.
   ACESSO_LER |=    ACESSO_LIVRE;  // Geralmente o acesso a leitura é livre.
     
-  // Verificamos se o acesso a determinado controlador é livre.
-  var seAcessoLivre = function(bandeira) {
-    return bandeira & ACESSO_LIVRE;
-  };
-  
-  // Verificamos se possui o acesso à criação.
-  var seAcessoCriar = function(bandeira) {
-    return bandeira & ACESSO_CRIAR;
-  };
-  
-  // Verificamos se possui o acesso à listagem.
-  var seAcessoListar = function(bandeira) {
-    return bandeira & ACESSO_LISTAR;
-  };
-  
-  // Verificamos se possui o acesso à leitura.
-  var seAcessoLer = function(bandeira) {
-    return bandeira & ACESSO_LER;
-  };
-  
-  // Verificamos se possui o acesso a atualização.
-  var seAcessoAtualizar = function(bandeira) {
-    return bandeira & ACESSO_ATUALIZAR;
-  };
-  
-  // Verificamos se possui o acesso a deletar.
-  var seAcessoDeletar = function(bandeira) {
-    return bandeira & ACESSO_DELETAR;
-  };
-  
-  // Verificamos se possui o acesso total as rotas.
-  var seAcessoTotal = function(bandeira) {
-    return bandeira & ACESSO_TOTAL;
-  };
-  
+    
+  /* Verificamos aqui as bandeiras de acesso a este modelo.
+   *
+   * @Parametro {tipo} O tipo de acesso requisitado. Por exemplo 'Listar'.
+   * @Parametro {bandeira} O valor da bandeira que será comparada com o tipo de acesso informado. 
+   * @Retorna falso se não houver acesso, verdadeiro caso contrário.
+   */
+  var sePossuiAcesso = function (tipo, bandeira) {
+    var seSim = false;
+    
+    switch (tipo) {
+      case 'Livre':  // Verificamos se o acesso a determinado controlador é livre.
+        seSim = (bandeira & ACESSO_LIVRE);
+      break;
+      case 'Criar':  // Verificamos se possui o acesso à criação.
+        seSim = (bandeira & ACESSO_CRIAR)
+      break;
+      case 'Listar':  // Verificamos se possui o acesso à listagem.
+        seSim = (bandeira & ACESSO_LISTAR);
+      break;
+      case 'Ler':  // Verificamos se possui o acesso à leitura.
+        seSim = (bandeira & ACESSO_LER);
+      break;
+      case 'Atualizar':  // Verificamos se possui o acesso a atualização.
+        seSim = (bandeira & ACESSO_ATUALIZAR);
+      break;
+      case 'Deletar':  // Verificamos se possui o acesso a deletar.
+        seSim = (bandeira & ACESSO_DELETAR);
+      break;
+      case 'Total':  // Verificamos se possui o acesso total as rotas.
+        seSim = (bandeira & ACESSO_TOTAL);
+      break;
+    }
+    
+    return seSim;
+  }
+    
   /* Verificamos aqui se o usuário possui acesso a este modulo. Se o usuário conferir, 
    * vamos retornar suas informações para o callback, juntamente com o valor da sua bandeira de acesso a este módulo.
    *
@@ -127,7 +129,7 @@ exame.controladores = function(utilitarios) {
         },
         before: function(req, res, context) {
           // Podemos modificar aqui os dados antes da listagem.
-          if (seAcessoLivre(ACESSO_LISTAR)) {
+          if (sePossuiAcesso('Criar', ACESSO_LIVRE)) {
             // Acesso livre para a listagem. Podemos continuar.
             return context.continue;
           } else {
@@ -154,7 +156,7 @@ exame.controladores = function(utilitarios) {
           
           // Aqui iremos ver se o usuário possui acesso a esta fonte. Esta verificação é realizada antes da listagem  começar.
           // De qualquer forma, podemos aqui adicionar a verificação do cliente (para saber se ele possui ou não acesso).
-          if (seAcessoLivre(ACESSO_LISTAR)) {
+          if (sePossuiAcesso('Listar', ACESSO_LIVRE)) {
             // Acesso livre para a listagem. Podemos continuar.
             return context.continue;
           } else {
@@ -174,11 +176,12 @@ exame.controladores = function(utilitarios) {
               return !seRealizado;
             });
             
-            // Aqui verificamos se o usuário é valido e se possui algum acesso a esta fonte. Caso não possua acesso é retornado erro.
+            // Aqui verificamos se o usuário é valido e se possui algum acesso a esta fonte.
+            // Caso não possua acesso é retornado um erro 403 de acesso proibido.
             if (seValidado) {
-              if (seAcessoTotal(dadosUsuario.bandeira)) {
+              if (sePossuiAcesso('Listar', dadosUsuario.bandeira)) {
                 return context.continue;
-              } else if (seAcessoListar(dadosUsuario.bandeira)) {
+              } else if (sePossuiAcesso('Total', dadosUsuario.bandeira)) {
                 return context.continue;
               } else {
                 return context.error(403, "Acesso proibido a listagem. Contacte o administrador.");
@@ -201,7 +204,7 @@ exame.controladores = function(utilitarios) {
     'read': {
       auth: {
         before: function(req, res, context) {
-          if (seAcessoLivre(ACESSO_LER)) {
+          if (sePossuiAcesso('Ler', ACESSO_LIVRE)) {
             // Acesso livre para a leitura. Podemos continuar.
             return context.continue;
           } else {
