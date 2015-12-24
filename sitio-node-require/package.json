@@ -1,7 +1,7 @@
 {
   "name": "laboratorio-site",
   "description": "Site para laboratorios",
-  "keywords": "Laboratorio analises clinicas sangue",
+  "keywords": "Laboratorio analises clinicas exame sangue paciente médico atendimento",
   "version": "0.0.1",
   "author": "Léo Felippe <leofelippedias@hotmail.com.br>",
   "main": "./iniciar.js",
