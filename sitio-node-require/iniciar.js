@@ -75,13 +75,16 @@ configuracao.load(function (args, opcs) {
   // Adicionamos isso para realizar o registro de requisições.
   aplic.use(morgan('combined'));
   
+  // Espera pelos eventos do sistema operacional.
+  var eventosSistema = new EventosSistema();
+  
   // Chamamos o arquivo principal, ele vai carregar os outros arquivos principais do servidor.
   var sitio = require('./fonte/iniciador/principal');
   
   sitio.prosseguir(configuracao, aplic, jwt, function() {
     
     // Iniciamos aqui a escuta pelos eventos de sinalização e ou excessão.
-    EventosSistema.iniciar();
+    eventosSistema.iniciar();
     
     registrador.debug('Carregando o servidor HTTP e XMPP.');
     
