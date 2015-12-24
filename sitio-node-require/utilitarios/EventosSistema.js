@@ -174,4 +174,4 @@ EventosSistema.prototype.iniciar = function () {
   this.iniciarEsperaPorEventosSinais();
 };
 
-module.exports = EventosSistema;
+module.exports = new EventosSistema();

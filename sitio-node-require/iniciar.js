@@ -15,7 +15,6 @@ var http = require('http');
 var morgan = require('morgan');
 var ServidorXmpp = require('servidor-xmpp');
 var jwt = require('jsonwebtoken');
-var EventosSistema = require('./utilitarios/EventosSistema');
 
 // Carregamos o nosso registrador
 var registrador = require('./fonte/nucleo/registrador')('iniciar');
@@ -56,11 +55,17 @@ configuracao.load(function (args, opcs) {
   // Iniciamos o servidor express
   var aplic = express();
   
+  // Necessário usar isto para a aceitação de requisições das origens permitidas.
+  var cors = require('cors');
+  aplic.use(cors({
+    origin: configuracao.server.cors.origin
+  }));
+  
   // Utilizamos o bodyParser para receber requisições POST ou PUT.
   // Lembre-se de manter o limit do body em 100kb para nos precaver dos ataques de negação de serviço.
   var bodyParser = require('body-parser');
-  aplic.use(bodyParser.json({limit: '100kb'}));
-  aplic.use(bodyParser.urlencoded({limit: '100kb', extended: false}));
+  aplic.use(bodyParser.json({limit: configuracao.server.limit}));
+  aplic.use(bodyParser.urlencoded({limit: configuracao.server.limit, extended: false}));
   
   // Porta ao qual iremos receber conexões.  
   aplic.set('port', process.env.PORT || configuracao.server.port);
@@ -75,7 +80,7 @@ configuracao.load(function (args, opcs) {
   aplic.use(morgan('combined'));
   
   // Espera pelos eventos do sistema operacional.
-  var eventosSistema = new EventosSistema();
+  var eventosSistema = require('./utilitarios/EventosSistema');
   
   // Chamamos o arquivo principal, ele vai carregar os outros arquivos principais do servidor.
   var sitio = require('./fonte/iniciador/principal');
