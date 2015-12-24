@@ -46,8 +46,8 @@ module.exports = {
   "server": {
     "logger": "dev",                  // Valores permitidos: 'default', 'short', 'tiny', 'dev' 
     "port": 8080,                     // A porta ao qual o servidor irá escutar por requisições http.
-    "limit": "100kb",                 // Limite permitido para o conteúdo body. Lembre-se de manter o limit do body em 
-                                      // '100kb' para nos precaver dos ataques de negação de serviço.
+    "limit": "200kb",                 // Limite permitido para o conteúdo body. Lembre-se de manter o limit do body em 
+                                      // '200kb' para nos precaver dos ataques de negação de serviço.
     "cors": {                         
       "origin": ["http://localhost"]  // Os endereços de origem que são permitidos, utilize * apenas na fase de desenvolvimento e testes, 
                                       // por questões de segurança.

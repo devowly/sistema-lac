@@ -59,11 +59,11 @@ configuracao.load(function (args, opcs) {
   // Necessário usar isto para a aceitação de requisições das origens permitidas.
   var cors = require('cors');
   aplic.use(cors({
-    origin: configuracao.server.cors.origin
+    origin: configuracao.server.cors.origin  // Origens aceitas por este servidor express.
   }));
   
   // Utilizamos o bodyParser para receber requisições POST ou PUT.
-  // Lembre-se de manter o limit do body em 100kb para nos precaver dos ataques de negação de serviço.
+  // Lembre-se de manter o limit do body em 200kb para nos precaver dos ataques de negação de serviço.
   var bodyParser = require('body-parser');
   aplic.use(bodyParser.json({limit: configuracao.server.limit}));
   aplic.use(bodyParser.urlencoded({limit: configuracao.server.limit, extended: false}));

@@ -6,7 +6,9 @@
  *            Utilizando Json Web Token.
  */
 
-/* Versão 0.0.1-Beta */
+/* Versão 0.0.1-Beta 
+ * - Criar rota no express para permitir ao cliente re-validar seu token de acesso. (issue #27) [FEITO]
+ */
 
 var util = require('util');
 var EmissorEvento = require('events').EventEmitter;
@@ -53,6 +55,8 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
   
   // Acrescentamos a nossa rota de autenticação e esperamos por requisições do tipo POST.
   this.aplic.post('/autenticar', function (req, res) {
+    
+    // Tentamos pegar o jid e senha informados no corpo, parametros ou no cabeçalho da requisição.
     var jid = req.body.jid || req.params.jid || req.headers['x-autenticacao-jid'];
     var senha = req.body.senha || req.params.senha || req.headers['x-autenticacao-senha'];
     
@@ -89,12 +93,18 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
               jwtDados.uuid = usuario.uuid;  // uuid: Identificador único do usuário.
               jwtDados.name = usuario.name;  // name: Nome do usuário.
               
+              // Nossos escopos de acesso as rotas de cada modelo.
+              var escopos = {};
+              
               // Caso tenhamos diversos acessos para diversos modelos, vamos armazena-los aqui.
               acessos.forEach(function(acesso) {
                 var modelo = acesso.modelo;                   // O modelo onde verificamos a bandeira de acesso.
                 var bandeira = acesso.bandeira.toString(16);  // Salvamos a bandeira do modelo no tipo texto. Depois convertemos para hexa.
-                jwtDados[modelo] = bandeira;                // Salvamos determinada bandeira para um modelo em especifico.
+                escopos[modelo] = bandeira;                // Salvamos determinada bandeira para um modelo em especifico.
               }); 
+              
+              // Extendemos os dados acrescentando os escopos.
+              jwtDados = util._extend(jwtDados, escopos); 
               
               // Agora que tudo esta certo nós podemos criar seu token de acesso.
               var token = esteObjeto.jsonWebToken.sign(
@@ -110,7 +120,8 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
                 success: true,
                 message: 'Autorização permitida, seu access token foi criado.',
                 token: token,
-                id: usuario.id
+                id: usuario.id,
+                escopos: escopos
               });
             }
           });
@@ -120,6 +131,39 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
         }
       }
     });  
+  });
+  
+ /* Isto verifica o estado atual de autenticação do usuário
+  * O usuário poderá a cada nova requisição requisitar esta rota, assim iremos re-verificar seu token de acesso.
+  * Retornamos o id do usuário, se ocorreu sucesso, ou se ocorreu algum problema retornamos que não houve sucesso.
+  * Alguns problemas podem ocorrer se o token está expirado, inválido etc.
+  * Caso não haja sucesso, a interface do lado cliente deve manipular para que seja apresentada uma visão para que o usuário
+  * possa se re-autenticar.
+  */
+  this.aplic.get('/sessao', function(req, res){ 
+    
+    // Tentamos pegar o token informado no corpo, parametros ou no cabeçalho da requisição.
+    var token = req.body.token || req.params.token || req.headers['x-access-token'];
+    
+    esteObjeto.jsonWebToken.verify(token, esteObjeto.autentic.supersecret, function (erro, decodificado) {
+      if (erro) {
+        // O Token não confere. 
+        res.json({ success: false, message: 'Você informou um token que não confere. Contacte o administrador.' });
+      } else {
+        if (decodificado) {
+          // Informamos que houve sucesso na validação do token. 
+          // Este token contêm informações do nosso usuário.
+          res.json({
+            success: true,
+            message: 'Seu token foi re-validado com sucesso',
+            id: decodificado.id
+          });
+        } else {
+          // Alguma coisa deu errado.
+          res.json({ success: false, message: 'Você informou um token que não possui dados. Por favor, contacte o administrador.' });
+        }
+      }
+    });
   });
 };
 

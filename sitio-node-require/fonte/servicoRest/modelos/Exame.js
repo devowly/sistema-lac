@@ -131,7 +131,7 @@ exame.controladores = function(utilitarios) {
             
             // Aqui verificamos se o usuário é valido e se possui algum acesso a esta fonte.
             // Caso não possua acesso é retornado um erro 403 de acesso proibido.
-            if (seValidado && parseInt(dadosUsuario[exame.esteModelo], 16)) {
+            if (seValidado && dadosUsuario[exame.esteModelo]) {
               if(utilitarios.verificarSePossuiAcesso(exame.esteModelo, ['Listar', 'Total'], parseInt(dadosUsuario[exame.esteModelo], 16))) {
                 return context.continue;
               } else {
