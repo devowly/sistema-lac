@@ -11,9 +11,10 @@
  */
 
 /* Versão 0.0.1-Beta 
- * - Adicionar a caracteristica de enviar email em tempo real para os desenvolvedores responsáveis pelo sistema. [AFAZER]
- * - Adicionar a caracteristica de armazenar os erros de uma excessão não tratada. [AFAZER]
- * - Adicionar a caracteristica de um encerramento elegante do sistema. [AFAZER]
+ * - Adicionar a caracteristica de enviar email de alerta de erro em tempo real para os desenvolvedores responsáveis pelo sistema. (issue #22) [AFAZER]
+ * - Adicionar a caracteristica de armazenar os erros de uma excessão não tratada. (issue #23) [AFAZER]
+ * - Adicionar a caracteristica de um encerramento elegante do sistema. (issue #24) [AFAZER]
+ * - Adicionar caracteristica para tratar erros. (issue #18) [AFAZER]
  */
 
 /* Abstração da gerencia dos eventos para encerramento elegante do sistema.
@@ -150,7 +151,7 @@ EventosSistema.prototype.iniciarEsperaPorEventosExcessao = function () {
   *                   que pode ser utilizada para mostrar o caminho do erro que gerou esta excessão.
   */
   process.addListener('uncaughtException', function (erro) {
-    // <umdez> Falta apenas realizar registro do erro. para leitura posterior.
+    // <umdez> Falta apenas realizar registro do erro. para leitura posterior. (issue #23) [AFAZER]
     
     // Neste caso, sempre retornar valor de fracasso.
     process.exit(esteObjeto.SAIDA_FRACASSO); 

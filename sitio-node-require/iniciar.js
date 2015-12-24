@@ -4,8 +4,7 @@
 
 /* Versão 0.0.1-Beta
  * - Procurar maneira ideal de interação deste serviço com os serviços providos pelo servidor-xmpp. (issue #21) [AFAZER]
- * - Servir as páginas do painel de administração utilizando o Express. (issue #19) [AFAZER]
- * - Adicionar caracteristica para tratar erros. (issue #18) [AFAZER]
+ * - Servir as páginas do painel de administração utilizando o Express. (issue #19) [FEITO]
  */
 
 var pasta = require('path');
