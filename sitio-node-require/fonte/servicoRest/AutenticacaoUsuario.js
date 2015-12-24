@@ -86,17 +86,17 @@ AutenticacaoUsuario.prototype.verificarUsuarioPeloToken = function(token, modelo
  * @Veja http://brianmajewski.com/2015/02/25/relearning-backbone-part-9/
  *
  * @Parametro {modeloRota} O nome do modelo onde as rotas estão sendo acessadas.
- * @Parametro {usrjid} O identificador do usuário. Composto de local@dominio.
+ * @Parametro {jid} O identificador do usuário. Composto de local@dominio.
  * @Parametro {senha} Senha do usuário.
  * @Parametro {cd} Função chamada logo após verificarmos completamente o usuário.
  */
-AutenticacaoUsuario.prototype.verificarUsuarioPeloJid = function(modeloRota, usrjid, senha, cd) {
+AutenticacaoUsuario.prototype.verificarUsuarioPeloJid = function(modeloRota, jid, senha, cd) {
   var esteObjeto = this;
   
   // Aqui procuramos o usuário pelo jid fornecido.
   this.bd[this.modeloVerificacao].findOne({
     where: {
-      jid: usrjid
+      jid: jid
     }
   }).then(function (usuario) {
     // Se não houver um usuário, é provavel que os dados informados estejam incorretos. Retornamos assim o valor false.

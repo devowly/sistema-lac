@@ -1,8 +1,8 @@
 'use strict';
 
-/* @arquivo indice.js 
+/* Realiza o carregamento do nosso serviço REST.
  *
- * @descrição Realiza o carregamento do nosso serviço REST.
+ * @arquivo indice.js 
  */
 
 /* Versão 0.0.1-Beta

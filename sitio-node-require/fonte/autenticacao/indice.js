@@ -53,10 +53,13 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
   
   // Acrescentamos a nossa rota de autenticação e esperamos por requisições do tipo POST.
   this.aplic.post('/autenticar', function (req, res) {
+    var jid = req.body.jid || req.params.jid || req.headers['x-autenticacao-jid'];
+    var senha = req.body.senha || req.params.senha || req.headers['x-autenticacao-senha'];
+    
     // Aqui procuramos o usuário pelo jid fornecido.
     esteObjeto.bd[esteObjeto.modeloVerificacao].findOne({
       where: {
-        jid: req.body.usuarioJid
+        jid: jid
       }
     }).then(function (usuario) {
       // Se não houver um usuário, é provavel que os dados informados estejam incorretos. Informamos que o JID é incorreto.
@@ -64,7 +67,7 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
         res.json({ success: false, message: 'Você informou um JID que não confere. Contacte o administrador.' });
       } else {
         // Iremos verificar aqui se os dados informados realmente conferem com os dados que temos.
-        var seConfere = usuario.verificarSenha(req.body.senha);
+        var seConfere = usuario.verificarSenha(senha);
         if (seConfere) {
           // Se o usuário conferir com os dados, agora podemos criar seu token de acesso.
           var token = esteObjeto.jsonWebToken.sign({

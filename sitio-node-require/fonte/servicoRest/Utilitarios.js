@@ -92,11 +92,11 @@ Utilitarios.prototype.autenticarPeloToken = function (token, modeloRota, cd) {
  * juntamente com o valor da sua bandeira de acesso a um determinado modelo.
  *
  * @Parametro {modeloRota} O modelo onde iremos pegar as bandeiras de acesso do usuário.
- * @Parametro {usrjid} O identificador do usuário. Composto de local@dominio.
+ * @Parametro {jid} O identificador do usuário. Composto de local@dominio.
  * @Parametro {senha} A senha deste usuário.
  * @Parametro {cd} Função que será chamada assim que a verificação estiver terminada.
  */
-Utilitarios.prototype.autenticarPeloJid = function(modeloRota, usrjid, senha, cd) { 
+Utilitarios.prototype.autenticarPeloJid = function(modeloRota, jid, senha, cd) { 
   var seTerminou = false;  // Informa quando validação estiver terminada.
   var dadosUsuario = null; // Dados do usuário.
   var seValidado = false;  // Informamos se o usuário foi validado.
@@ -112,7 +112,7 @@ Utilitarios.prototype.autenticarPeloJid = function(modeloRota, usrjid, senha, cd
   }
 
   // Verificamos jid e senha.
-  this.autenticacaoUsuario.verificarUsuarioPeloJid(modeloRota, usrjid, senha, ponte);
+  this.autenticacaoUsuario.verificarUsuarioPeloJid(modeloRota, jid, senha, ponte);
   
   // Percorre laço enquanto não estiver realizado tudo. Infelizmente, 
   // isso é necessário porque o sequelize é assincrono.
