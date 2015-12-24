@@ -19,12 +19,10 @@
   // Utilizaremos os tokens para autenticação.
   this.jsonWebToken = jwt;
   
-  // Chave para codificação ou decodificação dos tokens.
-  this.superSecreto = autenticacao.supersecret;
-  
-  // A nossa configuração da autenticação. Abaixo a lista de propriedades:
+  // A nossa configuração da autenticação. Abaixo a lista das propriedades:
   // - autenticacao.verifymodel: Contêm o nome do modelo onde iremos buscar verificar os dados do usuário.
   // - autenticacao.accessmodel: Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
+  // - autenticacao.supersecret: Contêm o valor da chave super secreta para codificar e decodificar os tokens.
   this.autentic = autenticacao;
 };
 
@@ -44,7 +42,7 @@ AutenticacaoUsuario.prototype.inicializar = function() {
 AutenticacaoUsuario.prototype.verificarUsuarioPeloToken = function(token, modeloRota, cd) {
   var esteObjeto = this;
   
-  this.jsonWebToken.verify(token, this.superSecreto, function (erro, decodificado) {
+  this.jsonWebToken.verify(token, this.autentic.supersecret, function (erro, decodificado) {
     if (erro) {
       // O Token não confere. 
       cd(false, null);

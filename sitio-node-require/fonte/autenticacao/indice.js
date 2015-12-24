@@ -33,9 +33,10 @@ var Autenticacao = function (aplicativo, bancoDados, jwt, autenticacao) {
   // Utilizaremos os tokens para autenticação.
   this.jsonWebToken = jwt;
   
-  // A nossa configuração da autenticação. Abaixo a lista de propriedades:
+  // A nossa configuração da autenticação. Abaixo a lista das propriedades:
   // - autenticacao.verifymodel: Contêm o nome do modelo onde iremos buscar verificar os dados do usuário.
   // - autenticacao.accessmodel: Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
+  // - autenticacao.supersecret: Contêm o valor da chave super secreta para codificar e decodificar os tokens.
   this.autentic = autenticacao;
 };
 
