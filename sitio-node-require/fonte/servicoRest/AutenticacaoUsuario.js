@@ -23,10 +23,10 @@
   this.superSecreto = autenticacao.supersecret;
   
   // Nome do modelo onde iremos buscar verificar os dados do usuário.
-  this.modeloVerificacao = 'Usuario';
+  this.modeloVerificacao = autenticacao.verifymodel;
   
   // Nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
-  this.modeloAcesso = 'AcessoRota';
+  this.modeloAcesso = autenticacao.accessmodel;
 };
 
 AutenticacaoUsuario.prototype.inicializar = function() {

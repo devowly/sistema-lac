@@ -38,9 +38,6 @@ var ServicoRest = function (aplicativo, bancoDados, jwt, autenticacao) {
   // Utilizaremos os tokens para autenticação.
   this.jsonWebToken = jwt;
   
-  // Configuração da autenticação.
-  this.autentic = autenticacao;
-  
   // Iniciamos aqui os utilitários.
   this.utilitarios = new Utilitarios(bancoDados, jwt, autenticacao);
 };

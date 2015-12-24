@@ -22,6 +22,8 @@
  *
  * @Diretiva {authentication} O nosso sistema de autenticação.
  *  - authentication.supersecret (Obrigatório) Super segredo para codificar e decoficar os tokens.
+ *  - authentication.verifymodel (Obrigatório) o modelo onde iremos usar para a verificação para a autenticação.
+ *  - authentication.accessmodel (Obrigatório) O modelo onde iremos requisitar as bandeiras para acesso.
  */
 module.exports = {
   
@@ -50,7 +52,9 @@ module.exports = {
   
   // Autenticação: As configurações para as autenticações.
   "authentication": {
-    "supersecret": "abcd1234"           // Segredo do Json Web Token (JWT).
+    "supersecret": "abcd1234",         // Super segredo do Json Web Token (JWT).
+    "verifymodel": "Usuario",          // O modelo onde iremos usar para a verificação para a autenticação.
+    "accessmodel": "AcessoRota"        // O modelo onde iremos requisitar as bandeiras para acesso de cada modelo.
   }
   
 };

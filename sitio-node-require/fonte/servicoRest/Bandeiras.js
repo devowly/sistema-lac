@@ -56,7 +56,7 @@ Bandeiras.prototype.sePossuiAcesso = function(modelo, tipos, valor) {
   
   for (var bandeira in listaBandeiras) {
     if (listaBandeiras.hasOwnProperty(bandeira)){
-      for (var ca = 0; ca < tipos.length; ca++) {
+      for (var ca = 0; ca < tipos.length; ca++) {        
         // Se o tipo de acesso requisitado e o valor das bandeiras são verdadeiros, nós retornamos verdadeiro.
         if (tipos[ca] === listaBandeiras[bandeira].tipo && (listaBandeiras[bandeira].valor & valor)) {
           seSim = true;
