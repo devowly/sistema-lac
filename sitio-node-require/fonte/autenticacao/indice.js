@@ -68,7 +68,7 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
     }).then(function (usuario) {
       // Se não houver um usuário, é provavel que os dados informados estejam incorretos. Informamos que o JID é incorreto.
       if (!usuario) {
-        res.json({ success: false, message: 'Você informou um JID que não confere. Contacte o administrador.' });
+        res.json({ autenticacao: false, success: false, message: 'Você informou um JID que não confere. Contacte o administrador.' });
       } else {
         // Iremos verificar aqui se os dados informados realmente conferem com os dados que temos.
         var seConfere = usuario.verificarSenha(senha);
@@ -117,6 +117,7 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
               // Este token contêm informações sobre o tipo de acesso que o usuário possuirá. Isto 
               // é realizado pelo valor das bandeiras que este usuário possui.
               res.json({
+                autenticacao: true,
                 success: true,
                 message: 'Autorização permitida, seu access token foi criado.',
                 token: token,
@@ -127,7 +128,7 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
           });
           
         } else {
-          res.json({ success: false, message: 'Você informou uma senha que não confere. Contacte o administrador.' });
+          res.json({ autenticacao: false, success: false, message: 'Você informou uma senha que não confere. Contacte o administrador.' });
         }
       }
     });  
@@ -147,23 +148,42 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
     
     esteObjeto.jsonWebToken.verify(token, esteObjeto.autentic.supersecret, function (erro, decodificado) {
       if (erro) {
-        // O Token não confere. 
-        res.json({ success: false, message: 'Você informou um token que não confere. Contacte o administrador.' });
+        var erroMsg = erro.message;
+        if (erro.name && erro.name === 'TokenExpiredError') {
+          // O Token expirou. 
+          res.json({ expirado: true, success: false, message: 'Você informou um token que expirou. Contacte o administrador.' });
+        } else {
+          // Algum erro aconteceu. 
+          res.json({ expirado: false, success: false, message: 'Ocorreu um erro ao tentarmos verificar seu token. Segue o erro: '+ erroMsg});
+        }
       } else {
         if (decodificado) {
           // Informamos que houve sucesso na validação do token. 
           // Este token contêm informações do nosso usuário.
           res.json({
+            expirado: false, 
             success: true,
             message: 'Seu token foi re-validado com sucesso',
             id: decodificado.id
           });
         } else {
           // Alguma coisa deu errado.
-          res.json({ success: false, message: 'Você informou um token que não possui dados. Por favor, contacte o administrador.' });
+          res.json({ expirado: false, success: false, message: 'Você informou um token que não possui dados. Por favor, contacte o administrador.' });
         }
       }
     });
+  });
+  
+  this.aplic.delete('/sessao/', function(req, res, next){  
+    // Tentamos pegar o token informado no corpo, parametros ou no cabeçalho da requisição.
+    var token = req.body.token || req.params.token || req.headers['x-access-token'];
+    
+    // Quando o usuário sair do sistema, vamos limpar sua sessão.
+    // Lembre-se que se esta rota não for chamada pelo lado cliente, não temos como saber 
+    // quando que o cliente saiu, nem se é necessário a remoção do token.
+    
+    // <umdez> Existe algum método para revogar a existencia de um token?
+    res.send({success: false, message: 'Não é possível revogar um token. Contacte o administrador.'});      
   });
 };
 
