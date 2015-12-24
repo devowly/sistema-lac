@@ -7,6 +7,7 @@
  */
 
 /* Versão 0.0.1-Beta 
+ * - Adicionar caracteristica de revogar um determinado token. (issue #29) [NAO]
  * - Criar rota no express para permitir ao cliente re-validar seu token de acesso. (issue #27) [FEITO]
  */
 
