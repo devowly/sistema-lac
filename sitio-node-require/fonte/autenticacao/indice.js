@@ -33,10 +33,9 @@ var Autenticacao = function (aplicativo, bancoDados, jwt, autenticacao) {
   // Utilizaremos os tokens para autenticação.
   this.jsonWebToken = jwt;
   
-  // Nome do modelo onde iremos buscar verificar os dados do usuário.
-  this.modeloVerificacao = 'Usuario';
-  
-  // Configuração da autenticação.
+  // A nossa configuração da autenticação. Abaixo a lista de propriedades:
+  // - autenticacao.verifymodel: Contêm o nome do modelo onde iremos buscar verificar os dados do usuário.
+  // - autenticacao.accessmodel: Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
   this.autentic = autenticacao;
 };
 
@@ -57,7 +56,7 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
     var senha = req.body.senha || req.params.senha || req.headers['x-autenticacao-senha'];
     
     // Aqui procuramos o usuário pelo jid fornecido.
-    esteObjeto.bd[esteObjeto.modeloVerificacao].findOne({
+    esteObjeto.bd[esteObjeto.autentic.verifymodel].findOne({
       where: {
         jid: jid
       }

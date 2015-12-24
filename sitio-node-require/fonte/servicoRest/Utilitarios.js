@@ -22,11 +22,10 @@ var Utilitarios = function (bancoDados, jwt, autenticacao) {
   // Utilizaremos os tokens para autenticação.
   this.jsonWebToken = jwt;
   
-  // Configuração da autenticação.
-  this.autentic = autenticacao;
-  
+  // Para realizar a autenticação dos usuários.
   this.autenticacaoUsuario = new AutenticacaoUsuario(bancoDados, jwt, autenticacao); 
   
+  // As bandeiras de acesso as rotas dos modelos.
   this.bandeiras = new Bandeiras(); 
 };
 
