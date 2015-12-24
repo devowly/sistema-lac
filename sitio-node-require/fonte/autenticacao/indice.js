@@ -141,6 +141,9 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
   * Alguns problemas podem ocorrer se o token está expirado, inválido etc.
   * Caso não haja sucesso, a interface do lado cliente deve manipular para que seja apresentada uma visão para que o usuário
   * possa se re-autenticar.
+  *
+  * Importante lembrar que o token permanece válido ao usuário re-iniciar a página. Assim fica necessário apenas
+  * verificarmos a sessao novamente, ao invez de re-autenticar o usuário.
   */
   this.aplic.get('/sessao', function(req, res){ 
     
@@ -184,6 +187,9 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
     // quando que o cliente saiu, nem se é necessário a remoção do token.
     
     // <umdez> Existe algum método para revogar a existencia de um token?
+    // Provavelmente teremos que apenas remover o token que está armazenado no lado cliente.
+    // Assim o sistema não conseguirá acessar nossas fontes. Isso pode ser
+    // uma alternativa.
     res.send({success: false, message: 'Não é possível revogar um token. Contacte o administrador.'});      
   });
 };
