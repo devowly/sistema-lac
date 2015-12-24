@@ -36,10 +36,9 @@ AutenticacaoUsuario.prototype.inicializar = function() {
  * @Veja http://brianmajewski.com/2015/02/25/relearning-backbone-part-9/
  *
  * @Parametro {token} O token informado pelo usuário.
- * @Parametro {modeloRota} O nome do modelo onde as rotas estão sendo acessadas.
  * @Parametro {cd} Função chamada logo após verificarmos completamente o usuário.
  */
-AutenticacaoUsuario.prototype.verificarUsuarioPeloToken = function(token, modeloRota, cd) {
+AutenticacaoUsuario.prototype.verificarUsuarioPeloToken = function(token, cd) {
   var esteObjeto = this;
   
   this.jsonWebToken.verify(token, this.autentic.supersecret, function (erro, decodificado) {
@@ -48,29 +47,7 @@ AutenticacaoUsuario.prototype.verificarUsuarioPeloToken = function(token, modelo
       cd(false, null);
     } else {
       if (decodificado) {
-        var usuarioAcesso = {};
-        // Aqui nós iremos procurar pelas bandeiras que este usuário possui para a rota (modelo) informada.
-        esteObjeto.bd[esteObjeto.autentic.accessmodel].findOne({
-          where: {
-            usuario_id: decodificado.id,  // Identificador do usuário.
-            modelo: modeloRota            // Modelo onde queremos descobrir as bandeiras de acesso.
-          }
-        }).then(function (acessoRota) {
-          if (!acessoRota) {
-            // Aqui, caso o usuário não possua nenhuma bandeira para este modelo, retornamos o valor de false. Isso
-            // faz com que o usuário não tenha acesso as rotas que necessitem de uma bandeira de acesso.
-            // As rotas de livre acesso não necessitam de nenhuma verificação.
-            cd(false, null);
-          } else {
-            // Copiamos alguns dados necessário para usuarioAcesso e depois iremos retorna-los.
-            usuarioAcesso.id = decodificado.id;       // id: Identificador e também chave primária do nosso usuário.
-            usuarioAcesso.jid = decodificado.jid;     // jid: Identificador Jabber do nosso usuário. (local@dominio).
-            usuarioAcesso.uuid = decodificado.uuid;   // uuid: Identificador único do usuário.
-            usuarioAcesso.name = decodificado.name;   // name: Nome do usuário.
-            usuarioAcesso.bandeira = parseInt(acessoRota.bandeira, 16);  // bandeira: A bandeira de acesso deste usuário.
-            cd(true, usuarioAcesso);
-          }
-        });
+        cd(true, decodificado);
       } else {
         cd(false, null);
       }

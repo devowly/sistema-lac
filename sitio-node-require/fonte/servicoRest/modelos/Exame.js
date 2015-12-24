@@ -109,7 +109,7 @@ exame.controladores = function(utilitarios) {
           
           // Aqui iremos ver se o usuário possui acesso a esta fonte. Esta verificação é realizada antes da listagem  começar.
           // De qualquer forma, podemos aqui adicionar a verificação do cliente (para saber se ele possui ou não acesso).
-          if (utilitarios.verificarSePossuiAcesso(exame.esteModelo, ['Listar'], ACESSO_LIVRE)) {
+          if (utilitarios.verificarSePossuiAcesso(exame.esteModelo, ['Listar'], ACESSO_LIVRE) && false) {
             // Acesso livre para a listagem. Podemos continuar.
             return context.continue;
           } else {
@@ -118,7 +118,7 @@ exame.controladores = function(utilitarios) {
             
             if (token) {
               // Autenticamos aqui o usuário utilizando o token informado.
-              utilitarios.autenticarPeloToken(token, exame.esteModelo, function(seConfere, usuario) {
+              utilitarios.autenticarPeloToken(token, function(seConfere, usuario) {
                 if (seConfere) {
                   // Nosso usuário foi validado com sucesso.
                   dadosUsuario = usuario;
@@ -131,8 +131,8 @@ exame.controladores = function(utilitarios) {
             
             // Aqui verificamos se o usuário é valido e se possui algum acesso a esta fonte.
             // Caso não possua acesso é retornado um erro 403 de acesso proibido.
-            if (seValidado) {
-              if(utilitarios.verificarSePossuiAcesso(exame.esteModelo, ['Listar', 'Total'], dadosUsuario.bandeira)) {
+            if (seValidado && dadosUsuario[exame.esteModelo]) {
+              if(utilitarios.verificarSePossuiAcesso(exame.esteModelo, ['Listar', 'Total'], parseInt(dadosUsuario[exame.esteModelo], 16))) {
                 return context.continue;
               } else {
                 return context.error(403, "Acesso proibido a listagem. Contacte o administrador.");

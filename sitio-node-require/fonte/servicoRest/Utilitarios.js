@@ -57,10 +57,9 @@ Utilitarios.prototype.verificarSePossuiAcesso = function(modelo, tipos, valor) {
 /* Realiza a autenticação de deteminado usuário pelo token informado.
  *
  * @Parametro {token} Aquele token utilizado para autenticação.
- * @Parametro {modeloRota} Cada modelo possuirá bandeiras de acesso e nós iremos acessar o valor das bandeiras de determinado modelo.
  * @Parametro {cd} A função chamada após a autenticação.
  */
-Utilitarios.prototype.autenticarPeloToken = function (token, modeloRota, cd) {
+Utilitarios.prototype.autenticarPeloToken = function (token, cd) {
   var seTerminou = false;  // Informa quando validação estiver terminada.
   var dadosUsuario = null; // Dados do usuário.
   var seValidado = false;  // Informamos se o usuário foi validado.
@@ -76,7 +75,7 @@ Utilitarios.prototype.autenticarPeloToken = function (token, modeloRota, cd) {
   }
   
   // Verificamos o token.
-  this.autenticacaoUsuario.verificarUsuarioPeloToken(token, modeloRota, ponte);
+  this.autenticacaoUsuario.verificarUsuarioPeloToken(token, ponte);
   
   // Percorre laço enquanto não estiver realizado tudo. Infelizmente, 
   // isso é necessário porque o sequelize é assincrono.
@@ -84,6 +83,8 @@ Utilitarios.prototype.autenticarPeloToken = function (token, modeloRota, cd) {
     return !seTerminou;
   });
   
+  // Retornamos se o usuário foi validade com sucesso e seus dados.
+  // Caso não foi validado retornamos null nos dados.
   cd(seValidado, dadosUsuario);
 };
 
@@ -119,6 +120,8 @@ Utilitarios.prototype.autenticarPeloJid = function(modeloRota, jid, senha, cd) {
     return !seTerminou;
   });
   
+  // Retornamos se o usuário foi validade com sucesso e seus dados.
+  // Caso não foi validado retornamos null nos dados.
   cd(seValidado, dadosUsuario);
 };
 

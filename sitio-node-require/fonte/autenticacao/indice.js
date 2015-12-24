@@ -69,22 +69,50 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
         // Iremos verificar aqui se os dados informados realmente conferem com os dados que temos.
         var seConfere = usuario.verificarSenha(senha);
         if (seConfere) {
-          // Se o usuário conferir com os dados, agora podemos criar seu token de acesso.
-          var token = esteObjeto.jsonWebToken.sign({
-            jid: usuario.jid,
-            id: usuario.id,
-            uuid: usuario.uuid,
-            name: usuario.name
-          }, esteObjeto.autentic.supersecret, {
-            // O token vai expirar em 24 horas.
-            expiresInMinutes: 1440
-          });
+          // O jid e senha conferem, agora iremos requisitar as bandeiras de acesso para cada modelo.
+          var jwtDados = {};
+          // Aqui nós iremos procurar pelas bandeiras que este usuário possui para todas as rotas que ele tem cadastro.
+          // Isso funcionará como os escopos, porque só iremos oferecer acesso a certos escopos (rotas dos modelos).
+          esteObjeto.bd[esteObjeto.autentic.accessmodel].findAll({
+            where: {
+              usuario_id: usuario.id  // Identificador do usuário.
+            }
+          }).then(function (acessos) {
+            if (!acessos) {
+              // Aqui, caso o usuário não possua nenhuma bandeira, fará com que o usuário não tenha acesso as rotas 
+              // que necessitem de uma bandeira de acesso. Lembre-se que as rotas de livre acesso não necessitam de nenhuma verificação.
+              // Então este usuário possuirá acesso a somente as rotas de livre acesso, que geralmente são de listagem ou leitura.
+            } else {
+              // Copiamos alguns dados básicos do usuário e depois iremos codifica-los e depois retorna-los.
+              jwtDados.id = usuario.id;      // id: Identificador e também chave primária do nosso usuário.
+              jwtDados.jid = usuario.jid;    // jid: Identificador Jabber do nosso usuário. (local@dominio).
+              jwtDados.uuid = usuario.uuid;  // uuid: Identificador único do usuário.
+              jwtDados.name = usuario.name;  // name: Nome do usuário.
+              
+              // Caso tenhamos diversos acessos para diversos modelos, vamos armazena-los aqui.
+              acessos.forEach(function(acesso) {
+                var modelo = acesso.modelo;                   // O modelo onde verificamos a bandeira de acesso.
+                var bandeira = acesso.bandeira.toString(16);  // Salvamos a bandeira do modelo no tipo texto. Depois convertemos para hexa.
+                jwtDados[modelo] = bandeira;                // Salvamos determinada bandeira para um modelo em especifico.
+              }); 
+              
+              // Agora que tudo esta certo nós podemos criar seu token de acesso.
+              var token = esteObjeto.jsonWebToken.sign(
+                jwtDados,  // Informações básicas do nosso cliente.
+                esteObjeto.autentic.supersecret, {
+                expiresInMinutes: 1440  // O token vai expirar em 24 horas.
+              });
 
-          res.json({
-            success: true,
-            message: 'Autorização permitida, seu access token foi criado.',
-            token: token,
-            id: usuario.id
+              // Informamos que houve sucesso na identificação e também retornamos o valor do token. 
+              // Este token contêm informações sobre o tipo de acesso que o usuário possuirá. Isto 
+              // é realizado pelo valor das bandeiras que este usuário possui.
+              res.json({
+                success: true,
+                message: 'Autorização permitida, seu access token foi criado.',
+                token: token,
+                id: usuario.id
+              });
+            }
           });
           
         } else {
