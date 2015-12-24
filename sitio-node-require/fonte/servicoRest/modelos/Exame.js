@@ -109,7 +109,7 @@ exame.controladores = function(utilitarios) {
           
           // Aqui iremos ver se o usuário possui acesso a esta fonte. Esta verificação é realizada antes da listagem  começar.
           // De qualquer forma, podemos aqui adicionar a verificação do cliente (para saber se ele possui ou não acesso).
-          if (utilitarios.verificarSePossuiAcesso(exame.esteModelo, ['Listar'], ACESSO_LIVRE) && false) {
+          if (utilitarios.verificarSePossuiAcesso(exame.esteModelo, ['Listar'], ACESSO_LIVRE)) {
             // Acesso livre para a listagem. Podemos continuar.
             return context.continue;
           } else {
@@ -131,7 +131,7 @@ exame.controladores = function(utilitarios) {
             
             // Aqui verificamos se o usuário é valido e se possui algum acesso a esta fonte.
             // Caso não possua acesso é retornado um erro 403 de acesso proibido.
-            if (seValidado && dadosUsuario[exame.esteModelo]) {
+            if (seValidado && parseInt(dadosUsuario[exame.esteModelo], 16)) {
               if(utilitarios.verificarSePossuiAcesso(exame.esteModelo, ['Listar', 'Total'], parseInt(dadosUsuario[exame.esteModelo], 16))) {
                 return context.continue;
               } else {
