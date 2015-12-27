@@ -20,9 +20,9 @@
   this.jsonWebToken = jwt;
   
   // A nossa configuração da autenticação. Abaixo a lista das propriedades:
-  // - autenticacao.verifymodel: Contêm o nome do modelo onde iremos buscar verificar os dados do usuário.
-  // - autenticacao.accessmodel: Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
-  // - autenticacao.supersecret: Contêm o valor da chave super secreta para codificar e decodificar os tokens.
+  // - autenticacao.verifyModel: Contêm o nome do modelo onde iremos buscar verificar os dados do usuário.
+  // - autenticacao.accessModel: Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
+  // - autenticacao.superSecret: Contêm o valor da chave super secreta para codificar e decodificar os tokens.
   this.autentic = autenticacao;
 };
 
@@ -41,14 +41,16 @@ AutenticacaoUsuario.prototype.inicializar = function() {
 AutenticacaoUsuario.prototype.verificarUsuarioPeloToken = function(token, cd) {
   var esteObjeto = this;
   
-  this.jsonWebToken.verify(token, this.autentic.supersecret, function (erro, decodificado) {
+  this.jsonWebToken.verify(token, this.autentic.superSecret, function (erro, decodificado) {
     if (erro) {
       // O Token não confere. 
       cd(false, null);
     } else {
       if (decodificado) {
+        // Token verificado e decodificado com sucesso.
         cd(true, decodificado);
       } else {
+        // Token verificado porem não ha valor decodificado.
         cd(false, null);
       }
     }
@@ -68,7 +70,7 @@ AutenticacaoUsuario.prototype.verificarUsuarioPeloJid = function(modeloRota, jid
   var esteObjeto = this;
   
   // Aqui procuramos o usuário pelo jid fornecido.
-  this.bd[this.autentic.verifymodel].findOne({
+  this.bd[this.autentic.verifyModel].findOne({
     where: {
       jid: jid
     }
@@ -99,7 +101,7 @@ AutenticacaoUsuario.prototype.verificarUsuarioPeloJid = function(modeloRota, jid
 AutenticacaoUsuario.prototype.verificarUsuarioAcessoRota = function(modeloRota, usuario, cd) {
   var usuarioAcesso = {};
   // Aqui nós iremos procurar pelas bandeiras que este usuário possui para a rota (modelo) informada.
-  this.bd[this.autentic.accessmodel].findOne({
+  this.bd[this.autentic.accessModel].findOne({
     where: {
       usuario_id: usuario.id,       // Identificador do usuário.
       modelo: modeloRota            // Modelo onde queremos descobrir as bandeiras de acesso.

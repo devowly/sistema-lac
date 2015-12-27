@@ -113,8 +113,8 @@ exame.controladores = function(utilitarios) {
             // Acesso livre para a listagem. Podemos continuar.
             return context.continue;
           } else {
-            // Pegamos inicialmente o token.
-            var token = req.body.token || req.params.token || req.headers['x-access-token'];
+            // Tentamos inicialmente pegar o token informado no corpo, parametros ou no cabeçalho da requisição.
+            var token = (req.body && req.body.token) || (req.params && req.params.token) || req.headers['x-access-token'];
             
             if (token) {
               // Autenticamos aqui o usuário utilizando o token informado.
