@@ -73,11 +73,20 @@ util.inherits(Autenticacao, EmissorEvento);
 /* Realiza o inicio do serviço de autenticação de nossos usuários.
  * @Veja http://brianmajewski.com/2015/02/25/relearning-backbone-part-9/
  */
-Autenticacao.prototype.carregarServicoAutenticacao = function () {
+Autenticacao.prototype.carregarServicoSessao = function () {
   var esteObjeto = this;
   
   // Obs: Se utilizar o Postman, não utilize 'application/json' no header de requisição
   // @Veja https://stackoverflow.com/questions/29006170/error-invalid-json-with-multer-and-body-parser
+  
+  /* Aqui - em cada uma das rotas - nós também iremos retornar um código de status informando o ocorrido. Os valores de estados poderão ser:
+   * - [status 401] Não autorizado. Quando a autenticação é requerida e falhou ou dados necessários não foram providos.
+   * - [status 200] Tudo certo. Estado padrão para informar que a requisição ocorreu com exito.
+   * - [status 403] Acesso proibido. Retornamos este valor sempre que o acesso a uma fonte é proibida.
+   *
+   * @Veja https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+   * @Veja http://expressjs.com/en/guide/error-handling.html
+   */
   
   // Acrescentamos a nossa rota de autenticação e esperamos por requisições do tipo POST.
   this.aplic.post('/sessao', function (req, res) {
@@ -95,7 +104,7 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
       }).then(function (usuario) {
         // Se não houver um usuário, é provavel que os dados informados estejam incorretos. Informamos que o JID é incorreto.
         if (!usuario) {
-          res.json({ auth: false, success: false, message: 'Você informou um JID que não confere.' });
+          res.status(401).json({ auth: false, success: false, message: 'Você informou um JID que não confere.' });  
         } else {
           // Iremos verificar aqui se os dados informados realmente conferem com os dados que temos.
           var seConfere = usuario.verificarSenha(senha);
@@ -155,18 +164,18 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
               // Informamos que houve sucesso na identificação e também retornamos o valor do token. 
               // Este token contêm informações sobre o tipo de acesso que o usuário possuirá. Isto 
               // é realizado pelo valor das bandeiras que este usuário possui.
-              res.json(resposta);
+              res.status(200).json(resposta);
             });
             
           } else {
-            res.json({ auth: false, success: false, message: 'Você informou uma senha que não confere.' });
+            res.status(401).json({ auth: false, success: false, message: 'Você informou uma senha que não confere.' });
           }
         }
       });
     } 
     // Caso o jid e senha não forem informados, nós temos que avisar.
     else {
-      res.json({ auth: false, success: false, message: 'Você deve informar o jid e senha.' });
+      res.status(401).json({ auth: false, success: false, message: 'Você deve informar o jid e senha.' });
     }
   });
   
@@ -199,16 +208,16 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
         if (erro) {
           if (erro.name && erro.name === 'TokenExpiredError') {
             // O Token expirou, aqui informamos que tem de ser realizada nova autenticação.          
-            res.json({ expired: true, success: false, message: 'Você informou um token que expirou. ('+ erro.message +').'});
+            res.status(401).json({ expired: true, success: false, message: 'Você informou um token que expirou. ('+ erro.message +').'});
           } else {
             // Algum outro erro aconteceu. 
-            res.json({ expired: false, success: false, message: 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').'});
+            res.status(401).json({ expired: false, success: false, message: 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').'});
           }
         } else {
           if (decodificado) {
             // Informamos que houve sucesso na validação do token. 
             // Este token contêm informações do nosso usuário.
-            res.json({
+            res.status(200).json({
               expired: false,      // Informamos que o token ainda não expirou.
               success: true,       // Informamos que houve sucesso na re-validação.
               message: 'Seu token foi re-validado com sucesso.',
@@ -236,7 +245,7 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
         }).then(function (usuario) {
           // Se não houver um usuário, é provavel que os dados informados estejam incorretos. Informamos que o JID é incorreto.
           if (!usuario) {
-            res.json({ auth: false, success: false, message: 'Você informou um JID que não confere.' });
+            res.status(401).json({ auth: false, success: false, message: 'Você informou um JID que não confere.' });
           } else {
             // Iremos verificar aqui se os dados informados realmente conferem com os dados que temos.
             var seConfere = usuario.verificarSenha(senha);
@@ -297,7 +306,7 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
                 // Informamos que houve sucesso na identificação e também retornamos o valor do token. 
                 // Este token contêm informações sobre o tipo de acesso que o usuário possuirá. Isto 
                 // é realizado pelo valor das bandeiras que este usuário possui.
-                res.json(resposta);
+                res.status(200).json(resposta);
                 
                 // Lembre-se que a resposta contêm a chave exp. Esta chave contêm o valor de minutos até o token expirar.
                 // Assim a gente poderia até usar isso no lado cliente para saber quando o token expirou e manipular a visão
@@ -307,14 +316,14 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
               });
               
             } else {
-              res.json({ auth: false, success: false, message: 'Você informou uma senha que não confere.' });
+              res.status(401).json({ auth: false, success: false, message: 'Você informou uma senha que não confere.' });
             }
           }
         });
       } 
       // Caso o token, ou o jid e senha não forem informados, nós temos que avisar.
       else {
-        res.json({ success: false, message: 'Você deve informar o token ou o jid e senha.' });
+        res.status(401).json({ success: false, message: 'Você deve informar o token ou o jid e senha.' });
       }
     } 
   });
@@ -331,7 +340,7 @@ Autenticacao.prototype.carregarServicoAutenticacao = function () {
     // Provavelmente teremos que apenas remover o token que está armazenado no lado cliente.
     // Assim o sistema não conseguirá acessar nossas fontes. Isso pode ser
     // uma alternativa.
-    res.send({success: false, message: 'Não é possível revogar o seu token.'});    
+    res.status(403).json({success: false, message: 'Não é possível revogar o seu token.'});    
 
     next();    
   });
@@ -350,7 +359,7 @@ Autenticacao.prototype.iniciar = function () {
   return new Promessa(function (deliberar, recusar) {
 
     // Carregamos nosso serviço.
-    esteObjeto.carregarServicoAutenticacao();
+    esteObjeto.carregarServicoSessao();
     
     // Se tudo ocorreu bem.
     deliberar(esteObjeto);
