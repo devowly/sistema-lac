@@ -3,6 +3,10 @@
 /* @Arquivo sessao.js
  */
 
+/* Versão 0.0.1-Beta 
+ * - Adicionar modelo de sessão para lidar com a sessão atual do usuário. (issue #37) [FEITO]
+ */
+ 
 define([
   'jquery',
   'underscore',
@@ -63,10 +67,14 @@ define([
       this.save(credenciais, {
         success: function () {
          /* Caso a entrada seja um sucesso e o usuário receba o seu token, então é necessário agora que
-          * seja acrescentado no método Backbone.sync uma forma de adicionar o nosso token nos
+          * seja acrescentado no método Backbone.sync() uma forma de adicionar o nosso token nos
           * cabeçalhos das nossas próximas requisições.
           *
           * @Veja http://www.sitepoint.com/using-json-web-tokens-node-js/
+          *
+          * Nós podemos agora utilizar cookies seguros, isso faz com que não seja mais necessário sobrescrever
+          * o método Backbone.sync(). Sendo assim, enviamos um POST com as nossas credenciais, e o token
+          * será armazenado numa sessão segura e a cada nova requisição serão acessados os dados pela sessão.
           */
           
         },
@@ -95,9 +103,6 @@ define([
           
           modelo.clear();
           // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
-          // 
-          // The server also returns a new csrf token so that
-          // the user can relogin without refreshing the page
           esteObjeto.set({auth: false});
           
         },
@@ -119,8 +124,9 @@ define([
     seAutenticado: function(cd) {
       var esteObjeto = this;
         
-      // getAuth is wrapped around our router
-      // before we start any routers let us see if the user is valid
+      // Este método envolve as rotas, sendo utilizado para a gente manipular a visão do usuário.
+      // Mostrando a visão de entrada se o usuário não estiver validado.
+      // Antes de iniciarmos qualquer rota vamos ver se o usuário é valido.
       this.fetch({
         success: function() {
           cd(true);
@@ -133,10 +139,11 @@ define([
     
     // Aqui os atributos padrões deste modelo de sessao.
     defaults: {
-      auth: false      // Caso o usuário esteja autenticado.
-    , success: false   // Caso houve sucesso na requisição.
-    , message: null    // A mensagem recebida.
-    , token: null      // O nosso token que será utilizado para acesso as rotas do serviço.
+      auth: false      // Caso o usuário esteja autenticado. Se for falso o usuário terá de realizar novamente a entrada.
+    , success: false   // Caso houve sucesso na requisição. 
+    , message: null    // A mensagem recebida. A cada requisição iremos receber uma mensagem informando o que aconteceu.
+    , iss: null        // Identificador do nosso remetente. Este identificador não é nada mais que a chave primária do usuário.
+    , token: null      // O nosso token que será utilizado para acesso as rotas do serviço. (Não é informado se caso utilizarmos cookies seguros).
     , exp: null        // O tempo, em minutos, que vai levar para o token expirar.
     , iat: null
     }
