@@ -32,7 +32,7 @@
 
 /* Versão 0.0.1-Beta 
  * - Remover informações sensíveis na resposta da nossa sessão. (issue #35) [FEITO]
- * - Adicionar uma caracteristica de manipulação do serviço de sessões onde possamos ativar o modo cookie ou o modo token. (issue #34) [AFAZER]
+ * - Adicionar uma caracteristica de manipulação do serviço de sessões onde possamos ativar o modo cookie ou o modo token. (issue #34) [FEITO]
  * - Adicionar caracteristica de armazenar o token (JWT) em cookie seguro. (issue #33) [FEITO]
  * - Organizar melhor o nosso serviço de autenticação e autorização com Json Web Token. (issue #30) [FEITO]
  * - Adicionar caracteristica de revogar um determinado token. (issue #29) [NAO]
@@ -292,6 +292,13 @@ Autenticacao.prototype.carregarServicoSessao = function () {
      
   });
   
+  /* Realiza a saida do usuário. É importante notar que apesar de estarmos retornando estado 200 de sucesso,
+   * não será possível que o token seja revogado. Então nós retornamos este estado mesmo que não houve um sucesso.
+   *
+   * @Parametro {req} A requisição recebida.
+   * @Parametro {res} A nossa resposta.
+   * @Parametro {next} função chamada para passar a requisição para outras rotas.
+   */
   this.aplic.delete('/sessao/', function(req, res, next){  
     var token = null;
     
@@ -315,7 +322,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
         // Provavelmente teremos que apenas remover o token que está armazenado no lado cliente.
         // Assim o sistema não conseguirá acessar nossas fontes. Isso pode ser
         // uma alternativa.
-        res.status(403).json({success: false, message: 'Sessão regenerada porem não foi possível revogar o seu token.'});    
+        res.status(200).json({success: false, message: 'Sessão regenerada porem não foi possível revogar o seu token.'});    
         
         next(); 
       });
@@ -324,7 +331,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
       // Provavelmente teremos que apenas remover o token que está armazenado no lado cliente.
       // Assim o sistema não conseguirá acessar nossas fontes. Isso pode ser
       // uma alternativa.
-      res.status(403).json({success: false, message: 'Não é possível revogar o seu token.'});    
+      res.status(200).json({success: false, message: 'Não é possível revogar o seu token.'});    
       
       next(); 
     }
