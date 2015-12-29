@@ -3,6 +3,7 @@
 /* @arquivo iniciar.js */
 
 /* Versão 0.0.1-Beta
+ * - Adicionar caracteristica de adicionar https quando realizar login. (issue #32) [AFAZER]
  * - Adicionar caracteristica de aceitar determinadas origens utilizando o módulo cors. (issue #26) [FEITO] 
  * - Procurar maneira ideal de interação deste serviço com os serviços providos pelo servidor-xmpp. (issue #21) [AFAZER]
  * - Servir as páginas do painel de administração utilizando o Express. (issue #19) [FEITO]
