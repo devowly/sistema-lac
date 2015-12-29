@@ -12,11 +12,11 @@
 var Sequelize = require('sequelize');
 var sequelize_fixtures = require('sequelize-fixtures');
 var pasta = require('path');
-var configuracao = require('../configuracao/configuracao');
+var configuracao = require('../../configuracao/configuracao');
 var dados = require('./dadosjson/indice');
-var modelos = require('../fonte/armazenamento/modelos/indice');
+var modelos = require('../../fonte/armazenamento/modelos/indice');
 var Promessa = require('bluebird');
-var registrador = require('../fonte/nucleo/registrador')('preencherBanco');
+var registrador = require('../../fonte/nucleo/registrador')('preencherBanco');
 
 /* Provê metodos e função de iniciar a conexão com o banco de dados, carregar os modelos do banco,
  * e preencher o banco com os registros.
