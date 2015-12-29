@@ -31,6 +31,7 @@
  */
 
 /* Versão 0.0.1-Beta 
+ * - Adicionar caracteristica de armazenar o token (JWT) em cookie seguro. (issue #33) [FEITO]
  * - Organizar melhor o nosso serviço de autenticação e autorização com Json Web Token. (issue #30) [AFAZER]
  * - Adicionar caracteristica de revogar um determinado token. (issue #29) [NAO]
  * - Criar rota no express para permitir ao cliente re-validar seu token de acesso. (issue #27) [FEITO]
@@ -90,7 +91,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
   
   // Acrescentamos a nossa rota de autenticação e esperamos por requisições do tipo POST.
   this.aplic.post('/sessao', function (req, res) {
-    
+     
     // Tentamos pegar aqui o jid e senha informados no corpo, parametros ou no cabeçalho da requisição.
     var jid = (req.body && req.body.jid) || (req.params && req.params.jid) || req.headers['x-authentication-jid'];
     var senha = (req.body && req.body.senha) || (req.params && req.params.senha) || req.headers['x-authentication-senha'];
@@ -151,6 +152,14 @@ Autenticacao.prototype.carregarServicoSessao = function () {
                 expiresInMinutes: (24 * 60)         // O token expira em 24 horas.
               });
 
+              // Aqui nós salvamos o nosso token em um cookie seguro. É importante utilizarmos o cookie seguro,
+              // Desta forma vamos nos precaver de uma tentativa de pegar a nossa senha.
+              // Lembre-se que este cookie só funcionará em conexões seguras (HTTPS).
+              var sess = req.session;
+              if (sess) {
+                sess.token = token;
+              }
+      
               // Criamos a nossa resposta.
               var resposta = {
                 auth: true,        // Se foi autenticado.
@@ -199,19 +208,40 @@ Autenticacao.prototype.carregarServicoSessao = function () {
   * verificarmos a sessao novamente, ao invez de re-autenticar o usuário.
   */
   this.aplic.get('/sessao', function(req, res){ 
+    var token = null;
     
-    // Tentamos pegar o token informado no corpo, parametros ou no cabeçalho da requisição.
-    var token = (req.body && req.body.token) || (req.params && req.params.token) || req.headers['x-access-token'];
+    // Aqui nós tentaremos acessar um token já existente em um cookie.
+    var sess = req.session;
+    if (sess && sess.token) {
+      token = sess.token;
+    } else {
+      // Tentamos pegar o token informado no corpo, parametros ou no cabeçalho da requisição.
+      token = (req.body && req.body.token) || (req.params && req.params.token) || req.headers['x-access-token'];
+    }
     
     if (token) {
       esteObjeto.jsonWebToken.verify(token, esteObjeto.autentic.superSecret, function (erro, decodificado) {
         if (erro) {
           if (erro.name && erro.name === 'TokenExpiredError') {
-            // O Token expirou, aqui informamos que tem de ser realizada nova autenticação.          
-            res.status(401).json({ expired: true, success: false, message: 'Você informou um token que expirou. ('+ erro.message +').'});
+            // O Token expirou, aqui informamos que tem de ser realizada nova autenticação.    
+            if (sess && sess.token) {
+              // Se existir, nós limpamos a nossa sessão.
+              sess.regenerate(function(err) {             
+                res.status(401).json({ expired: true, success: false, message: 'Você informou um token que expirou. ('+ erro.message +').'});
+              });
+            } else {
+              res.status(401).json({ expired: true, success: false, message: 'Você informou um token que expirou. ('+ erro.message +').'});
+            } 
           } else {
             // Algum outro erro aconteceu. 
-            res.status(401).json({ expired: false, success: false, message: 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').'});
+            if (sess && sess.token) {
+              // Se existir, nós limpamos a nossa sessão.
+              sess.regenerate(function(err) { 
+                res.status(401).json({ expired: false, success: false, message: 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').'});
+              });
+            } else {
+              res.status(401).json({ expired: false, success: false, message: 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').'});
+            }
           }
         } else {
           if (decodificado) {
@@ -225,7 +255,14 @@ Autenticacao.prototype.carregarServicoSessao = function () {
             });
           } else {
             // Alguma coisa deu errado ao tentarmos decodificar o token informado.
-            res.json({ expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
+            if (sess && sess.token) {
+              // Se existir, nós limpamos a nossa sessão.
+              sess.regenerate(function(err) { 
+                res.json({ expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
+              });
+            } else {
+              res.json({ expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
+            }
           }
         }
       });
@@ -329,20 +366,31 @@ Autenticacao.prototype.carregarServicoSessao = function () {
   });
   
   this.aplic.delete('/sessao/', function(req, res, next){  
-    // Tentamos pegar o token informado no corpo, parametros ou no cabeçalho da requisição.
-    var token = (req.body && req.body.token) || (req.params && req.params.token) || req.headers['x-access-token'];
+    var token = null;
+    
+    // Aqui nós tentaremos acessar um token já existente em um cookie.
+    var sess = req.session;
+    if (sess && sess.token) {
+      token = sess.token;
+    } else {
+      // Tentamos pegar o token informado no corpo, parametros ou no cabeçalho da requisição.
+      token = (req.body && req.body.token) || (req.params && req.params.token) || req.headers['x-access-token'];
+    }
     
     // Quando o usuário sair do sistema, vamos limpar sua sessão.
     // Lembre-se que se esta rota não for chamada pelo lado cliente, não temos como saber 
-    // quando que o cliente saiu, nem se é necessário a remoção do token.
+    // quando que o cliente saiu.
     
-    // <umdez> Existe algum método para revogar a existencia de um token?
-    // Provavelmente teremos que apenas remover o token que está armazenado no lado cliente.
-    // Assim o sistema não conseguirá acessar nossas fontes. Isso pode ser
-    // uma alternativa.
-    res.status(403).json({success: false, message: 'Não é possível revogar o seu token.'});    
-
-    next();    
+    // Iniciamos aqui uma nova sessão do usuário.
+    if (sess) sess.regenerate(function(err) { 
+      // <umdez> Existe algum método para revogar a existencia de um token?
+      // Provavelmente teremos que apenas remover o token que está armazenado no lado cliente.
+      // Assim o sistema não conseguirá acessar nossas fontes. Isso pode ser
+      // uma alternativa.
+      res.status(403).json({success: false, message: 'Não é possível revogar o seu token.'});    
+      
+      next(); 
+    });  
   });
 };
 
