@@ -31,10 +31,10 @@
  */
 
 /* Versão 0.0.1-Beta 
- * - Remover informações sensíveis na resposta da nossa sessão. (issue #35) [AFAZER]
+ * - Remover informações sensíveis na resposta da nossa sessão. (issue #35) [FEITO]
  * - Adicionar uma caracteristica de manipulação do serviço de sessões onde possamos ativar o modo cookie ou o modo token. (issue #34) [AFAZER]
  * - Adicionar caracteristica de armazenar o token (JWT) em cookie seguro. (issue #33) [FEITO]
- * - Organizar melhor o nosso serviço de autenticação e autorização com Json Web Token. (issue #30) [AFAZER]
+ * - Organizar melhor o nosso serviço de autenticação e autorização com Json Web Token. (issue #30) [FEITO]
  * - Adicionar caracteristica de revogar um determinado token. (issue #29) [NAO]
  * - Criar rota no express para permitir ao cliente re-validar seu token de acesso. (issue #27) [FEITO]
  */
