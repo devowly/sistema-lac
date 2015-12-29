@@ -3,6 +3,8 @@
 /* @arquivo iniciar.js */
 
 /* Versão 0.0.1-Beta
+ * - Adicionar dados de certificados e sessão para o arquivo de configuração. (issue #38) [FEITO]
+ * - Adicionar certificados fornecidos pelo https://startssl.com/. (issue #36) [AFAZER]
  * - Adicionar caracteristica de adicionar https quando realizar login. (issue #32) [AFAZER]
  * - Adicionar caracteristica de aceitar determinadas origens utilizando o módulo cors. (issue #26) [FEITO] 
  * - Procurar maneira ideal de interação deste serviço com os serviços providos pelo servidor-xmpp. (issue #21) [AFAZER]
@@ -28,15 +30,8 @@ var registrador = require('./fonte/nucleo/registrador')('iniciar');
 configuracao.set('env', {
   DOMAIN: 'domain',
   PORT: ['port', parseInt],
+  SSLPORT: ['sslPort', parseInt]
 });
-
-/* Aqui temos a nossa chave e certificado. Foi utilizado a ferramenta openssl provida pelo git. 
- * O comando para cria-los: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privatekey.key -out certificate.crt
- * @Veja https://stackoverflow.com/questions/2355568/create-a-openssl-certificate-on-windows
- */
-var chavePrivada  = fs.readFileSync('certificados/servidorHttp.key', 'utf8');
-var certificado = fs.readFileSync('certificados/servidorHttp.crt', 'utf8');
-var credenciais = {key: chavePrivada, cert: certificado};
 
 /* Nossas opções para configuração pela linha de comando. 
  */
@@ -71,7 +66,7 @@ configuracao.load(function (args, opcs) {
   // Necessário usar isto para a aceitação de requisições das origens permitidas. @Veja https://www.npmjs.com/package/cors
   var cors = require('cors');
   aplic.use(cors({
-    origin: configuracao.server.cors.origin  // Origens aceitas por este servidor express.
+    origin: configuracao.server.cors.origin  // Origem aceita por este servidor express.
   , methods:  ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']  // Métodos aceitos.
   , allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token', 'X-Requested-With', 'Accept', 'Accept-Version', 'Content-Length', 'Content-MD5', 'Date', 'X-Api-Version']
   , credentials: true
@@ -79,12 +74,20 @@ configuracao.load(function (args, opcs) {
   
   // Necessário utilizarmos sessão. @Veja https://github.com/expressjs/session
   aplic.use(sessao({
-    secret: 'MySuperSessionSecret',
+    secret: configuracao.server.session.superSecret,  // Nosso super segredo para esta sessão.
     cookie: {
       httpOnly: true,  // A presença desta bandeira vai pedir com que o navegador não permita que um script do lado cliente acesse e manipule este cookie.
-      secure: true  // Informa para o navegador para somente enviar este cookie em requisições que utilizam https.
+      secure: true     // Informa para o navegador para somente enviar este cookie em requisições que utilizam https.
     }
   }));
+  
+  /* Aqui temos a nossa chave e certificado. Foi utilizado a ferramenta openssl provida pelo git. 
+   * O comando para cria-los: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privatekey.key -out certificate.crt
+   * @Veja https://stackoverflow.com/questions/2355568/create-a-openssl-certificate-on-windows
+   */
+  var chavePrivada  = fs.readFileSync('certificados/' + configuracao.server.certificates.privateKey, 'utf8');
+  var certificado = fs.readFileSync('certificados/' + configuracao.server.certificates.certificate, 'utf8');
+  var credenciais = {key: chavePrivada, cert: certificado};
   
   // Utilizamos o bodyParser para receber requisições POST ou PUT.
   // Lembre-se de manter o limit do body em 200kb para nos precaver dos ataques de negação de serviço.
@@ -92,8 +95,11 @@ configuracao.load(function (args, opcs) {
   aplic.use(bodyParser.json({limit: configuracao.server.limit}));
   aplic.use(bodyParser.urlencoded({limit: configuracao.server.limit, extended: false}));
   
-  // Porta ao qual iremos receber conexões.  
+  // Porta ao qual iremos receber requisições http.  
   aplic.set('port', process.env.PORT || configuracao.server.port);
+  
+  // Porta ao qual iremos receber requisições https.  
+  aplic.set('sslPort', process.env.SSLPORT || configuracao.server.sslPort);
   
   // Iremos servir as páginas do diretorio "/admin"
   aplic.use('/admin', express.static(pasta.join(__dirname, 'admin')));  
@@ -125,8 +131,8 @@ configuracao.load(function (args, opcs) {
     
     // Inicia o servidor HTTPS e começa a esperar por conexões.
     aplic.serverSsl = https.createServer(credenciais, aplic);
-    aplic.serverSsl.listen(443, function () {
-      registrador.debug("Servidor express carregado e escutando na porta " + 443);
+    aplic.serverSsl.listen(aplic.get('sslPort'), function () {
+      registrador.debug("Servidor express carregado e escutando na porta " + aplic.get('sslPort'));
     });
     
     // Iniciar servidor XMPP.
