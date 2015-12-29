@@ -31,6 +31,8 @@
  */
 
 /* Versão 0.0.1-Beta 
+ * - Remover informações sensíveis na resposta da nossa sessão. (issue #35) [AFAZER]
+ * - Adicionar uma caracteristica de manipulação do serviço de sessões onde possamos ativar o modo cookie ou o modo token. (issue #34) [AFAZER]
  * - Adicionar caracteristica de armazenar o token (JWT) em cookie seguro. (issue #33) [FEITO]
  * - Organizar melhor o nosso serviço de autenticação e autorização com Json Web Token. (issue #30) [AFAZER]
  * - Adicionar caracteristica de revogar um determinado token. (issue #29) [NAO]
@@ -67,6 +69,9 @@ var Autenticacao = function (aplicativo, bancoDados, jwt, autenticacao) {
   // - autenticacao.accessModel: Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
   // - autenticacao.superSecret: Contêm o valor da chave super secreta para codificar e decodificar os tokens.
   this.autentic = autenticacao;
+  
+  // Aqui a gente coloca se utilizaremos cookies seguros para a sessão.
+  this.seForUtilizarCookie = true;
 };
 
 util.inherits(Autenticacao, EmissorEvento);
@@ -120,12 +125,15 @@ Autenticacao.prototype.carregarServicoSessao = function () {
               }
             }).then(function (acessos) {
               
+              // Adicionamos o id do nosso usuário como remetente. assim utilizamos ele no modelo.
+              jwtDados.iss = usuario.id;
+              
               // Copiamos alguns dados básicos do usuário e depois iremos codifica-los e depois retorna-los.
               jwtDados.user = {};                 // Acrescentamos todos os dados do usuário
               jwtDados.user.id = usuario.id;      // O identificador e também chave primária do nosso usuário.
               jwtDados.user.name = usuario.name;  // O nome do usuário.
               jwtDados.user.jid = usuario.jid;    // O identificador Jabber do nosso usuário. (local@dominio).
-              jwtDados.user.uuid = usuario.uuid;  // O identificador único do usuário.
+              jwtDados.user.uuid = usuario.uuid;  // O identificador único do usuário.              
               
               // Obs: Ainda não estou certo se vou continuar informando os escopos diretamente pelo JWT.
               // Pode ser que fique melhor a cada requisição que seja informado qual os escopos de acesso a cada requisição.
@@ -153,7 +161,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
               });
 
               // Aqui nós salvamos o nosso token em um cookie seguro. É importante utilizarmos o cookie seguro,
-              // Desta forma vamos nos precaver de uma tentativa de pegar a nossa senha.
+              // Desta forma vamos nos precaver de uma tentativa de pegar os dados.
               // Lembre-se que este cookie só funcionará em conexões seguras (HTTPS).
               var sess = req.session;
               if (sess) {
@@ -161,12 +169,25 @@ Autenticacao.prototype.carregarServicoSessao = function () {
               }
       
               // Criamos a nossa resposta.
-              var resposta = {
-                auth: true,        // Se foi autenticado.
-                success: true,     // A autenticação foi um sucesso.
-                message: 'Autorização permitida, seu access token foi criado.',
-                token: token
+              var resposta = {};
+              if (esteObjeto.seForUtilizarCookie) {
+                // Se nós estamos utilizando cookies seguros então não é necessário retornarmos o nosso token.
+                // Faremos isso porque o token é um dado sensivel e precavemos contra o roubo dele.
+                resposta = {
+                  auth: true,        // Se foi autenticado.
+                  success: true,     // A autenticação foi um sucesso.
+                  message: 'Autorização permitida, seu access token foi criado.'
+                }
+              } else {
+                // Aqui nós teremos que informar o token.
+                resposta = {
+                  auth: true,        // Se foi autenticado.
+                  success: true,     // A autenticação foi um sucesso.
+                  message: 'Autorização permitida, seu access token foi criado.',
+                  token: token       // Token do usuário.
+                }
               }
+              
               // Extendemos aqui a nossa resposta, adicionando escopos e dados do usuário.
               util._extend(resposta, jwtDados);
               
@@ -227,20 +248,20 @@ Autenticacao.prototype.carregarServicoSessao = function () {
             if (sess && sess.token) {
               // Se existir, nós limpamos a nossa sessão.
               sess.regenerate(function(err) {             
-                res.status(401).json({ expired: true, success: false, message: 'Você informou um token que expirou. ('+ erro.message +').'});
+                res.status(401).json({ auth: false, expired: true, success: false, message: 'Você informou um token que expirou. ('+ erro.message +').'});
               });
             } else {
-              res.status(401).json({ expired: true, success: false, message: 'Você informou um token que expirou. ('+ erro.message +').'});
+              res.status(401).json({ auth: false, expired: true, success: false, message: 'Você informou um token que expirou. ('+ erro.message +').'});
             } 
           } else {
             // Algum outro erro aconteceu. 
             if (sess && sess.token) {
               // Se existir, nós limpamos a nossa sessão.
               sess.regenerate(function(err) { 
-                res.status(401).json({ expired: false, success: false, message: 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').'});
+                res.status(401).json({ auth: false, expired: false, success: false, message: 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').'});
               });
             } else {
-              res.status(401).json({ expired: false, success: false, message: 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').'});
+              res.status(401).json({ auth: false, expired: false, success: false, message: 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').'});
             }
           }
         } else {
@@ -248,6 +269,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
             // Informamos que houve sucesso na validação do token. 
             // Este token contêm informações do nosso usuário.
             res.status(200).json({
+              auth: true,
               expired: false,      // Informamos que o token ainda não expirou.
               success: true,       // Informamos que houve sucesso na re-validação.
               message: 'Seu token foi re-validado com sucesso.',
@@ -258,111 +280,16 @@ Autenticacao.prototype.carregarServicoSessao = function () {
             if (sess && sess.token) {
               // Se existir, nós limpamos a nossa sessão.
               sess.regenerate(function(err) { 
-                res.json({ expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
+                res.json({ auth: false, expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
               });
             } else {
-              res.json({ expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
+              res.json({ auth: false, expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
             }
           }
         }
       });
     }
-    // Se não foi informado um token, então nós iremos supor que foi informado jid e senha para autenticarmos e então gerarmos novo token.
-    else {
-      // Tentamos pegar aqui o jid e senha informados no corpo, parametros ou no cabeçalho da requisição.
-      var jid = (req.body && req.body.jid) || (req.params && req.params.jid) || req.headers['x-authentication-jid'];
-      var senha = (req.body && req.body.senha) || (req.params && req.params.senha) || req.headers['x-authentication-senha'];
-      
-      if (jid && senha) {
-        // Aqui procuramos o usuário pelo jid fornecido.
-        esteObjeto.bd[esteObjeto.autentic.verifyModel].findOne({
-          where: {
-            jid: jid
-          }
-        }).then(function (usuario) {
-          // Se não houver um usuário, é provavel que os dados informados estejam incorretos. Informamos que o JID é incorreto.
-          if (!usuario) {
-            res.status(401).json({ auth: false, success: false, message: 'Você informou um JID que não confere.' });
-          } else {
-            // Iremos verificar aqui se os dados informados realmente conferem com os dados que temos.
-            var seConfere = usuario.verificarSenha(senha);
-            if (seConfere) {
-              // O jid e senha conferem, agora iremos requisitar as bandeiras de acesso para cada modelo.
-              var jwtDados = {};
-              // Aqui nós iremos procurar pelas bandeiras que este usuário possui para todas as rotas que ele tem cadastro.
-              // Isso funcionará como os escopos, porque só iremos oferecer acesso a certos escopos (rotas dos modelos).
-              esteObjeto.bd[esteObjeto.autentic.accessModel].findAll({
-                where: {
-                  usuario_id: usuario.id  // Identificador do usuário.
-                }
-              }).then(function (acessos) {
-                
-                // Copiamos alguns dados básicos do usuário e depois iremos codifica-los e depois retorna-los.
-                jwtDados.user = {};                 // Acrescentamos todos os dados do usuário
-                jwtDados.user.id = usuario.id;      // O identificador e também chave primária do nosso usuário.
-                jwtDados.user.name = usuario.name;  // O nome do usuário.
-                jwtDados.user.jid = usuario.jid;    // O identificador Jabber do nosso usuário. (local@dominio).
-                jwtDados.user.uuid = usuario.uuid;  // O identificador único do usuário.
-                
-                // Obs: Ainda não estou certo se vou continuar informando os escopos diretamente pelo JWT.
-                // Pode ser que fique melhor a cada requisição que seja informado qual os escopos de acesso a cada requisição.
-                if (!acessos) {
-                  // Aqui, caso o usuário não possua nenhuma bandeira, fará com que o usuário não tenha acesso as rotas 
-                  // que necessitem de uma bandeira de acesso. Lembre-se que as rotas de livre acesso não necessitam de nenhuma verificação.
-                  // Então este usuário possuirá acesso a somente as rotas de livre acesso, que geralmente são de listagem ou leitura.
-                } else {
-                  // Nossos escopos de acesso as rotas de cada modelo.
-                  var escopos = {};
-                  // Caso tenhamos diversos acessos para diversos modelos, vamos armazena-los aqui.
-                  acessos.forEach(function(acesso) {
-                    var modelo = acesso.modelo;                   // O modelo onde verificamos a bandeira de acesso.
-                    var bandeira = acesso.bandeira.toString(16);  // Salvamos a bandeira do modelo no tipo texto. Depois convertemos para hexa.
-                    escopos[modelo] = bandeira;                   // Salvamos determinada bandeira para um modelo em especifico.
-                  }); 
-                  jwtDados.scopes = escopos;  // Acrescentamos os escopos.
-                }
-                
-                // Agora que tudo esta certo nós podemos criar seu token de acesso.
-                var token = esteObjeto.jsonWebToken.sign(
-                  jwtDados,                           // Informações básicas.
-                  esteObjeto.autentic.superSecret, {
-                  expiresInMinutes: (24 * 60),         // O token expira em 24 horas.
-                  noTimestamp: true                    // Não utilizar timeStamp.
-                });
-
-                // Criamos a nossa resposta.
-                var resposta = {
-                  auth: true,        // Se foi autenticado.
-                  success: true,     // A autenticação foi um sucesso.
-                  message: 'Autorização permitida, seu access token foi criado.',
-                  token: token
-                }
-                // Extendemos aqui a nossa resposta, adicionando escopos e alguns dados do usuário.
-                util._extend(resposta, jwtDados);
-                
-                // Informamos que houve sucesso na identificação e também retornamos o valor do token. 
-                // Este token contêm informações sobre o tipo de acesso que o usuário possuirá. Isto 
-                // é realizado pelo valor das bandeiras que este usuário possui.
-                res.status(200).json(resposta);
-                
-                // Lembre-se que a resposta contêm a chave exp. Esta chave contêm o valor de minutos até o token expirar.
-                // Assim a gente poderia até usar isso no lado cliente para saber quando o token expirou e manipular a visão
-                // de forma que seja requisitado nova autenticação pelo cliente.
-                // Exemplo: resposta.exp >= (Math.floor(Date.now() / 1000) + (24*60))
-                // No exemplo acima iremos verificar se o tempo de expiração ultrapassou 24 horas.
-              });
-              
-            } else {
-              res.status(401).json({ auth: false, success: false, message: 'Você informou uma senha que não confere.' });
-            }
-          }
-        });
-      } 
-      // Caso o token, ou o jid e senha não forem informados, nós temos que avisar.
-      else {
-        res.status(401).json({ success: false, message: 'Você deve informar o token ou o jid e senha.' });
-      }
-    } 
+     
   });
   
   this.aplic.delete('/sessao/', function(req, res, next){  
@@ -382,7 +309,17 @@ Autenticacao.prototype.carregarServicoSessao = function () {
     // quando que o cliente saiu.
     
     // Iniciamos aqui uma nova sessão do usuário.
-    if (sess) sess.regenerate(function(err) { 
+    if (sess && sess.token) {
+      sess.regenerate(function(err) { 
+        // <umdez> Existe algum método para revogar a existencia de um token?
+        // Provavelmente teremos que apenas remover o token que está armazenado no lado cliente.
+        // Assim o sistema não conseguirá acessar nossas fontes. Isso pode ser
+        // uma alternativa.
+        res.status(403).json({success: false, message: 'Sessão regenerada porem não foi possível revogar o seu token.'});    
+        
+        next(); 
+      });
+    } else {
       // <umdez> Existe algum método para revogar a existencia de um token?
       // Provavelmente teremos que apenas remover o token que está armazenado no lado cliente.
       // Assim o sistema não conseguirá acessar nossas fontes. Isso pode ser
@@ -390,7 +327,8 @@ Autenticacao.prototype.carregarServicoSessao = function () {
       res.status(403).json({success: false, message: 'Não é possível revogar o seu token.'});    
       
       next(); 
-    });  
+    }
+        
   });
 };
 
