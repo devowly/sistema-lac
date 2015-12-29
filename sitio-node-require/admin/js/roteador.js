@@ -11,8 +11,9 @@
 define([
   'jquery',
   'backbone',
-  'modelos/sessao'
-], function($, Backbone, ModeloSessao){
+  'utilitarios',
+  'modelos/sessao/Sessao'
+], function($, Backbone, Utilitarios, ModeloSessao){
   
   var SitioRoteador = Backbone.Router.extend({
     
@@ -29,8 +30,18 @@ define([
     /* É chamado já na inicialização, assim adicionamos o básico (topo, barra de navegação rodape) ao nosso sitio.
      */
     initialize: function () {
-      ModeloSessao.entrar();
-      //ModeloSessao.getAuth();
+      ModeloSessao.entrar({jid: 'raiz@localhost', senha: 'montes'}, function(seAutenticou){
+        if (seAutenticou) {
+          Utilitarios.carregarColecao([ModeloSessao.escopos], function(){
+            for(var ca = 0; ca < ModeloSessao.escopos.length; ca++){
+              console.log(ca + ': ' + ModeloSessao.escopos.models[ca].get('modelo') + ' ' + ModeloSessao.escopos.models[ca].get('bandeira'));
+            }
+          });
+        } else {
+          console.log('Não foi possível autenticar o usuário.');
+        }
+        
+      });
     },
     
     inicio: function() {

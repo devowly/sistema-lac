@@ -5,6 +5,10 @@
  * @Arquivo AutenticacaoUsuario.js
  */
 
+/* Versão 0.0.1-Beta 
+ * - Adicionar caracteristica de verificação das bandeiras de acesso a cada nova requisição de acesso. (issue #39) [AFAZER]
+ */
+ 
 /* Realizamos aqui diversas formas de autenticar os nossos usuário.
  * 
  * @Parametro {bancoDados} Objeto do nosso banco de dados.

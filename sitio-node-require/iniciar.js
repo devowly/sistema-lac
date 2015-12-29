@@ -59,7 +59,7 @@ configuracao.load(function (args, opcs) {
   if(opcs.configuracao !== pastaConfiguracaoPadrao) {
     configuracao.merge(require(opcs.configuracao));
   }
-
+  
   // Iniciamos o servidor express
   var aplic = express();
   

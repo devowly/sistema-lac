@@ -34,11 +34,11 @@
   "repositories": [
     {
       "type": "git",
-      "path": "git@github.com:umdez/testantoSites.git"
+      "path": "git@github.com:devowly/testantoSites.git"
     }
   ],
-  "homepage": "https://github.com/umdez/testantoSites",
-  "bugs": "https://github.com/umdez/testantoSites/issues",
+  "homepage": "https://github.com/devowly/testantoSites",
+  "bugs": "https://github.com/devowly/testantoSites/issues",
   "maintainers": [
     {
       "name": "umdez",
@@ -47,7 +47,7 @@
     }
   ],
   "contributors": [
-    "https://github.com/umdez/testantoSites/graphs/contributors"
+    "https://github.com/devowly/testantoSites/graphs/contributors"
   ],
   "license": "UNLICENSED",
   "private": true,

@@ -4,15 +4,17 @@
  */
 
 /* Versão 0.0.1-Beta 
- * - Adicionar a coleção aninhada dos escopos para o modelo de sessão. (issue #42) [AFAZER] 
+ * - Adicionar a coleção aninhada dos escopos para o modelo de sessão. (issue #42) [FEITO] 
  * - Adicionar modelo de sessão para lidar com a sessão atual do usuário. (issue #37) [FEITO]
  */
  
 define([
   'jquery',
   'underscore',
-  'backbone'
-], function($, _, Backbone) {
+  'backbone',
+  'nesting',
+  'colecoes/sessao/escopos'
+], function($, _, Backbone, nesting, ColecaoEscopos) {
   
   /* Este modelo vai prover métodos para iniciarmos, validarmos e removermos a sessão de um determinado usuário.
    * @Veja https://cdnjs.com/libraries/backbone.js/tutorials/cross-domain-sessions
@@ -43,8 +45,16 @@ define([
   
     urlRoot: '/sessao',
     
+    // Isso vai ser utilizado para quando formos pegar os dados 
+    // das coleções aninhadas pertecentes a este modelo.
+    colecoesAninhadas: [
+      'escopos'
+    ], 
+    
     initialize: function () {
-     
+      // Aqui nós substituimos a url de ColecaoEscopos.
+      this.escopos = nestCollection(this, 'escopos', new ColecaoEscopos(this.get('escopos')));
+      this.escopos.url = '/sessao/' + this.iss + '/escopos';
     },
     
    /* Abaixo iremos realizar os diversos métodos para iniciar, validar e remover uma determinada sessão.
@@ -62,7 +72,7 @@ define([
     *
     * @Parametro {credenciais} As credenciais necessárias para a requisição de um token. Geralmente composto de jid e senha.
     */
-    entrar: function(credenciais) {
+    entrar: function(credenciais, cd) {
       var esteObjeto = this;
       
       this.save(credenciais, {
@@ -77,10 +87,10 @@ define([
           * o método Backbone.sync(). Sendo assim, enviamos um POST com as nossas credenciais, e o token
           * será armazenado numa sessão segura e a cada nova requisição serão acessados os dados pela sessão.
           */
-          
+          cd(true);
         },
         error: function () {
-          
+          cd(false);
         }
       });
     },

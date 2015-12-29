@@ -31,7 +31,7 @@
  */
 
 /* Versão 0.0.1-Beta 
- * - Adicionar rotas de acesso a bandeiras (e os escopos) aninhadas a rota de sessão. (issue #40) [AFAZER]
+ * - Adicionar rotas de acesso a bandeiras (e os escopos) aninhadas a rota de sessão. (issue #40) [FEITO]
  * - Remover informações sensíveis na resposta da nossa sessão. (issue #35) [FEITO]
  * - Adicionar uma caracteristica de manipulação do serviço de sessões onde possamos ativar o modo cookie ou o modo token. (issue #34) [FEITO]
  * - Adicionar caracteristica de armazenar o token (JWT) em cookie seguro. (issue #33) [FEITO]
@@ -86,6 +86,7 @@ util.inherits(Autenticacao, EmissorEvento);
 
 /* Realiza roteamento para os escopos. Note que os escopos estão aninhados com a sessão.
  * Assim, ao requisitarmos a sessão com sucesso então iremos conseguir acessar os escopos do usuário.
+ * @Veja http://stackoverflow.com/a/25305272/4187180
  */
 Autenticacao.prototype.carregarServicoEscopos = function() {
   var esteObjeto = this;
@@ -146,16 +147,18 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
                 // que necessitem de uma bandeira de acesso. Lembre-se que as rotas de livre acesso não necessitam de nenhuma verificação.
                 // Então este usuário possuirá acesso a somente as rotas de livre acesso, que geralmente são de listagem ou leitura.
               } else {
-                // Nossos escopos de acesso as rotas de cada modelo.
-                var escopos = {};
+                // Nossa resposta:
+                var resposta = [];
+                
                 // Caso tenhamos diversos acessos para diversos modelos, vamos armazena-los aqui.
                 acessos.forEach(function(acesso) {
-                  var modelo = acesso.modelo;                   // O modelo onde verificamos a bandeira de acesso.
-                  var bandeira = acesso.bandeira.toString(16);  // Salvamos a bandeira do modelo no tipo texto. Depois convertemos para hexa.
-                  escopos[modelo] = bandeira;                   // Salvamos determinada bandeira para um modelo em especifico.
+                  var escopo = {};                               // Nosso escopo de acesso as rotas de cada modelo.
+                  var modelo = acesso.modelo;                    // O modelo onde verificamos a bandeira de acesso.
+                  var bandeira = acesso.bandeira.toString(16);   // Salvamos a bandeira do modelo no tipo texto. Depois convertemos para hexa.                  
+                  escopo['modelo'] = modelo;                     // O modelo.
+                  escopo['bandeira'] = bandeira;                 // Salvamos determinada bandeira para um modelo em especifico.
+                  resposta.push(escopo);
                 }); 
-                
-                var resposta = escopos;
                 res.status(200).json(resposta);
               }
             });
@@ -260,7 +263,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
                 acessos.forEach(function(acesso) {
                   var modelo = acesso.modelo;                   // O modelo onde verificamos a bandeira de acesso.
                   var bandeira = acesso.bandeira.toString(16);  // Salvamos a bandeira do modelo no tipo texto. Depois convertemos para hexa.
-                  escopos[modelo] = bandeira;                   // Salvamos determinada bandeira para um modelo em especifico.
+                  // escopos[modelo] = bandeira;                // Salvamos determinada bandeira para um modelo em especifico.
                 }); 
                 jwtDados.scopes = escopos;  // Acrescentamos os escopos.
               }
