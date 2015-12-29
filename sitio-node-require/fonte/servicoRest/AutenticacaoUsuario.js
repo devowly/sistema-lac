@@ -6,7 +6,7 @@
  */
 
 /* Versão 0.0.1-Beta 
- * - Adicionar caracteristica de verificação das bandeiras de acesso a cada nova requisição de acesso. (issue #39) [AFAZER]
+ * - Adicionar caracteristica de verificação das bandeiras de acesso a cada nova requisição de acesso. (issue #39) [FEITO]
  */
  
 /* Realizamos aqui diversas formas de autenticar os nossos usuário.
@@ -50,9 +50,33 @@ AutenticacaoUsuario.prototype.verificarUsuarioPeloToken = function(token, cd) {
       // O Token não confere. 
       cd(false, null);
     } else {
-      if (decodificado) {
-        // Token verificado e decodificado com sucesso.
-        cd(true, decodificado);
+      if (decodificado && decodificado.user && decodificado.user.id) {
+        // Aqui nós iremos procurar pelas bandeiras que este usuário possui para a rota (modelo) informada.
+        esteObjeto.bd[esteObjeto.autentic.accessModel].findAll({
+          where: {
+            usuario_id: decodificado.user.id  // Identificador do usuário.
+          }
+        }).then(function (acessos) {
+          if (!acessos) {
+            // Aqui, caso o usuário não possua nenhuma bandeira, fará com que o usuário não tenha acesso as rotas 
+            // que necessitem de uma bandeira de acesso. Lembre-se que as rotas de livre acesso não necessitam de nenhuma verificação.
+            // Então este usuário possuirá acesso a somente as rotas de livre acesso, que geralmente são de listagem ou leitura.
+            cd(false, null);
+          } else {
+            var escopos = {};   // Nosso escopo de acesso as rotas de cada modelo.
+            
+            // Caso tenhamos diversos acessos para diversos modelos, vamos armazena-los aqui.
+            acessos.forEach(function(acesso) {                            
+              var modelo = acesso.modelo;                   // O modelo onde verificamos a bandeira de acesso.
+              var bandeira = acesso.bandeira.toString(16);  // Salvamos a bandeira do modelo no tipo texto. Depois convertemos para hexa.                  
+              escopos[modelo] = bandeira;                    // Salvamos determinada bandeira para um modelo em especifico.
+            }); 
+            
+             // Token verificado e decodificado com sucesso.
+             cd(true, escopos);
+          }
+        })
+        
       } else {
         // Token verificado porem não ha valor decodificado.
         cd(false, null);
