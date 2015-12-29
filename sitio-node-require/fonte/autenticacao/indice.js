@@ -214,12 +214,9 @@ Autenticacao.prototype.carregarServicoSessao = function () {
   * do usuário. No lado cliente, teremos a cada nova requisição, informar o token para esta rota, assim a gente consegue 
   * re-validar seu token de acesso.  
   *
-  * A segunda coisa a fazer é se o cliente nos informou um jid e senha. Então verificamos os dados informados, e se 
-  * conferir, nós iremos gerar novo token para o usuário.
+  * Se houve sucesso, nós iremos informar o usuário uma mensagem de que o token não expirou.
   *
-  * Se houve sucesso, nós iremos informar o usuário com um novo token ou uma mensagem de que o token não expirou.
-  *
-  * Caso o novo token foi criado com sucesso, o lado cliente deve agir de forma a mostrar o usuário uma nova visão.
+  * Caso ocorreu sucesso, o lado cliente saberá que está validado.
   * Ou se caso não haja sucesso na re-validação e ou autenticação, então o lado cliente deve manipular para que seja
   * apresentada uma visão onde o usuário posso realizar nova autenticação.
   *
