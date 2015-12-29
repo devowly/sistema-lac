@@ -8,11 +8,14 @@
  * - Servir as páginas do painel de administração utilizando o Express. (issue #19) [FEITO]
  */
 
+var fs = require('fs');
 var pasta = require('path');
 var configuracao = require('jsconfig');
 var pastaConfiguracaoPadrao = pasta.join(__dirname, "/configuracao/configuracao.js");
 var express = require('express');
+var sessao = require('express-session');
 var http = require('http');
+var https = require('https');
 var morgan = require('morgan');
 var ServidorXmpp = require('servidor-xmpp');
 var jwt = require('jsonwebtoken');
@@ -25,6 +28,14 @@ configuracao.set('env', {
   DOMAIN: 'domain',
   PORT: ['port', parseInt],
 });
+
+/* Aqui temos a nossa chave e certificado. Foi utilizado a ferramenta openssl provida pelo git. 
+ * O comando para cria-los: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privatekey.key -out certificate.crt
+ * @Veja https://stackoverflow.com/questions/2355568/create-a-openssl-certificate-on-windows
+ */
+var chavePrivada  = fs.readFileSync('certificados/servidorHttp.key', 'utf8');
+var certificado = fs.readFileSync('certificados/servidorHttp.crt', 'utf8');
+var credenciais = {key: chavePrivada, cert: certificado};
 
 /* Nossas opções para configuração pela linha de comando. 
  */
@@ -56,10 +67,22 @@ configuracao.load(function (args, opcs) {
   // Iniciamos o servidor express
   var aplic = express();
   
-  // Necessário usar isto para a aceitação de requisições das origens permitidas.
+  // Necessário usar isto para a aceitação de requisições das origens permitidas. @Veja https://www.npmjs.com/package/cors
   var cors = require('cors');
   aplic.use(cors({
     origin: configuracao.server.cors.origin  // Origens aceitas por este servidor express.
+  , methods:  ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']  // Métodos aceitos.
+  , allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token', 'X-Requested-With', 'Accept', 'Accept-Version', 'Content-Length', 'Content-MD5', 'Date', 'X-Api-Version']
+  , credentials: true
+  }));
+  
+  // Necessário utilizarmos sessão. @Veja https://github.com/expressjs/session
+  aplic.use(sessao({
+    secret: 'MySuperSessionSecret',
+    cookie: {
+      httpOnly: true,  // A presença desta bandeira vai pedir com que o navegador não permita que um script do lado cliente acesse e manipule este cookie.
+      secure: true  // Informa para o navegador para somente enviar este cookie em requisições que utilizam https.
+    }
   }));
   
   // Utilizamos o bodyParser para receber requisições POST ou PUT.
@@ -91,12 +114,18 @@ configuracao.load(function (args, opcs) {
     // Iniciamos aqui a escuta pelos eventos de sinalização e ou excessão.
     eventosSistema.iniciar();
     
-    registrador.debug('Carregando o servidor HTTP e XMPP.');
+    registrador.debug('Carregando o servidor HTTP, HTTPS e XMPP.');
     
-    // Inicia o servidor HTTP e começa a esperar por conexões
+    // Inicia o servidor HTTP e começa a esperar por conexões.
     aplic.server = http.createServer(aplic);
     aplic.server.listen(aplic.get('port'), function () {
       registrador.debug("Servidor express carregado e escutando na porta " + aplic.get('port'));
+    });
+    
+    // Inicia o servidor HTTPS e começa a esperar por conexões.
+    aplic.serverSsl = https.createServer(credenciais, aplic);
+    aplic.serverSsl.listen(443, function () {
+      registrador.debug("Servidor express carregado e escutando na porta " + 443);
     });
     
     // Iniciar servidor XMPP.
