@@ -68,9 +68,9 @@ module.exports = {
   
   // Autenticação: As configurações para as autenticações.
   "authentication": {
-    "superSecret": "abcd1234",         // Super segredo do Json Web Token (JWT).
-    "verifyModel": "Usuario",          // O modelo onde iremos usar para a verificação para a autenticação.
-    "accessModel": "AcessoRota"        // O modelo onde iremos requisitar as bandeiras para acesso de cada modelo.
+    "superSecret": "abcd1234",  // Super segredo do Json Web Token (JWT).
+    "verifyModel": "Usuario",   // O modelo onde iremos usar para a verificação para a autenticação.
+    "accessModel": "Escopo"     // O modelo onde iremos requisitar as bandeiras para acesso de cada modelo.
   }
   
 };

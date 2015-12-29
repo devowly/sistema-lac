@@ -35,7 +35,7 @@ module.exports = function (sequelize, DataTypes) {
     associate: function (modelos) {
       // Adiciona coluna de chave estrangeira 'usuario_id' para o modelo de acesso as rotas.
       // Cada um dos acesso a rota pertencerá a um usuário. 
-      modelos.Usuario.hasMany(modelos.AcessoRota, { foreignKey: 'usuario_id' }); 
+      modelos.Usuario.hasMany(modelos.Escopo, { foreignKey: 'usuario_id' }); 
     },
     instanceMethods: {
       verificarSenha: function(password) {
