@@ -4,6 +4,7 @@
  */
 
 /* Versão 0.0.1-Beta 
+ * - Adicionar a coleção aninhada dos escopos para o modelo de sessão. (issue #42) [AFAZER] 
  * - Adicionar modelo de sessão para lidar com a sessão atual do usuário. (issue #37) [FEITO]
  */
  
@@ -20,6 +21,10 @@ define([
    * Iremos realizar uma requisição GET passando o token para a rota '/session'. Assim a gente descobre 
    * se o usuário está validado e depois utilizamos o token para requisitar as diversas rotas do nosso aplicativo.
    * Se a validação der errado, sabemos que o cliente deverá realizar nova autenticação.
+   *
+   * Outra abordagem que podemos realizar é utilizarmos cookies seguros, assim as credenciais são enviadas apenas 
+   * uma única vez para a criação do token. Logo em seguida o token é armazenado no cookie. Esta abordagem não
+   * necessita sobrescrever o método Backbone.sync() para informamos o token em cada requisição.
    *
    * Abaixo listamos algumas dicas de segurança para o nosso sistema de autenticação.
    * - Crie os tokens com uma chave secreta forte, que seja disponivel para acesso SOMENTE pelo serviço de autenticação.
@@ -55,14 +60,10 @@ define([
    /* Responsável por realizar a entrada do usuário. Informando o seu jid e senha pelo método POST. 
     * Se tudo correr bem o usuário terá seu token de acesso para realização de requisições as rotas do serviço.
     *
-    * @Parametro {credenciais} As credenciais necessárias para a requisição de um token.
+    * @Parametro {credenciais} As credenciais necessárias para a requisição de um token. Geralmente composto de jid e senha.
     */
     entrar: function(credenciais) {
-      var credenciais = {};
       var esteObjeto = this;
-      
-      credenciais.jid = 'leo@localhost';
-      credenciais.senha = 'montes';
       
       this.save(credenciais, {
         success: function () {
@@ -104,7 +105,6 @@ define([
           modelo.clear();
           // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
           esteObjeto.set({auth: false});
-          
         },
         error: function () {
           // Aqui nós mudamos o valor de auth para false, fazendo com que seja disparado o evento change:auth.
