@@ -15,6 +15,7 @@
     "deasync": "0.1.4",
     "epilogue": "umdez/epilogue",
     "express": "4.13.3",
+    "express-session": "1.12.1",
     "jsconfig": "0.2.0",
     "jsonwebtoken": "5.4.1",
     "lodash": "3.10.1",
