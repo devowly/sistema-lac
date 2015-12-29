@@ -9,7 +9,7 @@ define([
   'jquery', 
   'underscore',
   'backbone',
-  'imagems/base64/imagens'
+  'imagens/base64/imagens'
 ], function($, _, BackBone, imagensBase64){
   
   /* Carrega assincronamente os templates encontrados em arquivos .html separados.

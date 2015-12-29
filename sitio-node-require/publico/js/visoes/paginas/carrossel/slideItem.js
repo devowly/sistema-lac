@@ -50,7 +50,7 @@ define([
       if (modelo.indice === 0) $(this.el).addClass('active');
       
       // pegamos a imagem na base 64.
-      modelo.imagem_b64 = Utilitarios.pegarImagemB64(modelo.imagem_arquivo, 'IMAGEMS_SLIDES');
+      modelo.imagem_b64 = Utilitarios.pegarImagemB64(modelo.imagem_arquivo, 'IMAGENS_SLIDES');
       
       $(this.el).html(this.templante(modelo));
       

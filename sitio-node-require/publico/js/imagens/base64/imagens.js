@@ -6,8 +6,8 @@
  */
 
 define([ 
-  'imagems/base64/logo/imagens',
-  'imagems/base64/slides/imagens'
+  'imagens/base64/logo/imagens',
+  'imagens/base64/slides/imagens'
 ], function(logo, slides) {
 
   // Armazenamos as diversas imagems b64 aqui nesta variavel constante.

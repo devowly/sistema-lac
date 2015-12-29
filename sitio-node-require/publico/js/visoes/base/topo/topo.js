@@ -56,7 +56,7 @@ define([
       this.$el.html(this.templante());
        
       // A imagem de logo da nossa pagina, utilizamos aqui uma imagem na base 64.
-      var logo = { imagem: Utilitarios.pegarImagemB64('logo.jpg', 'IMAGEMS_LOGO') };
+      var logo = { imagem: Utilitarios.pegarImagemB64('logo.jpg', 'IMAGENS_LOGO') };
       //var logo = { imagem: '/js/imagems/logo.jpg'}; 
       
       // Adicionamos o logo ao conteudo do topo.
