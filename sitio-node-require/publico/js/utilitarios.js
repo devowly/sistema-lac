@@ -9,8 +9,8 @@ define([
   'jquery', 
   'underscore',
   'backbone',
-  'imagems/base64/imagems'
-], function($, _, BackBone, imagemsBase64){
+  'imagems/base64/imagens'
+], function($, _, BackBone, imagensBase64){
   
   /* Carrega assincronamente os templates encontrados em arquivos .html separados.
    * Depois de carregado ele chama a função cd().
@@ -221,7 +221,7 @@ define([
     var imgBase64 = null;
     
     // Percorremos cada uma das imagems
-    _.each(imagemsBase64[lista], function(imagem) {
+    _.each(imagensBase64[lista], function(imagem) {
       
       // Retornamos o valor da imagem de determinado arquivo.
       if (imagem.arquivo === arquivo) {
