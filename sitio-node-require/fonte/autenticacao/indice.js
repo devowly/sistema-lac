@@ -31,6 +31,7 @@
  */
 
 /* Versão 0.0.1-Beta 
+ * - Adicionar rotas de acesso a bandeiras (e os escopos) aninhadas a rota de sessão. (issue #40) [AFAZER]
  * - Remover informações sensíveis na resposta da nossa sessão. (issue #35) [FEITO]
  * - Adicionar uma caracteristica de manipulação do serviço de sessões onde possamos ativar o modo cookie ou o modo token. (issue #34) [FEITO]
  * - Adicionar caracteristica de armazenar o token (JWT) em cookie seguro. (issue #33) [FEITO]
@@ -43,6 +44,7 @@ var util = require('util');
 var EmissorEvento = require('events').EventEmitter;
 var Promessa = require('bluebird');
 var registrador = require('../nucleo/registrador')('Autenticacao');
+var express = require('express');
 
 /* Abstração da gerencia das autenticações e autorizações. 
  *
@@ -72,9 +74,119 @@ var Autenticacao = function (aplicativo, bancoDados, jwt, autenticacao) {
   
   // Aqui a gente coloca se utilizaremos cookies seguros para a sessão.
   this.seForUtilizarCookie = true;
+  
+  // Necessitamos aqui de receber as caracteristicas para utilizarmos rotas. Isto é importante para aninharmos algumas rotas.
+  // Iniciamos aqui o roteador para sessões e os escopos do usuário. Note que colocamos mergeParams no roteador de escopos, porque 
+  // queremos aninha-los com o roteador de sessão. @Veja http://stackoverflow.com/a/25305272/4187180
+  this.sessaoRoteador = express.Router();
+  this.escoposRoteador = express.Router({mergeParams: true});
 };
 
 util.inherits(Autenticacao, EmissorEvento);
+
+/* Realiza roteamento para os escopos. Note que os escopos estão aninhados com a sessão.
+ * Assim, ao requisitarmos a sessão com sucesso então iremos conseguir acessar os escopos do usuário.
+ */
+Autenticacao.prototype.carregarServicoEscopos = function() {
+  var esteObjeto = this;
+  
+  // Aninhamos os roteadores ao acrescenta-los como ponte:
+  this.sessaoRoteador.use('/:usuarioId/escopos', this.escoposRoteador);
+  
+  this.escoposRoteador.route('/').get(function (req, res) {
+    var token = null;
+    
+    // Aqui nós tentaremos acessar um token já existente em um cookie.
+    var sess = req.session;
+    if (sess && sess.token) {
+      token = sess.token;
+    } else {
+      // Tentamos pegar o token informado no corpo, parametros ou no cabeçalho da requisição.
+      token = (req.body && req.body.token) || (req.params && req.params.token) || req.headers['x-access-token'];
+    }
+    
+    // Aqui iremos verificar o token e depois pegar a lista de escopos deste usuário.
+    if (token) {
+      esteObjeto.jsonWebToken.verify(token, esteObjeto.autentic.superSecret, function (erro, decodificado) {
+        if (erro) {
+          // Acabou de acontecer um erro ao tentarmos verificar o token informado.
+          if (erro.name && erro.name === 'TokenExpiredError') {
+            // O Token expirou, aqui informamos que tem de ser realizada nova autenticação.    
+            if (sess && sess.token) {
+              // Se existir, nós limpamos a nossa sessão.
+              sess.regenerate(function(err) {             
+                res.status(401).json({ auth: false, expired: true, success: false, message: 'Você informou um token que expirou. ('+ erro.message +').'});
+              });
+            } else {
+              res.status(401).json({ auth: false, expired: true, success: false, message: 'Você informou um token que expirou. ('+ erro.message +').'});
+            } 
+          } else {
+            // Algum outro erro aconteceu. 
+            if (sess && sess.token) {
+              // Se existir, nós limpamos a nossa sessão.
+              sess.regenerate(function(err) { 
+                res.status(401).json({ auth: false, expired: false, success: false, message: 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').'});
+              });
+            } else {
+              res.status(401).json({ auth: false, expired: false, success: false, message: 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').'});
+            }
+          }
+        } else {
+          if (decodificado) {
+            // O token foi decodificado com sucesso. Aqui nós iremos procurar pelas bandeiras que este usuário possui
+            // para todas as rotas que ele tem cadastro. Isso funcionará como os escopos, porque só iremos oferecer acesso
+            // a certos escopos (rotas dos modelos).
+            esteObjeto.bd[esteObjeto.autentic.accessModel].findAll({
+              where: {
+                usuario_id: decodificado.user ?  decodificado.user.id : -1  // Identificador do usuário.
+              }
+            }).then(function (acessos) {
+              if (!acessos) {
+                // Aqui, caso o usuário não possua nenhuma bandeira, fará com que o usuário não tenha acesso as rotas 
+                // que necessitem de uma bandeira de acesso. Lembre-se que as rotas de livre acesso não necessitam de nenhuma verificação.
+                // Então este usuário possuirá acesso a somente as rotas de livre acesso, que geralmente são de listagem ou leitura.
+              } else {
+                // Nossos escopos de acesso as rotas de cada modelo.
+                var escopos = {};
+                // Caso tenhamos diversos acessos para diversos modelos, vamos armazena-los aqui.
+                acessos.forEach(function(acesso) {
+                  var modelo = acesso.modelo;                   // O modelo onde verificamos a bandeira de acesso.
+                  var bandeira = acesso.bandeira.toString(16);  // Salvamos a bandeira do modelo no tipo texto. Depois convertemos para hexa.
+                  escopos[modelo] = bandeira;                   // Salvamos determinada bandeira para um modelo em especifico.
+                }); 
+                
+                var resposta = escopos;
+                res.status(200).json(resposta);
+              }
+            });
+            
+          } else {
+            // Alguma coisa deu errado ao tentarmos decodificar o token informado.
+            if (sess && sess.token) {
+              // Se existir, nós limpamos a nossa sessão.
+              sess.regenerate(function(err) { 
+                res.status(401).json({ auth: false, expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
+              });
+            } else {
+              res.status(401).json({ auth: false, expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
+            }
+          }
+        }
+      });
+    } else {
+      res.status(401).json({ auth: false, expired: false, success: false, message: 'Você deve nos informar um token para continuar.' });
+    }
+  });
+
+  // Informamos aqui um único escopo de uma sessão pelo id.
+  this.escoposRoteador.route('/:escopoId').get(function (req, res) {
+    var escpId = req.params.escopoId;  // Identificador deste escopo.
+    var usrId = req.params.usuarioId;  // Identificador da sessão deste usuário.
+    
+    res.status(200).json('Isto ainda não foi implementado.');
+  });
+  
+};
 
 /* Realiza o inicio do serviço de autenticação de nossos usuários.
  * @Veja http://brianmajewski.com/2015/02/25/relearning-backbone-part-9/
@@ -83,7 +195,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
   var esteObjeto = this;
   
   // Obs: Se utilizar o Postman, não utilize 'application/json' no header de requisição
-  // @Veja https://stackoverflow.com/questions/29006170/error-invalid-json-with-multer-and-body-parser
+  // @Veja http://stackoverflow.com/a/29006928/4187180
   
   /* Aqui - em cada uma das rotas - nós também iremos retornar um código de status informando o ocorrido. Os valores de estados poderão ser:
    * - [status 401] Não autorizado. Quando a autenticação é requerida e falhou ou dados necessários não foram providos.
@@ -93,9 +205,9 @@ Autenticacao.prototype.carregarServicoSessao = function () {
    * @Veja https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
    * @Veja http://expressjs.com/en/guide/error-handling.html
    */
-  
+      
   // Acrescentamos a nossa rota de autenticação e esperamos por requisições do tipo POST.
-  this.aplic.post('/sessao', function (req, res) {
+  this.sessaoRoteador.route('/').post(function (req, res) {
      
     // Tentamos pegar aqui o jid e senha informados no corpo, parametros ou no cabeçalho da requisição.
     var jid = (req.body && req.body.jid) || (req.params && req.params.jid) || req.headers['x-authentication-jid'];
@@ -209,7 +321,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
     }
   });
   
- /* Aqui iremos fazer duas coisas, a primeira é verificar se um token foi informado. Caso o token foi informado, nós
+ /* Aqui iremos fazer uma coisa, a primeira é verificar se um token foi informado. Caso o token foi informado, nós
   * iremos verificar se o token é valido e se não expirou. Assim iremos conseguir verificar o estado atual de autenticação
   * do usuário. No lado cliente, teremos a cada nova requisição, informar o token para esta rota, assim a gente consegue 
   * re-validar seu token de acesso.  
@@ -225,7 +337,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
   * Obs: É importante lembrar que o token permanece válido ao usuário re-iniciar a página. Assim fica necessário apenas
   * verificarmos a sessao novamente, ao invez de re-autenticar o usuário.
   */
-  this.aplic.get('/sessao', function(req, res){ 
+  this.sessaoRoteador.route('/').get(function(req, res){ 
     var token = null;
     
     // Aqui nós tentaremos acessar um token já existente em um cookie.
@@ -277,14 +389,16 @@ Autenticacao.prototype.carregarServicoSessao = function () {
             if (sess && sess.token) {
               // Se existir, nós limpamos a nossa sessão.
               sess.regenerate(function(err) { 
-                res.json({ auth: false, expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
+                res.status(401).json({ auth: false, expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
               });
             } else {
-              res.json({ auth: false, expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
+              res.status(401).json({ auth: false, expired: false, success: false, message: 'Você informou um token que não foi possível decodificar.' });
             }
           }
         }
       });
+    } else {
+      res.status(401).json({ auth: false, expired: false, success: false, message: 'Você deve nos informar um token para continuar.' });
     }
      
   });
@@ -296,7 +410,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
    * @Parametro {res} A nossa resposta.
    * @Parametro {next} função chamada para passar a requisição para outras rotas.
    */
-  this.aplic.delete('/sessao/', function(req, res, next){  
+  this.sessaoRoteador.route('/').delete(function(req, res, next){  
     var token = null;
     
     // Aqui nós tentaremos acessar um token já existente em um cookie.
@@ -334,6 +448,8 @@ Autenticacao.prototype.carregarServicoSessao = function () {
     }
         
   });
+  
+  this.aplic.use('/sessao', this.sessaoRoteador);
 };
 
 /* Realizamos aqui o inicio do nosso serviço de autenticação e autorização.
@@ -348,8 +464,11 @@ Autenticacao.prototype.iniciar = function () {
 
   return new Promessa(function (deliberar, recusar) {
 
-    // Carregamos nosso serviço.
+    // Carregamos nosso serviço de sessões.
     esteObjeto.carregarServicoSessao();
+    
+    // Carregamos nosso serviço de escopos.
+    esteObjeto.carregarServicoEscopos();
     
     // Se tudo ocorreu bem.
     deliberar(esteObjeto);
