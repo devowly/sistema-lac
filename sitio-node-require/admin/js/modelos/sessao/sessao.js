@@ -189,6 +189,7 @@ define([
     defaults: {
       auth: false    // Caso o usuário esteja autenticado. Se for falso o usuário terá de realizar novamente a entrada.
     , message: null  // A mensagem recebida. A cada requisição iremos receber uma mensagem informando o que aconteceu.
+    , code: null     // Codigo informado para que possamos manipular aqui no lado cliente.
     , token: null    // O nosso token que será utilizado para acesso as rotas do serviço. (Não é informado se caso utilizarmos cookies seguros).
     , exp: null      // O tempo, em minutos, que vai levar para o token expirar.
     , id: null       // Identificador do nosso remetente. Este identificador não é nada mais que a chave primária do usuário.

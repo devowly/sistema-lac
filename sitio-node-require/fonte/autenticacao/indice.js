@@ -183,7 +183,7 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
             // a certos escopos (rotas dos modelos).
             esteObjeto.bd[esteObjeto.autentic.accessModel].findAll({
               where: {
-                usuario_id: decodificado.user ?  decodificado.user.id : -1  // Identificador do usuário.
+                usuario_id: decodificado.user ?  decodificado.user.id : -1  // Identificador do usuário. Se não encontrado o id, utilizamos -1.
               }
             }).then(function (acessos) {
               if (!acessos) {

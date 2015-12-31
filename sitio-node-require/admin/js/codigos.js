@@ -10,22 +10,24 @@ define([
 ], function($, _, BackBone){
   
   /* A cada requisição iremos retornar na resposta um campo 'code' que é responsável por
-   * informar qual estado da sessão. Isso faz com que o lado cliente possa facilmente
-   * manipular os diversos estados de uma requisição. Abaixo a lista dos códigos: 
-   ------------------------------------------------------------------------------ */
+   * informar qual estado da sessão. Isso faz com que haja uma forma primitiva de comunicação,
+   * assim o lado cliente pode facilmente manipular os diversos estados de uma requisição.
+   *
+   * Iremos utilizar apenas três grupos de códigos: O grupo *ERRO*, *SUCESSO* e *INFO*. Cada um
+   * deles separará as diversas mensagens pelo grau. Assim uma mensagem do grupo *ERRO* possuirá
+   * uma gravidade maior que a do grupo *INFO* e assim por diante. 
+   ------------------------------------------------------------------------------------------- */
   var CodigosDeResposta = function() {
     this.CODIGOS = {
-      
-      'INFO': [],  // Aqui são os códigos relacionados às informações.
-     
-      'SUCESSO': [],  // Aqui os códigos de sucesso.
-
-      'ERRO': []  // Informar o cliente que houve algum erro.
+      'INFO': [],    // Aqui são os códigos relacionados às informações.
+      'SUCESSO': [], // Aqui os códigos de sucesso.
+      'ERRO': []     // Informar o cliente que houve algum erro.
     };
   };
   
-  /* Realiza a adição de um novo código. Cada código será utilizado para a comunicação das respostas do serviço REST com os nossos modelos.
-   * A gente usará isso para ficar mais simples de manipular as diversas respostas do serviço REST.
+  /* Realiza a adição de um novo código. Cada código será utilizado para a comunicação das respostas
+   * do serviço REST com os nossos modelos. A gente usará isso para ficar mais simples de manipular as
+   * diversas respostas do serviço REST.
    *
    * @Parametro {tipo} O tipo do código. Podendo ser: 'INFO', 'SUCESSO' ou 'ERRO'.
    * @Parametro {nome} O nome do código. Por exemplo: 'SENHA_INVALIDA'.
@@ -34,21 +36,21 @@ define([
    */
   CodigosDeResposta.prototype.adicionarUmCodigo = function(tipo, nome, valor, mensagem) {
    
-    if ('INFO' === tipo) {
+    if ('INFO' === tipo) {  // Códigos de informação poder ser apresentados com cor azul.
       this.CODIGOS['INFO'].push({
         nome: nome
       , cod: valor.toString()
       , msg: mensagem
       });
       
-    } else if ('SUCESSO' === tipo) {
+    } else if ('SUCESSO' === tipo) {  // Códigos de sucesso poderão ser apresentados com a cor verde.
       this.CODIGOS['SUCESSO'].push({
         nome: nome
       , cod: valor.toString()
       , msg: mensagem
       }); 
       
-    } else if ('ERRO' === tipo) {
+    } else if ('ERRO' === tipo) {  // Códigos de erro podem ser apresentados com a cor vermelha.
       this.CODIGOS['ERRO'].push({
         nome: nome
       , cod: valor.toString()
