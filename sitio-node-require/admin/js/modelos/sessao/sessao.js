@@ -12,9 +12,35 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'codigos',
   'nesting',
   'colecoes/sessao/escopos'
-], function($, _, Backbone, nesting, ColecaoEscopos) {
+], function($, _, Backbone, Codigos, nesting, ColecaoEscopos) {
+  
+  // Abaixo nós adicionamos aqui todos os códigos que serão utilizados para a "comunicação" entre o nosso modelo e o nosso serviço REST.
+  // Os códigos de informação são:
+  Codigos.codigosDeResposta.adicionarUmCodigo('INFO', 'SENHA_INVALIDA', '001', 'A senha está incorreta ou não foi informada.'); 
+  Codigos.codigosDeResposta.adicionarUmCodigo('INFO', 'JID_INVALIDO', '002', ' O Jid informado não confere.'); 
+  Codigos.codigosDeResposta.adicionarUmCodigo('INFO', 'JID_SENHA_NECESSARIOS', '003', 'O Jid ou a senha não foram informados.'); 
+  Codigos.codigosDeResposta.adicionarUmCodigo('INFO', 'TOKEN_NECESSARIO', '004', 'O token é necessário de ser informado.'); 
+  Codigos.codigosDeResposta.adicionarUmCodigo('INFO', 'TOKEN_EXPIRADO', '005', 'O token está expirado.'); 
+  Codigos.codigosDeResposta.adicionarUmCodigo('INFO', 'SESSAO_ENCERRADA', '006', 'A sessão foi encerrada.'); 
+  
+  // Os códigos de sucesso são:
+  Codigos.codigosDeResposta.adicionarUmCodigo('SUCESSO', 'USUARIO_AUTENTICADO', '101', 'O usuário foi autenticado com sucesso.'); 
+  Codigos.codigosDeResposta.adicionarUmCodigo('SUCESSO', 'TOKEN_VALIDADO', '102', 'O token é valido e pode ser utilizado nas requisições seguintes.'); 
+  
+  // Os códigos de erro são:
+  Codigos.codigosDeResposta.adicionarUmCodigo('ERRO', 'TOKEN_NAO_DECODIFICADO', '201', 'Ocorreu algum problema ao decodifica-lo.'); 
+  Codigos.codigosDeResposta.adicionarUmCodigo('ERRO', 'VERIFICACAO_TOKEN', '202', 'Ocorreu algum problema ao verificarmos a validade do token informado.'); 
+          
+  // Vamos registrar aqui para ajudar nos testes e desenvolvimento.
+  // Não é para ser usado na fase final.
+  var registro = function(valor) {
+    if (!valor) return; 
+    var codigo = Codigos.codigosDeResposta.procurarUmCodigoPeloValor(valor);
+    console.log((codigo ? codigo.msg : 'Codigo não encontrado.'));
+  };
   
   /* Este modelo vai prover métodos para iniciarmos, validarmos e removermos a sessão de um determinado usuário.
    * @Veja https://cdnjs.com/libraries/backbone.js/tutorials/cross-domain-sessions
@@ -45,6 +71,8 @@ define([
   
     urlRoot: '/sessao',
     
+    idAttribute: 'id',
+    
     // Isso vai ser utilizado para quando formos pegar os dados 
     // das coleções aninhadas pertecentes a este modelo.
     colecoesAninhadas: [
@@ -52,9 +80,7 @@ define([
     ], 
     
     initialize: function () {
-      // Aqui nós substituimos a url de ColecaoEscopos.
       this.escopos = nestCollection(this, 'escopos', new ColecaoEscopos(this.get('escopos')));
-      this.escopos.url = '/sessao/' + this.iss + '/escopos';
     },
     
    /* Abaixo iremos realizar os diversos métodos para iniciar, validar e remover uma determinada sessão.
@@ -76,7 +102,7 @@ define([
       var esteObjeto = this;
       
       this.save(credenciais, {
-        success: function () {
+        success: function (modelo, resposta) {
          /* Caso a entrada seja um sucesso e o usuário receba o seu token, então é necessário agora que
           * seja acrescentado no método Backbone.sync() uma forma de adicionar o nosso token nos
           * cabeçalhos das nossas próximas requisições.
@@ -87,10 +113,18 @@ define([
           * o método Backbone.sync(). Sendo assim, enviamos um POST com as nossas credenciais, e o token
           * será armazenado numa sessão segura e a cada nova requisição serão acessados os dados pela sessão.
           */
-          cd(true);
+          
+          // Acrescentamos a URL dos escopos aqui, porque é aqui que recebemos o nosso id.
+          esteObjeto.escopos.url = '/sessao/' + esteObjeto.id + '/escopos';
+        
+          registro(resposta.code);
+        
+          cd(true, resposta);
         },
-        error: function () {
-          cd(false);
+        error: function (modelo, resposta) {
+          registro(resposta.code);
+          
+          cd(false, resposta);
         }
       });
     },
@@ -102,16 +136,18 @@ define([
     sair: function() {
       var esteObjeto = this;
       
-      // Envia um DELETE para a rota '/sessao' e limpa os dados do lado cliente.
+      // Envia um DELETE para a rota '/sessao/:id' e limpa os dados do lado cliente.
       this.destroy({
         
-        // Provavelmente esta rota sempre irá responder com estado (403) informando erro.
-        // Isso acontece porque não temos um método de revogar token pelo lado servidor,
-        // mas de qualquer forma nós podemos aqui do lado cliente manipular para que
-        // seja apresentada uma visão de que o usuário saiu da conta. Além disso,
-        // devemos mostrar uma visão onde o usuário possa se re-autenticar.
-        success: function (modelo, resp) {
-          
+        /* Provavelmente esta rota sempre irá responder com estado (403) informando erro.
+         * Isso acontece porque não temos um método de revogar token pelo lado servidor,
+         * mas de qualquer forma nós podemos aqui do lado cliente manipular para que
+         * seja apresentada uma visão de que o usuário saiu da conta. Além disso,
+         * devemos mostrar uma visão onde o usuário possa se re-autenticar.
+         */
+        success: function (modelo, resposta) {
+          registro(resposta.code);
+          // Limpamos o modelo.
           modelo.clear();
           // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
           esteObjeto.set({auth: false});
@@ -138,24 +174,24 @@ define([
       // Mostrando a visão de entrada se o usuário não estiver validado.
       // Antes de iniciarmos qualquer rota vamos ver se o usuário é valido.
       this.fetch({
-        success: function() {
-          cd(true);
+        success: function(modelo, resposta) {
+          registro(resposta.code);
+          cd(true, resposta);
         },
-        error: function() {
-          cd(false);
+        error: function(modelo, resposta) {
+          registro(resposta.code);
+          cd(false, resposta);
         }
       });
     },
     
     // Aqui os atributos padrões deste modelo de sessao.
     defaults: {
-      auth: false      // Caso o usuário esteja autenticado. Se for falso o usuário terá de realizar novamente a entrada.
-    , success: false   // Caso houve sucesso na requisição. 
-    , message: null    // A mensagem recebida. A cada requisição iremos receber uma mensagem informando o que aconteceu.
-    , iss: null        // Identificador do nosso remetente. Este identificador não é nada mais que a chave primária do usuário.
-    , token: null      // O nosso token que será utilizado para acesso as rotas do serviço. (Não é informado se caso utilizarmos cookies seguros).
-    , exp: null        // O tempo, em minutos, que vai levar para o token expirar.
-    , iat: null
+      auth: false    // Caso o usuário esteja autenticado. Se for falso o usuário terá de realizar novamente a entrada.
+    , message: null  // A mensagem recebida. A cada requisição iremos receber uma mensagem informando o que aconteceu.
+    , token: null    // O nosso token que será utilizado para acesso as rotas do serviço. (Não é informado se caso utilizarmos cookies seguros).
+    , exp: null      // O tempo, em minutos, que vai levar para o token expirar.
+    , id: null       // Identificador do nosso remetente. Este identificador não é nada mais que a chave primária do usuário.
     }
     
   });
