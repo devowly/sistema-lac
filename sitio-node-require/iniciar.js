@@ -68,7 +68,7 @@ configuracao.load(function (args, opcs) {
   aplic.use(cors({
     origin: configuracao.server.cors.origin  // Origem aceita por este servidor express.
   , methods:  ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']  // Métodos aceitos.
-  , allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token', 'X-Requested-With', 'Accept', 'Accept-Version', 'Content-Length', 'Content-MD5', 'Date', 'X-Api-Version']
+  , allowedHeaders: ['Content-Type', 'Authorization', 'X-total', 'X-CSRF-Token', 'X-Requested-With', 'Accept', 'Accept-Version', 'Content-Length', 'Content-MD5', 'Date', 'X-Api-Version']
   , credentials: true
   }));
   
