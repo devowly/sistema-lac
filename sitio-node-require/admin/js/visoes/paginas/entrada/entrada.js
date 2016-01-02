@@ -10,65 +10,100 @@ define([
   'underscore',
   'bootstrap',
   'utilitarios',
-  'text!/admin/js/templantes/paginas/entrada/Visao.Entrada.html'
-], function($, Backbone, _, Bootstrap, Utilitarios, Templante){
+  'text!/admin/js/templantes/paginas/entrada/Visao.Entrada.html',
+  'text!/admin/js/templantes/paginas/painel/Visao.Painel.html'
+], function($, Backbone, _, Bootstrap, Utilitarios, TemplanteEntrada, TemplantePainel){
   
-  /* Responsavel por lidar com a página de entrada do painel de administração.
+  /* Responsavel por lidar com a página de entrada e a pagina do painel de administração.
    */
   var Entrada = Backbone.View.extend({
     
+    // O Modelo para realizarmos a sessão.
     ModeloSessao: null,
-    jid: null,
-    senha: null,
     
-    templante: _.template(Templante),
+    // O Jabber ID do usuário. (Composto por local@dominio).
+    jid: null,  
+    
+    // A senha deste usuário.
+    senha: null,  
     
     attributes: {
       
     },
 
     initialize: function (ModeloSessao) {
-      this.render();
+      var esteObjeto = this;
       this.ModeloSessao = ModeloSessao;
+     
+      // Espera os eventos da propriedade auth do ModeloSessao. Assim podemos 
+      // manipular a interface do usuário de acordo com o estado de autenticação atual do usuário.
+      this.ModeloSessao.on('change:auth', function (sessao) {
+        esteObjeto.render();
+      });
+      this.render();
+      return this;
     },
 
     render: function () {
-      // Renderiza este template
-      this.$el.html(this.templante());
-      return this;
+      /* Escolheremos aqui o templante a ser apresentado dependendo da propriedade 'auth' do nosso ModeloSessao.
+       * Caso a usuário esteja autenticado então mostramos a interface do painel. Caso contrário, nós iremos 
+       * manipular para que seja apresentada novamente uma tela para que ele realize a entrada novamente.
+       */
+      if(this.ModeloSessao.get('auth')){
+        this.$el.html(_.template(TemplantePainel));
+      } else {
+        this.$el.html(_.template(TemplanteEntrada)); 
+      }
     },
     
-    mudarJid: function(evento) {
+    // Sempre que o usuário digitar na entrada de jid nós iremos acessar o valor para
+    // realizarmos a entrada posteriormente.
+    _aoEscreverAtualizarJid: function(evento) {
       this.jid = $(evento.currentTarget).val();
     },
     
-    mudarSenha: function(evento) {
+    // Sempre que o usuário digitar na entrada de senha nós iremos acessar o valor para
+    // realizarmos a entrada posteriormente.
+    _aoEscreverAtualizarSenha: function(evento) {
       this.senha = $(evento.currentTarget).val();
     },
     
-    entrar: function (evento) {
+    // Realizamos aqui a entrada do usuário. É necessário o Jid e a senha.
+    _aoClicarEntrar: function (evento) {
       evento.preventDefault();
-      
       var esteObjeto = this;
       
-      this.ModeloSessao.entrar({jid: this.jid, senha: this.senha}, function(seAutenticou){
+      // Lembre-se que para o usuário entrar fica necessário informarmos o jid e a senha.
+      // Assim que o usuário entrar, vamos utilizar o cookie recebido para as novas requisições.
+      this.ModeloSessao.entrar({jid: this.jid, senha: this.senha}, function(seAutenticou, resposta){
         if (seAutenticou) {
+          // Caso tudo ocorra bem, então, nós iremos acessar a coleção de escopos.
           Utilitarios.carregarColecao([esteObjeto.ModeloSessao.escopos], function(){
+            // Veja que cada modelo de escopo possui o nome do modelo (tabela) no banco de dados e também o valor da bandeira de acesso.
+            // Com estes valores em mãos nós podemos *montar* aqui a nossa interface do usuário.
             for(var ca = 0; ca < esteObjeto.ModeloSessao.escopos.length; ca++){
               console.log(ca + ': ' + esteObjeto.ModeloSessao.escopos.models[ca].get('modelo') + ' ' + esteObjeto.ModeloSessao.escopos.models[ca].get('bandeira'));
             }
           });
+          // Limpamos o jid e senha armazenados.
+          esteObjeto.jid = esteObjeto.senha = '';
         } else {
-          console.log('Não foi possível autenticar o usuário.');
+          console.log('Não foi possível autenticar o usuário. ('+ resposta.responseJSON.message +')');
         }
-        
       });
     },
     
+    // Evento disparado ao clicar no botão de saida.
+    _aoClicarSair : function(evento) {
+      evento.preventDefault();
+      this.ModeloSessao.sair();
+    },
+    
     events: {
-      'submit form.entrada': 'entrar',           // Ao submeter o formulário.
-      'change input#entradaJid': 'mudarJid',     // Ao escrever na entrada do jid.
-      'change input#entradaSenha': 'mudarSenha'  // Ao escrever na entrada do jid.
+      'submit form.saida': '_aoClicarSair',                     // Ao clicar no botão sair.
+      'submit form.entrada': '_aoClicarEntrar',                 // Ao clicar em botão de submeter o formulário.
+      'change input#entradaJid': '_aoEscreverAtualizarJid',     // Ao escrever no campo de entrada de jid.
+      'change input#entradaSenha': '_aoEscreverAtualizarSenha'  // Ao escrever no campo de entrada de senha.
     },
 
     /* Iniciamos componentes para esta visão. 

@@ -3,23 +3,11 @@
 
 /* IMPORTAÇÃO DOS ESTILOS DE BASE
 -------------------------------------------*/
-@import url('global.css');           /* Estilos globais: São compartilhados por vários arquivos. */
-@import url('base/topo.css');
-@import url('base/barraNavegacao.css');
-@import url('base/rodape.css');
-@import url('corpo.css');
 @import url('grid.css');
-
+ 
 /* ESTILOS ÚNICOS DE CADA ARQUIVO
 -----------------------------------------------*/
-@import url('paginas/pagInicio.css');             /* Página index.html */
-@import url('paginas/pagExamesOrientacoes.css');  /* pág. examesOrientacoes.html */
-@import url('paginas/pagCentralAtendimento.css'); /* pág. centralAtendimento.html */
-@import url('paginas/pagConvenios.css');          /* pág. convenios.html */
-@import url('paginas/pagQuemSomos.css');          /* pág. quemSomos.html */
-@import url('paginas/pagNossaEquipe.css');        /* pág. nossaEquipe.html */
-@import url('paginas/pagNossasUnidades.css');     /* pág. unidades.html */    
-@import url('paginas/pagInfoConvenio.css');       /* pág. infoConvenio.html */    
+@import url('paginas/pagVisaoEntrada.css');             /* Página Visao.Entrada.html */
       
 /* ESTILOS DO BOOTSTRAP
 ---------------------------------------------------------------*/

@@ -19,26 +19,26 @@ define([
   
   // Abaixo nós adicionamos aqui todos os códigos que serão utilizados para a "comunicação" entre o nosso modelo e o nosso serviço REST.
   // Os códigos de informação são:
-  Codigos.codigosDeResposta.adicionarUmCodigo('INFO', 'SENHA_INVALIDA', '001', 'A senha está incorreta ou não foi informada.'); 
-  Codigos.codigosDeResposta.adicionarUmCodigo('INFO', 'JID_INVALIDO', '002', ' O Jid informado não confere.'); 
-  Codigos.codigosDeResposta.adicionarUmCodigo('INFO', 'JID_SENHA_NECESSARIOS', '003', 'O Jid ou a senha não foram informados.'); 
-  Codigos.codigosDeResposta.adicionarUmCodigo('INFO', 'TOKEN_NECESSARIO', '004', 'O token é necessário de ser informado.'); 
-  Codigos.codigosDeResposta.adicionarUmCodigo('INFO', 'TOKEN_EXPIRADO', '005', 'O token está expirado.'); 
-  Codigos.codigosDeResposta.adicionarUmCodigo('INFO', 'SESSAO_ENCERRADA', '006', 'A sessão foi encerrada.'); 
+  Codigos.adicionarUmCodigo('INFO', 'SENHA_INVALIDA', '001', 'A senha está incorreta ou não foi informada.'); 
+  Codigos.adicionarUmCodigo('INFO', 'JID_INVALIDO', '002', ' O Jid informado não confere.'); 
+  Codigos.adicionarUmCodigo('INFO', 'JID_SENHA_NECESSARIOS', '003', 'O Jid ou a senha não foram informados.'); 
+  Codigos.adicionarUmCodigo('INFO', 'TOKEN_NECESSARIO', '004', 'O token é necessário de ser informado.'); 
+  Codigos.adicionarUmCodigo('INFO', 'TOKEN_EXPIRADO', '005', 'O token está expirado.'); 
+  Codigos.adicionarUmCodigo('INFO', 'SESSAO_ENCERRADA', '006', 'A sessão foi encerrada.'); 
   
   // Os códigos de sucesso são:
-  Codigos.codigosDeResposta.adicionarUmCodigo('SUCESSO', 'USUARIO_AUTENTICADO', '101', 'O usuário foi autenticado com sucesso.'); 
-  Codigos.codigosDeResposta.adicionarUmCodigo('SUCESSO', 'TOKEN_VALIDADO', '102', 'O token é valido e pode ser utilizado nas requisições seguintes.'); 
+  Codigos.adicionarUmCodigo('SUCESSO', 'USUARIO_AUTENTICADO', '101', 'O usuário foi autenticado com sucesso.'); 
+  Codigos.adicionarUmCodigo('SUCESSO', 'TOKEN_VALIDADO', '102', 'O token é valido e pode ser utilizado nas requisições seguintes.'); 
   
   // Os códigos de erro são:
-  Codigos.codigosDeResposta.adicionarUmCodigo('ERRO', 'TOKEN_NAO_DECODIFICADO', '201', 'Ocorreu algum problema ao decodifica-lo.'); 
-  Codigos.codigosDeResposta.adicionarUmCodigo('ERRO', 'VERIFICACAO_TOKEN', '202', 'Ocorreu algum problema ao verificarmos a validade do token informado.'); 
+  Codigos.adicionarUmCodigo('ERRO', 'TOKEN_NAO_DECODIFICADO', '201', 'Ocorreu algum problema ao decodifica-lo.'); 
+  Codigos.adicionarUmCodigo('ERRO', 'VERIFICACAO_TOKEN', '202', 'Ocorreu algum problema ao verificarmos a validade do token informado.'); 
           
   // Vamos registrar aqui para ajudar nos testes e desenvolvimento.
   // Não é para ser usado na fase final.
   var registro = function(valor) {
     if (!valor) return; 
-    var codigo = Codigos.codigosDeResposta.procurarUmCodigoPeloValor(valor);
+    var codigo = Codigos.procurarUmCodigoPeloValor(valor);
     console.log((codigo ? codigo.msg : 'Codigo não encontrado.'));
   };
   

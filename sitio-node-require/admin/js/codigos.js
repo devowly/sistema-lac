@@ -99,8 +99,6 @@ define([
     return codigo;
   };
   
-  return { 
-    // Aqui retornamos este objeto.
-    codigosDeResposta: new CodigosDeResposta()
-  };
+  return (new CodigosDeResposta());
+
 });
