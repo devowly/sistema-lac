@@ -29,10 +29,10 @@ define([
    * do serviço REST com os nossos modelos. A gente usará isso para ficar mais simples de manipular as
    * diversas respostas do serviço REST.
    *
-   * @Parametro {tipo} O tipo do código. Podendo ser: 'INFO', 'SUCESSO' ou 'ERRO'.
-   * @Parametro {nome} O nome do código. Por exemplo: 'SENHA_INVALIDA'.
-   * @Parametro {valor} O valor do código. Por exemplo: '001'
-   * @Parametro {mensagem} Uma mensagem que será associada a um código. Por exemplo: 'Senha invalida ou não informada.'.
+   * @Parametro {Texto} [tipo] O tipo do código. Podendo ser: 'INFO', 'SUCESSO' ou 'ERRO'.
+   * @Parametro {Texto} [nome] O nome do código. Por exemplo: 'SENHA_INVALIDA'.
+   * @Parametro {Texto} [valor] O valor do código. Por exemplo: '001'
+   * @Parametro {Texto} [mensagem] Uma mensagem que será associada a um código. Por exemplo: 'Senha invalida ou não informada.'.
    */
   CodigosDeResposta.prototype.adicionarUmCodigo = function(tipo, nome, valor, mensagem) {
    
@@ -72,8 +72,8 @@ define([
    * 'SUCESSO' pode ser apresentada da cor verde, a mensagem 'INFO' poderia ser de cor azul, já a mensagem de erro
    * pode ser apresentada com a cor vermelha. Assim, as cores podem representar a gravidade do código retornado.
    *
-   * @Parametro {valor} O valor do nosso código. Geralmente um campo texto com valor único.
-   * @Retorno Uma mensagem e o tipo se encontrarmos o código, ou valor null, se não for encontrado o código.
+   * @Parametro {Texto} [valor] O valor do nosso código. Geralmente um campo texto com valor único.
+   * @Retorno {Objeto|nulo} Um objeto contendo uma mensagem, tipo e o nome se encontrarmos o código, ou valor null, se não for encontrado o código.
    */
   CodigosDeResposta.prototype.procurarUmCodigoPeloValor = function(valor) {
     var CODS = this.CODIGOS;

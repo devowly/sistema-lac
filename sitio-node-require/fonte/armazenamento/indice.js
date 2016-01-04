@@ -15,33 +15,48 @@ var Promessa = require('bluebird');
 var modelos = require('./modelos/indice');
 var registrador = require('../nucleo/registrador')('armazenamento');
 
-/* Contem funções para a gerencia da database.
+/* Contêm as funções para a gerencia da database. Aqui iremos tentar uma conexão com o nosso banco de dados.
+ * Para a conexão estaremos utilizando o Sequelize. Assim que a conexão for realizadas nós iremos 
+ * sincronizar com o banco, faremos isso ao carregarmos todos os arquivos de modelos do nosso banco.
+ * Ao final nós teremos cada modelo como uma propriedades desta classe, por exemplo, quando 
+ * carregarmos o modelo de nome Slide, ele poderá ser acesso a qualquer momento utilizando this.Slide ou
+ * this[Slide].
  *
- * @Parametro {opcoes} Contem as opções para configuração
+ * @Parametro {Objeto} [opcoes] Contem todas as opções para a configuração deste serviço de armazenamento.
  */
 var Armazenamento = function (opcoes) {
   
   EmissorEvento.call(this);
 
   if (!opcoes) {
-    throw new Error('Opções da database não foram colocados');
+    throw new Error('Opções da database não foram informadas.');
   }
   this.opc = opcoes;
 };
 
 util.inherits(Armazenamento, EmissorEvento);
 
+/* Carrega todos modelos da pasta modelos e cada um deles é adicionado a este objeto.
+ * Por exemplo, o modelo Slide será armazenado em this.Slide ou this[Slide].
+ * Sendo assim a gente pode acessar daqui os diversos modelos.
+ */
 Armazenamento.prototype.carregarModelos = function () {
-  // Carrega todos modelos da pasta modelos e cada um deles é adicionado a este objeto.
-  // Por exemplo, o modelo Slide será armazenado em this.Slide
-  // Sendo assim a gente pode acessar daqui os diversos modelos.
   modelos(this.sequelize, this);
 };
 
 /* Inicia o nosso banco de dados e sincroniza as tabelas se elas não estiverem lá.
  *
- * @Parametro {opcsSincroniza} Contem as opções de configuração em um objeto chave valor.
- * @Retorna {Promessa} Promessa de recusa ou deliberação.
+ * @Parametro {Objeto} [opcsSincroniza] Contem as opções de configuração em um objeto chave valor.
+ * @Parametro {Texto} [opcsSincroniza.dialect] Dialeto utilizado, pode ser MySQL, SQlite e Postgres.
+ * @Parametro {Texto} [opcsSincroniza.user] Nome do usuário do banco de dados, não é necessário para o SQlite.
+ * @Parametro {Texto} [opcsSincroniza.password] Senha do usuário do banco de dados, não é necessário para o SQlite.
+ * @Parametro {Texto} [opcsSincroniza.database] Nome do nosso banco de dados.
+ * @Parametro {Número} [opcsSincroniza.maxConcurrentQueries] Valor máximo de consultas concorrentes.
+ * @Parametro {Número} [opcsSincroniza.maxConnections] Valor máximo de conexões.
+ * @Parametro {Número} [opcsSincroniza.maxIdleTime] Tempo máximo inativo.
+ * @Parametro {Texto} [opcsSincroniza.host] Endereço ao qual utilizaremos para a conexão com o banco de dados.
+ * @Parametro {Número} [opcsSincroniza.port] A porta ao qual utilizaremos para a conexão com o banco de dados.
+ * @Retorna {Promessa} Uma promessa de recusa em caso de erro, ou de deliberação se tudo correr bem.
  */
 Armazenamento.prototype.iniciar = function (opcsSincroniza) {
 

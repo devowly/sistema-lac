@@ -15,10 +15,12 @@ define([
   
   /* Responsavel por centralizar e aplicar um zoom no mapa do google.
    *
-   * @Parametro {coordenadas} As coordenadas de determinado ponto no mapa.
-   * @Parametro {zoom} O nível do zoom que será aplicado.
-   * @Parametro {$elemento} Um elemento na página, onde será acrescentado o mapa.
-   * @Retorno {mapa} O novo mapa criado.
+   * @Parametro {Objeto} [coordenadas] As coordenadas de determinado ponto no mapa.
+   * @Parametro {Número} [coordenadas.lat] A latitude da coordenada.
+   * @Parametro {Número} [coordenadas.lng] A longitude da coordenada.
+   * @Parametro {Número} [zoom] O nível de zoom que será aplicado.
+   * @Parametro {Elemento} [$elemento] Um elemento na página, onde será acrescentado o mapa.
+   * @Retorno {Objeto|nulo} O objeto do novo mapa criado ou nulo.
    */
   var centralizarMapa = function (coordenadas, zoom, $elemento) {
     var mapa = null;
@@ -32,13 +34,15 @@ define([
     return mapa;
   };
   
-  /* Responsavel por adicionar um marcador no mapa, para ficar mais fácil de localizar o 
+  /* Responsavel por adicionar um marcador no mapa e também centraliza-lo, para ficar mais fácil de localizar o 
    * a posição onde se encontra determinado ponto  no mapa.
    *
-   * @Parametro {mapa} Objeto do mapa.
-   * @Parametro {coordenada} As coordenadas de determinado ponto no mapa.
-   * @Parametro {titulo} O título que ajuda a descrever determinado ponto.
-   * @Retorno {marca} A marca do mapa que é criada.
+   * @Parametro {Objeto} [mapa] O nosso mapa.
+   * @Parametro {Objeto} [coordenadas] As coordenadas de determinado ponto no mapa.
+   * @Parametro {Número} [coordenadas.lat] A latitude da coordenada.
+   * @Parametro {Número} [coordenadas.lng] A longitude da coordenada.
+   * @Parametro {Texto} [titulo] O título que ajuda a descrever determinado ponto.
+   * @Retorno {Objeto|nulo} A marca do mapa que é criada ou nulo se algo dar errado.
    */
   var adcrMarcadorMapa = function (mapa, coordenadas, titulo) {
     var marca = null;
@@ -55,7 +59,7 @@ define([
   
   /* Responsável pelo redimensionamento do mapa porque quando mudamos de visão o mapa é apagado.
    *
-   * @Parametro {mapa} Objeto do mapa.
+   * @Parametro {Objeto} [mapa] O nosso mapa.
    */
   var redimensionarMapa = function(mapa) {
     

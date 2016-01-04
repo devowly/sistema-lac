@@ -16,9 +16,10 @@ var Autenticacao = require('./Autenticacao');                    // Nosso servi�
 
 /* Realiza o inicio dos nossos serviços principais.
  * 
- * @Parametro {configuracao} Objeto contendo as informações de configuração.
- * @Parametro {aplicativo} O objeto do aplicativo do servidor Express.
- * @Parametro {pronto} A função que será chamada ao realizarmos todas as nossas funções.
+ * @Parametro {Objeto} [configuracao] Contêm as informações de configuração.
+ * @Parametro {Objeto} [aplicativo] O nosso aplicativo do servidor Express.
+ * @Parametro {Objeto} [jwt] Contêm propriedades e métodos para lidarmos com os tokens.
+ * @Parametro {Função} [pronto] Será chamada ao realizarmos todas as nossas funções.
  */
 exports.prosseguir = function(configuracao, aplicativo, jwt, pronto) {
   var esteObjeto = {};

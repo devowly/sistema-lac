@@ -121,10 +121,11 @@
 
     },
     
-    /* Realiza o carregamento das coleções aninhadas porque o Paginator não o faz.
+    /* Realiza o carregamento das coleções aninhadas porque o Paginator não o faz. Isso é importante
+     * porque utilizaremos também os dados da coleção aninhada.
      *
-     * @Parametro {colecao} A coleção dos exames.
-     * @Parametro {cd} Função que será chamada logo após estiverem carregados as coleções e os templantes extras.
+     * @Parametro {Objeto} [colecao] A coleção dos exames.
+     * @Parametro {Função} [cd] Será chamada logo após estiverem carregados as coleções e os templantes extras.
      */
     _carregarColecoesAninhadas: function(colecao, cd) {
       
@@ -154,7 +155,7 @@
     
     /* Realiza o carregamento dos templates e os acrescentão ao DOM.
      *
-     * @Parametro {cd} Função que será chamada logo após estiver carregado os templantes extras.
+     * @Parametro {Função} [cd] Será chamada logo após estiver carregado os templantes extras.
      */
     _carregarTemplantesModais: function(cd) {
       

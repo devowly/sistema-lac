@@ -96,7 +96,9 @@ define([
    /* Responsável por realizar a entrada do usuário. Informando o seu jid e senha pelo método POST. 
     * Se tudo correr bem o usuário terá seu token de acesso para realização de requisições as rotas do serviço.
     *
-    * @Parametro {credenciais} As credenciais necessárias para a requisição de um token. Geralmente composto de jid e senha.
+    * @Parametro {Objeto} [credenciais] As credenciais necessárias para a requisição de um token. Geralmente composto de jid e senha.
+    * @Parametro {Texto} [credenciais.jid] O Jabber ID do usuário. Composto por local@dominio.
+    * @Parametro {Texto} [credenciais.senha] A senha do usuário.
     */
     entrar: function(credenciais, cd) {
       var esteObjeto = this;
@@ -169,7 +171,7 @@ define([
      * Se houver algo errado com o nosso token, por exemplo, se o token está expirado, então devemos
      * manipular para que o usuário possa se re-autenticar.     
      *
-     * @Parametro {cd} Função a ser chamada quando a requisição terminar.
+     * @Parametro {Função} [cd] Função a ser chamada quando a requisição terminar.
      */
     seAutenticado: function(cd) {
       var esteObjeto = this;

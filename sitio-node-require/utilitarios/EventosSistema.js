@@ -36,7 +36,7 @@ EventosSistema.prototype.iniciarEsperaPorEventoSaida = function () {
   
   /* Realizamos o termino do nosso processo. Neste caso, apenas informamos o valor de encerramento.
    *
-   * @Parametro {codigo} Contendo valor de sucesso ou fracasso.
+   * @Parametro {Número} [codigo] Contêm o valor de sucesso ou fracasso.
    */
   process.addListener('exit', function(codigo) {
     console.log('Encerrando o processo com ' + (codigo === esteObjeto.SAIDA_EXITO ? 'sucesso' : 'falha') + '.');
@@ -146,9 +146,9 @@ EventosSistema.prototype.iniciarEsperaPorEventosExcessao = function () {
   * a utilização do modulo cluster, assim você terá vários (usualmente o número de núcleos do CPU) processos em execução paralela, então, quando um 
   * encerrar com erro, os outros ainda estarão em execução. Mantendo assim o aplicativo em execução. @Veja https://nodejs.org/api/cluster.html
   *   
-  * @Parametro {erro} Um objeto contendo informações da excessão ocorrida. Podendo ser utilizada para o registro 
-  *                   do erro que aconteceu. Este objeto também possui uma propriedade (erro.stack) que é uma pilha
-  *                   que pode ser utilizada para mostrar o caminho do erro que gerou esta excessão.
+  * @Parametro {Objeto} [erro] Um objeto contendo informações da excessão ocorrida. Podendo ser utilizada para o registro 
+  *                            do erro que aconteceu. Este objeto também possui uma propriedade (erro.stack) que é uma pilha
+  *                            que pode ser utilizada para mostrar o caminho do erro que gerou esta excessão.
   */
   process.addListener('uncaughtException', function (erro) {
     // <umdez> Falta apenas realizar registro do erro. para leitura posterior. (issue #23) [AFAZER]

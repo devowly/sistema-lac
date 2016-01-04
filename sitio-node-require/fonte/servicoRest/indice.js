@@ -20,10 +20,16 @@ var Utilitarios = require('./Utilitarios');
 /* Abstração da gerencia das rotas do serviço REST. 
  * Realiza o carregamento das rotas REST do nosso servidor.
  *
- * @Parametro {aplicativo} O nosso servidor Express.
- * @Parametro {bancoDados} Objeto do nosso banco de dados.
- * @Parametro {jwt} Nosso módulo Json Web Token.
- * @Parametro {autenticacao} Configuração de autenticação.
+ * @Parametro {Objeto} [aplicativo] O nosso aplicativo Express.
+ * @Parametro {Objeto} [bancoDados] Contêm o objeto do nosso banco de dados.
+ * @Parametro {Objeto} [bancoDados.sequelize] O objeto do Sequelize.
+ * @Parametro {Objeto} [jwt] Contêm métodos e propriedades para o serviço Json Web Token.
+ * @Parametro {Método} [jwt.verify] Utilizado para verificarmos o token.
+ * @Parametro {Objeto} [autenticacao] Contêm as diretivas de configuração para a autenticação.
+ * @Parametro {Texto} [autenticacao.verifyModel] Contêm o nome do modelo onde iremos buscar verificar os dados do usuário.
+ * @Parametro {Texto} [autenticacao.accessModel] Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
+ * @Parametro {Texto} [autenticacao.superSecret] Contêm o valor da chave super secreta para codificar e decodificar os tokens.
+ * @Parametro {Boleano} [autenticacao.useSessionWithCookies] Contêm o valor que informa se vamos utilizar cookies com sessão.
  */
 var ServicoRest = function (aplicativo, bancoDados, jwt, autenticacao) {
   

@@ -131,7 +131,7 @@ define([
     /* Realizamos aqui o carregamento dos templantes. Para este templantes, nós carregamos as abas e seus conteúdos.
      * Após o carregamento dos templantes, chamamos o método render() que irá acrescentar as visões no DOM.
      *
-     * @Parametro {cd} A função que será chamada quando os templantes estiverem carregados e acrescentados.
+     * @Parametro {Função} [cd] Será chamada logo após os templantes estiverem carregados e acrescentados ao DOM.
      */
     carregarTemplantes: function(cd) {
       var visoes = [];
@@ -194,7 +194,7 @@ define([
     
     /* Realiza o acrescimo das visões das abas e seus conteudos ao DOM.
      *
-     * @Parametro {cd} Função a ser chamada quando as visões já forem acrescentadas os DOM.
+     * @Parametro {Função} [cd] Será chamada quando as visões já forem acrescentadas ao DOM.
      */
     render: function (cd) {
       
@@ -324,9 +324,10 @@ define([
      
     },
       
-    /* Faz o mapa re-iniciar, Sempre que houver troca de aba é necessário utilizar isso. 
+    /* Faz o mapa re-iniciar, Sempre que houver troca de aba é necessário utilizar isso porque
+     * O mapa desaparece. 
      *
-     * @Parametro {aba} A aba onde o conteudo possui o mapa que será re-iniciado.
+     * @Parametro {Texto} [aba] O nome da aba onde o conteudo possui o mapa que será re-iniciado.
      */
     _reIniciarCadaMapa: function (aba) {
       

@@ -80,10 +80,10 @@ define([
       
     },
     
-     /* Realiza o carregamento das coleções aninhadas porque o Paginator não o faz.
+    /* Realiza o carregamento das coleções aninhadas porque o Paginator não o faz.
      *
-     * @Parametro {colecao} A coleção dos convênios.
-     * @Parametro {cd} Função que será chamada logo após estiverem carregados as coleções aninhadas.
+     * @Parametro {Objeto} [colecao] A coleção dos convênios.
+     * @Parametro {Função} [cd] Será chamada logo após estiverem carregados as coleções aninhadas.
      */
     _carregarColecoesAninhadas: function(colecao, cd) {
       

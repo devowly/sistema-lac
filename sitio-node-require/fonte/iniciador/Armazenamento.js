@@ -13,7 +13,7 @@ function CarregaArmazenamento() {}
 
 /* Realiza o incio do nosso modulo de armazenamento.
  *
- * @Parametro {configuracao} Objeto contendo as informações de configuração.
+ * @Parametro {Objeto} [configuracao] Contêm as informações de configuração.
  * @Retorna {Promessa} Uma promessa de recusa ou de deliberação.
  */
 CarregaArmazenamento.prototype.carregar = function (configuracao) {
