@@ -182,13 +182,18 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
             } 
           }
         } else {
-          if (decodificado) {
+          // Queremos o ID do usuário para verificarmos se ele confere com o ID que está no token.
+          // <umdez> Ainda não sei se é realmente necessário realizarmos isso. Vou ter que verificar isto.
+          var usrId = req.params ? req.params.usuarioId : null;  
+          
+          // Quando o token for decodificado nós iremos tentar acessar o id do usuário.
+          if (decodificado && decodificado.user && (decodificado.user.id > 0) && usrId === decodificado.user.id) {
             // O token foi decodificado com sucesso. Aqui nós iremos procurar pelas bandeiras que este usuário possui
             // para todas as rotas que ele tem cadastro. Isso funcionará como os escopos, porque só iremos oferecer acesso
             // a certos escopos (rotas dos modelos).
             esteObjeto.bd[esteObjeto.autentic.accessModel].findAll({
               where: {
-                usuario_id: decodificado.user ?  decodificado.user.id : -1  // Identificador do usuário. Se não encontrado o id, utilizamos -1.
+                usuario_id: decodificado.user.id
               }
             }).then(function (acessos) {
               if (!acessos) {
