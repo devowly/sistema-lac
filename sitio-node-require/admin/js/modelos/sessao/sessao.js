@@ -17,7 +17,29 @@ define([
   'colecoes/sessao/escopos'
 ], function($, _, Backbone, CodigosDeResposta, nesting, ColecaoEscopos) {
   
-  // Abaixo nós adicionamos aqui todos os códigos que serão utilizados para a "comunicação" entre o nosso modelo e o nosso serviço REST.
+ /* Os modelos são a parte central de um aplicativo, contendo os dados e também uma parte longa de toda logica que a cerca:
+  * Conversões, validações, propriedades e controle de acesso. Um modelo possue funcionalidades básicas para a gerencia dos dados.
+  *
+  * Alguns dos métodos dos modelos são listados abaixo.
+  *
+  * fetch   (União dos dados já obtidos com os novos do banco de dados)
+  * save    (Salva o modelo)
+  * destroy (Deleta o modelo)
+  * get     (Requisita o valor de um atributo de um modelo) 
+  * sync    (Faz persistir o estado de um modelo para com o servidor. Pode ser substituido com algum método customizado) 
+  *
+  * @veja http://backbonejs.org/#Model
+  */
+   
+ /* Para a *comunicação* entre este modelo e as rotas REST utilizaremos, além dos estados, códigos que irão fornecer informações que ajudarão
+  * a nossa parte cliente manipular estes valores com mais facilidade.
+  * Um exemplo simples seria o de um código do tipo INFO que poderia estar informando que a senha informada não confere, então podemos
+  * alertar o usuário de uma forma mais simples para ele entender o que está acontecendo no serviço REST.
+  * Os tipos base que iremos utilizar serão o 'INFO', 'SUCESSO' e também o 'ERRO'. Dividimos estes códigos nestes três (3) grupos principais.
+  * Lembre-se que cada um dos grupos possui um nível de gravidade. O grupo 'ERRO' possuirá a gravidade maior seguido do 'INFO' e o 'SUCESSO'
+  * sendo de menor gravidade.
+  */
+  
   // Os códigos de informação são:
   CodigosDeResposta.adicionarUmCodigo('INFO', 'SENHA_INVALIDA', '001', 'A senha está incorreta ou não foi informada.'); 
   CodigosDeResposta.adicionarUmCodigo('INFO', 'JID_INVALIDO', '002', ' O Jid informado não confere.'); 

@@ -109,7 +109,7 @@ var Autenticacao = function (aplicativo, bancoDados, jwt, autenticacao) {
    * - autenticacao.useSessionWithCookies: Contêm o valor que informa se vamos utilizar cookies com sessão.
    */
   this.autentic = autenticacao;
-  this.seForUtilizarCookie = autenticacao.useSessionWithCookies;  // Aqui a gente coloca se utilizaremos cookies seguros para a sessão.
+  this.seForUtilizarSessaoComCookie = autenticacao.useSessionWithCookies;  // Aqui a gente coloca se utilizaremos cookies seguros para a sessão.
   
   /* Necessitamos aqui de receber as caracteristicas para utilizarmos rotas. Isto é importante para aninharmos algumas rotas.
    * Iniciamos aqui o roteador para sessões e os escopos do usuário. Note que colocamos mergeParams no roteador de escopos, porque 
@@ -127,7 +127,7 @@ Autenticacao.prototype._buscarToken = function(req) {
   var token = null;
     
   // Aqui nós tentaremos acessar um token já existente em um cookie.
-  if (this.seForUtilizarCookie && req.session && req.session.token) {
+  if (this.seForUtilizarSessaoComCookie && req.session && req.session.token) {
     token = req.session.token;
   } else {
     // Tentamos pegar o token informado no corpo, parametros ou no cabeçalho da requisição.
@@ -162,7 +162,7 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
             resposta.message = 'Você informou um token que expirou. ('+ erro.message +').';
             resposta.code = CODIGOS.INFO.TOKEN_EXPIRADO;
             
-            if (esteObjeto.seForUtilizarCookie && req.session) {
+            if (esteObjeto.seForUtilizarSessaoComCookie && req.session) {
               // Se existir, nós limpamos a nossa sessão.
               req.session.regenerate(function(err) { res.status(401).json(resposta); });
             } else {
@@ -174,7 +174,7 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
             resposta.message = 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').';
             resposta.code = CODIGOS.ERRO.VERIFICACAO_TOKEN;
             
-            if (esteObjeto.seForUtilizarCookie && req.session) {
+            if (esteObjeto.seForUtilizarSessaoComCookie && req.session) {
               // Se existir, nós limpamos a nossa sessão.
               req.session.regenerate(function(err) { res.status(401).json(resposta); });
             } else {
@@ -220,7 +220,7 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
             resposta.message = 'Você informou um token que não foi possível decodificar.';
             resposta.code = CODIGOS.ERRO.TOKEN_NAO_DECODIFICADO;
             
-            if (esteObjeto.seForUtilizarCookie && req.session) {
+            if (esteObjeto.seForUtilizarSessaoComCookie && req.session) {
               // Se existir, nós limpamos a nossa sessão.
               req.session.regenerate(function(err) { 
                 res.status(401).json(resposta);
@@ -336,7 +336,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
                * Faremos isso porque o token é um dado sensivel e precavemos contra o roubo dele.
                * Já se não utilizamos os cookies então iremos adicionar o nosso token na resposta.
                */
-              if (!esteObjeto.seForUtilizarCookie) {
+              if (!esteObjeto.seForUtilizarSessaoComCookie) {
                 resposta.token = token;  // Aqui nós teremos que informar o token.
               } else {
                 // Aqui nós salvamos o nosso token em um cookie seguro. É importante utilizarmos o cookie seguro,
@@ -403,7 +403,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
             resposta.message = 'Você informou um token que expirou. ('+ erro.message +').';
             resposta.code = CODIGOS.INFO.TOKEN_EXPIRADO;
             
-            if (esteObjeto.seForUtilizarCookie && req.session) {
+            if (esteObjeto.seForUtilizarSessaoComCookie && req.session) {
               // Se existir, nós limpamos a nossa sessão.
               req.session.regenerate(function(err) { res.status(401).json(resposta); });
             } else {
@@ -416,7 +416,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
             resposta.message = 'Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').';
             resposta.code = CODIGOS.ERRO.VERIFICACAO_TOKEN;
             
-            if (esteObjeto.seForUtilizarCookie && req.session) {
+            if (esteObjeto.seForUtilizarSessaoComCookie && req.session) {
               // Se existir, nós limpamos a nossa sessão.
               req.session.regenerate(function(err) { res.status(401).json(resposta); });
             } else {
@@ -441,7 +441,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
             resposta.code = CODIGOS.ERRO.TOKEN_NAO_DECODIFICADO;
             
             // Se existir uma sessão, nós limpamos ela.
-            if (esteObjeto.seForUtilizarCookie && req.session) {
+            if (esteObjeto.seForUtilizarSessaoComCookie && req.session) {
               req.session.regenerate(function(erro) { res.status(401).json(resposta); });
             } else {
               res.status(401).json(resposta);
@@ -476,7 +476,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
      * Assim o sistema não conseguirá acessar nossas fontes. Isso pode ser
      * uma alternativa.
      */ 
-    if (esteObjeto.seForUtilizarCookie && req.session && req.session.token) {
+    if (esteObjeto.seForUtilizarSessaoComCookie && req.session && req.session.token) {
       req.session.regenerate(function(erro) {
         // Regenerar a sessão do usuário.
         res.status(200).json({code: CODIGOS.INFO.SESSAO_ENCERRADA, message: 'Sessão regenerada porem não foi possível revogar o seu token.'}); 
@@ -489,7 +489,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
   this.aplic.use('/sessao', this.sessaoRoteador);
 };
 
-/* Realizamos aqui o inicio do nosso serviço de autenticação e autorização.
+/* Realizamos aqui o inicio do nosso serviço de sessão com autenticação e autorização.
  *
  * @Retorna {Objeto} [Promessa] Uma promessa de recusa ou de deliberação. 
  */
