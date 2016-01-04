@@ -90,9 +90,12 @@ define([
    * @Veja https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet
    */
   var Sessao = Backbone.Model.extend({
-  
+    
+    // A URL REST deste modelo.
     urlRoot: '/sessao',
     
+    // Informa qual dos atributos é o identificador.
+    // <umdez> Não é realmente necessário (Porem diminuirá a paranoia). 
     idAttribute: 'id',
     
     // Isso vai ser utilizado para quando formos pegar os dados 
@@ -130,6 +133,7 @@ define([
     * @Parametro {Objeto} [credenciais] As credenciais necessárias para a requisição de um token. Geralmente composto de jid e senha.
     * @Parametro {Texto} [credenciais.jid] O Jabber ID do usuário. Composto por local@dominio.
     * @Parametro {Texto} [credenciais.senha] A senha do usuário.
+    * @Parametro {Função} [cd] É chamada logo após recebermos a resposta.
     */
     entrar: function(credenciais, cd) {
       var esteObjeto = this;
@@ -202,7 +206,7 @@ define([
      * Se houver algo errado com o nosso token, por exemplo, se o token está expirado, então devemos
      * manipular para que o usuário possa se re-autenticar.     
      *
-     * @Parametro {Função} [cd] Função a ser chamada quando a requisição terminar.
+     * @Parametro {Função} [cd] Será chamada quando a requisição terminar e receber uma resposta.
      */
     seAutenticado: function(cd) {
       var esteObjeto = this;
