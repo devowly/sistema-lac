@@ -22,6 +22,9 @@ var Utilitarios = function (bancoDados, jwt, autenticacao) {
   // Utilizaremos os tokens para autenticação.
   this.jsonWebToken = jwt;
   
+  // Informa se utilizaremos cookies com sessão.
+  this.seForUtilizarCookie = autenticacao.useSessionWithCookies;
+  
   // Para realizar a autenticação dos usuários.
   this.autenticacaoUsuario = new AutenticacaoUsuario(bancoDados, jwt, autenticacao); 
   
@@ -51,7 +54,7 @@ Utilitarios.prototype.adcUmaBandeiraParaModelo = function(modelo, bandeira, tipo
  * @Retorna falso se não houver acesso, verdadeiro caso contrário.
  */
 Utilitarios.prototype.verificarSePossuiAcesso = function(modelo, tipos, valor) {
-  return this.bandeiras.sePossuiAcesso(modelo, tipos, valor);
+  return this.bandeiras.sePossuiAcesso(modelo, tipos, parseInt(valor, 16));
 };
 
 /* Realiza a autenticação de deteminado usuário pelo token informado.
@@ -123,6 +126,21 @@ Utilitarios.prototype.autenticarPeloJid = function(modeloRota, jid, senha, cd) {
   // Retornamos se o usuário foi validade com sucesso e seus dados.
   // Caso não foi validado retornamos null nos dados.
   cd(seValidado, dadosUsuario);
+};
+
+/* Realiza a busca do token em cookies ou na requisição.
+ */
+Utilitarios.prototype.buscarUmToken = function(req) {
+  var token = null;
+    
+  // Aqui nós tentaremos acessar um token já existente em um cookie.
+  if (this.seForUtilizarCookie && req.session && req.session.token) {
+    token = req.session.token;
+  } else {
+    // Tentamos pegar o token informado no corpo, parametros ou no cabeçalho da requisição.
+    token = (req.body && req.body.token) || (req.params && req.params.token) || req.headers['x-access-token'];
+  }
+  return token;
 };
 
 module.exports = Utilitarios;

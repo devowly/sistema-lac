@@ -113,16 +113,8 @@ exame.controladores = function(utilitarios) {
             // Acesso livre para a listagem. Podemos continuar.
             return context.continue;
           } else {
-            var token
-            
-            // Aqui nós tentaremos acessar um token já existente em um cookie.
-            var sess = req.session;
-            if (sess && sess.token) {
-              token = sess.token;
-            } else {
-              // Tentamos pegar o token informado no corpo, parametros ou no cabeçalho da requisição.
-              token = (req.body && req.body.token) || (req.params && req.params.token) || req.headers['x-access-token'];
-            }
+            // Iremos buscar o token que está em uma sessão ou que foi informado na requisição.
+            var token = utilitarios.buscarUmToken(req);
             
             if (token) {
               // Autenticamos aqui o usuário utilizando o token informado.
@@ -134,16 +126,16 @@ exame.controladores = function(utilitarios) {
                 } 
               });
             } else {
-              return context.error(401, "Não informado nenhum token. Contacte o administrador.");
+              return context.error(401, "É necessário informar um token.");
             }
             
             // Aqui verificamos se o usuário é valido e se possui algum acesso a esta fonte.
             // Caso não possua acesso é retornado um erro 403 de acesso proibido.
-            if (seValidado && dadosEscopos && dadosEscopos[exame.esteModelo]) {
-              if(utilitarios.verificarSePossuiAcesso(exame.esteModelo, ['Listar', 'Total'], parseInt(dadosEscopos[exame.esteModelo], 16))) {
+            if (seValidado && dadosEscopos) {
+              if(utilitarios.verificarSePossuiAcesso(exame.esteModelo, ['Listar', 'Total'], dadosEscopos[exame.esteModelo])) {
                 return context.continue;
               } else {
-                return context.error(403, "Acesso proibido a listagem. Contacte o administrador.");
+                return context.error(403, "Acesso proibido a listagem.");
               }
             } else {
               return context.error(401, "Tentativa de acesso sem sucesso. Verifique seu token de acesso.");
