@@ -113,6 +113,15 @@ define([
     *
     * @Veja https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
     * @Veja http://expressjs.com/en/guide/error-handling.html
+    *
+    * As rotas disponíveis serão:
+    * - POST /sessao/  (Para realizarmos o inicio de uma sessão).
+    * - GET /sessao/  (Para validarmos uma sessão).
+    * - DELETE /sessao/  (Para o usuário encerrar uma sessão já existente).
+    * - GET /sessao/:identificadorDoUsuario/escopos/  (Para receber o valor dos escopos de um determinado usuário).
+    * - GET /escopos/  (Para pegar o valor dos escopos de determinado usuário).
+    *
+    * Devemos lembrar que se estivermos utilizando cookies a sessão do usuário irá funcionar em todas as janelas de um mesmo navegador.
     */
     
    /* Responsável por realizar a entrada do usuário. Informando o seu jid e senha pelo método POST. 
