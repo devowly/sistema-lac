@@ -31,6 +31,7 @@
  *  - authentication.verifymModel (Obrigatório) o modelo onde iremos usar para a verificação para a autenticação.
  *  - authentication.accessModel (Obrigatório) O modelo onde iremos requisitar as bandeiras para acesso.
  *  - authentication.useSessionWithCookies (Opcional e recomendado) Se iremos utilizar cookies com session.
+ *  - authentication.minutesToExpireToken (Obrigatório) Minutos de validade deste token. Ao final disso o token não mais será valido.
  */
 module.exports = {
   
@@ -72,7 +73,8 @@ module.exports = {
     "superSecret": "abcd1234",  // Super segredo do Json Web Token (JWT).
     "verifyModel": "Usuario",   // O modelo onde iremos usar para a verificação para a autenticação.
     "accessModel": "Escopo",    // O modelo onde iremos requisitar as bandeiras para acesso de cada modelo.
-    "useSessionWithCookies": true   // Se iremos utilizar cookies com session.
+    "useSessionWithCookies": true,   // Se iremos utilizar cookies com session.
+    "minutesToExpireToken": 24 * 60  // Minutos de vida do token. Ao fim destes minutos o token não é mais válido.
   }
   
 };

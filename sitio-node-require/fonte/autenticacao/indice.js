@@ -88,6 +88,7 @@ var CODIGOS = {
  * @Parametro {Texto} [autenticacao.accessModel] Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
  * @Parametro {Texto} [autenticacao.superSecret] Contêm o valor da chave super secreta para codificar e decodificar os tokens.
  * @Parametro {Boleano} [autenticacao.useSessionWithCookies] Contêm o valor que informa se vamos utilizar cookies com sessão.
+ * @Parametro {Número} [autenticacao.minutesToExpireToken] Contêm o valor dos minutos de validade do token.
  */
 var Autenticacao = function (aplicativo, bancoDados, jwt, autenticacao) {
   
@@ -107,9 +108,11 @@ var Autenticacao = function (aplicativo, bancoDados, jwt, autenticacao) {
    * - autenticacao.accessModel: Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
    * - autenticacao.superSecret: Contêm o valor da chave super secreta para codificar e decodificar os tokens.
    * - autenticacao.useSessionWithCookies: Contêm o valor que informa se vamos utilizar cookies com sessão.
+   * - autenticacao.minutesToExpireToken: Contêm o valor dos minutos de validade do token.
    */
   this.autentic = autenticacao;
   this.seForUtilizarSessaoComCookie = autenticacao.useSessionWithCookies;  // Aqui a gente coloca se utilizaremos cookies seguros para a sessão.
+  this.minutosParaExpirarToken = autenticacao.minutesToExpireToken; 
   
   /* Necessitamos aqui de receber as caracteristicas para utilizarmos rotas. Isto é importante para aninharmos algumas rotas.
    * Iniciamos aqui o roteador para sessões e os escopos do usuário. Note que colocamos mergeParams no roteador de escopos, porque 
@@ -350,7 +353,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
               var token = esteObjeto.jsonWebToken.sign(
                 jwtDados,                           // Informações básicas.
                 esteObjeto.autentic.superSecret, {
-                expiresInMinutes: (24 * 60)         // O token expira em 24 horas.
+                expiresInMinutes: esteObjeto.minutosParaExpirarToken  // Quantidade de minutos até o token expirar.
               });
 
               // Criamos a nossa resposta.
