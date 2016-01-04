@@ -31,6 +31,7 @@
  */
 
 /* Versão 0.0.1-Beta 
+ * - Mover configuração de cookie para o aquivo de configuração. (issue #44) [FEITO]
  * - Retornar codigo de estado da sessão. (issue #43) [FEITO]
  * - Adicionar rotas de acesso a bandeiras (e os escopos) aninhadas a rota de sessão. (issue #40) [FEITO]
  * - Remover informações sensíveis na resposta da nossa sessão. (issue #35) [FEITO]
@@ -100,11 +101,10 @@ var Autenticacao = function (aplicativo, bancoDados, jwt, autenticacao) {
    * - autenticacao.verifyModel: Contêm o nome do modelo onde iremos buscar verificar os dados do usuário.
    * - autenticacao.accessModel: Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
    * - autenticacao.superSecret: Contêm o valor da chave super secreta para codificar e decodificar os tokens.
+   * - autenticacao.useSessionWithCookies: Contêm o valor que informa se vamos utilizar cookies com sessão.
    */
   this.autentic = autenticacao;
-  
-  // Aqui a gente coloca se utilizaremos cookies seguros para a sessão.
-  this.seForUtilizarCookie = true;
+  this.seForUtilizarCookie = autenticacao.useSessionWithCookies;  // Aqui a gente coloca se utilizaremos cookies seguros para a sessão.
   
   /* Necessitamos aqui de receber as caracteristicas para utilizarmos rotas. Isto é importante para aninharmos algumas rotas.
    * Iniciamos aqui o roteador para sessões e os escopos do usuário. Note que colocamos mergeParams no roteador de escopos, porque 

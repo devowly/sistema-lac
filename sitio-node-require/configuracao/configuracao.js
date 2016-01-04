@@ -30,6 +30,7 @@
  *  - authentication.superSecret (Obrigatório) Super segredo para codificar e decoficar os tokens.
  *  - authentication.verifymModel (Obrigatório) o modelo onde iremos usar para a verificação para a autenticação.
  *  - authentication.accessModel (Obrigatório) O modelo onde iremos requisitar as bandeiras para acesso.
+ *  - authentication.useSessionWithCookies (Opcional e recomendado) Se iremos utilizar cookies com session.
  */
 module.exports = {
   
@@ -70,7 +71,8 @@ module.exports = {
   "authentication": {
     "superSecret": "abcd1234",  // Super segredo do Json Web Token (JWT).
     "verifyModel": "Usuario",   // O modelo onde iremos usar para a verificação para a autenticação.
-    "accessModel": "Escopo"     // O modelo onde iremos requisitar as bandeiras para acesso de cada modelo.
+    "accessModel": "Escopo",    // O modelo onde iremos requisitar as bandeiras para acesso de cada modelo.
+    "useSessionWithCookies": true   // Se iremos utilizar cookies com session.
   }
   
 };

@@ -23,10 +23,13 @@
   // Utilizaremos os tokens para autenticação.
   this.jsonWebToken = jwt;
   
-  // A nossa configuração da autenticação. Abaixo a lista das propriedades:
-  // - autenticacao.verifyModel: Contêm o nome do modelo onde iremos buscar verificar os dados do usuário.
-  // - autenticacao.accessModel: Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
-  // - autenticacao.superSecret: Contêm o valor da chave super secreta para codificar e decodificar os tokens.
+ /*
+  * A nossa configuração da autenticação. Abaixo a lista das propriedades:
+  * - autenticacao.verifyModel: Contêm o nome do modelo onde iremos buscar verificar os dados do usuário.
+  * - autenticacao.accessModel: Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
+  * - autenticacao.superSecret: Contêm o valor da chave super secreta para codificar e decodificar os tokens.
+  * - autenticacao.useSessionWithCookies: Contêm o valor que informa se vamos utilizar cookies com sessão.
+  */
   this.autentic = autenticacao;
 };
 
