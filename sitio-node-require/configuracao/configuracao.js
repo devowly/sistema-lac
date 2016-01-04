@@ -74,7 +74,7 @@ module.exports = {
     "verifyModel": "Usuario",   // O modelo onde iremos usar para a verificação para a autenticação.
     "accessModel": "Escopo",    // O modelo onde iremos requisitar as bandeiras para acesso de cada modelo.
     "useSessionWithCookies": true,   // Se iremos utilizar cookies com session.
-    "minutesToExpireToken": 24 * 60  // Minutos de vida do token. Ao fim destes minutos o token não é mais válido.
+    "minutesToExpireToken": 14 * 60  // Minutos de vida do token. Ao fim destes minutos o token não é mais válido.
   }
   
 };
