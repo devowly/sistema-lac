@@ -114,6 +114,15 @@ var Autenticacao = function (aplicativo, bancoDados, jwt, autenticacao) {
   /* Necessitamos aqui de receber as caracteristicas para utilizarmos rotas. Isto é importante para aninharmos algumas rotas.
    * Iniciamos aqui o roteador para sessões e os escopos do usuário. Note que colocamos mergeParams no roteador de escopos, porque 
    * queremos aninha-los com o roteador de sessão. @Veja http://stackoverflow.com/a/25305272/4187180
+   *
+   * As rotas disponíveis serão:
+   * - POST /sessao/  (Para realizarmos o inicio de uma sessão).
+   * - GET /sessao/  (Para validarmos uma sessão).
+   * - DELETE /sessao/  (Para o usuário encerrar uma sessão já existente).
+   * - GET /sessao/:identificadorDoUsuario/escopos/  (Para receber o valor dos escopos de um determinado usuário).
+   * - GET /escopos/  (Para pegar o valor dos escopos de determinado usuário).
+   *
+   * Devemos lembrar que se estivermos utilizando cookies a sessão do usuário irá funcionar em todas as janelas de um mesmo navegador.
    */
   this.sessaoRoteador = express.Router();
   this.escoposRoteador = express.Router({mergeParams: true});
@@ -121,7 +130,17 @@ var Autenticacao = function (aplicativo, bancoDados, jwt, autenticacao) {
 
 util.inherits(Autenticacao, EmissorEvento);
 
-/* Realiza a busca do token em cookies ou na requisição.
+/* Realiza a busca do token em cookies ou na requisição. Esta é a parte básica da nossa autenticação.
+ * Assim que o usuário tentar acesso em qualquer das rotas nós iremos buscar inicialmente o token aqui.
+ *
+ * @Parametro {Objeto} [req] Contêm dados de determinada requisição.
+ * @Parametro {Objeto} [req.params] Contêm dados passados nos parametros da requisição.
+ * @Parametro {Texto} [req.params.token] O valor do token passado no parametro da requisição.
+ * @Parametro {Objeto} [req.body] Contêm os dados passados no corpo da requisição.
+ * @Parametro {Texto} [req.body.token] O valor do token passado no corpo da requisição.
+ * @Parametro {Objeto} [req.session] Contêm os dados de determinada sessão.
+ * @Parametro {Texto} [req.session.token] O valor do token que está na sessão armazenado em um cookie.
+ * @Retorna {Texto|nulo} Em caso de sucesso retornamos o texto do token. Se por algum motivo houver falha nós retornamos nulo.
  */
 Autenticacao.prototype._buscarToken = function(req) {
   var token = null;
@@ -184,10 +203,10 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
         } else {
           // Queremos o ID do usuário para verificarmos se ele confere com o ID que está no token.
           // <umdez> Ainda não sei se é realmente necessário realizarmos isso. Vou ter que verificar isto.
-          var usrId = req.params ? req.params.usuarioId : null;  
+          // var usrId = req.params ? req.params.usuarioId : null;  
           
           // Quando o token for decodificado nós iremos tentar acessar o id do usuário.
-          if (decodificado && decodificado.user && (decodificado.user.id > 0) && usrId === decodificado.user.id) {
+          if (decodificado && decodificado.user && (decodificado.user.id > 0)) {
             // O token foi decodificado com sucesso. Aqui nós iremos procurar pelas bandeiras que este usuário possui
             // para todas as rotas que ele tem cadastro. Isso funcionará como os escopos, porque só iremos oferecer acesso
             // a certos escopos (rotas dos modelos).
