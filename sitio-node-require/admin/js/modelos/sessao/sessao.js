@@ -139,11 +139,15 @@ define([
       // Envia um DELETE para a rota '/sessao/:id' e limpa os dados do lado cliente.
       this.destroy({
         
-        /* Provavelmente esta rota sempre irá responder com estado (403) informando erro.
+        /* <umdez> Provavelmente esta rota sempre irá responder com estado (403) informando erro.
          * Isso acontece porque não temos um método de revogar token pelo lado servidor,
          * mas de qualquer forma nós podemos aqui do lado cliente manipular para que
          * seja apresentada uma visão de que o usuário saiu da conta. Além disso,
          * devemos mostrar uma visão onde o usuário possa se re-autenticar.
+         * 
+         * <umdez> Apesar do que eu já tinha escrito e pensado, esta rota não mais irá retornar estado (403).
+         * Eu faço isto porque mesmo que o token (JWT) não possa ser revogado, ele pode ser apagado
+         * ao regenerarmos o cookie. Isso já deve ser o bastante. 
          */
         success: function (modelo, resposta) {
           registro(resposta.code);
