@@ -1,0 +1,51 @@
+/* @Arquivo base.css
+ */
+
+/* IMPORTAÇÃO DOS ESTILOS DE BASE
+-------------------------------------------*/
+@import url('global.css');           /* Estilos globais: São compartilhados por vários arquivos. */
+@import url('base/topo.css');
+@import url('base/barraNavegacao.css');
+@import url('base/rodape.css');
+@import url('corpo.css');
+@import url('grid.css');
+
+/* ESTILOS ÚNICOS DE CADA ARQUIVO
+-----------------------------------------------*/
+@import url('paginas/pagInicio.css');             /* Página index.html */
+@import url('paginas/pagExamesOrientacoes.css');  /* pág. examesOrientacoes.html */
+@import url('paginas/pagCentralAtendimento.css'); /* pág. centralAtendimento.html */
+@import url('paginas/pagConvenios.css');          /* pág. convenios.html */
+@import url('paginas/pagQuemSomos.css');          /* pág. quemSomos.html */
+@import url('paginas/pagNossaEquipe.css');        /* pág. nossaEquipe.html */
+@import url('paginas/pagNossasUnidades.css');     /* pág. unidades.html */    
+@import url('paginas/pagInfoConvenio.css');       /* pág. infoConvenio.html */    
+      
+/* ESTILOS DO BOOTSTRAP
+---------------------------------------------------------------*/
+@import url('../bootstrap-v3.3.5/css/bootstrap.min.css');       /* CSS minificado e compilado */
+@import url('../bootstrap-v3.3.5/css/bootstrap-theme.min.css'); /* Tema opcional */
+
+/* TEMAS 
+---------------------------------------------------------------*/
+@import url('temas/tema001/tema.css');                          /* Estilos do tema verde */
+@import url('../bootstrap-v3.3.5/tema001/variables.less');      /* Estilos do tema verde @veja http://bootstrap-live-customizer.com/ */
+@import url('../bootstrap-v3.3.5/tema001/theme.css');           /* Estilos do tema verde @veja http://bootstrap-live-customizer.com/ */
+
+/* ESTILOS DOS BOTÕES DE REDE SOCIAL
+----------------------------------------------*/
+@import url('../bootstrap-social/bootstrap-social.css');
+
+/* ESTILOS DE FONTES E ICONES
+----------------------------------------------*/
+@import url('../font-awesome-v4.4.0/font-awesome/css/font-awesome.css');
+
+/* ESTILOS DO JQUERY UI
+-------------------------------------------------------------*/
+@import url('../jQuery-UI-Themas-v1.11.4/jquery-ui-themes/themes/south-street/jquery-ui.css');
+@import url('../jQuery-UI-Themas-v1.11.4/jquery-ui-themes/themes/south-street/theme.css');
+
+/* ESTILOS DAS TABELAS DO BACKGRID
+----------------------------------------------*/
+@import url('../backgrid-v0.3.5/backgrid.css');
+@import url('../backgrid-v0.3.5/backgrid-paginator.css');
