@@ -3,6 +3,7 @@
 /* @arquivo iniciar.js */
 
 /* Versão 0.0.1-Beta
+ * - Como fazer para separar a parte das visões do nosso servidor rest? (issue #41) [FEITO]
  */
 
 var fs = require('fs');

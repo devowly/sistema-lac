@@ -14,8 +14,9 @@ define([
   'backbone',
   'codigos',
   'nesting',
+  'configuracao',
   'colecoes/sessao/escopos'
-], function($, _, Backbone, CodigosDeResposta, nesting, ColecaoEscopos) {
+], function($, _, Backbone, CodigosDeResposta, nesting, Configuracao, ColecaoEscopos) {
   
  /* Os modelos são a parte central de um aplicativo, contendo os dados e também uma parte longa de toda logica que a cerca:
   * Conversões, validações, propriedades e controle de acesso. Um modelo possue funcionalidades básicas para a gerencia dos dados.
@@ -92,7 +93,7 @@ define([
   var Sessao = Backbone.Model.extend({
     
     // A URL REST deste modelo.
-    urlRoot: '/sessao',
+    urlRoot: Configuracao.cors.serverAddressSsl + 'sessao',
     
     // Informa qual dos atributos é o identificador.
     // <umdez> Não é realmente necessário (Porem diminuirá a paranoia). 
@@ -152,7 +153,7 @@ define([
           */
           
           // Acrescentamos a URL dos escopos aqui, porque é aqui que recebemos o nosso id.
-          esteObjeto.escopos.url = '/sessao/' + esteObjeto.id + '/escopos';
+          esteObjeto.escopos.url = Configuracao.cors.serverAddressSsl + 'sessao/' + esteObjeto.id + '/escopos';
         
           registro(resposta.code);
         
