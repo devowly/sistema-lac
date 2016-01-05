@@ -10,15 +10,9 @@ var pasta = require('path');
 var configuracao = require('jsconfig');
 var pastaConfiguracaoPadrao = pasta.join(__dirname, "/configuracao/configuracao.js");
 var express = require('express');
-var sessao = require('express-session');
 var http = require('http');
 var https = require('https');
 var morgan = require('morgan');
-var ServidorXmpp = require('servidor-xmpp');
-var jwt = require('jsonwebtoken');
-
-// Carregamos o nosso registrador
-var registrador = require('./fonte/nucleo/registrador')('iniciar');
 
 // Parametros do ambiente
 configuracao.set('env', {
@@ -39,8 +33,8 @@ configuracao.defaults(pastaConfiguracaoPadrao);
 
 /* Carregamos a assincronamente a nossa configuração e prosseguimos com nossos serviços.
  *
- * @Parametro {args} Argumento passados
- * @Parametro {opcs} As opções dos argumentos.
+ * @Parametro {Objeto} [args] Argumento passados
+ * @Parametro {Objeto} [opcs] As opções dos argumentos.
  */
 configuracao.load(function (args, opcs) {
 
@@ -56,24 +50,6 @@ configuracao.load(function (args, opcs) {
   
   // Iniciamos o servidor express
   var aplic = express();
-  
-  // Necessário usar isto para a aceitação de requisições das origens permitidas. @Veja https://www.npmjs.com/package/cors
-  var cors = require('cors');
-  aplic.use(cors({
-    origin: configuracao.server.cors.origin  // Origem aceita por este servidor express.
-  , methods:  ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']  // Métodos aceitos.
-  , allowedHeaders: ['Content-Type', 'Authorization', 'X-total', 'X-CSRF-Token', 'X-Requested-With', 'Accept', 'Accept-Version', 'Content-Length', 'Content-MD5', 'Date', 'X-Api-Version']
-  , credentials: true
-  }));
-  
-  // Necessário utilizarmos sessão. @Veja https://github.com/expressjs/session
-  aplic.use(sessao({
-    secret: configuracao.server.session.superSecret,  // Nosso super segredo para esta sessão.
-    cookie: {
-      httpOnly: true,  // A presença desta bandeira vai pedir com que o navegador não permita que um script do lado cliente acesse e manipule este cookie.
-      secure: true     // Informa para o navegador para somente enviar este cookie em requisições que utilizam https.
-    }
-  }));
   
   /* Aqui temos a nossa chave e certificado. Foi utilizado a ferramenta openssl provida pelo git. 
    * O comando para cria-los: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privatekey.key -out certificate.crt
@@ -106,36 +82,22 @@ configuracao.load(function (args, opcs) {
   
   // Espera pelos eventos do sistema operacional.
   var eventosSistema = require('./utilitarios/EventosSistema');
+ 
+  // Iniciamos aqui a escuta pelos eventos de sinalização e ou excessão.
+  eventosSistema.iniciar();
   
-  // Chamamos o arquivo principal, ele vai carregar os outros arquivos principais do servidor.
-  var sitio = require('./fonte/iniciador/principal');
+  console.log('Carregando o servidor HTTP e HTTPS.');
   
-  sitio.prosseguir(configuracao, aplic, jwt, function() {
-    
-    // Iniciamos aqui a escuta pelos eventos de sinalização e ou excessão.
-    eventosSistema.iniciar();
-    
-    registrador.debug('Carregando o servidor HTTP, HTTPS e XMPP.');
-    
-    // Inicia o servidor HTTP e começa a esperar por conexões.
-    aplic.server = http.createServer(aplic);
-    aplic.server.listen(aplic.get('port'), function () {
-      registrador.debug("Servidor express carregado e escutando na porta " + aplic.get('port'));
-    });
-    
-    // Inicia o servidor HTTPS e começa a esperar por conexões.
-    aplic.serverSsl = https.createServer(credenciais, aplic);
-    aplic.serverSsl.listen(aplic.get('sslPort'), function () {
-      registrador.debug("Servidor express carregado e escutando na porta " + aplic.get('sslPort'));
-    });
-    
-    // Iniciar servidor XMPP.
-    ServidorXmpp.inicializar(configuracao).then(function(){
-      ServidorXmpp.carregar(function() {
-        registrador.debug('Iniciou servidor xmpp com sucesso!');
-      });
-    });
-    
+  // Inicia o servidor HTTP e começa a esperar por conexões.
+  aplic.server = http.createServer(aplic);
+  aplic.server.listen(aplic.get('port'), function () {
+    console.log("Servidor express carregado e escutando na porta " + aplic.get('port'));
+  });
+  
+  // Inicia o servidor HTTPS e começa a esperar por conexões.
+  aplic.serverSsl = https.createServer(credenciais, aplic);
+  aplic.serverSsl.listen(aplic.get('sslPort'), function () {
+    console.log("Servidor express carregado e escutando na porta " + aplic.get('sslPort'));
   });
   
 });
