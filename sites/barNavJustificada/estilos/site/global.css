@@ -1,9 +1,0 @@
-/* Responsividade: Caso haja resize a gente tem que mudar */
-@media screen and (min-width: 768px) {
-  /* Removemos o padding que setamos anteriormente */
-  .topo,
-  .footer {
-    padding-right: 0;
-    padding-left: 0;
-  }
-}
