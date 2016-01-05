@@ -11,8 +11,9 @@ define([
   'backbone',
   'backbone.paginator',
   'underscore',
+  'configuracao',
   'modelos/convenio/convenio'
-], function($, Backbone, BackbonePaginator, _, ModeloConvenio){
+], function($, Backbone, BackbonePaginator, _, Configuracao, ModeloConvenio){
   
   /* O Backbone.PageableCollection é 100% compativel com o BackBone.Collection. Por causa disso, 
    * todos os métodos básicos irão funcionar. Além disso, novos métodos serão adicionados.
@@ -62,7 +63,7 @@ define([
     /* A url não é nada mais que uma rota que temos no serviço REST Epilogue. Neste endereço, iremos
      * realizar a listagem dos registros do banco.
      */
-    url: "/convenios",
+    url: Configuracao.cors.serverAddressSsl + "convenios",
     
    /* Existem três tipos de modos no Paginator, listo cada um deles abaixo:
     *

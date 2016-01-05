@@ -11,8 +11,9 @@
   'backbone',
   'backbone.paginator',
   'underscore',
+  'configuracao',
   'modelos/exame/exame'
-], function($, Backbone, BackbonePaginator, _, ModeloExame){
+], function($, Backbone, BackbonePaginator, _, Configuracao, ModeloExame){
    
   /* O Backbone.PageableCollection é 100% compativel com o BackBone.Collection. Por causa disso, 
    * todos os métodos básicos irão funcionar. Além disso, novos métodos serão adicionados.
@@ -62,7 +63,7 @@
     /* A url não é nada mais que uma rota que temos no serviço REST Epilogue. Neste endereço, iremos
      * realizar a listagem dos registros do banco.
      */
-    url: "/exames",
+    url: Configuracao.cors.serverAddressSsl + "exames",
    
    /* Existem três tipos de modos no Paginator, listo cada um deles abaixo:
     *
@@ -166,6 +167,9 @@
      
     // A cada nova requisição, nós iremos pegar o valor total de registros para esta requisição.
     parseState: function (resp, queryParams, state, options) {
+      
+      // Para isto funcionar temos que configurar para o CORS expor o cabeçalho X-total. 
+      // Para entender isso @Veja http://stackoverflow.com/a/15444439/4187180
       return { totalRecords: parseInt( options.xhr.getResponseHeader("X-total")) };
     }
     

@@ -7,8 +7,9 @@ define([
   'backbone',
   'nesting',
   'underscore',
+  'configuracao',
   'colecoes/exames/exameOrientacoes'
-], function($, Backbone, Nesting, _, ColecaoExameOrientacoes){
+], function($, Backbone, Nesting, _, Configuracao, ColecaoExameOrientacoes){
   
   /* Os modelos são a parte central de um aplicativo, contendo os dados e também uma parte longa de toda logica que a cerca:
    * Conversões, validações, propriedades e controle de acesso. Um modelo possue funcionalidades básicas para a gerencia dos dados.
@@ -26,7 +27,7 @@ define([
   var Exame = Backbone.Model.extend({
 
     // O endereço REST onde iremos pegar os dados.
-    urlRoot: "/exames",
+    urlRoot: Configuracao.cors.serverAddressSsl + "exames",
 
     // Isso vai ser utilizado para quando formos pegar os dados 
     // das coleções aninhadas pertecentes a este modelo.
@@ -39,7 +40,7 @@ define([
       // Cada um dos exames possue uma orientação a ser informada.
       // Aqui nós substituimos a url de ColecaoExameOrientacoes.
       this.exameOrientacoes = nestCollection(this, 'exameOrientacoes', new ColecaoExameOrientacoes(this.get('exameOrientacoes')));
-      this.exameOrientacoes.url = '/exames/' + this.id + '/ExameOrientacao';
+      this.exameOrientacoes.url = Configuracao.cors.serverAddressSsl + 'exames/' + this.id + '/ExameOrientacao';
     },
     
     // Aqui os atributos padrões deste modelo de exame.

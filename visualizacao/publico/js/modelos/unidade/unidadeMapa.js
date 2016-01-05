@@ -5,8 +5,9 @@
  define([
   'jquery',
   'backbone',
-  'underscore'
-], function($, Backbone, _){
+  'underscore',
+  'configuracao'
+], function($, Backbone, _, Configuracao){
 
   /* Os modelos são a parte central de um aplicativo, contendo os dados e também uma parte longa de toda logica que a cerca:
    * Conversões, validações, propriedades e controle de acesso. Um modelo possue funcionalidades básicas para a gerencia dos dados.
@@ -24,7 +25,7 @@
   var UnidadeMapa = Backbone.Model.extend({
 
     // O endereço REST onde iremos pegar os dados.
-    urlRoot: "/UnidadeMapa",
+    urlRoot: Configuracao.cors.serverAddressSsl + "UnidadeMapa",
 
     initialize: function () {
         

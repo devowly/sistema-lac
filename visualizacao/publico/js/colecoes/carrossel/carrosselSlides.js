@@ -6,8 +6,9 @@
   'jquery',
   'backbone',
   'underscore',
+  'configuracao',
   'modelos/carrossel/carrosselSlide'
-], function($, Backbone, _, ModeloCarrosselSlide){
+], function($, Backbone, _, Configuracao, ModeloCarrosselSlide){
   
   /* A coleção tem como objetivo contem um conjunto de modelos. Estes modelos compartilham
    * mesma propriedades. Além disso, a coleção possui vários métodos para gerencia destes modelos.
@@ -29,7 +30,7 @@
     model: ModeloCarrosselSlide,
     
     // O endereço REST onde iremos pegar os dados. 
-    url: "/carrosselSlides"
+    url: Configuracao.cors.serverAddressSsl + "carrosselSlides"
 
   });
   

@@ -6,8 +6,9 @@ define([
   'jquery',
   'backbone',
   'underscore',
+  'configuracao',
   'modelos/exame/exameOrientacao'
-], function($, Backbone, _, ModeloExameOrientacao){
+], function($, Backbone, _, Configuracao, ModeloExameOrientacao){
   
   /* A coleção tem como objetivo contem um conjunto de modelos. Estes modelos compartilham
    * mesma propriedades. Além disso, a coleção possui vários métodos para gerencia destes modelos.
@@ -30,7 +31,7 @@ define([
     
     // O endereço REST onde iremos pegar os dados. 
     // Esta url será substituida pelo Modelo.Exame 
-    url: "/ExameOrientacao"
+    url: Configuracao.cors.serverAddressSsl + "ExameOrientacao"
 
   });
   

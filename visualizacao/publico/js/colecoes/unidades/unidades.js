@@ -6,8 +6,9 @@
   'jquery',
   'backbone',
   'underscore',
+  'configuracao',
   'modelos/unidade/unidade'
-], function($, Backbone, _, ModeloUnidade){
+], function($, Backbone, _, Configuracao, ModeloUnidade){
   
   /* A coleção tem como objetivo contem um conjunto de modelos. Estes modelos compartilham
    * mesma propriedades. Além disso, a coleção possui vários métodos para gerencia destes modelos.
@@ -29,7 +30,7 @@
     model: ModeloUnidade,
     
     // O endereço REST onde iremos pegar os dados. 
-    url: "/unidades"
+    url: Configuracao.cors.serverAddressSsl + "unidades"
 
   });
   

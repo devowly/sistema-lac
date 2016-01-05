@@ -63,12 +63,19 @@ configuracao.load(function (args, opcs) {
   // Iniciamos o servidor express
   var aplic = express();
   
+  // Origens permitidas pelo CORS.
+  var listaOrigensPermitidas = configuracao.server.cors.origin;
+
   // Necessário usar isto para a aceitação de requisições das origens permitidas. @Veja https://www.npmjs.com/package/cors
   var cors = require('cors');
   aplic.use(cors({
-    origin: configuracao.server.cors.origin  // Origem aceita por este servidor express.
+    origin: function(origem, cd) {  // Origem aceita por este servidor express.
+      var seOrigemPermitida = listaOrigensPermitidas.indexOf(origem) !== -1;
+      cd(null, seOrigemPermitida);
+    }  
   , methods:  ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']  // Métodos aceitos.
-  , allowedHeaders: ['Content-Type', 'Authorization', 'X-total', 'X-CSRF-Token', 'X-Requested-With', 'Accept', 'Accept-Version', 'Content-Length', 'Content-MD5', 'Date', 'X-Api-Version']
+  , allowedHeaders: ['Content-Range', 'X-total', 'Content-Type', 'Authorization', 'X-CSRF-Token', 'X-Requested-With', 'Accept', 'Accept-Version', 'Content-Length', 'Content-MD5', 'Date', 'X-Api-Version']
+  , exposedHeaders: ['Content-Range', 'X-total']  // Aqui teremos os cabeçalhos *expostos* para as requisições ajax. @Veja http://stackoverflow.com/a/15444439/4187180
   , credentials: true
   }));
   
@@ -100,12 +107,6 @@ configuracao.load(function (args, opcs) {
   
   // Porta ao qual iremos receber requisições https.  
   aplic.set('sslPort', process.env.SSLPORT || configuracao.server.sslPort);
-  
-  // Iremos servir as páginas do diretorio "/admin"
-  aplic.use('/admin', express.static(pasta.join(__dirname, 'admin')));  
-  
-  // Iremos servir as páginas do diretorio "/publico"
-  aplic.use('/', express.static(pasta.join(__dirname, 'publico')));
   
   // Adicionamos isso para realizar o registro de requisições.
   aplic.use(morgan('combined'));

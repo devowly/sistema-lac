@@ -7,8 +7,9 @@
   'backbone',
   'nesting',
   'underscore',
+  'configuracao',
   'colecoes/unidades/unidadeMapas'
-], function($, Backbone, nesting, _, ColecaoUnidadeMapas){
+], function($, Backbone, nesting, _, Configuracao, ColecaoUnidadeMapas){
  
   /* Os modelos são a parte central de um aplicativo, contendo os dados e também uma parte longa de toda logica que a cerca:
    * Conversões, validações, propriedades e controle de acesso. Um modelo possue funcionalidades básicas para a gerencia dos dados.
@@ -26,7 +27,7 @@
   var Unidade = Backbone.Model.extend({
 
     // O endereço REST onde iremos pegar os dados.
-    urlRoot: "/unidades",
+    urlRoot: Configuracao.cors.serverAddressSsl + "unidades",
 
     // Isso vai ser utilizado para quando formos pegar os dados 
     // das coleções aninhadas pertecentes a este modelo.
@@ -39,7 +40,7 @@
       // Cada uma das unidades possue um zoom e coordenadas para o mapa
       // Aqui nós substituimos a url de ColecaoUnidadeMapas.
       this.unidadeMapas = nestCollection(this, 'unidadeMapas', new ColecaoUnidadeMapas(this.get('unidadeMapas')));
-      this.unidadeMapas.url = '/unidades/' + this.id + '/UnidadeMapa';
+      this.unidadeMapas.url = Configuracao.cors.serverAddressSsl + 'unidades/' + this.id + '/UnidadeMapa';
     },
     
     // Aqui os atributos padrões deste modelo de unidade.
