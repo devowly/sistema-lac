@@ -22,12 +22,12 @@ Bandeiras.prototype.inicializar = function() {
   
 };
 
-/* Acrescenta uma bandeira na lista. 
+/* Acrescenta uma bandeira na pilha do modelo. 
  *
- * @Parametro {modelo} O modelo que possui as bandeiras.
- * @Parametro {bandeira} O nome desta bandeira.
- * @Parametro {tipo} O tipo de acesso da bandeira. Por exemplo: 'Criar'.
- * @Parametro {valor} O valor em hexadecimal desta bandeira.
+ * @Parametro {Texto} [modelo] O nome do modelo que possui as bandeiras.
+ * @Parametro {Texto} [bandeira] O nome desta bandeira.
+ * @Parametro {Texto} [tipo] O tipo de acesso da bandeira. Por exemplo: 'Criar'.
+ * @Parametro {Número} [valor] O valor em hexadecimal desta bandeira.
  */
 Bandeiras.prototype.adcBandeiraParaModelo = function(modelo, bandeira, tipo, valor) {
   
@@ -45,9 +45,9 @@ Bandeiras.prototype.adcBandeiraParaModelo = function(modelo, bandeira, tipo, val
 
 /* Verificamos aqui as bandeiras de acesso a este determinado modelo.
  *
- * @Parametro {modelo} O modelo que possui as bandeiras.
- * @Parametro {tipos} Pilha com os tipos de acesso requisitado. Por exemplo 'Listar'.
- * @Retorna falso se não houver acesso, verdadeiro caso contrário.
+ * @Parametro {Texto} [modelo] O modelo que possui as bandeiras.
+ * @Parametro {Pilha} [tipos] Os tipos de acesso requisitado. Por exemplo 'Listar'.
+ * @Retorna {falso|verdadeiro} falso se não houver acesso, verdadeiro caso contrário.
  */
 Bandeiras.prototype.sePossuiAcesso = function(modelo, tipos, valor) {
   var seSim = false;

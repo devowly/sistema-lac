@@ -10,9 +10,9 @@ var AutenticacaoUsuario = require('./AutenticacaoUsuario');
  
 /* Utilitários diversos para as fontes Rest.
  *
- * @Parametro {bancoDados} Objeto do nosso banco de dados.
- * @Parametro {jwt} Nosso módulo Json Web Token.
- * @Parametro {autenticacao} Dados para autenticação.
+ * @Parametro {Objeto} [bancoDados] O nosso banco de dados Sequelize.
+ * @Parametro {Objeto} [jwt] Utilizado para tratar as requisições em Json Web Token.
+ * @Parametro {Objeto} [autenticacao] Configuração de autenticação.
  */
 var Utilitarios = function (bancoDados, jwt, autenticacao) {
 
@@ -36,12 +36,12 @@ Utilitarios.prototype.inicializar = function () {
   
 };
 
-/* Acrescenta uma bandeira na lista. 
+/* Acrescenta uma bandeira na pilha do modelo. 
  *
- * @Parametro {modelo} O modelo que possui as bandeiras.
- * @Parametro {bandeira} O nome desta bandeira.
- * @Parametro {tipo} O tipo de acesso da bandeira. Por exemplo: 'Criar'.
- * @Parametro {valor} O valor em hexadecimal desta bandeira.
+ * @Parametro {Texto} [modelo] O nome do modelo que possui as bandeiras.
+ * @Parametro {Texto} [bandeira] O nome desta bandeira.
+ * @Parametro {Texto} [tipo] O tipo de acesso da bandeira. Por exemplo: 'Criar'.
+ * @Parametro {Número} [valor] O valor em hexadecimal desta bandeira.
  */
 Utilitarios.prototype.adcUmaBandeiraParaModelo = function(modelo, bandeira, tipo, valor) {
   this.bandeiras.adcBandeiraParaModelo(modelo, bandeira, tipo, valor);
@@ -49,9 +49,9 @@ Utilitarios.prototype.adcUmaBandeiraParaModelo = function(modelo, bandeira, tipo
 
 /* Verificamos aqui as bandeiras de acesso a este determinado modelo.
  *
- * @Parametro {modelo} O modelo que possui as bandeiras.
- * @Parametro {tipos} Os tipos de acesso requisitado. Por exemplo 'Listar'.
- * @Retorna falso se não houver acesso, verdadeiro caso contrário.
+ * @Parametro {Texto} [modelo] O modelo que possui as bandeiras.
+ * @Parametro {Pilha} [tipos] Os tipos de acesso requisitado. Por exemplo 'Listar'.
+ * @Retorna {falso|verdadeiro} falso se não houver acesso, verdadeiro caso contrário.
  */
 Utilitarios.prototype.verificarSePossuiAcesso = function(modelo, tipos, valor) {
   return this.bandeiras.sePossuiAcesso(modelo, tipos, parseInt(valor, 16));
@@ -59,8 +59,8 @@ Utilitarios.prototype.verificarSePossuiAcesso = function(modelo, tipos, valor) {
 
 /* Realiza a autenticação de deteminado usuário pelo token informado.
  *
- * @Parametro {token} Aquele token utilizado para autenticação.
- * @Parametro {cd} A função chamada após a autenticação.
+ * @Parametro {Texto} [token] Aquele token utilizado para autenticação.
+ * @Parametro {Função} [cd] Será chamada após a autenticação.
  */
 Utilitarios.prototype.autenticarPeloToken = function (token, cd) {
   var seTerminou = false;  // Informa quando validação estiver terminada.
@@ -94,10 +94,10 @@ Utilitarios.prototype.autenticarPeloToken = function (token, cd) {
 /* Realiza a autenticação do usuário pelo JID. Se o usuário conferir, vamos retornar suas informações com a função cd(), 
  * juntamente com o valor da sua bandeira de acesso a um determinado modelo.
  *
- * @Parametro {modeloRota} O modelo onde iremos pegar as bandeiras de acesso do usuário.
- * @Parametro {jid} O identificador do usuário. Composto de local@dominio.
- * @Parametro {senha} A senha deste usuário.
- * @Parametro {cd} Função que será chamada assim que a verificação estiver terminada.
+ * @Parametro {Texto} [modeloRota] O modelo onde iremos pegar as bandeiras de acesso do usuário.
+ * @Parametro {Texto} [jid] O identificador do usuário. Composto de local@dominio.
+ * @Parametro {Texto} [senha] Senha deste usuário.
+ * @Parametro {Função} [cd] Será chamada assim que a verificação estiver terminada.
  */
 Utilitarios.prototype.autenticarPeloJid = function(modeloRota, jid, senha, cd) { 
   var seTerminou = false;  // Informa quando validação estiver terminada.
@@ -129,6 +129,14 @@ Utilitarios.prototype.autenticarPeloJid = function(modeloRota, jid, senha, cd) {
 };
 
 /* Realiza a busca do token em cookies ou na requisição.
+ *
+ * @Parametro {Objeto} [req] Contêm dados de determinada requisição.
+ * @Parametro {Objeto} [req.params] Contêm dados passados nos parametros da requisição.
+ * @Parametro {Texto} [req.params.token] O valor do token passado no parametro da requisição.
+ * @Parametro {Objeto} [req.body] Contêm os dados passados no corpo da requisição.
+ * @Parametro {Texto} [req.body.token] O valor do token passado no corpo da requisição.
+ * @Parametro {Objeto} [req.session] Contêm os dados de determinada sessão.
+ * @Parametro {Texto} [req.session.token] O valor do token que está na sessão armazenado em um cookie.
  */
 Utilitarios.prototype.buscarUmToken = function(req) {
   var token = null;

@@ -16,9 +16,14 @@ var exame = {
   , parametroOrdenamento: 'order'      // Parametro de ordenamento.
   , seRealizarPaginacao: true          // Caso seja necessário possuir suporte à paginação.
   , controladores: null                // Os controladores desta rota.
-  , seRecarregarInstancias: false      // É importante não ligar esta opção, porque causa um comportamento estranho ao atualizar e ou criar registros.
+  , seRecarregarInstancias: false      // É importante *não* ligar esta opção, porque causa um comportamento estranho ao atualizar e ou criar registros.
 };
 
+/* Os controladores deste modelo.
+ *
+ * @Parametro {Objeto} [utilitarios] Contêm métodos uteis como autenticação e verificação de acesso.
+ * @Retorna {Objeto} Contendo os controladores do Epilogue.
+ */
 exame.controladores = function(utilitarios) {
   
   // Nome deste módulo, Geralmente é o nome dessa tabela no banco de dados.

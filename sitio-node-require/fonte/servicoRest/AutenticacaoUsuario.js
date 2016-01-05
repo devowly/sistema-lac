@@ -11,9 +11,9 @@
  
 /* Realizamos aqui diversas formas de autenticar os nossos usuário.
  * 
- * @Parametro {bancoDados} Objeto do nosso banco de dados.
- * @Parametro {jwt} Nosso módulo Json Web Token.
- * @Parametro {autenticacao} Configuração de autenticação.
+ * @Parametro {Objeto} [bancoDados] O nosso banco de dados Sequelize.
+ * @Parametro {Objeto} [jwt] Utilizado para tratar as requisições em Json Web Token.
+ * @Parametro {Objeto} [autenticacao] Configuração de autenticação.
  */
  var AutenticacaoUsuario = function(bancoDados, jwt, autenticacao) {
 
@@ -42,8 +42,8 @@ AutenticacaoUsuario.prototype.inicializar = function() {
  * @Veja https://github.com/auth0/node-jsonwebtoken
  * @Veja http://brianmajewski.com/2015/02/25/relearning-backbone-part-9/
  *
- * @Parametro {token} O token informado pelo usuário.
- * @Parametro {cd} Função chamada logo após verificarmos completamente o usuário.
+ * @Parametro {Texto} [token] O token informado pelo usuário.
+ * @Parametro {Função} [cd] Será chamada logo após verificarmos completamente o usuário.
  */
 AutenticacaoUsuario.prototype.verificarUsuarioPeloToken = function(token, cd) {
   var esteObjeto = this;
@@ -92,10 +92,10 @@ AutenticacaoUsuario.prototype.verificarUsuarioPeloToken = function(token, cd) {
  * Se o usuário conferir nós iremos pegar suas bandeiras de acesso e retornar chamando a função cd().
  * @Veja http://brianmajewski.com/2015/02/25/relearning-backbone-part-9/
  *
- * @Parametro {modeloRota} O nome do modelo onde as rotas estão sendo acessadas.
- * @Parametro {jid} O identificador do usuário. Composto de local@dominio.
- * @Parametro {senha} Senha do usuário.
- * @Parametro {cd} Função chamada logo após verificarmos completamente o usuário.
+ * @Parametro {Texto} [modeloRota] O modelo onde iremos pegar as bandeiras de acesso do usuário.
+ * @Parametro {Texto} [jid] O identificador do usuário. Composto de local@dominio.
+ * @Parametro {Texto} [senha] Senha deste usuário.
+ * @Parametro {Função} [cd] Será chamada assim que a verificação estiver terminada.
  */
 AutenticacaoUsuario.prototype.verificarUsuarioPeloJid = function(modeloRota, jid, senha, cd) {
   var esteObjeto = this;
@@ -124,10 +124,10 @@ AutenticacaoUsuario.prototype.verificarUsuarioPeloJid = function(modeloRota, jid
 
 /* Logo após conferir o usuário, nós carregamos as bandeiras de acesso dele a determinada modelo de rota.
  *
- * @Parametro {modeloRota} O nome do modelo onde as rotas estão sendo acessadas.
- * @Parametro {usuario} O objeto com os dados do usuário. 
- * @Parametro {cd} Função chamada logo após acessarmos as bandeiras de determinado usuário.
- *                 Nesta função nós informamos se o usuário confere e seus dados.
+ * @Parametro {Texto} [modeloRota] O nome do modelo onde as rotas estão sendo acessadas.
+ * @Parametro {Objeto} [usuario] Os dados do usuário. 
+ * @Parametro {Função} [cd] Função chamada logo após acessarmos as bandeiras de determinado usuário.
+ *                          Nesta função nós informamos se o usuário confere e seus dados.
  */
 AutenticacaoUsuario.prototype.verificarUsuarioAcessoRota = function(modeloRota, usuario, cd) {
   var usuarioAcesso = {};
