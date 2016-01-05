@@ -1,0 +1,12 @@
+/* @Arquivo temaVerde.css 
+ *
+ * Nosso tema verde 
+ */
+  
+/* TEMAS DA BARRA DE NAVEGAÇÃO DA PÁGINA 
+--------------------------------------------------------*/
+ 
+/* cor das palavras dos links de navegação */
+#barraNavegacao #navbar ul span {
+  color: green; /* Verde */
+}

@@ -1,0 +1,370 @@
+[
+  {
+    "model": "Exame",
+    "data": {
+      "id": 1,
+      "nome": "1,25 DIHIDROXI VITAMINA D3"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 1,
+      "pagina_html": "orientacao0001.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 1
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 2,
+      "nome": "17OH PROGESTERONA 1H APOS CORTROSINA"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 2,
+      "pagina_html": "orientacao0002.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 2
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 3,
+      "nome": "17OH PROGESTERONA"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 3,
+      "pagina_html": "orientacao0003.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 3
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 4,
+      "nome": "17OH CORTICOSTEROIDE"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 4,
+      "pagina_html": "orientacao0004.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 4
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 5,
+      "nome": "17KS CETOESTEROIDES NEUTROS TOTAIS"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 5,
+      "pagina_html": "orientacao0005.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 5
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 6,
+      "nome": "11 DESOXICORTISOL 60 MIN APOS CORTROSINA"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 6,
+      "pagina_html": "orientacao0006.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 6
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 7,
+      "nome": "11 DESOXICORTISOL"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 7,
+      "pagina_html": "orientacao0007.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 7
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 8,
+      "nome": "11 DESOXICORTICOSTERONA"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 8,
+      "pagina_html": "orientacao0008.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 8
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 9,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 9,
+      "pagina_html": "orientacao0009.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 9
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 10,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 10,
+      "pagina_html": "orientacao0010.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 10
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 11,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 11,
+      "pagina_html": "orientacao0011.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 11
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 12,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 12,
+      "pagina_html": "orientacao0012.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 12
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 13,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 13,
+      "pagina_html": "orientacao0013.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 13
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 14,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 14,
+      "pagina_html": "orientacao0014.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 14
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 15,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 15,
+      "pagina_html": "orientacao0015.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 15
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 16,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 16,
+      "pagina_html": "orientacao0016.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 16
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 17,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 17,
+      "pagina_html": "orientacao0017.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 17
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 18,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 18,
+      "pagina_html": "orientacao0018.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 18
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 19,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 19,
+      "pagina_html": "orientacao0019.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 19
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 20,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 20,
+      "pagina_html": "orientacao0020.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 20
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 21,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 21,
+      "pagina_html": "orientacao0021.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 21
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 22,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 22,
+      "pagina_html": "orientacao0022.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 22
+    }
+  },
+  {
+    "model": "Exame",
+    "data": {
+      "id": 23,
+      "nome": "17OH OUTRO"
+    }
+  },
+  {
+    "model": "ExameOrientacao",
+    "data": {
+      "id": 23,
+      "pagina_html": "orientacao0023.html",
+      "nome_elemento": "modalorientacao",
+      "exame_id": 23
+    }
+  }
+]

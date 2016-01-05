@@ -1,0 +1,58 @@
+{
+  "name": "laboratorio-site",
+  "description": "Site para laboratorios",
+  "keywords": "Laboratorio analises clinicas exame sangue paciente médico atendimento",
+  "version": "0.0.1",
+  "author": "Léo Felippe <leofelippedias@hotmail.com.br>",
+  "main": "./iniciar.js",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "bluebird": "3.0.0",
+    "body-parser": "1.12.0",
+    "bunyan": "1.3.5",
+    "bunyan-logstash-tcp": "0.3.4",
+    "cors": "2.6.0",
+    "deasync": "0.1.4",
+    "epilogue": "umdez/epilogue",
+    "express": "4.13.3",
+    "express-session": "1.12.1",
+    "jsconfig": "0.2.0",
+    "jsonwebtoken": "5.4.1",
+    "lodash": "3.10.1",
+    "morgan": "1.6.1",
+    "mysql": "2.9.0",
+    "node-uuid": "1.4.2",
+    "sequelize": "3.5.1",
+    "servidor-xmpp": "umdez/servidor-xmpp"
+  },
+  "devDependencies": {
+    "mocha": "2.3.3",
+    "vows": "0.9.0-rc3",
+    "underscore": "1.8.3",
+    "sequelize-fixtures": "0.4.8"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "path": "git@github.com:devowly/testantoSites.git"
+    }
+  ],
+  "homepage": "https://github.com/devowly/testantoSites",
+  "bugs": "https://github.com/devowly/testantoSites/issues",
+  "maintainers": [
+    {
+      "name": "umdez",
+      "email": "leofelippedias@hotmail.com.br",
+      "url": "http://meu-dominio.com.br"
+    }
+  ],
+  "contributors": [
+    "https://github.com/devowly/testantoSites/graphs/contributors"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": ">=0.4.0"
+  },
+  "bin": "./iniciar.js"
+}

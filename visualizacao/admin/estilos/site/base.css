@@ -1,0 +1,39 @@
+/* @Arquivo base.css
+ */
+
+/* IMPORTAÇÃO DOS ESTILOS DE BASE
+-------------------------------------------*/
+@import url('grid.css');
+ 
+/* ESTILOS ÚNICOS DE CADA ARQUIVO
+-----------------------------------------------*/
+@import url('paginas/pagVisaoEntrada.css');             /* Página Visao.Entrada.html */
+      
+/* ESTILOS DO BOOTSTRAP
+---------------------------------------------------------------*/
+@import url('../bootstrap-v3.3.5/css/bootstrap.min.css');       /* CSS minificado e compilado */
+@import url('../bootstrap-v3.3.5/css/bootstrap-theme.min.css'); /* Tema opcional */
+
+/* TEMAS 
+---------------------------------------------------------------*/
+@import url('temas/tema001/tema.css');                          /* Estilos do tema verde */
+@import url('../bootstrap-v3.3.5/tema001/variables.less');      /* Estilos do tema verde @veja http://bootstrap-live-customizer.com/ */
+@import url('../bootstrap-v3.3.5/tema001/theme.css');           /* Estilos do tema verde @veja http://bootstrap-live-customizer.com/ */
+
+/* ESTILOS DOS BOTÕES DE REDE SOCIAL
+----------------------------------------------*/
+@import url('../bootstrap-social/bootstrap-social.css');
+
+/* ESTILOS DE FONTES E ICONES
+----------------------------------------------*/
+@import url('../font-awesome-v4.4.0/font-awesome/css/font-awesome.css');
+
+/* ESTILOS DO JQUERY UI
+-------------------------------------------------------------*/
+@import url('../jQuery-UI-Themas-v1.11.4/jquery-ui-themes/themes/south-street/jquery-ui.css');
+@import url('../jQuery-UI-Themas-v1.11.4/jquery-ui-themes/themes/south-street/theme.css');
+
+/* ESTILOS DAS TABELAS DO BACKGRID
+----------------------------------------------*/
+@import url('../backgrid-v0.3.5/backgrid.css');
+@import url('../backgrid-v0.3.5/backgrid-paginator.css');

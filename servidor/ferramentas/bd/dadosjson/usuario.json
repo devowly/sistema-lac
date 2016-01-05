@@ -1,0 +1,39 @@
+[
+  {
+    "model": "Usuario",
+    "data": {
+      "id": 1,
+      "name": "Administrado raiz",
+      "jid": "raiz@localhost",
+      "password": "$2a$05$ttY7tUd7n2kYJ1QHbqVtxONht1CCzbAEs9NYACKcA/Fzf61mgCKpG"
+    }
+  },
+  {
+    "model": "Escopo",
+    "data": {
+      "id": 1,
+      "modelo": "Exame",
+      "bandeira": "40",
+      "usuario_id": 1
+    }
+  },
+  {
+    "model": "Escopo",
+    "data": {
+      "id": 2,
+      "modelo": "Convenio",
+      "bandeira": "40",
+      "usuario_id": 1
+    }
+  },
+  {
+    "model": "Escopo",
+    "data": {
+      "id": 3,
+      "modelo": "Unidade",
+      "bandeira": "40",
+      "usuario_id": 1
+    }
+  }
+  
+]
