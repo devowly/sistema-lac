@@ -1,19 +1,22 @@
 'use strict'
 
 /* Versão 0.0.1-Beta
+ * - Armazenado as variaveis das visões para a variavel global window.Visao. (4b8b93591a770d86e67f00fca33e90acb45a9e46) [FEITO]
+ * - Desenvolver o método carregarArquivosXml. (issue #20) [AFAZER]
  */
 
 define([
   'jquery', 
   'underscore',
-  'backbone'
-], function($, _, BackBone){
+  'backbone',
+  'imagens/base64/imagens'
+], function($, _, BackBone, imagensBase64){
   
   /* Carrega assincronamente os templates encontrados em arquivos .html separados.
    * Depois de carregado ele chama a função cd().
    *
-   * @Parametro {visoes} Lista contendo o nome das visões a serem carregadas.
-   * @Parametro {cd} Função que iremos chamar quando todas as visões forem carregadas.
+   * @Parametro {Pilha} [visoes] Lista contendo o nome das visões a serem carregadas.
+   * @Parametro {Função} [cd] Chamda logo após todas as visões forem carregadas.
    */
   var carregarTemplantes = function(visoes, cd) {
 
@@ -38,10 +41,10 @@ define([
    * É interessante usa-lo pois isso faz o desenvolvimento ser mais produtivo porque não precisamos adicionar modelos e coleções e 
    * também faz com que não seja necessário carregar dados para o banco de dados.
    *
-   * @Parametro {lista} Uma lista onde serão salvos os arquivos de templante carregados.
-   * @Parametro {diretorio} O nome da pasta de onde os arquivos de templante estarão armazenados.
-   * @Parametro {visoes} Lista contendo o nome das visões a serem carregadas.
-   * @Parametro {cd} A função que será chamada logo após serem carregados todas as visões.
+   * @Parametro {Pilha} [lista] Aqui, serão salvos os arquivos de templante carregados.
+   * @Parametro {Texto} [diretorio] O nome do diretorio onde os arquivos de templante estão armazenados.
+   * @Parametro {Pilha} [visoes] Contêm o nome das visões a serem carregadas.
+   * @Parametro {Função} [cd] Será chamada logo após serem carregadas todas as visões.
    */
   var carregarTemplantesExtras = function(lista, diretorio, visoes, cd) {
 
@@ -62,9 +65,9 @@ define([
   
   /* Carrega apenas as coleções aninhadas de um determinado modelo
    *
-   * @Parametro {colecao} Uma coleção de modelos
-   * @Parametro {colecoesAninhadas} Aquela coleção aninhada aos modelos de uma coleção.
-   * @Parametro {cd} A função a ser chamada quando se estiver carregado todas colecoes aninhadas.
+   * @Parametro {Objeto} [colecao] Uma coleção de modelos.
+   * @Parametro {Pilha} [colecoesAninhadas] Aquelas coleções aninhadas aos modelos de uma coleção.
+   * @Parametro {Função} [cd] Será chamada quando se estiver carregado todas colecoes aninhadas.
    */
   var carregarColecaoAninhada = function(colecao, colecoesAninhadas, cd) { /* <umdez> método obsoleto? */
     
@@ -96,11 +99,10 @@ define([
     }
   };
   
-  /* Carrega todas as coleções aninhadas de um determinado modelo de forma recursiva.
+  /* Carrega *todas* as coleções aninhadas de um determinado modelo de forma recursiva.
    *
-   * @Parametro {colecoes} Uma lista de coleções.
-   * @Parametro {cd} Uma função que será chamada logo após aquelas coleções aninhadas 
-   *                 serem totalmente carregadas.
+   * @Parametro {Pilha} [colecoes] Contêm um conjunto de coleções.
+   * @Parametro {Função} [cd] Chamada logo após aquelas coleções aninhadas serem totalmente carregadas.
    */
   var carregarTodasColecoesAninhadas = function(colecoes, cd) {
      var esteObj = this;
@@ -175,8 +177,8 @@ define([
   
   /* Carrega a coleção e depois todas as suas coleções aninhadas.
    *
-   * @Parametro {colecoes} Aquelas coleções que serão carregadas.
-   * @Parametro {cd} Função a ser chamada após as coleções serem carregadas.
+   * @Parametro {Pilha} [colecoes] Contêm aquele conjunto de coleções que serão carregadas.
+   * @Parametro {Função} [cd] Chamada logo após as coleções serem carregadas.
    */
   var carregarColecao = function(colecoes, cd) {
     var esteObj = this;
@@ -206,6 +208,34 @@ define([
     }
     
   };
+  
+  /* Retorna uma imagem em base64 para cada nome de arquivo em uma lista especificada.
+   *
+   * @Parametro {Texto} [arquivo] O nome do arquivo da imagem.
+   * @Parametro {Texto} [lista] Qual a lista onde iremos procurar as imagems? Por exemplo: 'IMAGENS_LOGO'. 
+   */
+  var pegarImagemB64 = function(arquivo, lista) {
+    
+    // Armazenamos aqui o tipo da imagem e sua representação em base 64
+    var imgBase64 = null;
+    
+    // Percorremos cada uma das imagems
+    _.each(imagensBase64[lista], function(imagem) {
+      
+      // Retornamos o valor da imagem de determinado arquivo.
+      if (imagem.arquivo === arquivo) {
+        imgBase64 = imagem.tipo + ',' + imagem.base64;
+      }
+    });
+    
+    return imgBase64;
+  };
+  
+  /* Responsavel por carregar arquivos xml.
+   */
+  var carregarArquivosXml = function() {
+
+  };
 
   return { 
     // Aqui retornamos todos os métodos deste objeto.
@@ -213,6 +243,8 @@ define([
     carregarTemplantesExtras: carregarTemplantesExtras,
     carregarColecaoAninhada: carregarColecaoAninhada,
     carregarTodasColecoesAninhadas: carregarTodasColecoesAninhadas,
-    carregarColecao: carregarColecao
+    carregarColecao: carregarColecao,
+    pegarImagemB64: pegarImagemB64,
+    carregarArquivosXml: carregarArquivosXml
   };
 });

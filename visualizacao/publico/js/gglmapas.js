@@ -19,7 +19,7 @@ define([
    * @Parametro {Número} [coordenadas.lat] A latitude da coordenada.
    * @Parametro {Número} [coordenadas.lng] A longitude da coordenada.
    * @Parametro {Número} [zoom] O nível de zoom que será aplicado.
-   * @Parametro {Elemento} [$elemento] Um elemento na página, onde será acrescentado o mapa.
+   * @Parametro {Elemento} [$elemento] Um elemento na página, onde será acrescentado o mapa. (ex., uma div ou span).
    * @Retorno {Objeto|nulo} O objeto do novo mapa criado ou nulo.
    */
   var centralizarMapa = function (coordenadas, zoom, $elemento) {
