@@ -535,11 +535,12 @@ Autenticacao.prototype.carregarServicoSessao = function () {
       req.session.regenerate(function(erro) {
         // Regenerar a sessão do usuário.
         resposta = new Respostas.RespostaDeRequisisaoCompleta('Sessão regenerada porem não foi possível revogar o seu token.', CODIGOS.INFO.SESSAO_ENCERRADA, AUTENTICADO.NAO);
+        esteObjeto._responder(res, resposta);
       });
     } else {
       resposta = new Respostas.RespostaDeRequisisaoCompleta('Não é possível revogar o seu token.', CODIGOS.INFO.SESSAO_ENCERRADA, AUTENTICADO.NAO); 
+      esteObjeto._responder(res, resposta);
     } 
-    esteObjeto._responder(res, resposta);
   });
   
   this.aplic.use('/sessao', this.sessaoRoteador);

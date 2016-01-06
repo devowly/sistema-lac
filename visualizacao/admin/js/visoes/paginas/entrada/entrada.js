@@ -100,10 +100,10 @@ define([
     },
     
     events: {
-      'submit form.saida': '_aoClicarSair',                     // Ao clicar no botão sair.
+      'submit form.sair': '_aoClicarSair',                     // Ao clicar no botão sair.
       'submit form.entrada': '_aoClicarEntrar',                 // Ao clicar em botão de submeter o formulário.
-      'change input#entradaJid': '_aoEscreverAtualizarJid',     // Ao escrever no campo de entrada de jid.
-      'change input#entradaSenha': '_aoEscreverAtualizarSenha'  // Ao escrever no campo de entrada de senha.
+      'change input#entrada_jid': '_aoEscreverAtualizarJid',     // Ao escrever no campo de entrada de jid.
+      'change input#entrada_senha': '_aoEscreverAtualizarSenha'  // Ao escrever no campo de entrada de senha.
     },
 
     /* Iniciamos componentes para esta visão. 
