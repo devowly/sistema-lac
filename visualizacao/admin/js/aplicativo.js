@@ -36,7 +36,7 @@ define([
     
     /* Sobrescreve todas as requisições ajax do jQuery com alcançe global. Neste método é possivel customizarmos
      * as opções do ajax ou modificar as opções já existentes antes de cada requisição enviada e antes que sejam 
-     * processadas pelo $.ajax().
+     * processadas pelo $.ajax(). @Veja https://api.jquery.com/jquery.ajaxprefilter/
      *
      * @Parametro {Objeto} [opcoes] As opções da requisição.
      * @Parametro {Objeto} [opcoesOriginais] São as opções não modificadas que são passadas para o $.ajax().

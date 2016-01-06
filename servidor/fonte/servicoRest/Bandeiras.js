@@ -11,7 +11,7 @@
  *
  * Aqui nós realizamos o teste para saber se um determinado usuário possui o acesso a rotas do serviço rest.
  *
- * @ Arquivo Bandeiras.js
+ * @Arquivo Bandeiras.js
  */
 
 var Bandeiras = function() {

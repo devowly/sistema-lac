@@ -48,6 +48,7 @@ define([
   CodigosDeResposta.adicionarUmCodigo('INFO', 'TOKEN_NECESSARIO', '004', 'O token é necessário de ser informado.'); 
   CodigosDeResposta.adicionarUmCodigo('INFO', 'TOKEN_EXPIRADO', '005', 'O token está expirado.'); 
   CodigosDeResposta.adicionarUmCodigo('INFO', 'SESSAO_ENCERRADA', '006', 'A sessão foi encerrada.'); 
+  CodigosDeResposta.adicionarUmCodigo('INFO', 'SERVICO_NAO_DISPONIVEL', '007', 'O serviço ainda está indisponível.'); 
   
   // Os códigos de sucesso são:
   CodigosDeResposta.adicionarUmCodigo('SUCESSO', 'USUARIO_AUTENTICADO', '101', 'O usuário foi autenticado com sucesso.'); 
