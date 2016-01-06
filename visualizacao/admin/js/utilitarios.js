@@ -8,9 +8,8 @@
 define([
   'jquery', 
   'underscore',
-  'backbone',
-  'imagens/base64/imagens'
-], function($, _, BackBone, imagensBase64){
+  'backbone'
+], function($, _, BackBone){
   
   /* Carrega assincronamente os templates encontrados em arquivos .html separados.
    * Depois de carregado ele chama a função cd().
@@ -209,28 +208,6 @@ define([
     
   };
   
-  /* Retorna uma imagem em base64 para cada nome de arquivo em uma lista especificada.
-   *
-   * @Parametro {Texto} [arquivo] O nome do arquivo da imagem.
-   * @Parametro {Texto} [lista] Qual a lista onde iremos procurar as imagems? Por exemplo: 'IMAGENS_LOGO'. 
-   */
-  var pegarImagemB64 = function(arquivo, lista) {
-    
-    // Armazenamos aqui o tipo da imagem e sua representação em base 64
-    var imgBase64 = null;
-    
-    // Percorremos cada uma das imagems
-    _.each(imagensBase64[lista], function(imagem) {
-      
-      // Retornamos o valor da imagem de determinado arquivo.
-      if (imagem.arquivo === arquivo) {
-        imgBase64 = imagem.tipo + ',' + imagem.base64;
-      }
-    });
-    
-    return imgBase64;
-  };
-  
   /* Responsavel por carregar arquivos xml.
    */
   var carregarArquivosXml = function() {
@@ -244,7 +221,6 @@ define([
     carregarColecaoAninhada: carregarColecaoAninhada,
     carregarTodasColecoesAninhadas: carregarTodasColecoesAninhadas,
     carregarColecao: carregarColecao,
-    pegarImagemB64: pegarImagemB64,
     carregarArquivosXml: carregarArquivosXml
   };
 });
