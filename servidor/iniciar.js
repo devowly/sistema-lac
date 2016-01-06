@@ -45,8 +45,8 @@ configuracao.defaults(pastaConfiguracaoPadrao);
 
 /* Carregamos a assincronamente a nossa configuração e prosseguimos com nossos serviços.
  *
- * @Parametro {args} Argumento passados
- * @Parametro {opcs} As opções dos argumentos.
+ * @Parametro {Objeto} [args] Argumento passados
+ * @Parametro {Objeto} [opcs] As opções dos argumentos.
  */
 configuracao.load(function (args, opcs) {
 
@@ -63,10 +63,14 @@ configuracao.load(function (args, opcs) {
   // Iniciamos o servidor express
   var aplic = express();
   
-  // Origens permitidas pelo CORS.
+  /* Aqui temos as origens permitidas no nosso serviço CORS. Lembre-se que iremos oferecer dois tipos de conexões (http e https).
+   */
   var listaOrigensPermitidas = configuracao.server.cors.origin;
 
-  // Necessário usar isto para a aceitação de requisições das origens permitidas. @Veja https://www.npmjs.com/package/cors
+  /* Iremos separar as preocupações do nosso projeto, para isso nós iremos oferecer os serviços deste servidor para
+   * a parte da visão. Assim iremos oferecer aceitação de conexões e requisições dos dominios de origem permitidos utilizando o módulo CORS. 
+   * @Veja https://www.npmjs.com/package/cors
+   */
   var cors = require('cors');
   aplic.use(cors({
     origin: function(origem, cd) {  // Origem aceita por este servidor express.
@@ -79,7 +83,10 @@ configuracao.load(function (args, opcs) {
   , credentials: true
   }));
   
-  // Necessário utilizarmos sessão. @Veja https://github.com/expressjs/session
+  /* Utilizaremos sessão em conjunto do Json Web Tokens (JWT) para manter a sessão dos nossos usuários.
+   * Isso oferece ainda mais uma camada de segurança para a entrada e manutenção da conexão do usuário com
+   * os nossos serviços. @Veja https://github.com/expressjs/session
+   */
   aplic.use(sessao({
     secret: configuracao.server.session.superSecret,  // Nosso super segredo para esta sessão.
     cookie: {
