@@ -44,11 +44,18 @@ define([
   });
   
   var inicializar = function() {
-    var Sitio = new SitioRoteador();
+    var Sitio = null;
     
-    // Aqui verificamos o estado da sessão do usuário. Isso faz com que se o usuário
-    // recarregar a página nós vamos verificar se ele já se autenticou.
+    /* Sempre é necessário verificar o estado da sessão do usuário. A gente confere o estado aqui,
+     * porque quando o usuário recarregar a página nós iremos apresentar a visão correta.
+     */
     ModeloSessao.seAutenticado(function(seValido, resposta){
+      
+      /* Devemos iniciar aqui o roteador porque sempre iremos apresentar a visão
+       * depois de verificar a sessão do usuário.
+       */
+      Sitio = new SitioRoteador();
+      
       // Iniciamos aqui o histórico das rotas.
       Backbone.history.start();    
     });

@@ -11,7 +11,14 @@ define([
     
     var ponteSync = Backbone.sync;
     
-    // Sobrescreve o método sync com alcançe global. @Veja http://naleid.com/blog/2012/10/29/overriding-backbone-js-sync-to-allow-cross-origin-resource-sharing-cors
+    /* Sobrescreve o método sync() do Backbone com alcançe global. Estamos utilizando o serviço CORS.
+     * @Veja http://naleid.com/blog/2012/10/29/overriding-backbone-js-sync-to-allow-cross-origin-resource-sharing-cors
+     * Este método é utilizado para persistir o estado do modelo para o servidor. 
+     *
+     * @Parametro {Objeto} [metodo] O método utilizado.
+     * @Parametro {Objeto} [modelo] O modelo do Backbone.
+     * @Parametro {Objeto} [opcoes] Configuração de opções de requisição.
+     */
     Backbone.sync = function(metodo, modelo, opcoes) {
       opcoes || (opcoes = {});
       
@@ -19,7 +26,6 @@ define([
       if (!opcoes.crossDomain) {
         opcoes.crossDomain = true;
       }
-      
       // Agora deixamos claro a necessidade de credenciais.
       if (!opcoes.xhrFields) {
         opcoes.xhrFields = {withCredentials:true};
@@ -28,13 +34,20 @@ define([
       return ponteSync(metodo, modelo, opcoes);
     };
     
-    // Sobrescreve parte das requisições ajax com alcançe global.
-    $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
+    /* Sobrescreve todas as requisições ajax do jQuery com alcançe global. Neste método é possivel customizarmos
+     * as opções do ajax ou modificar as opções já existentes antes de cada requisição enviada e antes que sejam 
+     * processadas pelo $.ajax().
+     *
+     * @Parametro {Objeto} [opcoes] As opções da requisição.
+     * @Parametro {Objeto} [opcoesOriginais] São as opções não modificadas que são passadas para o $.ajax().
+     * @Parametro {Objeto} [jqXHR] Objeto desta requisição.
+     */
+    $.ajaxPrefilter(function(opcoes, opcoesOriginais, jqXHR) {
       // Caso queira adicionar um dominio base para o sitio:
-      // options.url = 'http://localhost:81' + options.url;
+      // opcoes.url = 'http://localhost:81' + opcoes.url;
       
       // Caso queira utilizar credenciais:
-      options.xhrFields = {
+      opcoes.xhrFields = {
         withCredentials: true
       };
     });
