@@ -111,10 +111,15 @@ define([
     },
     
    /* Abaixo iremos realizar os diversos métodos para iniciar, validar e remover uma determinada sessão.
-    * Cada requisição feita vai retornar estado de sucesso ou erro. Iremos utilizar em geral alguns estados que listamos abaixo:
-    * - [status 401] Não autorizado. Quando a autenticação é requerida e falhou ou dados necessários não foram providos.
-    * - [status 200] Tudo certo. Estado padrão para informar que a requisição ocorreu com exito.
-    * - [status 403] Acesso proibido. Retornamos este valor sempre que o acesso a uma fonte é proibida.
+    * Cada requisição feita vai retornar estatus de sucesso ou erro. Iremos utilizar em geral alguns estados
+    * que listamos abaixo:
+    *
+    * - [estatus 200] Tudo certo. Estado padrão para informar que a requisição ocorreu com exito.
+    * - [estatus 401] Não autorizado. Quando a autenticação é requerida e falhou ou dados necessários não foram providos.
+    * - [estatus 400] Uma requisição errada. O servidor não pode ou não vai processar a requisição porque houve um erro no cliente (ex., sintaxe de requisição mau formada).
+    * - [estatus 403] Acesso proibido. Retornamos este valor sempre que o acesso a uma fonte é proibida.
+    * - [estatus 404] Não encontrado. A fonte requisitada não pode ser encontrada mas pode ser disponível no futuro.
+    * - [estatus 500] Erro interno no servidor. Uma mensagem generica, disparada quando uma condição não esperada foi encontrada.
     *
     * @Veja https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
     * @Veja http://expressjs.com/en/guide/error-handling.html
