@@ -4,6 +4,7 @@
  */
 
 /* Versão 0.0.1-Beta
+ * - Expandir caracteristica de lidar com as respostas da sessão de forma a também responder os estatos (200) de sucesso. (issue #47) [FEITO]
  * - Adicionar caracteristica de lidar com as respostas da sessão. (issue #46) [FEITO]
  */
 
