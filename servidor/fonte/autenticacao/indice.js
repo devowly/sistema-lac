@@ -325,7 +325,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
     var jid = (req.body && req.body.jid) || (req.params && req.params.jid) || req.headers['x-authentication-jid'];
     var senha = (req.body && req.body.senha) || (req.params && req.params.senha) || req.headers['x-authentication-senha'];
     
-    if (jid && senha) {
+    if (jid) {
       // Aqui procuramos o usuário pelo jid fornecido.
       esteObjeto.bd[esteObjeto.autentic.verifyModel].findOne({
         where: {
@@ -338,7 +338,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
           esteObjeto._responder(res, resposta);
         } else {
           // Iremos verificar aqui se os dados informados realmente conferem com os dados que temos.
-          var seConfere = usuario.verificarSenha(senha);
+          var seConfere = senha ? usuario.verificarSenha(senha) : false;
           if (seConfere) {
             // O jid e senha conferem, agora iremos requisitar as bandeiras de acesso para cada modelo.
             var jwtDados = {};
@@ -425,7 +425,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
     } 
     // Caso o jid ou a senha não forem informados, nós temos que avisar.
     else {
-      var resposta = new Respostas.RespostaDeErroNaoAutorizado('Você deve informar o jid e senha.', CODIGOS.INFO.JID_SENHA_NECESSARIOS, AUTENTICADO.NAO);
+      var resposta = new Respostas.RespostaDeErroNaoAutorizado('Você informou um JID que não confere.', CODIGOS.INFO.JID_INVALIDO, AUTENTICADO.NAO);
       esteObjeto._responder(res, resposta);
     }
   });
