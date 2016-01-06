@@ -419,15 +419,22 @@ Autenticacao.prototype.carregarServicoSessao = function () {
           } else {
             var resposta = new Respostas.RespostaDeErroNaoAutorizado('Você informou uma senha que não confere.', CODIGOS.INFO.SENHA_INVALIDA, AUTENTICADO.NAO);
             esteObjeto._responder(res, resposta);
-          }
+          } 
         }
       });
     } 
-    // Caso o jid ou a senha não forem informados, nós temos que avisar.
+    // Caso o jid não for informado, nós temos que avisar.
     else {
-      var resposta = new Respostas.RespostaDeErroNaoAutorizado('Você informou um JID que não confere.', CODIGOS.INFO.JID_INVALIDO, AUTENTICADO.NAO);
+      var resposta = null;
+      if(!senha) {
+        // O JID e a senha não foram informados corretamente.
+        resposta = new Respostas.RespostaDeErroNaoAutorizado('É necessário informar o Jid e a senha.', CODIGOS.INFO.JID_SENHA_NECESSARIOS, AUTENTICADO.NAO);
+      } else {
+        // Apenas o JID que não foi informado corretamente.
+        resposta = new Respostas.RespostaDeErroNaoAutorizado('Você informou um JID que não confere.', CODIGOS.INFO.JID_INVALIDO, AUTENTICADO.NAO);
+      }
       esteObjeto._responder(res, resposta);
-    }
+    } 
   });
   
  /* Aqui iremos fazer uma coisa, primeiramente nós vamos verificar se um token foi informado. Caso o token foi informado, nós
