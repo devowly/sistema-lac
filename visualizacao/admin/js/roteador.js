@@ -26,7 +26,6 @@ define([
     },
     
     initialize: function () {
-      
       // O nosso controlador de escopos.
       if (!this.ctrldrEscopos) {
         this.ctrldrEscopos = new ControladorEscopos(ModeloSessao); 
@@ -38,7 +37,7 @@ define([
         this.visaoEntrada = new VisaoEntrada(ModeloSessao);
       }
       // Acrescentamos a nossa interface a visão de entrada.
-      $('#conteudo').html(this.visaoEntrada.el);
+      $('#conteudo-raiz').html(this.visaoEntrada.el);
     },
     
     inicio: function() {

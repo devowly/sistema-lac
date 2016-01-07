@@ -7,13 +7,13 @@
  */
 
 define([
-  'jquery',
-  'backbone',
-  'underscore',
-  'bootstrap',
-  'utilitarios',
-  'text!/admin/js/templantes/paginas/entrada/Visao.Entrada.html',
-  'text!/admin/js/templantes/paginas/painel/Visao.Painel.html'
+  'jquery'
+, 'backbone'
+, 'underscore'
+, 'bootstrap'
+, 'utilitarios'
+, 'text!/admin/js/templantes/paginas/entrada/Visao.Entrada.html'
+, 'text!/admin/js/templantes/paginas/painel/Visao.Painel.html'
 ], function($, Backbone, _, Bootstrap, Utilitarios, TemplanteEntrada, TemplantePainel){
   
   /* Responsavel por lidar com a página de entrada e a pagina do painel de administração.
@@ -96,8 +96,8 @@ define([
     events: {
       'submit form.sair': '_aoClicarSair',                       // Ao clicar no botão sair.
       'submit form.entrada': '_aoClicarEntrar',                  // Ao clicar em botão de submeter o formulário.
-      'change input#entrada_jid': '_aoEscreverAtualizarJid',     // Ao escrever no campo de entrada de jid.
-      'change input#entrada_senha': '_aoEscreverAtualizarSenha'  // Ao escrever no campo de entrada de senha.
+      'change input#entrada-jid': '_aoEscreverAtualizarJid',     // Ao escrever no campo de entrada de jid.
+      'change input#entrada-senha': '_aoEscreverAtualizarSenha'  // Ao escrever no campo de entrada de senha.
     },
 
     /* Iniciamos componentes para esta visão. 
