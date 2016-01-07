@@ -47,7 +47,8 @@ var EmissorEvento = require('events').EventEmitter;
 var Promessa = require('bluebird');
 var registrador = require('../nucleo/registrador')('Autenticacao');
 var express = require('express');
-var Respostas = require('./Respostas');
+var RespostasDeSessao = require('./RespostasDeSessao');
+var RespostasDeEscopo = require('./RespostasDeEscopo');
 
 /* A cada requisição iremos retornar na resposta um campo 'code' que é responsável por
  * informar qual estado da sessão. Isso faz com que o lado cliente possa facilmente
@@ -84,8 +85,7 @@ var CODIGOS = {
  */
 var AUTENTICADO = {
   NAO: false,
-  SIM: true,
-  NAO_CONSTA: -1
+  SIM: true
 };
 
 /* Abstração da gerencia das autenticações e autorizações. 
@@ -150,16 +150,33 @@ util.inherits(Autenticacao, EmissorEvento);
  * @Parametro {Objeto} [valor] Os valores de nossa resposta.
  */
 Autenticacao.prototype._responder = function(resposta, valor) {
-  var dados = {
-    message: valor.message,
-    code: valor.code
-  };
   
-  // Quando o valor não constar não vamos envia-lo.
-  if (valor.auth !== AUTENTICADO.NAO_CONSTA) {
-    dados.auth = valor.auth;
+  if (valor instanceof RespostasDeSessao.RespostasDeSessao) {
+    var dados = null;
+    
+    if (valor.name === 'RequisisaoCompleta') {
+      dados = valor.conteudo;
+    } else {
+      dados = {
+        message: valor.message,
+        code: valor.code,
+        auth: valor.auth
+      };
+    }
+    resposta.status(valor.status).json(dados);
+  } else if (valor instanceof RespostasDeEscopo.RespostasDeEscopo) {
+    var dados = null;
+    
+    if (valor.name === 'RequisisaoCompleta') {
+      dados = valor.conteudo;
+    } else {
+      dados = {
+        message: valor.message,
+        code: valor.code
+      };
+    }
+    resposta.status(valor.status).json(dados);
   } 
-  resposta.status(valor.status).json(dados);
 };
 
 /* Realiza a busca do token em cookies ou na requisição. Esta é a parte básica da nossa autenticação.
@@ -210,7 +227,7 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
           
           // O Token expirou, aqui informamos que tem de ser realizada nova autenticação.    
           if (erro.name && erro.name === 'TokenExpiredError') {
-            resposta = new Respostas.RespostaDeErroNaoAutorizado('Você informou um token que expirou. ('+ erro.message +').', CODIGOS.INFO.TOKEN_EXPIRADO, AUTENTICADO.NAO_CONSTA);
+            resposta = new RespostasDeEscopo.ErroNaoAutorizado('Você informou um token que expirou. ('+ erro.message +').', CODIGOS.INFO.TOKEN_EXPIRADO);
             
             if (esteObjeto.seForUtilizarSessaoComCookie && req.session) {
               // Se existir, nós regeneramos a nossa sessão antes de responder.
@@ -219,7 +236,7 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
               esteObjeto._responder(res, resposta)
             } 
           } else {
-            resposta = new Respostas.RespostaDeErroNaoAutorizado('Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').', CODIGOS.ERRO.VERIFICACAO_TOKEN, AUTENTICADO.NAO_CONSTA);
+            resposta = new RespostasDeEscopo.ErroNaoAutorizado('Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').', CODIGOS.ERRO.VERIFICACAO_TOKEN);
             
             if (esteObjeto.seForUtilizarSessaoComCookie && req.session) {
               // Se existir, nós regeneramos a nossa sessão antes de responder.
@@ -260,15 +277,14 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
                   escopo['bandeira'] = bandeira;                 // Salvamos determinada bandeira para um modelo em especifico.
                   resposta.push(escopo);
                 }); 
-                res.status(200).json(resposta);
+                esteObjeto._responder(res, (new RespostasDeEscopo.RequisisaoCompleta(resposta)));
               }
             });
-            
           } 
            // Alguma coisa deu errado ao tentarmos decodificar o token informado.
            else {
             var resposta = {};
-            resposta = new Respostas.RespostaDeErroNaoAutorizado('Você informou um token que não foi possível decodificar.', CODIGOS.ERRO.TOKEN_NAO_DECODIFICADO, AUTENTICADO.NAO_CONSTA);
+            resposta = new RespostasDeEscopo.ErroNaoAutorizado('Você informou um token que não foi possível decodificar.', CODIGOS.ERRO.TOKEN_NAO_DECODIFICADO);
             
             if (esteObjeto.seForUtilizarSessaoComCookie && req.session) {
               // Se existir, nós regeneramos a nossa sessão antes de responder.
@@ -280,7 +296,7 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
         }
       });
     } else {
-      var resposta = new Respostas.RespostaDeErroNaoAutorizado('Você deve nos informar um token para continuar.', CODIGOS.INFO.TOKEN_NECESSARIO, AUTENTICADO.NAO_CONSTA);
+      var resposta = new RespostasDeEscopo.ErroNaoAutorizado('Você deve nos informar um token para continuar.', CODIGOS.INFO.TOKEN_NECESSARIO);
       esteObjeto._responder(res, resposta);
     }
   
@@ -291,7 +307,7 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
     var escpId = req.params.escopoId;  // Identificador deste escopo.
     var usrId = req.params.usuarioId;  // Identificador da sessão deste usuário.
     
-    var resposta = new Respostas.RespostaDeErroNaoAutorizado('Acesso não autorizado. Isto ainda não foi implementado.', CODIGOS.INFO.SERVICO_NAO_DISPONIVEL, AUTENTICADO.NAO_CONSTA);
+    var resposta = new RespostasDeEscopo.ErroNaoAutorizado('Acesso não autorizado. Isto ainda não foi implementado.', CODIGOS.INFO.SERVICO_NAO_DISPONIVEL);
     esteObjeto._responder(res, resposta);
   });
   
@@ -334,7 +350,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
       }).then(function (usuario) {
         // Se não houver um usuário, é provavel que os dados informados estejam incorretos. Informamos que o JID é incorreto.
         if (!usuario) {
-          var resposta = new Respostas.RespostaDeErroNaoAutorizado('Você informou um JID que não confere.', CODIGOS.INFO.JID_INVALIDO, AUTENTICADO.NAO);
+          var resposta = new RespostasDeSessao.ErroNaoAutorizado('Você informou um JID que não confere.', CODIGOS.INFO.JID_INVALIDO, AUTENTICADO.NAO);
           esteObjeto._responder(res, resposta);
         } else {
           // Iremos verificar aqui se os dados informados realmente conferem com os dados que temos.
@@ -413,11 +429,11 @@ Autenticacao.prototype.carregarServicoSessao = function () {
               // Informamos que houve sucesso na identificação e também retornamos o valor do token. 
               // Este token contêm informações sobre o tipo de acesso que o usuário possuirá. Isto 
               // é realizado pelo valor das bandeiras que este usuário possui.
-              res.status(200).json(resposta);
+              esteObjeto._responder(res, (new RespostasDeSessao.RequisisaoCompleta(resposta)));
             });
             
           } else {
-            var resposta = new Respostas.RespostaDeErroNaoAutorizado('Você informou uma senha que não confere.', CODIGOS.INFO.SENHA_INVALIDA, AUTENTICADO.NAO);
+            var resposta = new RespostasDeSessao.ErroNaoAutorizado('Você informou uma senha que não confere.', CODIGOS.INFO.SENHA_INVALIDA, AUTENTICADO.NAO);
             esteObjeto._responder(res, resposta);
           } 
         }
@@ -428,10 +444,10 @@ Autenticacao.prototype.carregarServicoSessao = function () {
       var resposta = null;
       if(!senha) {
         // O JID e a senha não foram informados corretamente.
-        resposta = new Respostas.RespostaDeErroNaoAutorizado('É necessário informar o Jid e a senha.', CODIGOS.INFO.JID_SENHA_NECESSARIOS, AUTENTICADO.NAO);
+        resposta = new RespostasDeSessao.ErroNaoAutorizado('É necessário informar o Jid e a senha.', CODIGOS.INFO.JID_SENHA_NECESSARIOS, AUTENTICADO.NAO);
       } else {
         // Apenas o JID que não foi informado corretamente.
-        resposta = new Respostas.RespostaDeErroNaoAutorizado('Você informou um JID que não confere.', CODIGOS.INFO.JID_INVALIDO, AUTENTICADO.NAO);
+        resposta = new RespostasDeSessao.ErroNaoAutorizado('Você informou um JID que não confere.', CODIGOS.INFO.JID_INVALIDO, AUTENTICADO.NAO);
       }
       esteObjeto._responder(res, resposta);
     } 
@@ -463,7 +479,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
                     
           // O Token expirou, aqui informamos que tem de ser realizada nova autenticação. 
           if (erro.name && erro.name === 'TokenExpiredError') {
-            resposta = new Respostas.RespostaDeErroNaoAutorizado('Você informou um token que expirou. ('+ erro.message +').', CODIGOS.INFO.TOKEN_EXPIRADO, AUTENTICADO.NAO);
+            resposta = new RespostasDeSessao.ErroNaoAutorizado('Você informou um token que expirou. ('+ erro.message +').', CODIGOS.INFO.TOKEN_EXPIRADO, AUTENTICADO.NAO);
                         
             if (esteObjeto.seForUtilizarSessaoComCookie && req.session) {
               // Se existir, nós regeneramos a nossa sessão e depois respondemos.
@@ -474,7 +490,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
           } 
            // O token parece que não está expirado, porem algum outro erro aconteceu. 
            else {
-            resposta = new Respostas.RespostaDeErroNaoAutorizado('Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').', CODIGOS.ERRO.VERIFICACAO_TOKEN, AUTENTICADO.NAO);
+            resposta = new RespostasDeSessao.ErroNaoAutorizado('Ocorreu um erro ao tentarmos verificar seu token. ('+ erro.message +').', CODIGOS.ERRO.VERIFICACAO_TOKEN, AUTENTICADO.NAO);
                        
             if (esteObjeto.seForUtilizarSessaoComCookie && req.session) {
               // Se existir, nós regeneramos a nossa sessão e logo após isto respondemos.
@@ -510,7 +526,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
         }
       });
     } else {
-      var resposta = new Respostas.RespostaDeErroNaoAutorizado('Você deve nos informar um token para realizar a validação.', CODIGOS.INFO.TOKEN_NECESSARIO, AUTENTICADO.NAO);
+      var resposta = new RespostasDeSessao.ErroNaoAutorizado('Você deve nos informar um token para realizar a validação.', CODIGOS.INFO.TOKEN_NECESSARIO, AUTENTICADO.NAO);
       esteObjeto._responder(res, resposta);
     }
   });
@@ -541,11 +557,11 @@ Autenticacao.prototype.carregarServicoSessao = function () {
     if (esteObjeto.seForUtilizarSessaoComCookie && req.session && req.session.token) {
       req.session.regenerate(function(erro) {
         // Regenerar a sessão do usuário.
-        resposta = new Respostas.RespostaDeRequisisaoCompleta('Sessão regenerada porem não foi possível revogar o seu token.', CODIGOS.INFO.SESSAO_ENCERRADA, AUTENTICADO.NAO);
+        resposta = new RespostasDeSessao.RequisisaoCompleta('Sessão regenerada porem não foi possível revogar o seu token.', CODIGOS.INFO.SESSAO_ENCERRADA, AUTENTICADO.NAO);
         esteObjeto._responder(res, resposta);
       });
     } else {
-      resposta = new Respostas.RespostaDeRequisisaoCompleta('Não é possível revogar o seu token.', CODIGOS.INFO.SESSAO_ENCERRADA, AUTENTICADO.NAO); 
+      resposta = new RespostasDeSessao.RequisisaoCompleta('Não é possível revogar o seu token.', CODIGOS.INFO.SESSAO_ENCERRADA, AUTENTICADO.NAO); 
       esteObjeto._responder(res, resposta);
     } 
   });

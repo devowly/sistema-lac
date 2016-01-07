@@ -35,10 +35,10 @@ var EmissorEvento = require('events').EventEmitter;
  * @Parametro {Boleano} [seAutenticado] Usuário está autenticado com sucesso?
  */
 
-var RespostasDeSessao = function(estatus, mensagem, codigo, seAutenticado) {
+var RespostasDeSessao = function(estatos, mensagem, codigo, seAutenticado) {
   this.name = 'RespostasDeSessao';
   this.message = mensagem || 'Erro interno no servidor.';
-  this.status = estatus || 500;                    
+  this.status = estatos || 500;                    
   this.code = codigo;  
   this.auth = seAutenticado;
 };
@@ -49,61 +49,61 @@ utilitario.inherits(RespostasDeSessao, EmissorEvento);
  * @Parametro {Texto} [mensagem] Vamos informar ao cliente o que aconteceu.
  * @Parametro {Texto} [codigo] Contêm geralmente uma forma de informar mais especificamente o que ocorreu ao cliente.
  */
-var RespostaDeErroNaoAutorizado = function(mensagem, codigo, seAutenticado) {
+var ErroNaoAutorizado = function(mensagem, codigo, seAutenticado) {
   RespostasDeSessao.call(this, 401, mensagem || 'Não autorizado', codigo, seAutenticado); 
-  this.name = 'RespostaDeErroNaoAutorizado';
+  this.name = 'ErroNaoAutorizado';
 };
-utilitario.inherits(RespostaDeErroNaoAutorizado, RespostasDeSessao);
+utilitario.inherits(ErroNaoAutorizado, RespostasDeSessao);
 
 /* Quando acontecer uma requisição erronea. Geralmente isso acontece porque houve um erro do lado do cliente.
  * 
  * @Parametro {Texto} [mensagem] Vamos informar ao cliente o que aconteceu.
  * @Parametro {Texto} [codigo] Contêm geralmente uma forma de informar mais especificamente o que ocorreu ao cliente.
  */
-var RespostaDeErroDeRequisicaoErrada = function(mensagem, codigo, seAutenticado) {
+var ErroDeRequisicaoErrada = function(mensagem, codigo, seAutenticado) {
   RespostasDeSessao.call(this, 400, mensagem || 'Requisição errada', codigo, seAutenticado); 
-  this.name = 'RespostaDeErroDeRequisicaoErrada';
+  this.name = 'ErroDeRequisicaoErrada';
 };
-utilitario.inherits(RespostaDeErroDeRequisicaoErrada, RespostasDeSessao);
+utilitario.inherits(ErroDeRequisicaoErrada, RespostasDeSessao);
 
 /* O acesso a essa fonte é proibida. Retornamos este valor sempre que o acesso a uma fonte é proibida.
  * 
  * @Parametro {Texto} [mensagem] Vamos informar ao cliente o que aconteceu.
  * @Parametro {Texto} [codigo] Contêm geralmente uma forma de informar mais especificamente o que ocorreu ao cliente.
  */
-var RespostaDeErroDeProibicao = function(mensagem, codigo, seAutenticado) {
+var ErroDeProibicao = function(mensagem, codigo, seAutenticado) {
   RespostasDeSessao.call(this, 403, mensagem || 'Proibido', codigo, seAutenticado); 
-  this.name = 'RespostaDeErroDeProibicao';
+  this.name = 'ErroDeProibicao';
 };
-utilitario.inherits(RespostaDeErroDeProibicao, RespostasDeSessao);
+utilitario.inherits(ErroDeProibicao, RespostasDeSessao);
 
 /* Não foi encontrado. A fonte requisitada não pode ser encontrada mas pode ser disponível no futuro.
  * 
  * @Parametro {Texto} [mensagem] Vamos informar ao cliente o que aconteceu.
  * @Parametro {Texto} [codigo] Contêm geralmente uma forma de informar mais especificamente o que ocorreu ao cliente.
  */
-var RespostaDeErroDeNaoEncontrado = function(mensagem, codigo, seAutenticado) {
+var ErroDeNaoEncontrado = function(mensagem, codigo, seAutenticado) {
   RespostasDeSessao.call(this, 404, mensagem || 'Não encontrado', codigo, seAutenticado); 
-  this.name = 'RespostaDeErroDeNaoEncontrado';
+  this.name = 'ErroDeNaoEncontrado';
 };
-utilitario.inherits(RespostaDeErroDeNaoEncontrado, RespostasDeSessao);
+utilitario.inherits(ErroDeNaoEncontrado, RespostasDeSessao);
 
 /* Tudo certo. Estatus padrão para informar que a requisição ocorreu com exito.
- * 
- * @Parametro {Texto} [mensagem] Vamos informar ao cliente o que aconteceu.
- * @Parametro {Texto} [codigo] Contêm geralmente uma forma de informar mais especificamente o que ocorreu ao cliente.
+ *
+ * @Parametro {Pilha} [conteudo] Conteudo do resultado a ser enviado.
  */
-var RespostaDeRequisisaoCompleta = function(mensagem, codigo, seAutenticado) {
-  RespostasDeSessao.call(this, 200, mensagem || 'Requisição completa', codigo, seAutenticado);
-  this.name = 'RespostaDeRequisisaoCompleta';
+var RequisisaoCompleta = function(conteudo) {
+  RespostasDeSessao.call(this, 200, 'Requisição completa', '', true);
+  this.name = 'RequisisaoCompleta';
+  this.conteudo = conteudo;
 };
-utilitario.inherits(RespostaDeRequisisaoCompleta, RespostasDeSessao);
+utilitario.inherits(RequisisaoCompleta, RespostasDeSessao);
 
 module.exports = {
-  RespostaDeErroNaoAutorizado: RespostaDeErroNaoAutorizado,
-  RespostaDeErroDeNaoEncontrado: RespostaDeErroDeNaoEncontrado,
-  RespostaDeErroDeRequisicaoErrada: RespostaDeErroDeRequisicaoErrada,
   RespostasDeSessao: RespostasDeSessao,
-  RespostaDeErroDeProibicao: RespostaDeErroDeProibicao,
-  RespostaDeRequisisaoCompleta: RespostaDeRequisisaoCompleta
+  ErroNaoAutorizado: ErroNaoAutorizado,
+  ErroDeRequisicaoErrada: ErroDeRequisicaoErrada,
+  ErroDeProibicao: ErroDeProibicao,
+  ErroDeNaoEncontrado: ErroDeNaoEncontrado,
+  RequisisaoCompleta: RequisisaoCompleta
 };
