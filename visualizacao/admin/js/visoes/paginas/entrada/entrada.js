@@ -30,7 +30,7 @@ define([
     senha: null,  
     
     attributes: {
-      
+    
     },
 
     initialize: function (ModeloSessao) {
@@ -79,14 +79,6 @@ define([
       // Assim que o usuário entrar, vamos utilizar o cookie recebido para as novas requisições.
       this.ModeloSessao.entrar({jid: this.jid, senha: this.senha}, function(seAutenticou, resposta){
         if (seAutenticou) {
-          // Caso tudo ocorra bem, então, nós iremos acessar a coleção de escopos.
-          Utilitarios.carregarColecao([esteObjeto.ModeloSessao.escopos], function(){
-            // Veja que cada modelo de escopo possui o nome do modelo (tabela) no banco de dados e também o valor da bandeira de acesso.
-            // Com estes valores em mãos nós podemos *montar* aqui a nossa interface do usuário.
-            for(var ca = 0; ca < esteObjeto.ModeloSessao.escopos.length; ca++){
-              console.log(ca + ': ' + esteObjeto.ModeloSessao.escopos.models[ca].get('modelo') + ' ' + esteObjeto.ModeloSessao.escopos.models[ca].get('bandeira'));
-            }
-          });
           // Limpamos o jid e senha armazenados.
           esteObjeto.jid = esteObjeto.senha = '';
         } else {
@@ -102,8 +94,8 @@ define([
     },
     
     events: {
-      'submit form.sair': '_aoClicarSair',                     // Ao clicar no botão sair.
-      'submit form.entrada': '_aoClicarEntrar',                 // Ao clicar em botão de submeter o formulário.
+      'submit form.sair': '_aoClicarSair',                       // Ao clicar no botão sair.
+      'submit form.entrada': '_aoClicarEntrar',                  // Ao clicar em botão de submeter o formulário.
       'change input#entrada_jid': '_aoEscreverAtualizarJid',     // Ao escrever no campo de entrada de jid.
       'change input#entrada_senha': '_aoEscreverAtualizarSenha'  // Ao escrever no campo de entrada de senha.
     },

@@ -12,7 +12,7 @@ define([
   'jquery',
   'backbone',
   'utilitarios',
-  'controladores/escopos',
+  'controladores/escopo/escopos',
   'visoes/paginas/entrada/entrada',
   'modelos/sessao/sessao'
 ], function($, Backbone, Utilitarios, ControladorEscopos, VisaoEntrada, ModeloSessao){
@@ -26,7 +26,11 @@ define([
     },
     
     initialize: function () {
-      var ctrldrEscopos = new ControladorEscopos(ModeloSessao);
+      
+      // O nosso controlador de escopos.
+      if (!this.ctrldrEscopos) {
+        this.ctrldrEscopos = new ControladorEscopos(ModeloSessao); 
+      }
       
       // Aqui verificamos se já apresentamos a visão de entrada.
       if (!this.visaoEntrada) {

@@ -157,8 +157,12 @@ define([
           * será armazenado numa sessão segura e a cada nova requisição serão acessados os dados pela sessão.
           */
           
-          // Acrescentamos a URL dos escopos aqui, porque é aqui que recebemos o nosso id.
+          /* Acrescentamos a URL dos escopos aqui, porque é aqui que recebemos o nosso id, e logo após isto
+           * nós podemos informar que o escopo está pronto para ser acessado. É desta forma que iremos requisitar
+           * o escopo do usuário.
+           */
           esteObjeto.escopos.url = 'sessao/' + esteObjeto.id + '/escopos';
+          esteObjeto.set({scope: true});
         
           registro(resposta.code);
         
@@ -166,7 +170,7 @@ define([
         },
         error: function (modelo, resposta) {
           registro(resposta.code);
-          
+          esteObjeto.set({scope: false});
           cd(false, resposta);
         }
       });
@@ -196,12 +200,14 @@ define([
           registro(resposta.code);
           // Limpamos o modelo.
           modelo.clear();
-          // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
+          // Muda o valor de auth e scope para false, fazendo com que seja disparado o evento change:auth e o change:scope.
           esteObjeto.set({auth: false});
+          esteObjeto.set({scope: false});
         },
         error: function () {
-          // Aqui nós mudamos o valor de auth para false, fazendo com que seja disparado o evento change:auth.
+          // Muda o valor de auth e scope para false, fazendo com que seja disparado o evento change:auth e o change:scope.
           esteObjeto.set({auth: false});
+          esteObjeto.set({scope: false});
         }
       });      
     },
@@ -223,10 +229,19 @@ define([
       this.fetch({
         success: function(modelo, resposta) {
           registro(resposta.code);
+          
+          /* Acrescentamos a URL dos escopos aqui, porque é aqui que recebemos o nosso id, e logo após isto
+           * nós podemos informar que o escopo está pronto para ser acessado. É desta forma que iremos requisitar
+           * o escopo do usuário.
+           */
+          esteObjeto.escopos.url = 'sessao/' + esteObjeto.id + '/escopos';
+          esteObjeto.set({scope: true});
+          
           cd(true, resposta);
         },
         error: function(modelo, resposta) {
           registro(resposta.code);
+          esteObjeto.set({scope: false});
           cd(false, resposta);
         }
       });
@@ -234,7 +249,9 @@ define([
     
     // Aqui os atributos padrões deste modelo de sessao.
     defaults: {
-      auth: false    // Caso o usuário esteja autenticado. Se for falso o usuário terá de realizar novamente a entrada.
+      scope: false   // Utilizaremos este atributo para saber quando o escopo esta pronto para ser acessado.
+                     // Lembre-se que este atributo não está na nossa sessão.
+    , auth: false    // Caso o usuário esteja autenticado. Se for falso o usuário terá de realizar novamente a entrada.
     , message: null  // A mensagem recebida. A cada requisição iremos receber uma mensagem informando o que aconteceu.
     , code: null     // Codigo informado para que possamos manipular aqui no lado cliente.
     , token: null    // O nosso token que será utilizado para acesso as rotas do serviço. (Não é informado se caso utilizarmos cookies seguros).
