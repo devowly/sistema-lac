@@ -3,14 +3,15 @@
 /* @arquivo aplicativo.js */
 
 /* Versão 0.0.1-Beta
- * - Adicionar o endereço do servidor diretamente no ajaxPrefilter. (issue #49) [AFAZER]
+ * - Adicionar o endereço do servidor diretamente no ajaxPrefilter. (issue #49) [FEITO]
  */
 
 define([
   'jquery',
   'roteador', // Requisitamos o arquivo roteador.js
-  'backbone'
-], function($, Roteador, Backbone){
+  'backbone',
+  'configuracao'
+], function($, Roteador, Backbone, Configuracao){
   var inicializar = function(){
     
     var ponteSync = Backbone.sync;
@@ -47,8 +48,10 @@ define([
      * @Parametro {Objeto} [jqXHR] Objeto desta requisição.
      */
     $.ajaxPrefilter(function(opcoes, opcoesOriginais, jqXHR) {
-      // Caso queira adicionar um dominio base para o sitio:
-      // opcoes.url = 'https://localhost:444' + opcoes.url;
+      /* Caso queira adicionar um dominio base para o sitio. Este dominio será utilizada nas requisições ajax
+       * de todas requisições deste sitio.
+       */
+      opcoes.url = Configuracao.cors.serverAddressSsl + opcoes.url;
       
       // Caso queira utilizar credenciais:
       opcoes.xhrFields = {
