@@ -48,7 +48,7 @@ define([
      */
     $.ajaxPrefilter(function(opcoes, opcoesOriginais, jqXHR) {
       // Caso queira adicionar um dominio base para o sitio:
-      // opcoes.url = 'https://localhost:444' + opcoes.url;
+      // opcoes.url = 'https://localhost:444/' + opcoes.url;
       
       // Caso queira utilizar credenciais:
       opcoes.xhrFields = {
