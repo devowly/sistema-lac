@@ -553,16 +553,19 @@ Autenticacao.prototype.carregarServicoSessao = function () {
      * Assim o sistema não conseguirá acessar nossas fontes. Isso pode ser
      * uma alternativa.
      */ 
-    var resposta = null;
+    var resposta = {};
+    resposta.auth = AUTENTICADO.NAO;
+    resposta.code = CODIGOS.INFO.SESSAO_ENCERRADA;
+ 
     if (esteObjeto.seForUtilizarSessaoComCookie && req.session && req.session.token) {
       req.session.regenerate(function(erro) {
         // Regenerar a sessão do usuário.
-        resposta = new RespostasDeSessao.RequisisaoCompleta('Sessão regenerada porem não foi possível revogar o seu token.', CODIGOS.INFO.SESSAO_ENCERRADA, AUTENTICADO.NAO);
-        esteObjeto._responder(res, resposta);
+        resposta.message = 'Sessão regenerada porem não foi possível revogar o seu token.';
+        esteObjeto._responder(res, new RespostasDeSessao.RequisisaoCompleta(resposta));
       });
     } else {
-      resposta = new RespostasDeSessao.RequisisaoCompleta('Não é possível revogar o seu token.', CODIGOS.INFO.SESSAO_ENCERRADA, AUTENTICADO.NAO); 
-      esteObjeto._responder(res, resposta);
+      resposta.message = 'Não é possível revogar o seu token.';
+      esteObjeto._responder(res, new RespostasDeSessao.RequisisaoCompleta(resposta));
     } 
   });
   
