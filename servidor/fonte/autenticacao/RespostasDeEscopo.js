@@ -30,7 +30,7 @@ var EmissorEvento = require('events').EventEmitter;
  */
 
 var RespostasDeEscopo = function(estatos, mensagem, codigo) {
-  this.name = 'RespostasDeSessao';
+  this.name = 'RespostasDeEscopo';
   this.message = mensagem || 'Erro interno no servidor.';
   this.status = estatos || 500;                    
   this.code = codigo;  
