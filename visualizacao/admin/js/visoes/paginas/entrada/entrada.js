@@ -3,7 +3,7 @@
 /* @arquivo entrada.js */
 
 /* Versão 0.0.1-Beta
- * - Adicionar caracteristica de validação para o formulário de entrada do painel de administração. (issue #48) [FEITO]
+ * - Adicionar caracteristica de validação para o formulário de entrada do painel de administração. (issue #48) [AFAZER]
  */
 
 define([

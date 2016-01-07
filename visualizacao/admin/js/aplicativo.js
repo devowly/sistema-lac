@@ -2,6 +2,10 @@
 
 /* @arquivo aplicativo.js */
 
+/* Versão 0.0.1-Beta
+ * - Adicionar o endereço do servidor diretamente no ajaxPrefilter. (issue #49) [AFAZER]
+ */
+
 define([
   'jquery',
   'roteador', // Requisitamos o arquivo roteador.js
@@ -44,7 +48,7 @@ define([
      */
     $.ajaxPrefilter(function(opcoes, opcoesOriginais, jqXHR) {
       // Caso queira adicionar um dominio base para o sitio:
-      // opcoes.url = 'http://localhost:81' + opcoes.url;
+      // opcoes.url = 'https://localhost:444' + opcoes.url;
       
       // Caso queira utilizar credenciais:
       opcoes.xhrFields = {
