@@ -16,7 +16,10 @@ define([
 , 'text!/admin/js/templantes/paginas/painel/Visao.Painel.html'
 ], function($, Backbone, _, Bootstrap, Utilitarios, TemplanteEntrada, TemplantePainel){
   
-  /* Responsavel por lidar com a página de entrada e a pagina do painel de administração.
+  /* @Visão Entrada().
+   *
+   * Responsavel por apresentar e lidar com a página de entrada e a pagina do painel de administração.
+   * Logo após o usuário realizar a sua entrada nós iremos apresentar para ele a visão de painel.
    */
   var Entrada = Backbone.View.extend({
     
@@ -33,6 +36,14 @@ define([
     
     },
 
+    /* @Construtor initialize().
+     *
+     * Aqui realizamos o inicio da visão de entrada. Se o usuário estiver autenticado nós apresentaremos
+     * a visão do painel. Caso contrário nós apresentaremos a visão para realização da entrada.
+     *
+     * @Parametro {Objeto} [ModeloSessao] Contêm dados do modelo de sessão.
+     * @Retorna {Objeto} Valor deste objeto.
+     */
     initialize: function (ModeloSessao) {
       var esteObjeto = this;
       this.ModeloSessao = ModeloSessao;
@@ -46,6 +57,10 @@ define([
       return this;
     },
 
+    /* @Método render().
+     *
+     * Renderizamos aqui a nossão visão e acrescentamos no DOM.
+     */
     render: function () {
       /* Escolheremos aqui o templante a ser apresentado dependendo da propriedade 'auth' do nosso ModeloSessao.
        * Caso a usuário esteja autenticado então mostramos a interface do painel. Caso contrário, nós iremos 
@@ -58,19 +73,34 @@ define([
       }
     },
     
-    // Sempre que o usuário digitar na entrada de jid nós iremos acessar o valor para
-    // realizarmos a entrada posteriormente.
+    /* @Método _aoEscreverAtualizarJid().
+     *
+     * Sempre que o usuário digitar na entrada de jid nós iremos acessar o valor para
+     * realizarmos a entrada posteriormente.
+     *
+     * @Parametro {Objeto} [evento] Contêm dados para acesso dos elementos do DOM.
+     */
     _aoEscreverAtualizarJid: function(evento) {
       this.jid = $(evento.currentTarget).val();
     },
     
-    // Sempre que o usuário digitar na entrada de senha nós iremos acessar o valor para
-    // realizarmos a entrada posteriormente.
+    /* @Método _aoEscreverAtualizarSenha().
+     *
+     * Sempre que o usuário digitar na entrada de senha nós iremos acessar o valor para
+     * realizarmos a entrada posteriormente.
+     *
+     * @Parametro {Objeto} [evento] Contêm dados para acesso dos elementos do DOM.
+     */
     _aoEscreverAtualizarSenha: function(evento) {
       this.senha = $(evento.currentTarget).val();
     },
     
-    // Realizamos aqui a entrada do usuário. É necessário o Jid e a senha.
+    /* @Método _aoClicarEntrar().
+     *
+     * Realizamos aqui a entrada do usuário. É necessário o Jid e a senha.
+     *
+     * @Parametro {Objeto} [evento] Contêm dados para acesso dos elementos do DOM.
+     */ 
     _aoClicarEntrar: function (evento) {
       evento.preventDefault();
       var esteObjeto = this;
@@ -87,7 +117,12 @@ define([
       });
     },
     
-    // Evento disparado ao clicar no botão de saida.
+    /* @Método _aoClicarSair().
+     *
+     * Evento disparado ao clicar no botão de saida.
+     *
+     * @Parametro {Objeto} [evento] Contêm dados para acesso dos elementos do DOM.
+     */
     _aoClicarSair : function(evento) {
       evento.preventDefault();
       this.ModeloSessao.sair();

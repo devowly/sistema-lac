@@ -65,7 +65,9 @@ define([
     console.log((codigo ? codigo.msg : 'Codigo não encontrado.'));
   };
   
-  /* Este modelo vai prover métodos para iniciarmos, validarmos e removermos a sessão de um determinado usuário.
+  /* @Modelo Sessao().
+   *
+   * Este modelo vai prover métodos para iniciarmos, validarmos e removermos a sessão de um determinado usuário.
    * @Veja https://cdnjs.com/libraries/backbone.js/tutorials/cross-domain-sessions
    *
    * A abordagem que utilizaremos para requisitar dados pelo lado cliente é que, sempre que necessário,
