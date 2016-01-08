@@ -94,19 +94,26 @@ define([
    */
   var Sessao = Backbone.Model.extend({
     
-    // A URL REST deste modelo.
+    /* @Propriedade {Texto} [urlRoot] A URL REST deste modelo.
+     */
     urlRoot: 'sessao',
     
-    // Informa qual dos atributos é o identificador.
-    // <umdez> Não é realmente necessário (Porem diminuirá a paranoia). 
+    /* @Propriedade {Texto} [idAttribute] Informa qual dos atributos é o identificador.
+     * <umdez> Não é realmente necessário (Porem diminuirá a paranoia).
+     */
     idAttribute: 'id',
     
-    // Isso vai ser utilizado para quando formos pegar os dados 
-    // das coleções aninhadas pertecentes a este modelo.
+    /* @Propriedade {Pilha} [colecoesAninhadas] Isso vai ser utilizado para quando formos pegar os dados 
+     * das coleções aninhadas pertecentes a este modelo.
+     */
     colecoesAninhadas: [
       'escopos'
     ], 
     
+    /* @Construtor initialize().
+     *
+     * Aqui realizamos o inicio do nosso modelo. 
+     */
     initialize: function () {
       this.escopos = nestCollection(this, 'escopos', new ColecaoEscopos(this.get('escopos')));
     },
