@@ -8,9 +8,13 @@
 var baseSitio = require('../indice');
 var Autenticacao = baseSitio.Autenticacao;
 
+/* @Classe CarregaServicoAutenticacao().
+ ----------------------------------------*/
 function CarregaServicoAutenticacao() {}
 
-/* Realiza o inicio do nosso modulo de serviço de autenticação.
+/* @Método carregar().
+ *
+ * Realiza o inicio do nosso modulo de serviço de autenticação.
  *
  * @Parametro {Objeto} [aplicativo] O nosso aplicativo Express.
  * @Parametro {Objeto} [bancoDados] Contêm o banco de dados Sequelize.
@@ -25,7 +29,7 @@ function CarregaServicoAutenticacao() {}
  */
 CarregaServicoAutenticacao.prototype.carregar = function (aplicativo, bancoDados, jwt, autenticacao) {
 
-  // Inicia o módulo de serviço de Autenticacao.
+  /* @Propriedade {Objeto} [srvcAut] O módulo do serviço de autenticacao. */
   var srvcAut = new Autenticacao(aplicativo, bancoDados, jwt, autenticacao);
 
   // Inicia o serviço de autenticacao e retorna promessa

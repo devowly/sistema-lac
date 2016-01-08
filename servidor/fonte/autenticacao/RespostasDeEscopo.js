@@ -9,7 +9,7 @@
 var utilitario = require('util');
 var EmissorEvento = require('events').EventEmitter;
 
-/* @Classe RespostasDeEscopo
+/* @Classe RespostasDeEscopo().
  *
  * Aqui - em cada uma das rotas - nós também iremos retornar um código de estatus informando o ocorrido. 
  * Os valores de estados poderão ser:
@@ -27,17 +27,26 @@ var EmissorEvento = require('events').EventEmitter;
  * @Parametro {Número} [estatus] O código de estatos de resposta do servidor HTTP REST.
  * @Parametro {Texto} [mensagem] Uma mensagem de resposta.
  * @Parametro {Texto} [codigo] Além dos estadus nós informamos um código que informa ao cliente o que realmente aconteceu.
- */
-
+ ---------------------------------------------------------------------------------------------------------------------------------*/
 var RespostasDeEscopo = function(estatos, mensagem, codigo) {
+  
+  /* @Propriedade {Texto} [name] Nome desta resposta. */  
   this.name = 'RespostasDeEscopo';
+  
+  /* @Propriedade {Texto} [message] Mensagem desta resposta. */ 
   this.message = mensagem || 'Erro interno no servidor.';
+  
+  /* @Propriedade {Número} [status] Estatos desta resposta. */ 
   this.status = estatos || 500;                    
+  
+  /* @Propriedade {Texto} [codigo] O código desta resposta. */ 
   this.code = codigo;  
 };
 utilitario.inherits(RespostasDeEscopo, EmissorEvento);
 
-/* Não autorizado. Quando a autenticação é requerida e falhou ou dados necessários não foram providos.
+/* @Método ErroNaoAutorizado().
+ *
+ * Não autorizado. Quando a autenticação é requerida e falhou ou dados necessários não foram providos.
  * 
  * @Parametro {Texto} [mensagem] Vamos informar ao cliente o que aconteceu.
  * @Parametro {Texto} [codigo] Contêm geralmente uma forma de informar mais especificamente o que ocorreu ao cliente.
@@ -48,7 +57,9 @@ var ErroNaoAutorizado = function(mensagem, codigo) {
 };
 utilitario.inherits(ErroNaoAutorizado, RespostasDeEscopo);
 
-/* Tudo certo. Estatus padrão para informar que a requisição ocorreu com exito.
+/* @Método RequisisaoCompleta(). 
+ *
+ * Tudo certo. Estatus padrão para informar que a requisição ocorreu com exito.
  * 
  * @Parametro {Pilha} [conteudo] Conteudo do resultado a ser enviado.
  */

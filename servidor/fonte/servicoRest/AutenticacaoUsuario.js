@@ -9,22 +9,24 @@
  * - Adicionar caracteristica de verificação das bandeiras de acesso a cada nova requisição de acesso. (issue #39) [FEITO]
  */
  
-/* Realizamos aqui diversas formas de autenticar os nossos usuário.
+/* @Classe AutenticacaoUsuario(). 
+ *
+ * Realizamos aqui diversas formas de autenticar os nossos usuário.
  * 
  * @Parametro {Objeto} [bancoDados] O nosso banco de dados Sequelize.
  * @Parametro {Objeto} [jwt] Utilizado para tratar as requisições em Json Web Token.
  * @Parametro {Objeto} [autenticacao] Configuração de autenticação.
- */
+ ------------------------------------------------------------------------------------*/
  var AutenticacaoUsuario = function(bancoDados, jwt, autenticacao) {
 
-  // Armazena a classe do banco de dados sequelize.
+  /* @Propriedade {Objeto} [bd] Armazena a classe do banco de dados sequelize. */ 
   this.bd = bancoDados; 
   
-  // Utilizaremos os tokens para autenticação.
+  /* @Propriedade {Objeto} [jsonWebToken] Utilizaremos os tokens para autenticação. */  
   this.jsonWebToken = jwt;
   
- /*
-  * A nossa configuração da autenticação. Abaixo a lista das propriedades:
+ /* @Propriedade {Objeto} [autentic] A nossa configuração da autenticação. Abaixo a lista das propriedades:
+  *
   * - autenticacao.verifyModel: Contêm o nome do modelo onde iremos buscar verificar os dados do usuário.
   * - autenticacao.accessModel: Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
   * - autenticacao.superSecret: Contêm o valor da chave super secreta para codificar e decodificar os tokens.
@@ -37,7 +39,9 @@ AutenticacaoUsuario.prototype.inicializar = function() {
 
 };
 
-/* Realiza verificação do nosso usuário pelo token. Caso o as informações passadas conferirem, nós 
+/* @Método verificarUsuarioPeloToken(). 
+ *
+ * Realiza verificação do nosso usuário pelo token. Caso o as informações passadas conferirem, nós 
  * retornaremos a informação que o usuário confere e também as diversas propriedades do usuário.
  * @Veja https://github.com/auth0/node-jsonwebtoken
  * @Veja http://brianmajewski.com/2015/02/25/relearning-backbone-part-9/
@@ -88,7 +92,9 @@ AutenticacaoUsuario.prototype.verificarUsuarioPeloToken = function(token, cd) {
   });
 };
 
-/* Verificamos o usuário. A verificação é realizada comparando a senha informada com a senha que temos.
+/* @Método verificarUsuarioPeloJid().  
+ *
+ * Verificamos o usuário. A verificação é realizada comparando a senha informada com a senha que temos.
  * Se o usuário conferir nós iremos pegar suas bandeiras de acesso e retornar chamando a função cd().
  * @Veja http://brianmajewski.com/2015/02/25/relearning-backbone-part-9/
  *
@@ -122,7 +128,9 @@ AutenticacaoUsuario.prototype.verificarUsuarioPeloJid = function(modeloRota, jid
   });
 };
 
-/* Logo após conferir o usuário, nós carregamos as bandeiras de acesso dele a determinada modelo de rota.
+/* @Método verificarUsuarioAcessoRota().  
+ *
+ * Logo após conferir o usuário, nós carregamos as bandeiras de acesso dele a determinada modelo de rota.
  *
  * @Parametro {Texto} [modeloRota] O nome do modelo onde as rotas estão sendo acessadas.
  * @Parametro {Objeto} [usuario] Os dados do usuário. 

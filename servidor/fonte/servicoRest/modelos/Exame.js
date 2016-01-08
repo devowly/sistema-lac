@@ -8,6 +8,10 @@
 /* Versão 0.0.1-Beta
  */
  
+/* @Objeto exame.
+ *
+ * Possui propriedades necessárias para o inicio do serviço REST para o modelo Exame.
+ -------------------------------------------------------------------------------------*/
 var exame = {
     nome: 'Exame'                      // É o nome dado a tabela (modelo) no banco de dados.
   , rotas: ['/exames', '/exames/:id']  // Rotas para o serviço REST.
@@ -19,7 +23,9 @@ var exame = {
   , seRecarregarInstancias: false      // É importante *não* ligar esta opção, porque causa um comportamento estranho ao atualizar e ou criar registros.
 };
 
-/* Os controladores deste modelo.
+/* @Função controladores().
+ *
+ * Os controladores deste modelo.
  *
  * @Parametro {Objeto} [utilitarios] Contêm métodos uteis como autenticação e verificação de acesso.
  * @Retorna {Objeto} Contendo os controladores do Epilogue.

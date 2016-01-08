@@ -11,7 +11,7 @@
 var utilitario = require('util');
 var EmissorEvento = require('events').EventEmitter;
 
-/* @Classe RespostasDeSessao
+/* @Classe RespostasDeSessao().
  *
  * Aqui - em cada uma das rotas - nós também iremos retornar um código de estatus informando o ocorrido. 
  * Os valores de estados poderão ser:
@@ -31,20 +31,31 @@ var EmissorEvento = require('events').EventEmitter;
  *
  * @Parametro {Número} [estatus] O código de estatos de resposta do servidor HTTP REST.
  * @Parametro {Texto} [mensagem] Uma mensagem de resposta.
- * @Parametro {Texto} [codigo] Além dos estadus nós informamos um código que informa ao cliente o que realmente aconteceu.
+ * @Parametro {Texto} [codigo] Além dos estatos nós informamos um código que informa ao cliente o que realmente aconteceu.
  * @Parametro {Boleano} [seAutenticado] Usuário está autenticado com sucesso?
- */
-
+ ---------------------------------------------------------------------------------------------------------------------------*/
 var RespostasDeSessao = function(estatos, mensagem, codigo, seAutenticado) {
+  
+  /* @Propriedade {Texto} [name] Nome desta resposta. */  
   this.name = 'RespostasDeSessao';
+  
+  /* @Propriedade {Texto} [message] Mensagem desta resposta. */ 
   this.message = mensagem || 'Erro interno no servidor.';
+  
+  /* @Propriedade {Número} [status] Estatos desta resposta. */ 
   this.status = estatos || 500;                    
+  
+  /* @Propriedade {Texto} [codigo] O código desta resposta. */ 
   this.code = codigo;  
+  
+  /* @Propriedade {Texto} [auth] Se o usuário está autenticado. */ 
   this.auth = seAutenticado;
 };
 utilitario.inherits(RespostasDeSessao, EmissorEvento);
 
-/* Não autorizado. Quando a autenticação é requerida e falhou ou dados necessários não foram providos.
+/* @Método ErroNaoAutorizado().
+ *
+ * Não autorizado. Quando a autenticação é requerida e falhou ou dados necessários não foram providos.
  * 
  * @Parametro {Texto} [mensagem] Vamos informar ao cliente o que aconteceu.
  * @Parametro {Texto} [codigo] Contêm geralmente uma forma de informar mais especificamente o que ocorreu ao cliente.
@@ -55,7 +66,9 @@ var ErroNaoAutorizado = function(mensagem, codigo, seAutenticado) {
 };
 utilitario.inherits(ErroNaoAutorizado, RespostasDeSessao);
 
-/* Quando acontecer uma requisição erronea. Geralmente isso acontece porque houve um erro do lado do cliente.
+/* @Método ErroDeRequisicaoErrada().
+ *
+ * Quando acontecer uma requisição erronea. Geralmente isso acontece porque houve um erro do lado do cliente.
  * 
  * @Parametro {Texto} [mensagem] Vamos informar ao cliente o que aconteceu.
  * @Parametro {Texto} [codigo] Contêm geralmente uma forma de informar mais especificamente o que ocorreu ao cliente.
@@ -66,7 +79,9 @@ var ErroDeRequisicaoErrada = function(mensagem, codigo, seAutenticado) {
 };
 utilitario.inherits(ErroDeRequisicaoErrada, RespostasDeSessao);
 
-/* O acesso a essa fonte é proibida. Retornamos este valor sempre que o acesso a uma fonte é proibida.
+/* @Método ErroDeProibicao().
+ *
+ * O acesso a essa fonte é proibida. Retornamos este valor sempre que o acesso a uma fonte é proibida.
  * 
  * @Parametro {Texto} [mensagem] Vamos informar ao cliente o que aconteceu.
  * @Parametro {Texto} [codigo] Contêm geralmente uma forma de informar mais especificamente o que ocorreu ao cliente.
@@ -77,7 +92,9 @@ var ErroDeProibicao = function(mensagem, codigo, seAutenticado) {
 };
 utilitario.inherits(ErroDeProibicao, RespostasDeSessao);
 
-/* Não foi encontrado. A fonte requisitada não pode ser encontrada mas pode ser disponível no futuro.
+/* @Método ErroDeNaoEncontrado(). 
+ *
+ * Não foi encontrado. A fonte requisitada não pode ser encontrada mas pode ser disponível no futuro.
  * 
  * @Parametro {Texto} [mensagem] Vamos informar ao cliente o que aconteceu.
  * @Parametro {Texto} [codigo] Contêm geralmente uma forma de informar mais especificamente o que ocorreu ao cliente.
@@ -88,7 +105,9 @@ var ErroDeNaoEncontrado = function(mensagem, codigo, seAutenticado) {
 };
 utilitario.inherits(ErroDeNaoEncontrado, RespostasDeSessao);
 
-/* Tudo certo. Estatus padrão para informar que a requisição ocorreu com exito.
+/* @Método RequisisaoCompleta().  
+ *
+ * Tudo certo. Estatus padrão para informar que a requisição ocorreu com exito.
  *
  * @Parametro {Pilha} [conteudo] Conteudo do resultado a ser enviado.
  */

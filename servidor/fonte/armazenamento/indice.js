@@ -15,7 +15,9 @@ var Promessa = require('bluebird');
 var modelos = require('./modelos/indice');
 var registrador = require('../nucleo/registrador')('armazenamento');
 
-/* Contêm as funções para a gerencia da database. Aqui iremos tentar uma conexão com o nosso banco de dados.
+/* @Classe Armazenamento().
+ *
+ * Contêm as funções para a gerencia da database. Aqui iremos tentar uma conexão com o nosso banco de dados.
  * Para a conexão estaremos utilizando o Sequelize. Assim que a conexão for realizadas nós iremos 
  * sincronizar com o banco, faremos isso ao carregarmos todos os arquivos de modelos do nosso banco.
  * Ao final nós teremos cada modelo como uma propriedades desta classe, por exemplo, quando 
@@ -23,7 +25,7 @@ var registrador = require('../nucleo/registrador')('armazenamento');
  * this[Slide].
  *
  * @Parametro {Objeto} [opcoes] Contem todas as opções para a configuração deste serviço de armazenamento.
- */
+ --------------------------------------------------------------------------------------------------------------*/
 var Armazenamento = function (opcoes) {
   
   EmissorEvento.call(this);
@@ -31,12 +33,16 @@ var Armazenamento = function (opcoes) {
   if (!opcoes) {
     throw new Error('Opções da database não foram informadas.');
   }
+  
+  /* @Propriedade {Objeto} [opcoes] As opções de configuração do armazenamento. */
   this.opc = opcoes;
 };
 
 util.inherits(Armazenamento, EmissorEvento);
 
-/* Carrega todos modelos da pasta modelos e cada um deles é adicionado a este objeto.
+/* @Método carregarModelos().
+ *
+ * Carrega todos modelos da pasta modelos e cada um deles é adicionado a este objeto.
  * Por exemplo, o modelo Slide será armazenado em this.Slide ou this[Slide].
  * Sendo assim a gente pode acessar daqui os diversos modelos.
  */
@@ -44,7 +50,9 @@ Armazenamento.prototype.carregarModelos = function () {
   modelos(this.sequelize, this);
 };
 
-/* Inicia o nosso banco de dados e sincroniza as tabelas se elas não estiverem lá.
+/* @Método iniciar(). 
+ *
+ * Inicia o nosso banco de dados e sincroniza as tabelas se elas não estiverem lá.
  *
  * @Parametro {Objeto} [opcsSincroniza] Contem as opções de configuração em um objeto chave valor.
  * @Parametro {Texto} [opcsSincroniza.dialect] Dialeto utilizado, pode ser MySQL, SQlite e Postgres.

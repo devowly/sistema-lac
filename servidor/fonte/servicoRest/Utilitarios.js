@@ -8,27 +8,29 @@ var AutenticacaoUsuario = require('./AutenticacaoUsuario');
  * @Arquivo Utilitarios.js
  */
  
-/* Utilitários diversos para as fontes Rest.
+/* @Classe Utilitarios().
+ *
+ * Contêm utilitários diversos para as fontes Rest.
  *
  * @Parametro {Objeto} [bancoDados] O nosso banco de dados Sequelize.
  * @Parametro {Objeto} [jwt] Utilizado para tratar as requisições em Json Web Token.
  * @Parametro {Objeto} [autenticacao] Configuração de autenticação.
- */
+ --------------------------------------------------------------------------------------*/
 var Utilitarios = function (bancoDados, jwt, autenticacao) {
 
-  // Armazena a classe do banco de dados sequelize.
+  /* @Propriedade {Objeto} [bd] Armazena o objeto do banco de dados sequelize. */
   this.bd = bancoDados; 
   
-  // Utilizaremos os tokens para autenticação.
+  /* @Propriedade {Objeto} [jsonWebToken] Utilizaremos os tokens para autenticação. */
   this.jsonWebToken = jwt;
   
-  // Informa se utilizaremos cookies com sessão.
+  /* @Propriedade {Boleano} [seForUtilizarCookie] Informa se utilizaremos cookies com sessão. */
   this.seForUtilizarCookie = autenticacao.useSessionWithCookies;
   
-  // Para realizar a autenticação dos usuários.
+  /* @Propriedade {Objeto} [autenticacaoUsuario] Para realizar a autenticação dos usuários. */
   this.autenticacaoUsuario = new AutenticacaoUsuario(bancoDados, jwt, autenticacao); 
-  
-  // As bandeiras de acesso as rotas dos modelos.
+   
+  /* @Propriedade {Objeto} [bandeiras] As bandeiras de acesso as rotas dos modelos. */
   this.bandeiras = new Bandeiras(); 
 };
 
@@ -36,7 +38,9 @@ Utilitarios.prototype.inicializar = function () {
   
 };
 
-/* Acrescenta uma bandeira na pilha do modelo. 
+/* @Método adcUmaBandeiraParaModelo().
+ *
+ * Acrescenta uma bandeira na pilha do modelo. 
  *
  * @Parametro {Texto} [modelo] O nome do modelo que possui as bandeiras.
  * @Parametro {Texto} [bandeira] O nome desta bandeira.
@@ -47,7 +51,9 @@ Utilitarios.prototype.adcUmaBandeiraParaModelo = function(modelo, bandeira, tipo
   this.bandeiras.adcBandeiraParaModelo(modelo, bandeira, tipo, valor);
 };
 
-/* Verificamos aqui as bandeiras de acesso a este determinado modelo.
+/* @Método verificarSePossuiAcesso().
+ *
+ * Verificamos aqui as bandeiras de acesso a este determinado modelo.
  *
  * @Parametro {Texto} [modelo] O modelo que possui as bandeiras.
  * @Parametro {Pilha} [tipos] Os tipos de acesso requisitado. Por exemplo 'Listar'.
@@ -57,7 +63,9 @@ Utilitarios.prototype.verificarSePossuiAcesso = function(modelo, tipos, valor) {
   return this.bandeiras.sePossuiAcesso(modelo, tipos, parseInt(valor, 16));
 };
 
-/* Realiza a autenticação de deteminado usuário pelo token informado.
+/* @Método autenticarPeloToken(). 
+ *
+ * Realiza a autenticação de deteminado usuário pelo token informado.
  *
  * @Parametro {Texto} [token] Aquele token utilizado para autenticação.
  * @Parametro {Função} [cd] Será chamada após a autenticação.
@@ -91,7 +99,9 @@ Utilitarios.prototype.autenticarPeloToken = function (token, cd) {
   cd(seValidado, dadosUsuario);
 };
 
-/* Realiza a autenticação do usuário pelo JID. Se o usuário conferir, vamos retornar suas informações com a função cd(), 
+/* @Método autenticarPeloJid(). 
+ * 
+ * Realiza a autenticação do usuário pelo JID. Se o usuário conferir, vamos retornar suas informações com a função cd(), 
  * juntamente com o valor da sua bandeira de acesso a um determinado modelo.
  *
  * @Parametro {Texto} [modeloRota] O modelo onde iremos pegar as bandeiras de acesso do usuário.
@@ -127,8 +137,10 @@ Utilitarios.prototype.autenticarPeloJid = function(modeloRota, jid, senha, cd) {
   // Caso não foi validado retornamos null nos dados.
   cd(seValidado, dadosUsuario);
 };
-
-/* Realiza a busca do token em cookies ou na requisição.
+ 
+/* @Método buscarUmToken(). 
+ *
+ * Realiza a busca do token em cookies ou na requisição.
  *
  * @Parametro {Objeto} [req] Contêm dados de determinada requisição.
  * @Parametro {Objeto} [req.params] Contêm dados passados nos parametros da requisição.

@@ -9,19 +9,23 @@ var baseSitio = require('../indice');
 var Armazenamento = baseSitio.Armazenamento;
 var registrador = require('../nucleo/registrador')('Armazenamento'); 
 
+/* @Classe CarregaArmazenamento().
+ ----------------------------------------*/
 function CarregaArmazenamento() {}
 
-/* Realiza o incio do nosso modulo de armazenamento.
+/* @Método carregar().
+ *
+ * Realiza o incio do nosso modulo de armazenamento.
  *
  * @Parametro {Objeto} [configuracao] Contêm as informações de configuração.
  * @Retorna {Promessa} Uma promessa de recusa ou de deliberação.
  */
 CarregaArmazenamento.prototype.carregar = function (configuracao) {
 
-  // Recebe as nossas configurações
+  /* @Propriedade {Objeto} [configArmazenamento] As nossas configurações. */
   var configArmazenamento = configuracao.storage;
 
-  // Inicia o módulo de armazenamento
+  /* @Propriedade {Objeto} [arm] O módulo de armazenamento. */
   var arm = new Armazenamento(configArmazenamento);
 
   // Inicia sequelize e retorna promessa

@@ -17,8 +17,9 @@ var registrador = require('../nucleo/registrador')('ServicoRest');
 var epilogue = require('epilogue');
 var Utilitarios = require('./Utilitarios');
 
-/* Abstração da gerencia das rotas do serviço REST. 
- * Realiza o carregamento das rotas REST do nosso servidor.
+/* @Classe ServicoRest().
+ *
+ * Abstração da gerencia das rotas do serviço REST. Realiza o carregamento das rotas REST do nosso servidor.
  *
  * @Parametro {Objeto} [aplicativo] O nosso aplicativo Express.
  * @Parametro {Objeto} [bancoDados] Contêm o objeto do nosso banco de dados.
@@ -30,27 +31,29 @@ var Utilitarios = require('./Utilitarios');
  * @Parametro {Texto} [autenticacao.accessModel] Contêm o nome do modelo onde iremos buscar verificar as bandeiras de acesso do usuário.
  * @Parametro {Texto} [autenticacao.superSecret] Contêm o valor da chave super secreta para codificar e decodificar os tokens.
  * @Parametro {Boleano} [autenticacao.useSessionWithCookies] Contêm o valor que informa se vamos utilizar cookies com sessão.
- */
+ ----------------------------------------------------------------------------------------------------------------------------------------*/
 var ServicoRest = function (aplicativo, bancoDados, jwt, autenticacao) {
   
   EmissorEvento.call(this);
 
-  // Armazena a classe do banco de dados sequelize.
+  /* @Propriedade {Objeto} [bd] Armazena a classe do banco de dados sequelize. */ 
   this.bd = bancoDados; 
-  
-  // Armazena aplicativo express
+   
+  /* @Propriedade {Objeto} [aplic] Armazena aplicativo express. */  
   this.aplic = aplicativo;
   
-  // Utilizaremos os tokens para autenticação.
+  /* @Propriedade {Objeto} [jsonWebToken] Utilizaremos os tokens para autenticação. */  
   this.jsonWebToken = jwt;
   
-  // Iniciamos aqui os utilitários.
+  /* @Propriedade {Objeto} [utilitarios] Iniciamos aqui os utilitários. */
   this.utilitarios = new Utilitarios(bancoDados, jwt, autenticacao);
 };
 
 util.inherits(ServicoRest, EmissorEvento);
 
-/* Realiza o inicio do serviço REST para cada modelo do banco de dados.
+/* @Método carregarServicoRest().  
+ *
+ * Realiza o inicio do serviço REST para cada modelo do banco de dados.
  */
 ServicoRest.prototype.carregarServicoRest = function () {
   
@@ -143,7 +146,9 @@ ServicoRest.prototype.carregarServicoRest = function () {
    
 };
 
-/* Realiza o inicio do serviço REST Epilogue e logo em seguida carrega o serviço REST
+/* @Método iniciar(). 
+ *
+ * Realiza o inicio do serviço REST Epilogue e logo em seguida carrega o serviço REST
  * para cada um dos modelos do banco de dados. 
  *
  * @Retorna {Promessa} Promessa de recusa ou de deliberação. 

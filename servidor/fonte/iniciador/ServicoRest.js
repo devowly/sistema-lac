@@ -8,9 +8,13 @@
 var baseSitio = require('../indice');
 var ServicoRest = baseSitio.ServicoRest;
 
+/* @Classe CarregaServicoRest().
+ ----------------------------------*/
 function CarregaServicoRest() {}
 
-/* Realiza o inicio do nosso modulo de serviço REST.
+/* @Método carregar().
+ *
+ * Realiza o inicio do nosso modulo de serviço REST.
  *
  * @Parametro {Objeto} [aplicativo] O nosso aplicativo Express.
  * @Parametro {Objeto} [bancoDados] Contêm o banco de dados Sequelize.
@@ -25,7 +29,7 @@ function CarregaServicoRest() {}
  */
 CarregaServicoRest.prototype.carregar = function (aplicativo, bancoDados, jwt, autenticacao) {
 
-  // Inicia o módulo de serviço REST
+  /* @Propriedade {Objeto} [srvcRest] O módulo do serviço REST. */
   var srvcRest = new ServicoRest(aplicativo, bancoDados, jwt, autenticacao);
 
   // Inicia o serviço REST e retorna promessa

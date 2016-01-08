@@ -14,15 +14,23 @@
  * @Arquivo Bandeiras.js
  */
 
+/* @Classe Bandeiras().
+ *
+ * Realizamos aqui a manipulação das bandeiras de acesso aos diversos escopos.
+ --------------------------------------------------------------------------------------*/
 var Bandeiras = function() {
-  this.listaBandeiras = [];  // Uma lista de bandeiras para cada modelo.
+  
+  /* @Propriedade {Pilha} [listaBandeiras] Uma lista de bandeiras para cada modelo. */
+  this.listaBandeiras = [];  
 };
 
 Bandeiras.prototype.inicializar = function() {
   
 };
 
-/* Acrescenta uma bandeira na pilha do modelo. 
+/* @Método adcBandeiraParaModelo(). 
+ *
+ * Acrescenta uma bandeira na pilha do modelo. 
  *
  * @Parametro {Texto} [modelo] O nome do modelo que possui as bandeiras.
  * @Parametro {Texto} [bandeira] O nome desta bandeira.
@@ -43,7 +51,9 @@ Bandeiras.prototype.adcBandeiraParaModelo = function(modelo, bandeira, tipo, val
   };
 };
 
-/* Verificamos aqui as bandeiras de acesso a este determinado modelo.
+/* @Método sePossuiAcesso(). 
+ *
+ * Verificamos aqui as bandeiras de acesso a este determinado modelo.
  *
  * @Parametro {Texto} [modelo] O modelo que possui as bandeiras.
  * @Parametro {Pilha} [tipos] Os tipos de acesso requisitado. Por exemplo 'Listar'.

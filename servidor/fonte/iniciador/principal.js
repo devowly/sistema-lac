@@ -14,13 +14,15 @@ var Armazenamento = require('./Armazenamento');                  // Modulo de ar
 var ServicoRest = require('./ServicoRest');                      // O nosso serviço REST para cada um dos modelos de armazenamento.
 var Autenticacao = require('./Autenticacao');                    // Nosso serviço de autenticacao Json Web Token.
 
-/* Realiza o inicio dos nossos serviços principais.
+/* @Função prosseguir().
+ *
+ * Realiza o inicio dos nossos serviços principais.
  * 
  * @Parametro {Objeto} [configuracao] Contêm as informações de configuração.
  * @Parametro {Objeto} [aplicativo] O nosso aplicativo do servidor Express.
  * @Parametro {Objeto} [jwt] Contêm propriedades e métodos para lidarmos com os tokens.
  * @Parametro {Função} [pronto] Será chamada ao realizarmos todas as nossas funções.
- */
+ ---------------------------------------------------------------------------------------*/
 exports.prosseguir = function(configuracao, aplicativo, jwt, pronto) {
   var esteObjeto = {};
   
