@@ -20,7 +20,7 @@ define([
    *
    * Responsavel por apresentar e lidar com a página de entrada e a pagina do painel de administração.
    * Logo após o usuário realizar a sua entrada nós iremos apresentar para ele a visão de painel.
-   */
+   ----------------------------------------------------------------------------------------------------*/
   var Entrada = Backbone.View.extend({
     
     /* @Propriedade {Objeto} [ModeloSessao] O Modelo para realizarmos a sessão. 

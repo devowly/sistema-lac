@@ -1,6 +1,8 @@
 'use strict'
 
-/* @Arquivo sessao.js
+/* Responsável por lidar com a sessão do usuário.
+ *
+ * @Arquivo sessao.js
  */
 
 /* Versão 0.0.1-Beta 
@@ -91,7 +93,7 @@ define([
    * 
    * @Veja https://stormpath.com/blog/token-auth-spa/
    * @Veja https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet
-   */
+   ---------------------------------------------------------------------------------------------------------------------------------*/
   var Sessao = Backbone.Model.extend({
     
     /* @Propriedade {Texto} [urlRoot] A URL REST deste modelo.
@@ -267,7 +269,10 @@ define([
       });
     },
     
-    // Aqui os atributos padrões deste modelo de sessao.
+    /* @Propriedade {Objeto} [defaults] Contêm os atributos padrões deste modelo de sessao.
+     * Lembre-se que estes atributos podem *não* estar armazenados no modelo do banco de dados.
+     * Eu utilizo alguns destes atributos fora do modelo para utilizar os eventos.     
+     */
     defaults: {
       scope: false   // Utilizaremos este atributo para saber quando o escopo esta pronto para ser acessado.
                      // Lembre-se que este atributo não está na nossa sessão.

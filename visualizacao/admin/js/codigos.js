@@ -9,7 +9,9 @@ define([
   'backbone'
 ], function($, _, BackBone){
   
-  /* A cada requisição iremos retornar na resposta um campo 'code' que é responsável por
+  /* @Classe CodigosDeResposta().
+   * 
+   * A cada requisição iremos retornar na resposta um campo 'code' que é responsável por
    * informar qual estado da sessão. Isso faz com que haja uma forma primitiva de comunicação,
    * assim o lado cliente pode facilmente manipular os diversos estados de uma requisição.
    *
@@ -18,6 +20,10 @@ define([
    * uma gravidade maior que a do grupo *INFO* e assim por diante. 
    ------------------------------------------------------------------------------------------- */
   var CodigosDeResposta = function() {
+    
+    /* @Propriedade {Objeto} [CODIGOS] Armazena os códigos de resposta divididos em conjuntos das 
+     * pilhas 'INFO', 'SUCESSO' e 'ERRO'.
+     */
     this.CODIGOS = {
       'INFO': [],    // Aqui são os códigos relacionados às informações.
       'SUCESSO': [], // Aqui os códigos de sucesso.
@@ -25,7 +31,9 @@ define([
     };
   };
   
-  /* Realiza a adição de um novo código. Cada código será utilizado para a comunicação das respostas
+  /* @Método adicionarUmCodigo().
+   *
+   * Realiza a adição de um novo código. Cada código será utilizado para a comunicação das respostas
    * do serviço REST com os nossos modelos. A gente usará isso para ficar mais simples de manipular as
    * diversas respostas do serviço REST.
    *
@@ -65,7 +73,9 @@ define([
     return true;
   };
   
-  /* Realizamos aqui uma busca por determinado código pelo valor informado. Se caso o código for encontrado,
+  /* @Método procurarUmCodigoPeloValor().
+   *
+   * Realizamos aqui uma busca por determinado código pelo valor informado. Se caso o código for encontrado,
    * nós retornamos a mensagem e o tipo do código. Os tipos de códigos que temos são 'INFO', 'SUCESSO' e 'ERRO'.
    *
    * Uma das utilidades de retornarmos o tipo é que podemos separar as informações, por exemplo, a mensagem do tipo 

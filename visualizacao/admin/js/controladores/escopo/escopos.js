@@ -21,7 +21,7 @@ define([
    * Cada rota REST possui diversas bandeiras de acesso para os escopos.
    * Assim a gente vai saber quais são as bandeiras que este usuário possui para um determinado
    * escopo.
-   */
+   --------------------------------------------------------------------------------------------*/
   var Escopos = function(ModeloSessao) {
     var esteObjeto = this;
     this.modeloSessao = ModeloSessao;

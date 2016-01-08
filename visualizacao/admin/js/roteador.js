@@ -1,8 +1,8 @@
 'use strict'
 
-/* @arquivo roteador.js
- *
- * Aqui vamos adicionar as caracteristicas de trabalhar com as rotas, Carregar os arquivos de visão. 
+/* Aqui vamos adicionar as caracteristicas de trabalhar com as rotas, Carregar os arquivos de visão.  
+ * 
+ * @arquivo roteador.js
  */ 
 
 /* Versão 0.0.1-Beta
@@ -17,14 +17,23 @@ define([
   'modelos/sessao/sessao'
 ], function($, Backbone, Utilitarios, ControladorEscopos, VisaoEntrada, ModeloSessao){
   
+  /* @Roteador SitioRoteador().
+   *
+   * Aqui temos as propriedades e métodos do nosso roteador. O roteador, como o nome já indica,
+   * realiza a apresentação das visões para cada cada rota acessada.
+   -------------------------------------------------------------------------------------------*/
   var SitioRoteador = Backbone.Router.extend({
     
-    /* AS ROTAS DO NOSSO APLICATIVO 
-     *----------------------------------------------------*/
+    /* @Propriedade {Objeto} [routes] Contêm as nossas rotas. 
+     */
     routes: {
       "": "inicio"
     },
     
+    /* @Construtor initialize().
+     *
+     * Aqui realizamos o inicio do nosso roteador. 
+     */
     initialize: function () {
       // O nosso controlador de escopos.
       if (!this.ctrldrEscopos) {
@@ -40,12 +49,21 @@ define([
       $('#conteudo-raiz').html(this.visaoEntrada.el);
     },
     
+   /* @Método inicio().
+    *
+    * Esta é a rota sempre apresentada inicialmente.
+    */
     inicio: function() {
       
     }
     
   });
   
+  /* @Função inicializar().
+   *
+   * Responsável por verificar o estado de autenticação do usuário e também por
+   * iniciar o nosso roteador e o histório de rotas.
+   ----------------------------------------------------------------------------*/
   var inicializar = function() {
     var Sitio = null;
     
