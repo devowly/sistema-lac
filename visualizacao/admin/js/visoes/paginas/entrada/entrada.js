@@ -23,16 +23,20 @@ define([
    */
   var Entrada = Backbone.View.extend({
     
-    /* @Propriedade ModeloSessao. O Modelo para realizarmos a sessão. */
+    /* @Propriedade {Objeto} [ModeloSessao] O Modelo para realizarmos a sessão. 
+     */
     ModeloSessao: null,
     
-    /* @Propriedade jid. O Jabber ID do usuário. (Composto por local@dominio). */
+    /* @Propriedade {Texto} [jid] O Jabber ID do usuário. (Composto por local@dominio). 
+     */
     jid: null,  
     
-    /* @Propriedade senha. A senha deste usuário. */
+    /* @Propriedade {Texto} [senha] A senha deste usuário. 
+     */
     senha: null,  
     
-    /* @Propriedade attributes. Os atributos desta visão. */
+    /* @Propriedade {Objeto} [attributes] Os atributos desta visão. 
+     */
     attributes: {
     
     },
