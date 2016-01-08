@@ -24,7 +24,13 @@ define([
    --------------------------------------------------------------------------------------------*/
   var Escopos = function(ModeloSessao) {
     var esteObjeto = this;
+    
+    /* @Propriedade {Objeto} [modeloSessao] Armazena o modelo da sessão. */
     this.modeloSessao = ModeloSessao;
+    
+    /* @Propriedade {Pilha} [escopos] Armazena os escopos de determinado usuário 
+     * que acaba de realizar a entrada. 
+     */
     this.escopos = [];
     
     // Espera os eventos da propriedade scope do modeloSessao.
