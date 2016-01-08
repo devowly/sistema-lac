@@ -133,7 +133,9 @@ define([
     * Devemos lembrar que se estivermos utilizando cookies a sessão do usuário irá funcionar em todas as janelas de um mesmo navegador.
     */
     
-   /* Responsável por realizar a entrada do usuário. Informando o seu jid e senha pelo método POST. 
+   /* @Método entrar().
+    *
+    * Responsável por realizar a entrada do usuário. Informando o seu jid e senha pelo método POST. 
     * Se tudo correr bem o usuário terá seu token de acesso para realização de requisições as rotas do serviço.
     *
     * @Parametro {Objeto} [credenciais] As credenciais necessárias para a requisição de um token. Geralmente composto de jid e senha.
@@ -144,6 +146,7 @@ define([
     entrar: function(credenciais, cd) {
       var esteObjeto = this;
       
+      // Envia um POST para a rota '/sessao/' e realiza a entrada.
       this.save(credenciais, {
         success: function (modelo, resposta) {
          /* Caso a entrada seja um sucesso e o usuário receba o seu token, então é necessário agora que
@@ -162,7 +165,7 @@ define([
            * o escopo do usuário.
            */
           esteObjeto.escopos.url = 'sessao/' + esteObjeto.id + '/escopos';
-          esteObjeto.set({scope: true});
+          esteObjeto.set({scope: true});  // Escopo pronto para ser requisitado.
         
           registro(resposta.code);
         
@@ -176,7 +179,9 @@ define([
       });
     },
     
-    /* Responsável por sair da sessão. Até o momento não é possível revogar o token pelo lado servidor,
+    /* @Método sair().
+     *
+     * Responsável por sair da sessão. Até o momento não é possível revogar o token pelo lado servidor,
      * por causa disso, nós temos que fazer uma forma de manipular isso aqui do lado cliente, provavelmente,
      * removendo os cookies e apresentando novamente um formulário onde o usuário possa realizar nova entrada.
      */
@@ -212,7 +217,9 @@ define([
       });      
     },
     
-    /* Realizamos aqui a validação do nosso token, isso é feito ao enviarmos uma requisição GET
+    /* @Método seAutenticado().
+     *
+     * Realizamos aqui a validação do nosso token, isso é feito ao enviarmos uma requisição GET
      * para a rota '/sessao'. Caso tudo ocorrer bem a gente vai saber que o nosso token é válido e que não
      * está expirado.
      * Se houver algo errado com o nosso token, por exemplo, se o token está expirado, então devemos
@@ -223,9 +230,13 @@ define([
     seAutenticado: function(cd) {
       var esteObjeto = this;
         
-      // Este método envolve as rotas, sendo utilizado para a gente manipular a visão do usuário.
-      // Mostrando a visão de entrada se o usuário não estiver validado.
-      // Antes de iniciarmos qualquer rota vamos ver se o usuário é valido.
+      /* Este método envolve as rotas, sendo utilizado para a gente manipular a visão do usuário.
+       * Mostrando a visão de entrada se o usuário não estiver validado. Antes de iniciarmos qualquer
+       * rota vamos ver se o usuário é valido.
+       *
+       * Enviamos aqui um GET para a rota '/sessao/' se retornar sucesso então nosso token é valido
+       * e com este token válido é possível realizarmos novas requisições.
+       */
       this.fetch({
         success: function(modelo, resposta) {
           registro(resposta.code);
@@ -235,7 +246,7 @@ define([
            * o escopo do usuário.
            */
           esteObjeto.escopos.url = 'sessao/' + esteObjeto.id + '/escopos';
-          esteObjeto.set({scope: true});
+          esteObjeto.set({scope: true});  // Escopo pronto para ser requisitado.
           
           cd(true, resposta);
         },

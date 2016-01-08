@@ -1,6 +1,6 @@
 'use strict'
 
-/* Aqui realizamos o controle dos escopos.
+/* Aqui realizamos a requisição dos escopos de determinado usuário que realizou entrada.
  *
  * @arquivo escopos.js
  */ 
@@ -15,6 +15,13 @@ define([
   'utilitarios'
 ], function($, Backbone, Utilitarios){
   
+  /* @Classe Escopos.
+   *
+   * Aqui nós vamos requisitar os escopos do usuário logo que ele realizar a entrada no painel.
+   * Cada rota REST possui diversas bandeiras de acesso para os escopos.
+   * Assim a gente vai saber quais são as bandeiras que este usuário possui para um determinado
+   * escopo.
+   */
   var Escopos = function(ModeloSessao) {
     var esteObjeto = this;
     this.modeloSessao = ModeloSessao;
@@ -27,6 +34,10 @@ define([
     esteObjeto._carregarEscopos();
   };
  
+  /* @Método _carregarEscopos().
+   *
+   * Carregamos aqui os escopos do usuário que acabou de realizar entrada no sistema.
+   */
   Escopos.prototype._carregarEscopos = function() {
     var esteObjeto = this;
     
