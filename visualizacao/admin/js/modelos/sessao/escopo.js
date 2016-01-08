@@ -32,8 +32,8 @@
 
     // Aqui os atributos padrões deste modelo de escopo.
     defaults: {
-      modelo: false     // O modelo 
-    , bandeira: false   // Bandeira com valores de acesso.
+      model: null  // O modelo 
+    , flag: null   // Bandeira com valores de acesso.
     }
   });
 

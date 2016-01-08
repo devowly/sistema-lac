@@ -38,8 +38,8 @@ define([
           // Veja que cada modelo de escopo possui o nome do modelo (tabela) no banco de dados e também o valor da bandeira de acesso.
           // Com estes valores em mãos nós podemos *montar* aqui a nossa interface do usuário.
           var escopo = {
-            modelo: esteObjeto.modeloSessao.escopos.models[ca].get('modelo')
-          , bandeira: esteObjeto.modeloSessao.escopos.models[ca].get('bandeira')
+            modelo: esteObjeto.modeloSessao.escopos.models[ca].get('model')
+          , bandeira: esteObjeto.modeloSessao.escopos.models[ca].get('flag')
           };
           esteObjeto.escopos.push(escopo);
         }

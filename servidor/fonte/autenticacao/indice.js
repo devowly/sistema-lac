@@ -273,8 +273,8 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
                   var escopo = {};                               // Nosso escopo de acesso as rotas de cada modelo.
                   var modelo = acesso.modelo;                    // O modelo onde verificamos a bandeira de acesso.
                   var bandeira = acesso.bandeira.toString(16);   // Salvamos a bandeira do modelo no tipo texto. Depois convertemos para hexa.                  
-                  escopo['modelo'] = modelo;                     // O modelo.
-                  escopo['bandeira'] = bandeira;                 // Salvamos determinada bandeira para um modelo em especifico.
+                  escopo['model'] = modelo;                     // O modelo.
+                  escopo['flag'] = bandeira;                 // Salvamos determinada bandeira para um modelo em especifico.
                   resposta.push(escopo);
                 }); 
                 esteObjeto._responder(res, (new RespostasDeEscopo.RequisisaoCompleta(resposta)));
