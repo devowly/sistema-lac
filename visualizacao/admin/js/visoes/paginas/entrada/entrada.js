@@ -23,15 +23,16 @@ define([
    */
   var Entrada = Backbone.View.extend({
     
-    // O Modelo para realizarmos a sessão.
+    /* @Propriedade ModeloSessao. O Modelo para realizarmos a sessão. */
     ModeloSessao: null,
     
-    // O Jabber ID do usuário. (Composto por local@dominio).
+    /* @Propriedade jid. O Jabber ID do usuário. (Composto por local@dominio). */
     jid: null,  
     
-    // A senha deste usuário.
+    /* @Propriedade senha. A senha deste usuário. */
     senha: null,  
     
+    /* @Propriedade attributes. Os atributos desta visão. */
     attributes: {
     
     },
@@ -51,21 +52,20 @@ define([
       // Espera os eventos da propriedade auth do ModeloSessao. Assim podemos 
       // manipular a interface do usuário de acordo com o estado de autenticação atual do usuário.
       this.ModeloSessao.on('change:auth', function (sessao) {
-        esteObjeto.render();
+        esteObjeto.renderizar();
       });
-      this.render();
+      this.renderizar();
       return this;
     },
 
-    /* @Método render().
+    /* @Método renderizar().
      *
-     * Renderizamos aqui a nossão visão e acrescentamos no DOM.
+     * Renderizamos aqui o nosso templante e o acrescentamos ao DOM. Escolheremos aqui o templante a a ser 
+     * apresentado dependendo da propriedade 'auth' do nosso ModeloSessao. Caso a usuário esteja autenticado
+     * então mostramos a interface do painel. Caso contrário, nós iremos manipular para que seja apresentada 
+     * novamente uma tela para que ele realize a entrada novamente.
      */
-    render: function () {
-      /* Escolheremos aqui o templante a ser apresentado dependendo da propriedade 'auth' do nosso ModeloSessao.
-       * Caso a usuário esteja autenticado então mostramos a interface do painel. Caso contrário, nós iremos 
-       * manipular para que seja apresentada novamente uma tela para que ele realize a entrada novamente.
-       */
+    renderizar: function () {
       if(this.ModeloSessao.get('auth')){
         this.$el.html(_.template(TemplantePainel));
       } else {
@@ -135,15 +135,19 @@ define([
       'change input#entrada-senha': '_aoEscreverAtualizarSenha'  // Ao escrever no campo de entrada de senha.
     },
 
-    /* Iniciamos componentes para esta visão. 
-     * Os componentes podem ser do bootstrap, jQuery e outros frameworks utilizados
+    /* @Método _iniciarMeusComponentes().
+     *
+     * Iniciamos componentes para esta visão. Os componentes podem ser do bootstrap, 
+     * jQuery e outros frameworks utilizados
      */ 
     _iniciarMeusComponentes: function(){
       
     },
     
-    /* Iniciamos as escutas de eventos para esta visão. 
-     * Os eventos podem ser de elementos do bootstrap, jQuery e outros frameworks utilizados
+    /* @Método _iniciarMinhaEscutaEventos().
+     *
+     * Iniciamos as escutas de eventos para esta visão. Os eventos podem ser de elementos do 
+     * bootstrap, jQuery e outros frameworks utilizados
      */ 
     _iniciarMinhaEscutaEventos: function() {
       
