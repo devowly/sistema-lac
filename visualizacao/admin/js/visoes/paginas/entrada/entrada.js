@@ -132,6 +132,9 @@ define([
       this.ModeloSessao.sair();
     },
     
+    /* @Propriedade {Objeto} [events] Aqui temos os eventos que esta visão irá escutar.
+     * Cada evento será disparado quando o usuário realizar alguma atividade no navegador. 
+     */
     events: {
       'submit form.sair': '_aoClicarSair',                       // Ao clicar no botão sair.
       'submit form.entrada': '_aoClicarEntrar',                  // Ao clicar em botão de submeter o formulário.
