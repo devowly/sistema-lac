@@ -7,13 +7,20 @@
  */
 
 define([
-  'jquery',
-  'roteador', // Requisitamos o arquivo roteador.js
-  'backbone',
-  'configuracao'
+  'jquery'
+, 'roteador' // Requisitamos o arquivo roteador.js
+, 'backbone'
+, 'configuracao'
 ], function($, Roteador, Backbone, Configuracao){
+  
+  /* @Função inicializar().
+   *
+   * Responsável por inicializar o nosso roteador e também por sobrescrever o método sync() e o ajaxPrefilter().
+   -------------------------------------------------------------------------------------------------------------*/
   var inicializar = function(){
     
+    /* @Variavel {Função} [ponteSync] Armazena o método sync().
+     */
     var ponteSync = Backbone.sync;
     
     /* Sobrescreve o método sync() do Backbone com alcançe global. Estamos utilizando o serviço CORS.

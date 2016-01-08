@@ -4,9 +4,9 @@
  */
 
 define([
-  'jquery', 
-  'underscore',
-  'backbone'
+  'jquery' 
+, 'underscore'
+, 'backbone'
 ], function($, _, BackBone){
   
   /* @Classe CodigosDeResposta().

@@ -10,9 +10,9 @@
  */
  
 define([
-  'jquery',
-  'backbone',
-  'utilitarios'
+  'jquery'
+, 'backbone'
+, 'utilitarios'
 ], function($, Backbone, Utilitarios){
   
   /* @Classe Escopos.

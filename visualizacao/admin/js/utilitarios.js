@@ -6,12 +6,14 @@
  */
 
 define([
-  'jquery', 
-  'underscore',
-  'backbone'
+  'jquery' 
+, 'underscore'
+, 'backbone'
 ], function($, _, BackBone){
   
-  /* Carrega assincronamente os templates encontrados em arquivos .html separados.
+  /* @Função carregarTemplantes().
+   *
+   * Carrega assincronamente os templates encontrados em arquivos .html separados.
    * Depois de carregado ele chama a função cd().
    *
    * @Parametro {Pilha} [visoes] Lista contendo o nome das visões a serem carregadas.
@@ -34,7 +36,9 @@ define([
     $.when.apply(null, deferidos).done(cd);
   };
   
-  /* Carrega assincronamente o(s) template(s) encontrado(s) em arquivos .html separados do diretorio informado.
+  /* @Função carregarTemplantesExtras().
+   *
+   * Carrega assincronamente o(s) template(s) encontrado(s) em arquivos .html separados do diretorio informado.
    * Ele armazena em cada objeto da lista um template. Depois de carregado ele chama a função cd().
    * Este método é designado para uso daquelas visões que precisam carregar mais arquivos quando não utiliza o banco de dados.
    * É interessante usa-lo pois isso faz o desenvolvimento ser mais produtivo porque não precisamos adicionar modelos e coleções e 
@@ -62,7 +66,9 @@ define([
     $.when.apply(null, deferidos).done(cd);
   };
   
-  /* Carrega apenas as coleções aninhadas de um determinado modelo
+  /* @Função carregarColecaoAninhada(). 
+   *
+   * Carrega apenas as coleções aninhadas de um determinado modelo
    *
    * @Parametro {Objeto} [colecao] Uma coleção de modelos.
    * @Parametro {Pilha} [colecoesAninhadas] Aquelas coleções aninhadas aos modelos de uma coleção.
@@ -98,7 +104,9 @@ define([
     }
   };
   
-  /* Carrega *todas* as coleções aninhadas de um determinado modelo de forma recursiva.
+  /* @Função carregarTodasColecoesAninhadas().  
+   *
+   * Carrega *todas* as coleções aninhadas de um determinado modelo de forma recursiva.
    *
    * @Parametro {Pilha} [colecoes] Contêm um conjunto de coleções.
    * @Parametro {Função} [cd] Chamada logo após aquelas coleções aninhadas serem totalmente carregadas.
@@ -174,7 +182,9 @@ define([
         
   };
   
-  /* Carrega a coleção e depois todas as suas coleções aninhadas.
+  /* @Função carregarColecao(). 
+   *
+   * Carrega a coleção e depois todas as suas coleções aninhadas.
    *
    * @Parametro {Pilha} [colecoes] Contêm aquele conjunto de coleções que serão carregadas.
    * @Parametro {Função} [cd] Chamada logo após as coleções serem carregadas.
@@ -208,7 +218,9 @@ define([
     
   };
   
-  /* Responsavel por carregar arquivos xml.
+  /* @Função carregarArquivosXml(). 
+   *
+   * Responsavel por carregar arquivos xml.
    */
   var carregarArquivosXml = function() {
 

@@ -11,12 +11,12 @@
  */
  
 define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'codigos',
-  'nesting',
-  'colecoes/sessao/escopos'
+  'jquery'
+, 'underscore'
+, 'backbone'
+, 'codigos'
+, 'nesting'
+, 'colecoes/sessao/escopos'
 ], function($, _, Backbone, CodigosDeResposta, nesting, ColecaoEscopos) {
   
  /* Os modelos são a parte central de um aplicativo, contendo os dados e também uma parte longa de toda logica que a cerca:

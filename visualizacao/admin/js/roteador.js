@@ -9,12 +9,12 @@
  */
  
 define([
-  'jquery',
-  'backbone',
-  'utilitarios',
-  'controladores/escopo/escopos',
-  'visoes/paginas/entrada/entrada',
-  'modelos/sessao/sessao'
+  'jquery'
+, 'backbone'
+, 'utilitarios'
+, 'controladores/escopo/escopos'
+, 'visoes/paginas/entrada/entrada'
+, 'modelos/sessao/sessao'
 ], function($, Backbone, Utilitarios, ControladorEscopos, VisaoEntrada, ModeloSessao){
   
   /* @Roteador SitioRoteador().

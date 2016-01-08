@@ -3,9 +3,9 @@
 /* @arquivo escopo.js */
 
  define([
-  'jquery',
-  'backbone',
-  'underscore'
+  'jquery'
+, 'backbone'
+, 'underscore'
 ], function($, Backbone, _){
 
   /* Os modelos são a parte central de um aplicativo, contendo os dados e também uma parte longa de toda logica que a cerca:
@@ -21,16 +21,29 @@
    *
    * @veja http://backbonejs.org/#Model
    */
+   
+  /* @Modelo Escopo().
+   *
+   * Responsável por armazenar os valores dos modelos de escopo.
+   ---------------------------------------------------------------------*/
   var Escopo = Backbone.Model.extend({
 
-    // O endereço REST onde iremos pegar os dados.
+    /* @Propriedade {Texto} [urlRoot] O endereço REST onde iremos pegar os dados. 
+     */
     urlRoot: 'escopos',
 
+    /* @Construtor initialize().
+     *
+     * Aqui realizamos o inicio do nosso modelo. 
+     */
     initialize: function () {
         
     },
 
-    // Aqui os atributos padrões deste modelo de escopo.
+    /* @Propriedade {Objeto} [defaults] Contêm os atributos padrões deste modelo de escopo.
+     * Lembre-se que estes atributos podem *não* estar armazenados no modelo do banco de dados.
+     * Eu utilizo alguns destes atributos fora do modelo para utilizar os eventos.     
+     */
     defaults: {
       model: null  // O modelo 
     , flag: null   // Bandeira com valores de acesso.
