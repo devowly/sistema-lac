@@ -95,7 +95,7 @@ utilitario.inherits(ErroDeNaoEncontrado, RespostasDeSessao);
 var RequisisaoCompleta = function(conteudo) {
   RespostasDeSessao.call(this, 200, 'Requisição completa', '', true);
   this.name = 'RequisisaoCompleta';
-  this.conteudo = conteudo;
+  this.content = conteudo;
 };
 utilitario.inherits(RequisisaoCompleta, RespostasDeSessao);
 

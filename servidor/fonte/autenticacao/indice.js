@@ -155,7 +155,7 @@ Autenticacao.prototype._responder = function(resposta, valor) {
     var dados = null;
     
     if (valor.name === 'RequisisaoCompleta') {
-      dados = valor.conteudo;
+      dados = valor.content;
     } else {
       dados = {
         message: valor.message,
@@ -168,7 +168,7 @@ Autenticacao.prototype._responder = function(resposta, valor) {
     var dados = null;
     
     if (valor.name === 'RequisisaoCompleta') {
-      dados = valor.conteudo;
+      dados = valor.content;
     } else {
       dados = {
         message: valor.message,

@@ -55,7 +55,7 @@ utilitario.inherits(ErroNaoAutorizado, RespostasDeEscopo);
 var RequisisaoCompleta = function(conteudo) {
   RespostasDeEscopo.call(this, 200, 'Requisição completa', '');
   this.name = 'RequisisaoCompleta';
-  this.conteudo = conteudo;
+  this.content = conteudo;
 };
 utilitario.inherits(RequisisaoCompleta, RespostasDeEscopo);
 
