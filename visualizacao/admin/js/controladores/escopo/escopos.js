@@ -39,7 +39,7 @@ define([
     esteObjeto._carregarEscopos();
   };
  
-  /* @Método _carregarEscopos().
+  /* @Método [Privado] _carregarEscopos().
    *
    * Carregamos aqui os escopos do usuário que acabou de realizar entrada no sistema.
    */

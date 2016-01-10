@@ -141,7 +141,7 @@ define([
     * Devemos lembrar que se estivermos utilizando cookies a sessão do usuário irá funcionar em todas as janelas de um mesmo navegador.
     */
     
-   /* @Método entrar().
+   /* @Método [Público] entrar().
     *
     * Responsável por realizar a entrada do usuário. Informando o seu jid e senha pelo método POST. 
     * Se tudo correr bem o usuário terá seu token de acesso para realização de requisições as rotas do serviço.
@@ -187,7 +187,7 @@ define([
       });
     },
     
-    /* @Método sair().
+    /* @Método [Público] sair().
      *
      * Responsável por sair da sessão. Até o momento não é possível revogar o token pelo lado servidor,
      * por causa disso, nós temos que fazer uma forma de manipular isso aqui do lado cliente, provavelmente,
@@ -225,7 +225,7 @@ define([
       });      
     },
     
-    /* @Método seAutenticado().
+    /* @Método [Público] seAutenticado().
      *
      * Realizamos aqui a validação do nosso token, isso é feito ao enviarmos uma requisição GET
      * para a rota '/sessao'. Caso tudo ocorrer bem a gente vai saber que o nosso token é válido e que não

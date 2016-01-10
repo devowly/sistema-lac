@@ -50,7 +50,7 @@ Armazenamento.prototype.carregarModelos = function () {
   modelos(this.sequelize, this);
 };
 
-/* @Método iniciar(). 
+/* @Método [Público] iniciar(). 
  *
  * Inicia o nosso banco de dados e sincroniza as tabelas se elas não estiverem lá.
  *

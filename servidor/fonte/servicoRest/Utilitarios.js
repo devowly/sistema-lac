@@ -38,7 +38,7 @@ Utilitarios.prototype.inicializar = function () {
   
 };
 
-/* @Método adcUmaBandeiraParaModelo().
+/* @Método [Público] adcUmaBandeiraParaModelo().
  *
  * Acrescenta uma bandeira na pilha do modelo. 
  *
@@ -51,7 +51,7 @@ Utilitarios.prototype.adcUmaBandeiraParaModelo = function(modelo, bandeira, tipo
   this.bandeiras.adcBandeiraParaModelo(modelo, bandeira, tipo, valor);
 };
 
-/* @Método verificarSePossuiAcesso().
+/* @Método [Público] verificarSePossuiAcesso().
  *
  * Verificamos aqui as bandeiras de acesso a este determinado modelo.
  *
@@ -63,7 +63,7 @@ Utilitarios.prototype.verificarSePossuiAcesso = function(modelo, tipos, valor) {
   return this.bandeiras.sePossuiAcesso(modelo, tipos, parseInt(valor, 16));
 };
 
-/* @Método autenticarPeloToken(). 
+/* @Método [Público] autenticarPeloToken(). 
  *
  * Realiza a autenticação de deteminado usuário pelo token informado.
  *
@@ -99,7 +99,7 @@ Utilitarios.prototype.autenticarPeloToken = function (token, cd) {
   cd(seValidado, dadosUsuario);
 };
 
-/* @Método autenticarPeloJid(). 
+/* @Método [Público] autenticarPeloJid(). 
  * 
  * Realiza a autenticação do usuário pelo JID. Se o usuário conferir, vamos retornar suas informações com a função cd(), 
  * juntamente com o valor da sua bandeira de acesso a um determinado modelo.
@@ -138,7 +138,7 @@ Utilitarios.prototype.autenticarPeloJid = function(modeloRota, jid, senha, cd) {
   cd(seValidado, dadosUsuario);
 };
  
-/* @Método buscarUmToken(). 
+/* @Método [Público] buscarUmToken(). 
  *
  * Realiza a busca do token em cookies ou na requisição.
  *

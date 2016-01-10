@@ -30,7 +30,7 @@ define([
     };
   };
   
-  /* @Método adicionarUmCodigo().
+  /* @Método [Público] adicionarUmCodigo().
    *
    * Realiza a adição de um novo código. Cada código será utilizado para a comunicação das respostas
    * do serviço REST com os nossos modelos. A gente usará isso para ficar mais simples de manipular as
@@ -72,7 +72,7 @@ define([
     return true;
   };
   
-  /* @Método procurarUmCodigoPeloValor().
+  /* @Método [Público] procurarUmCodigoPeloValor().
    *
    * Realizamos aqui uma busca por determinado código pelo valor informado. Se caso o código for encontrado,
    * nós retornamos a mensagem e o tipo do código. Os tipos de códigos que temos são 'INFO', 'SUCESSO' e 'ERRO'.

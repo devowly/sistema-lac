@@ -39,7 +39,7 @@ AutenticacaoUsuario.prototype.inicializar = function() {
 
 };
 
-/* @Método verificarUsuarioPeloToken(). 
+/* @Método [Público] verificarUsuarioPeloToken(). 
  *
  * Realiza verificação do nosso usuário pelo token. Caso o as informações passadas conferirem, nós 
  * retornaremos a informação que o usuário confere e também as diversas propriedades do usuário.
@@ -92,7 +92,7 @@ AutenticacaoUsuario.prototype.verificarUsuarioPeloToken = function(token, cd) {
   });
 };
 
-/* @Método verificarUsuarioPeloJid().  
+/* @Método [Público] verificarUsuarioPeloJid().  
  *
  * Verificamos o usuário. A verificação é realizada comparando a senha informada com a senha que temos.
  * Se o usuário conferir nós iremos pegar suas bandeiras de acesso e retornar chamando a função cd().
@@ -128,7 +128,7 @@ AutenticacaoUsuario.prototype.verificarUsuarioPeloJid = function(modeloRota, jid
   });
 };
 
-/* @Método verificarUsuarioAcessoRota().  
+/* @Método [Público] verificarUsuarioAcessoRota().  
  *
  * Logo após conferir o usuário, nós carregamos as bandeiras de acesso dele a determinada modelo de rota.
  *

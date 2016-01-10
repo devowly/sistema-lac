@@ -28,7 +28,7 @@ Bandeiras.prototype.inicializar = function() {
   
 };
 
-/* @Método adcBandeiraParaModelo(). 
+/* @Método [Público] adcBandeiraParaModelo(). 
  *
  * Acrescenta uma bandeira na pilha do modelo. 
  *
@@ -51,7 +51,7 @@ Bandeiras.prototype.adcBandeiraParaModelo = function(modelo, bandeira, tipo, val
   };
 };
 
-/* @Método sePossuiAcesso(). 
+/* @Método [Público] sePossuiAcesso(). 
  *
  * Verificamos aqui as bandeiras de acesso a este determinado modelo.
  *
