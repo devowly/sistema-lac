@@ -22,8 +22,7 @@ define([
   var CodigosDeResposta = function() {
     
     /* @Propriedade {Objeto} [CODIGOS] Armazena os códigos de resposta divididos em conjuntos das 
-     * pilhas 'INFO', 'SUCESSO' e 'ERRO'.
-     */
+     * pilhas 'INFO', 'SUCESSO' e 'ERRO'. */
     this.CODIGOS = {
       'INFO': [],    // Aqui são os códigos relacionados às informações.
       'SUCESSO': [], // Aqui os códigos de sucesso.

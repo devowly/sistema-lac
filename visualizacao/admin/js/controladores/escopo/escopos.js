@@ -29,8 +29,7 @@ define([
     this.modeloSessao = ModeloSessao;
     
     /* @Propriedade {Pilha} [escopos] Armazena os escopos de determinado usuário 
-     * que acaba de realizar a entrada. 
-     */
+     * que acaba de realizar a entrada. */
     this.escopos = [];
     
     // Espera os eventos da propriedade scope do modeloSessao.

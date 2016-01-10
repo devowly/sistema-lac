@@ -96,18 +96,15 @@ define([
    ---------------------------------------------------------------------------------------------------------------------------------*/
   var Sessao = Backbone.Model.extend({
     
-    /* @Propriedade {Texto} [urlRoot] A URL REST deste modelo.
-     */
+    /* @Propriedade {Texto} [urlRoot] A URL REST deste modelo. */
     urlRoot: 'sessao',
     
     /* @Propriedade {Texto} [idAttribute] Informa qual dos atributos é o identificador.
-     * <umdez> Não é realmente necessário (Porem diminuirá a paranoia).
-     */
+     * <umdez> Não é realmente necessário (Porem diminuirá a paranoia). */
     idAttribute: 'id',
     
     /* @Propriedade {Pilha} [colecoesAninhadas] Isso vai ser utilizado para quando formos pegar os dados 
-     * das coleções aninhadas pertecentes a este modelo.
-     */
+     * das coleções aninhadas pertecentes a este modelo. */
     colecoesAninhadas: [
       'escopos'
     ], 

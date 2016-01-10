@@ -23,20 +23,16 @@ define([
    ----------------------------------------------------------------------------------------------------*/
   var Entrada = Backbone.View.extend({
     
-    /* @Propriedade {Objeto} [ModeloSessao] O Modelo para realizarmos a sessão. 
-     */
+    /* @Propriedade {Objeto} [ModeloSessao] O Modelo para realizarmos a sessão. */
     ModeloSessao: null,
     
-    /* @Propriedade {Texto} [jid] O Jabber ID do usuário. (Composto por local@dominio). 
-     */
+    /* @Propriedade {Texto} [jid] O Jabber ID do usuário. (Composto por local@dominio). */
     jid: null,  
     
-    /* @Propriedade {Texto} [senha] A senha deste usuário. 
-     */
+    /* @Propriedade {Texto} [senha] A senha deste usuário. */
     senha: null,  
     
-    /* @Propriedade {Objeto} [attributes] Os atributos desta visão. 
-     */
+    /* @Propriedade {Objeto} [attributes] Os atributos desta visão. */
     attributes: {
     
     },
@@ -62,7 +58,7 @@ define([
       return this;
     },
 
-    /* @Método renderizar().
+    /* @Método [Público] renderizar().
      *
      * Renderizamos aqui o nosso templante e o acrescentamos ao DOM. Escolheremos aqui o templante a a ser 
      * apresentado dependendo da propriedade 'auth' do nosso ModeloSessao. Caso a usuário esteja autenticado
@@ -77,7 +73,7 @@ define([
       }
     },
     
-    /* @Método _aoEscreverAtualizarJid().
+    /* @Método [Privado] _aoEscreverAtualizarJid().
      *
      * Sempre que o usuário digitar na entrada de jid nós iremos acessar o valor para
      * realizarmos a entrada posteriormente.
@@ -88,7 +84,7 @@ define([
       this.jid = $(evento.currentTarget).val();
     },
     
-    /* @Método _aoEscreverAtualizarSenha().
+    /* @Método [Privado] _aoEscreverAtualizarSenha().
      *
      * Sempre que o usuário digitar na entrada de senha nós iremos acessar o valor para
      * realizarmos a entrada posteriormente.
@@ -99,7 +95,7 @@ define([
       this.senha = $(evento.currentTarget).val();
     },
     
-    /* @Método _aoClicarEntrar().
+    /* @Método [Privado] _aoClicarEntrar().
      *
      * Realizamos aqui a entrada do usuário. É necessário o Jid e a senha.
      *
@@ -121,7 +117,7 @@ define([
       });
     },
     
-    /* @Método _aoClicarSair().
+    /* @Método [Privado] _aoClicarSair().
      *
      * Evento disparado ao clicar no botão de saida.
      *
@@ -142,7 +138,7 @@ define([
       'change input#entrada-senha': '_aoEscreverAtualizarSenha'  // Ao escrever no campo de entrada de senha.
     },
 
-    /* @Método _iniciarMeusComponentes().
+    /* @Método [Privado] _iniciarMeusComponentes().
      *
      * Iniciamos componentes para esta visão. Os componentes podem ser do bootstrap, 
      * jQuery e outros frameworks utilizados
@@ -151,7 +147,7 @@ define([
       
     },
     
-    /* @Método _iniciarMinhaEscutaEventos().
+    /* @Método [Privado] _iniciarMinhaEscutaEventos().
      *
      * Iniciamos as escutas de eventos para esta visão. Os eventos podem ser de elementos do 
      * bootstrap, jQuery e outros frameworks utilizados

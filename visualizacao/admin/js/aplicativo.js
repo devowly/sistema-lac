@@ -19,8 +19,7 @@ define([
    -------------------------------------------------------------------------------------------------------------*/
   var inicializar = function(){
     
-    /* @Variavel {Função} [ponteSync] Armazena o método sync().
-     */
+    /* @Variavel {Método} [ponteSync] Armazena o método sync(). */
     var ponteSync = Backbone.sync;
     
     /* Sobrescreve o método sync() do Backbone com alcançe global. Estamos utilizando o serviço CORS.

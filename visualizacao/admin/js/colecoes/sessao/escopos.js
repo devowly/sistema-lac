@@ -31,13 +31,11 @@
    ---------------------------------------------------------------*/
   var Escopos = Backbone.Collection.extend({
 
-    /* @Propriedade {Objeto} [model] O modelo desta coleção.
-     */
+    /* @Propriedade {Objeto} [model] O modelo desta coleção. */
     model: ModeloEscopo,
     
     /* @Propriedade {Texto} [url] O endereço REST onde iremos pegar os dados. 
-     * Obs: Esta url será substituida pelo Modelo.Sessao
-     */ 
+     * Obs: Esta url será substituida pelo Modelo.Sessao */ 
     url: 'escopos'
 
   });

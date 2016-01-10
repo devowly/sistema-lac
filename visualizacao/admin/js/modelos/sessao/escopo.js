@@ -28,8 +28,7 @@
    ---------------------------------------------------------------------*/
   var Escopo = Backbone.Model.extend({
 
-    /* @Propriedade {Texto} [urlRoot] O endereço REST onde iremos pegar os dados. 
-     */
+    /* @Propriedade {Texto} [urlRoot] O endereço REST onde iremos pegar os dados. */
     urlRoot: 'escopos',
 
     /* @Construtor initialize().
@@ -42,8 +41,7 @@
 
     /* @Propriedade {Objeto} [defaults] Contêm os atributos padrões deste modelo de escopo.
      * Lembre-se que estes atributos podem *não* estar armazenados no modelo do banco de dados.
-     * Eu utilizo alguns destes atributos fora do modelo para utilizar os eventos.     
-     */
+     * Eu utilizo alguns destes atributos fora do modelo para utilizar os eventos. */
     defaults: {
       model: null  // O modelo 
     , flag: null   // Bandeira com valores de acesso.

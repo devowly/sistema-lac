@@ -24,8 +24,7 @@ define([
    -------------------------------------------------------------------------------------------*/
   var SitioRoteador = Backbone.Router.extend({
     
-    /* @Propriedade {Objeto} [routes] Contêm as nossas rotas. 
-     */
+    /* @Propriedade {Objeto} [routes] Contêm as nossas rotas. */
     routes: {
       "": "inicio"
     },

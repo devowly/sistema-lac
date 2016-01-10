@@ -5,7 +5,7 @@
 /* Versão 0.0.1-Beta
  * - Como fazer para separar a parte das visões do nosso servidor rest? (issue #41) [FEITO]
  */
-
+ 
 var fs = require('fs');
 var pasta = require('path');
 var configuracao = require('jsconfig');
