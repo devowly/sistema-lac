@@ -2,7 +2,7 @@
 
 /* Realiza rotinas de autenticação do usuário.
  *
- * @Arquivo AutenticacaoUsuario.js
+ * @Arquivo Autenticacao.js
  */
 
 /* Versão 0.0.1-Beta 
