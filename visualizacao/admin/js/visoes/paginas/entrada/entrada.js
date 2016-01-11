@@ -23,8 +23,8 @@ define([
    ----------------------------------------------------------------------------------------------------*/
   var Entrada = Backbone.View.extend({
     
-    /* @Propriedade {Objeto} [ModeloSessao] O Modelo para realizarmos a sessão. */
-    ModeloSessao: null,
+    /* @Propriedade {Objeto} [modeloSessao] O Modelo para realizarmos a sessão. */
+    modeloSessao: null,
     
     /* @Propriedade {Texto} [jid] O Jabber ID do usuário. (Composto por local@dominio). */
     jid: null,  
@@ -32,7 +32,8 @@ define([
     /* @Propriedade {Texto} [senha] A senha deste usuário. */
     senha: null,  
     
-    /* @Propriedade {Objeto} [attributes] Os atributos desta visão. */
+    /* @Propriedade {Objeto} [attributes] Os atributos desta visão que serão acrescentados 
+     * como atributos HTML (id, class, etc.) do elemento DOM desta visão. */
     attributes: {
     
     },
@@ -47,30 +48,32 @@ define([
      */
     initialize: function (ModeloSessao) {
       var esteObjeto = this;
-      this.ModeloSessao = ModeloSessao;
+      this.modeloSessao = ModeloSessao;
      
       // Espera os eventos da propriedade auth do ModeloSessao. Assim podemos 
       // manipular a interface do usuário de acordo com o estado de autenticação atual do usuário.
-      this.ModeloSessao.on('change:auth', function (sessao) {
-        esteObjeto.renderizar();
+      this.modeloSessao.on('change:auth', function (sessao) {
+        esteObjeto._renderizar();
       });
-      this.renderizar();
-      return this;
+      return this._renderizar();
     },
 
-    /* @Método [Público] renderizar().
+    /* @Método [Privado] _renderizar().
      *
      * Renderizamos aqui o nosso templante e o acrescentamos ao DOM. Escolheremos aqui o templante a a ser 
      * apresentado dependendo da propriedade 'auth' do nosso ModeloSessao. Caso a usuário esteja autenticado
      * então mostramos a interface do painel. Caso contrário, nós iremos manipular para que seja apresentada 
      * novamente uma tela para que ele realize a entrada novamente.
+     *
+     * @Retorna {Objeto} Valor deste objeto.
      */
-    renderizar: function () {
-      if(this.ModeloSessao.get('auth')){
+    _renderizar: function () {
+      if(this.modeloSessao.get('auth')){
         this.$el.html(_.template(TemplantePainel));
       } else {
         this.$el.html(_.template(TemplanteEntrada)); 
       }
+      return this;
     },
     
     /* @Método [Privado] _aoEscreverAtualizarJid().
@@ -107,10 +110,10 @@ define([
       
       // Lembre-se que para o usuário entrar fica necessário informarmos o jid e a senha.
       // Assim que o usuário entrar, vamos utilizar o cookie recebido para as novas requisições.
-      this.ModeloSessao.entrar({jid: this.jid, senha: this.senha}, function(seAutenticou, resposta){
+      this.modeloSessao.entrar({jid: this.jid, senha: this.senha}, function(seAutenticou, resposta){
         if (seAutenticou) {
           // Limpamos o jid e senha armazenados.
-          esteObjeto.jid = esteObjeto.senha = '';
+          esteObjeto.jid = esteObjeto.senha = null;
         } else {
           console.log('Não foi possível autenticar o usuário. ('+ resposta.responseJSON.message +')');
         }
@@ -125,22 +128,22 @@ define([
      */
     _aoClicarSair : function(evento) {
       evento.preventDefault();
-      this.ModeloSessao.sair();
+      this.modeloSessao.sair();
     },
     
     /* @Propriedade {Objeto} [events] Aqui temos os eventos que esta visão irá escutar.
      * Cada evento será disparado quando o usuário realizar alguma atividade no navegador. 
      */
     events: {
-      'submit form.sair': '_aoClicarSair',                       // Ao clicar no botão sair.
-      'submit form.entrada': '_aoClicarEntrar',                  // Ao clicar em botão de submeter o formulário.
-      'change input#entrada-jid': '_aoEscreverAtualizarJid',     // Ao escrever no campo de entrada de jid.
-      'change input#entrada-senha': '_aoEscreverAtualizarSenha'  // Ao escrever no campo de entrada de senha.
+      'submit form.sair': '_aoClicarSair'                        // Ao clicar no botão sair.
+    , 'submit form.entrada': '_aoClicarEntrar'                   // Ao clicar no botão de submeter o formulário ou no botão enter.
+    , 'change input#entrada-jid': '_aoEscreverAtualizarJid'      // Ao escrever no campo de entrada de jid.
+    , 'change input#entrada-senha': '_aoEscreverAtualizarSenha'  // Ao escrever no campo de entrada de senha.
     },
 
     /* @Método [Privado] _iniciarMeusComponentes().
      *
-     * Iniciamos componentes para esta visão. Os componentes podem ser do bootstrap, 
+     * Iniciamos aqui os componentes para esta visão. Os componentes podem ser do bootstrap, 
      * jQuery e outros frameworks utilizados
      */ 
     _iniciarMeusComponentes: function(){
@@ -149,7 +152,7 @@ define([
     
     /* @Método [Privado] _iniciarMinhaEscutaEventos().
      *
-     * Iniciamos as escutas de eventos para esta visão. Os eventos podem ser de elementos do 
+     * Iniciamos aqui as escutas de eventos para esta visão. Os eventos podem ser de elementos do 
      * bootstrap, jQuery e outros frameworks utilizados
      */ 
     _iniciarMinhaEscutaEventos: function() {
