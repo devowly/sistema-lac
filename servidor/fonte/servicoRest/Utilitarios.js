@@ -1,7 +1,7 @@
 'use strict'
 var deasync = require('deasync');
 var Bandeiras = require('./Bandeiras');
-var AutenticacaoUsuario = require('./AutenticacaoUsuario');
+var Autenticacao = require('./Autenticacao');
 
 /* Utilitarios diversos para nossas fontes REST.
  *
@@ -27,8 +27,8 @@ var Utilitarios = function (bancoDados, jwt, autenticacao) {
   /* @Propriedade {Boleano} [seForUtilizarCookie] Informa se utilizaremos cookies com sessão. */
   this.seForUtilizarCookie = autenticacao.useSessionWithCookies;
   
-  /* @Propriedade {Objeto} [autenticacaoUsuario] Para realizar a autenticação dos usuários. */
-  this.autenticacaoUsuario = new AutenticacaoUsuario(bancoDados, jwt, autenticacao); 
+  /* @Propriedade {Objeto} [autenticacao] Para realizar a autenticação dos usuários. */
+  this.autenticacaoUsuario = new Autenticacao(bancoDados, jwt, autenticacao); 
    
   /* @Propriedade {Objeto} [bandeiras] As bandeiras de acesso as rotas dos modelos. */
   this.bandeiras = new Bandeiras(); 
@@ -149,6 +149,7 @@ Utilitarios.prototype.autenticarPeloJid = function(modeloRota, jid, senha, cd) {
  * @Parametro {Texto} [req.body.token] O valor do token passado no corpo da requisição.
  * @Parametro {Objeto} [req.session] Contêm os dados de determinada sessão.
  * @Parametro {Texto} [req.session.token] O valor do token que está na sessão armazenado em um cookie.
+ * @Retorna {Texto|nulo} Se achar retorna o token, caso contrário retorna nulo.
  */
 Utilitarios.prototype.buscarUmToken = function(req) {
   var token = null;
