@@ -7,6 +7,6 @@ Nós temos uma documentação em andamento [aqui](https://github.com/devowly/sis
 
 #### Nossos diretórios
 Temos priorizado a divisão das preocupações deste projeto, portanto nós iremos oferecer os 3 diretórios raizes abaixo: 
-* /antigos/ (Contêm os arquivos antigos deste projeto).
-* /servidor/ (Contêm a parte do servidor do nosso projeto).
-* /visualizacao/ (Contêm a parte de visão do nosso projeto).
+* /sistema-lac/antigos/ (Contêm os arquivos antigos deste projeto).
+* /sistema-lac/servidor/ (Contêm a parte do servidor do nosso projeto).
+* /sistema-lac/visualizacao/ (Contêm a parte de visão do nosso projeto).
