@@ -33,7 +33,7 @@ define([
     senha: null,  
     
     /* @Propriedade {Objeto} [attributes] Os atributos desta visão que serão acrescentados 
-     * como atributos HTML (id, class, etc.) do elemento DOM desta visão. */
+     * como atributos HTML (id, class, etc.) do elemento (this.el) DOM desta visão. */
     attributes: {
     
     },
