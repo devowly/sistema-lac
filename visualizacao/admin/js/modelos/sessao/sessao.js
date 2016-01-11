@@ -16,7 +16,7 @@ define([
 , 'backbone'
 , 'codigos'
 , 'nesting'
-, 'colecoes/sessao/escopos'
+, 'colecoes/escopos/escopos'
 ], function($, _, Backbone, CodigosDeResposta, nesting, ColecaoEscopos) {
   
  /* Os modelos são a parte central de um aplicativo, contendo os dados e também uma parte longa de toda logica que a cerca:

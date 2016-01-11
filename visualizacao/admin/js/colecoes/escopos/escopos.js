@@ -6,7 +6,7 @@
   'jquery'
 , 'backbone'
 , 'underscore'
-, 'modelos/sessao/escopo'
+, 'modelos/escopo/escopo'
 ], function($, Backbone, _, ModeloEscopo){
   
   /* A coleção tem como objetivo contem um conjunto de modelos. Estes modelos compartilham
