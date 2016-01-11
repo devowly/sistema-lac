@@ -1,4 +1,4 @@
-#### servidor
+# Servidor
 Contêm a parte do servidor do nosso aplicativo. O nosso servidor irá fornecer os serviços de rotas REST, armazenamento e também o serviços XMPP para a nossa visão.
 
 #### Como configurar?
