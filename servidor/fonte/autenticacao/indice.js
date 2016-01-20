@@ -214,7 +214,7 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
   // Aninhamos os roteadores ao acrescenta-los como ponte:
   this.sessaoRoteador.use('/:usuarioId/escopos', this.escoposRoteador);
   
-  this.escoposRoteador.route('/').get(function (req, res) {
+  var requisitarEscoposDoUsuario = function (req, res) {
     
     var token = esteObjeto._buscarToken(req);
     
@@ -299,18 +299,23 @@ Autenticacao.prototype.carregarServicoEscopos = function() {
       var resposta = new RespostasDeEscopo.ErroNaoAutorizado('Você deve nos informar um token para continuar.', CODIGOS.INFO.TOKEN_NECESSARIO);
       esteObjeto._responder(res, resposta);
     }
-  
-  });
+  };
 
   // Informamos aqui um único escopo de uma sessão pelo id.
-  this.escoposRoteador.route('/:escopoId').get(function (req, res) {
+  var requisitarUmEscopoDoUsuario = function (req, res) {
     var escpId = req.params.escopoId;  // Identificador deste escopo.
     var usrId = req.params.usuarioId;  // Identificador da sessão deste usuário.
     
     var resposta = new RespostasDeEscopo.ErroNaoAutorizado('Acesso não autorizado. Isto ainda não foi implementado.', CODIGOS.INFO.SERVICO_NAO_DISPONIVEL);
     esteObjeto._responder(res, resposta);
-  });
+  };
   
+  /* Nós acrescentamos aqui as rotas de escopos do usuário. Estas rotas serão:
+   * - GET /sessao/:id/escopos/     (Requisição dos escopos).
+   * - GET /sessao/:id/escopos/:id  (Requisição dos escopos). 
+   */
+  this.escoposRoteador.route('/').get(requisitarEscoposDoUsuario);
+  this.escoposRoteador.route('/:escopoId').get(requisitarUmEscopoDoUsuario);
 };
 
 /* Realiza o inicio do serviço de autenticação de nossos usuários.
@@ -322,7 +327,9 @@ Autenticacao.prototype.carregarServicoSessao = function () {
   // Obs: Se utilizar o Postman, não utilize 'application/json' no header de requisição
   // @Veja http://stackoverflow.com/a/29006928/4187180
   
-  /* Aqui - em cada uma das rotas - nós também iremos retornar um código de status informando o ocorrido. Os valores de estados poderão ser:
+  /* @Função iniciarSessaoDoUsuario().
+   *
+   * Aqui - em cada uma das rotas - nós também iremos retornar um código de status informando o ocorrido. Os valores de estados poderão ser:
    * - [estatus 200] Tudo certo. Estado padrão para informar que a requisição ocorreu com exito.
    * - [estatus 401] Não autorizado. Quando a autenticação é requerida e falhou ou dados necessários não foram providos.
    * - [estatus 400] Uma requisição errada. O servidor não pode ou não vai processar a requisição porque houve um erro no cliente (ex., sintaxe de requisição mau formada).
@@ -335,7 +342,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
    */
       
   // Acrescentamos a nossa rota de autenticação e esperamos por requisições do tipo POST.
-  this.sessaoRoteador.route('/').post(function (req, res) {
+  var iniciarSessaoDoUsuario = function (req, res) {
         
     // Tentamos pegar aqui o jid e senha informados no corpo, parametros ou no cabeçalho da requisição.
     var jid = (req.body && req.body.jid) || (req.params && req.params.jid) || req.headers['x-authentication-jid'];
@@ -451,9 +458,11 @@ Autenticacao.prototype.carregarServicoSessao = function () {
       }
       esteObjeto._responder(res, resposta);
     } 
-  });
+  };
   
- /* Aqui iremos fazer uma coisa, primeiramente nós vamos verificar se um token foi informado. Caso o token foi informado, nós
+ /* @Função validarSessaoDoUsuario().
+  *
+  * Aqui iremos fazer uma coisa, primeiramente nós vamos verificar se um token foi informado. Caso o token foi informado, nós
   * iremos verificar se o token é valido e se não expirou. Assim iremos conseguir verificar o estado atual de autenticação
   * do usuário. No lado cliente, teremos a cada nova requisição, informar o token para esta rota, assim a gente consegue 
   * re-validar seu token de acesso.  
@@ -469,7 +478,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
   * Obs: É importante lembrar que o token permanece válido ao usuário re-iniciar a página. Assim fica necessário apenas
   * verificarmos a sessao novamente, ao invez de re-autenticar o usuário.
   */
-  this.sessaoRoteador.route('/').get(function(req, res){ 
+  var validarSessaoDoUsuario = function(req, res){ 
    var token = esteObjeto._buscarToken(req);
     
     if (token) {
@@ -529,9 +538,11 @@ Autenticacao.prototype.carregarServicoSessao = function () {
       var resposta = new RespostasDeSessao.ErroNaoAutorizado('Você deve nos informar um token para realizar a validação.', CODIGOS.INFO.TOKEN_NECESSARIO, AUTENTICADO.NAO);
       esteObjeto._responder(res, resposta);
     }
-  });
+  };
   
-  /* Realiza a saida do usuário. É importante notar que apesar de estarmos retornando estado 200 de sucesso,
+  /* @Função removerSessaoDoUsuario().
+   *
+   * Realiza a saida do usuário. É importante notar que apesar de estarmos retornando estado 200 de sucesso,
    * não será possível que o token seja revogado. Então nós retornamos este estado mesmo que não houve um sucesso.
    *
    * @Parametro {Objeto} [req] A requisição recebida.
@@ -540,7 +551,7 @@ Autenticacao.prototype.carregarServicoSessao = function () {
    * @Parametro {Objeto} [res] Utilizado para a nossa resposta.
    * @Parametro {Função} [next] função chamada para passar a requisição para outras rotas.
    */
-  this.sessaoRoteador.route('/:usuarioId').delete(function(req, res, next){  
+  var removerSessaoDoUsuario = function(req, res, next){  
      var usrId = req.params.usuarioId;  // <umdez> Podemos utilizar este id depois?
      var token = esteObjeto._buscarToken(req);
     
@@ -567,7 +578,18 @@ Autenticacao.prototype.carregarServicoSessao = function () {
       resposta.message = 'Não é possível revogar o seu token.';
       esteObjeto._responder(res, new RespostasDeSessao.RequisisaoCompleta(resposta));
     } 
-  });
+  };
+  
+  /* Nós acrescentamos aqui as rotas de sessão do usuário. Estas rotas serão:
+   * - GET /sessao/        (Validação da sessão).
+   * - GET /sessao/:id     (Re-validação da sessão). 
+   * - DELETE /sessao/:id  (Remoção da sessão).
+   * - POST /sessao/       (Iniciar sessão).
+   */
+  this.sessaoRoteador.route('/').get(validarSessaoDoUsuario);
+  this.sessaoRoteador.route('/:id').get(validarSessaoDoUsuario);
+  this.sessaoRoteador.route('/:usuarioId').delete(removerSessaoDoUsuario);
+  this.sessaoRoteador.route('/').post(iniciarSessaoDoUsuario);
   
   this.aplic.use('/sessao', this.sessaoRoteador);
 };

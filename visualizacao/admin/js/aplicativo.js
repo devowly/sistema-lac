@@ -6,12 +6,30 @@
  * - Adicionar o endereço do servidor diretamente no ajaxPrefilter. (issue #49) [FEITO]
  */
 
+/* @Objeto Aplicativo.
+ *
+ * Aqui temos o nosso objeto base do nosso aplicativo com nível global. Aqui iremos acrescentar propriedades,
+ * métodos, eventos e tudo mais que necessite de ser acessado globalmente.
+ -----------------------------------------------------------------------------------------------------------------*/
+var Aplicativo = {};
+
 define([
   'jquery'
+, 'underscore'
 , 'roteador' // Requisitamos o arquivo roteador.js
 , 'backbone'
 , 'configuracao'
-], function($, Roteador, Backbone, Configuracao){
+], function($, _, Roteador, Backbone, Configuracao){
+  
+  /* Aqui acrescentamos os eventos ao nosso objeto Aplicativo. Assim fica fácil utilizarmos eventos em diversos módulos 
+   * do nosso aplicativo, porque assim não será necessário passar o seu valor para cada módulo.
+   *
+   * @Veja http://pragmatic-backbone.com/using-events-like-a-baws
+   * @Veja https://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/
+   *
+   * @Propriedade {Objeto} [eventos] Extenção dos eventos do Backbone.
+   */
+  Aplicativo.eventos = _.extend({}, Backbone.Events);
   
   /* @Função inicializar().
    *

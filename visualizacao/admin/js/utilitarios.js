@@ -68,22 +68,16 @@ define([
   
   /* @Função carregarColecaoAninhada(). 
    *
-   * Carrega apenas as coleções aninhadas de um determinado modelo
+   * Carrega apenas as coleções aninhadas de um determinado modelo. Ele não carrega as coleções dos sub-níveis.
    *
    * @Parametro {Objeto} [colecao] Uma coleção de modelos.
    * @Parametro {Pilha} [colecoesAninhadas] Aquelas coleções aninhadas aos modelos de uma coleção.
    * @Parametro {Função} [cd] Será chamada quando se estiver carregado todas colecoes aninhadas.
    */
-  var carregarColecaoAninhada = function(colecao, colecoesAninhadas, cd) { /* <umdez> método obsoleto? */
+  var carregarColecaoAninhada = function(colecao, colecoesAninhadas, cd) { 
     
-    // Quantidade de modelos desta colecao.
-    var quantidadeModelos = colecao.models.length;
-    
-    // Quantidade de coleções que cada modelo possui.
-    var quantidadeColecoesAninhadas = colecoesAninhadas.length;
-    
-    // Quando carregarmos todas as coleções aninhadas, chamamos cd()
-    var quantBuscas = _.after(quantidadeModelos * quantidadeColecoesAninhadas, cd);
+    var quantidadeModelos = colecao.models.length;               // Quantidade de modelos desta colecao.
+    var quantidadeColecoesAninhadas = colecoesAninhadas.length;  // Quantidade de coleções que cada modelo possui.
     
     // Para cada modelo
     for (var ca = 0; ca < quantidadeModelos; ca++) {
@@ -95,39 +89,118 @@ define([
         var colecaoAninhada = colecoesAninhadas[cb];
         
         if (modelo[colecaoAninhada]) {
-          modelo[colecaoAninhada].fetch({success: quantBuscas}, {error: function(){
-            // <umdez> Como fazer em caso de erro?
-            console.log('carregarColecaoAninhada(): Não foi possivel carregar dados para a coleção aninhada.');
-          }} );  
+          modelo[colecaoAninhada].fetch({
+            async: false, success: function() {}
+          , error: function(colecao, resp, opcs){ console.log('carregarColecaoAninhada(): Não foi possivel carregar dados para a coleção aninhada.') }
+          });  
         }
       }
     }
+    // Quando carregarmos todas as coleções aninhadas, chamamos cd().
+    cd();
   };
   
-  /* @Função carregarTodasColecoesAninhadas().  
+  /* @Função carregarTodasColecoesAninhadasSinc().  
    *
    * Carrega *todas* as coleções aninhadas de um determinado modelo de forma recursiva.
    *
    * @Parametro {Pilha} [colecoes] Contêm um conjunto de coleções.
    * @Parametro {Função} [cd] Chamada logo após aquelas coleções aninhadas serem totalmente carregadas.
    */
-  var carregarTodasColecoesAninhadas = function(colecoes, cd) {
+  var carregarTodasColecoesAninhadasSinc = function(colecoes, cd) {
      var esteObj = this;
      
+    // Sempre que houver mais coleções nós iremos continuar a carregar
+    if (colecoes) {
+      var listaColecoesParaCarregar = [];   // Iremos carregar cada uma das colecoes aninhadas a estas colecoes.
+      var quantidadeModelos = 0;            // Quantos modelos cada coleção possui?
+      var quantidadeColecoesAninhadas = 0;  // Quantas coleções cada um dos modelos possui?
+      
+      // Para cada uma das nossas coleções nós teremos um número de modelos.
+      for (var ca = 0; ca < colecoes.length; ca++) {
+        
+        // para esta coleção, qual a quantidade de modelos?
+        quantidadeModelos = (colecoes[ca] && colecoes[ca].models ? colecoes[ca].models.length : 0);
+        
+        // Vamos percorrer os modelos de cada uma das coleções
+        for (var cb = 0; cb < quantidadeModelos; cb++) {
+          
+          // Agora nós acessamos a quantidade de coleções que cada um dos modelos possui.
+          quantidadeColecoesAninhadas = (colecoes[ca].models[cb].colecoesAninhadas ? colecoes[ca].models[cb].colecoesAninhadas.length : 0);
+          
+          for (var cc = 0; cc < quantidadeColecoesAninhadas; cc++) {
+            var colecoesAninhadas = colecoes[ca].models[cb].colecoesAninhadas;
+            
+            // Armazenamos as coleções que serão carregadas.
+            listaColecoesParaCarregar.push(colecoes[ca].models[cb][colecoesAninhadas[cc]]);
+          }  
+        }
+      }
+      
+      var quatTotalColecoes = listaColecoesParaCarregar.length;  // Quantas coleções temos para carregar
+      
+      // Se nenhum modelo possui coleção, então retornamos.
+      if (quatTotalColecoes === 0) cd();  
+      
+      for (var ca = 0; ca < quatTotalColecoes; ca++) {
+        if (listaColecoesParaCarregar[ca]) {
+          listaColecoesParaCarregar[ca].fetch({
+            async: false, success: function() { }
+          , error: function(colecao, resp, opcs){
+            console.log('carregarTodasColecoesAninhadasSinc(): Não foi possivel carregar dados para a coleção aninhada.') }
+          });  
+        }
+      }
+      
+      // Chama este método recursivamente passando a lista de coleções carregadas.
+      carregarTodasColecoesAninhadasSinc(listaColecoesParaCarregar, cd);
+    } else {
+      // Aqui nós não temos mais coleções para carregar. Então retornamos.
+      cd(); 
+    }  
+  };
+  
+  /* @Função carregarColecaoSinc(). 
+   *
+   * Carrega a coleção e depois todas as suas coleções aninhadas de forma sincrona.
+   *
+   * @Parametro {Pilha} [colecoes] Contêm aquele conjunto de coleções que serão carregadas.
+   * @Parametro {Função} [cd] Chamada logo após as coleções serem carregadas.
+   */
+  var carregarColecaoSinc = function(colecoes, cd) {
+    
+    if (colecoes.length === 0) {
+      console.log('carregarColecaoSinc(): É necessário informar uma lista de colecões');
+      cd(); 
+    } 
+    
+    // Percorremos todas aquelas coleções e as carregamos.
+    // Lembre-se que estamos carregando de formas sincrona.
+    for (var ca = 0; ca < colecoes.length; ca++) {
+      colecoes[ca].fetch({
+        async: false, success: function() { }
+      , error: function(colecao, resp, opcs){ console.log('carregarColecaoSinc(): Não foi possivel carregar dados para a coleção.') }
+      });
+    }
+    // Agora nós iremos carregar as coleções aninhadas a estas coleções que já carregamos.
+    carregarTodasColecoesAninhadasSinc(colecoes, cd); 
+  };
+  
+  /* @Função carregarTodasColecoesAninhadasAssinc().  
+   *
+   * Carrega *todas* as coleções aninhadas de um determinado modelo de forma recursiva e assincrona.
+   *
+   * @Parametro {Pilha} [colecoes] Contêm um conjunto de coleções.
+   * @Parametro {Função} [cd] Chamada logo após aquelas coleções aninhadas serem totalmente carregadas.
+   */
+  var carregarTodasColecoesAninhadasAssinc = function(colecoes, cd) {
+    
     // se houver mais coleções
     if (colecoes) {
-      
-      // Iremos carregar cada uma das colecoes aninhadas a estas colecoes.
-      var listaColecoesParaCarregar = [];
-      
-      // Quantas coleções nós possuimos
-      var quantidadeColecoes = colecoes.length;  
-      
-      // Quantos modelos cada coleção possui?
-      var quantidadeModelos = 0;
-      
-      // Quantas coleções cada um dos modelos possui?
-      var quantidadeColecoesAninhadas = 0;
+      var listaColecoesParaCarregar = [];        // Iremos carregar cada uma das colecoes aninhadas a estas colecoes.
+      var quantidadeColecoes = colecoes.length;  // Quantas coleções nós possuimos
+      var quantidadeModelos = 0;                 // Quantos modelos cada coleção possui?
+      var quantidadeColecoesAninhadas = 0;       // Quantas coleções cada um dos modelos possui?
       
       // Para cada uma das nossas coleções nós teremos um número de modelos.'
       for (var ca = 0; ca < quantidadeColecoes; ca++) {
@@ -146,77 +219,63 @@ define([
             
             // Armazenamos as coleções que serão carregadas.
             listaColecoesParaCarregar.push(colecoes[ca].models[cb][colecoesAninhadas[cc]]);
-            
           }  
         }
       }
       
-      // Quantas coleções temos para carregar
-      var quatTotalColecoes = listaColecoesParaCarregar.length;
+      var quatTotalColecoes = listaColecoesParaCarregar.length;  // Quantas coleções temos para carregar
       
-      // Se nenhum modelo possui coleção, então retornamos.
-      if (quatTotalColecoes === 0) {
-        cd(); // Aqui Não temos mais o que fazer.
-      } 
+      if (quatTotalColecoes === 0) { cd() };  // Se nenhum modelo possui coleção, então retornamos.
       
-      var chamarMais = function() {
-        // Chama este método novamente passando a lista de coleções carregadas.
-        esteObj.carregarTodasColecoesAninhadas(listaColecoesParaCarregar, cd);
-      }
+      // Ao concluirmos o carregamento, nós chamamos este método novamente passando a lista de coleções carregadas.
+      var aoConcluirCarregamentoDaColecoes = function() { carregarTodasColecoesAninhadasAssinc(listaColecoesParaCarregar, cd) };
       
-      // Quando carregarmos todas as coleções, chamamos chamarMais()
-      var contarCarregamentos = _.after(quatTotalColecoes, chamarMais);
+      // Quando carregarmos todas as coleções, chamamos aoConcluirCarregamentoDaColecoes()
+      var contarCarregamentos = _.after(quatTotalColecoes, aoConcluirCarregamentoDaColecoes);
       
       for (var ca = 0; ca < quatTotalColecoes; ca++) {
         if (listaColecoesParaCarregar[ca]) {
-          listaColecoesParaCarregar[ca].fetch({success: contarCarregamentos}, {error: function(){
-            // <umdez> Como fazer em caso de erro?
-            console.log('carregarTodasColecoesAninhadas(): Não foi possivel carregar dados para a coleção aninhada.');
-          }} );  
+          listaColecoesParaCarregar[ca].fetch({
+            async: true, success: contarCarregamentos
+          , error: function(colecao, resp, opcs) { console.log('carregarTodasColecoesAninhadasAssinc(): Não foi possivel carregar dados para a coleção aninhada.') }
+          });  
         }
       }
-     
     } else {
       cd(); // Não temos mais coleções, retornar.
     }
-        
   };
   
-  /* @Função carregarColecao(). 
+  /* @Função carregarColecaoAssinc(). 
    *
-   * Carrega a coleção e depois todas as suas coleções aninhadas.
+   * Carrega a coleção e depois todas as suas coleções aninhadas de forma assincrona.
    *
    * @Parametro {Pilha} [colecoes] Contêm aquele conjunto de coleções que serão carregadas.
    * @Parametro {Função} [cd] Chamada logo após as coleções serem carregadas.
    */
-  var carregarColecao = function(colecoes, cd) {
-    var esteObj = this;
+  var carregarColecaoAssinc = function(colecoes, cd) {
     
     var quantidadeColecoes = colecoes.length;
     
     if (quantidadeColecoes === 0) {
-      console.log('carregarColecao(): É necessário informar uma lista de colecões');
-      cd(); //Retornar.
+      console.log('carregarColecaoAssinc(): É necessário informar uma lista de colecões');
+      cd(); 
     } 
     
-    var chamarMais = function() {
-      // Carregaremos todas coleções aninhadas        
-      esteObj.carregarTodasColecoesAninhadas(colecoes, cd); 
-    }
+    // Depois de concluirmos o carregar estas coleções nós agora carregaremos todas coleções aninhadas.
+    var aoConcluirCarregamentoDaColecoes = function() { carregarTodasColecoesAninhadasAssinc(colecoes, cd) }
     
-    // Quando carregarmos todas as coleções, chamamos chamarMais()
-    var contarCarregamentos = _.after(quantidadeColecoes, chamarMais);
+    // Quando carregarmos todas as coleções, chamamos aoConcluirCarregamentoDaColecoes()
+    var contarCarregamentos = _.after(quantidadeColecoes, aoConcluirCarregamentoDaColecoes);
    
-    // Carregamos todas as coleções
+    // Aqui nós carregamos todas as coleções.
     for (var ca = 0; ca < quantidadeColecoes; ca++) {
-      
-      colecoes[ca].fetch({success: contarCarregamentos }, {error: function(){
-        // <umdez> Como fazer em caso de erro?
-        console.log('carregarColecao(): Não foi possivel carregar dados para a coleção.');
-      }} );
+      colecoes[ca].fetch({
+        async: true, success: contarCarregamentos
+      , error: function(colecao, resp, opcs){ console.log('carregarColecaoAssinc(): Não foi possivel carregar dados para a coleção.') }
+      });
     }
-    
-  };
+  }; 
   
   /* @Função carregarArquivosXml(). 
    *
@@ -227,12 +286,11 @@ define([
   };
 
   return { 
-    // Aqui retornamos todos os métodos deste objeto.
-    carregarTemplantes: carregarTemplantes,
-    carregarTemplantesExtras: carregarTemplantesExtras,
-    carregarColecaoAninhada: carregarColecaoAninhada,
-    carregarTodasColecoesAninhadas: carregarTodasColecoesAninhadas,
-    carregarColecao: carregarColecao,
-    carregarArquivosXml: carregarArquivosXml
+    carregarTemplantes: carregarTemplantes
+  , carregarTemplantesExtras: carregarTemplantesExtras
+  , carregarColecaoAninhada: carregarColecaoAninhada
+  , carregarColecaoAssinc: carregarColecaoAssinc
+  , carregarColecaoSinc: carregarColecaoSinc
+  , carregarArquivosXml: carregarArquivosXml
   };
 });

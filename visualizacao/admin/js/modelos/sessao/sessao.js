@@ -58,14 +58,6 @@ define([
   // Os códigos de erro são:
   CodigosDeResposta.adicionarUmCodigo('ERRO', 'TOKEN_NAO_DECODIFICADO', '201', 'Ocorreu algum problema ao decodifica-lo.'); 
   CodigosDeResposta.adicionarUmCodigo('ERRO', 'VERIFICACAO_TOKEN', '202', 'Ocorreu algum problema ao verificarmos a validade do token informado.'); 
-          
-  // Vamos registrar aqui para ajudar nos testes e desenvolvimento.
-  // Não é para ser usado na fase final.
-  var registro = function(valor) {
-    if (!valor) return; 
-    var codigo = CodigosDeResposta.procurarUmCodigoPeloValor(valor);
-    console.log((codigo ? codigo.msg : 'Codigo não encontrado.'));
-  };
   
   /* @Modelo Sessao().
    *
@@ -172,16 +164,14 @@ define([
            * nós podemos informar que o escopo está pronto para ser acessado. É desta forma que iremos requisitar
            * o escopo do usuário.
            */
-          esteObjeto.escopos.url = 'sessao/' + esteObjeto.id + '/escopos';
-          esteObjeto.set({scope: true});  // Escopo pronto para ser requisitado.
-        
-          registro(resposta.code);
-        
+          esteObjeto.escopos.url = 'sessao/' + modelo.id + '/escopos';
+          Aplicativo.eventos.trigger('modelo:sessao:usuario:dentro');  // Escopo pronto para ser requisitado.
+          
           cd(true, resposta);
         },
         error: function (modelo, resposta) {
-          registro(resposta.code);
-          esteObjeto.set({scope: false});
+          
+          Aplicativo.eventos.trigger('modelo:sessao:usuario:fora');
           cd(false, resposta);
         }
       });
@@ -210,17 +200,21 @@ define([
          * ao regenerarmos o cookie. Isso já deve ser o bastante. 
          */
         success: function (modelo, resposta) {
-          registro(resposta.code);
+
           // Limpamos o modelo.
           modelo.clear();
-          // Muda o valor de auth e scope para false, fazendo com que seja disparado o evento change:auth e o change:scope.
+          
+          // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
           esteObjeto.set({auth: false});
-          esteObjeto.set({scope: false});
+
+          Aplicativo.eventos.trigger('modelo:sessao:usuario:fora');
         },
         error: function () {
-          // Muda o valor de auth e scope para false, fazendo com que seja disparado o evento change:auth e o change:scope.
+          
+          // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
           esteObjeto.set({auth: false});
-          esteObjeto.set({scope: false});
+ 
+          Aplicativo.eventos.trigger('modelo:sessao:usuario:fora');
         }
       });      
     },
@@ -247,20 +241,19 @@ define([
        */
       this.fetch({
         success: function(modelo, resposta) {
-          registro(resposta.code);
           
           /* Acrescentamos a URL dos escopos aqui, porque é aqui que recebemos o nosso id, e logo após isto
            * nós podemos informar que o escopo está pronto para ser acessado. É desta forma que iremos requisitar
            * o escopo do usuário.
            */
-          esteObjeto.escopos.url = 'sessao/' + esteObjeto.id + '/escopos';
-          esteObjeto.set({scope: true});  // Escopo pronto para ser requisitado.
+          esteObjeto.escopos.url = 'sessao/' + modelo.id + '/escopos';
+          
+          Aplicativo.eventos.trigger('modelo:sessao:usuario:validado');  
           
           cd(true, resposta);
         },
         error: function(modelo, resposta) {
-          registro(resposta.code);
-          esteObjeto.set({scope: false});
+          Aplicativo.eventos.trigger('modelo:sessao:usuario:fora');
           cd(false, resposta);
         }
       });
@@ -271,9 +264,7 @@ define([
      * Eu utilizo alguns destes atributos fora do modelo para utilizar os eventos.     
      */
     defaults: {
-      scope: false   // Utilizaremos este atributo para saber quando o escopo esta pronto para ser acessado.
-                     // Lembre-se que este atributo não está na nossa sessão.
-    , auth: false    // Caso o usuário esteja autenticado. Se for falso o usuário terá de realizar novamente a entrada.
+      auth: false    // Caso o usuário esteja autenticado. Se for falso o usuário terá de realizar novamente a entrada.
     , message: null  // A mensagem recebida. A cada requisição iremos receber uma mensagem informando o que aconteceu.
     , code: null     // Codigo informado para que possamos manipular aqui no lado cliente.
     , token: null    // O nosso token que será utilizado para acesso as rotas do serviço. (Não é informado se caso utilizarmos cookies seguros).

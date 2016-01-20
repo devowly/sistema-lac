@@ -12,8 +12,8 @@ define([
 , 'underscore'
 , 'bootstrap'
 , 'utilitarios'
-, 'text!/admin/js/templantes/paginas/entrada/Visao.Entrada.html'
-, 'text!/admin/js/templantes/paginas/painel/Visao.Painel.html'
+, 'text!/admin/js/templantes/entrada/Visao.Entrada.html'
+, 'text!/admin/js/templantes/painel/Visao.Painel.html'
 ], function($, Backbone, _, Bootstrap, Utilitarios, TemplanteEntrada, TemplantePainel){
   
   /* @Visão Entrada().
