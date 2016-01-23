@@ -140,6 +140,13 @@ define([
   
   /* @Método {Publico} sePossuiAcessoAoEscopo().
    *
+   * Verificaremos aqui se o usuário possui realmente acesso a o escopo.
+   *
+   * @Parametro {Texto} [modulo] O nome do modulo.
+   * @Parametro {Texto} [modelo] O nome do modelo.
+   * @Parametro {Pilha} [acoes] Contêm as ações.
+   * @Parametro {Pilha} [livre] Contêm as bandeiras de livre acesso.
+   * @Parametro {Função} [cd] Chamada depois que a requisição de acesso terminar.
    */
   Escopos.prototype.sePossuiAcessoAoEscopo = function(modulo, modelo, acoes, livre, cd) {
     

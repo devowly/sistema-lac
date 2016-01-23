@@ -1,6 +1,6 @@
 'use strict'
 
-/* @arquivo topo.js */
+/* @arquivo barraDeNav.js */
 
 /* Versão 0.0.1-Beta
  */
@@ -10,8 +10,8 @@ define([
 , 'backbone'
 , 'underscore'
 , 'bootstrap'
-, 'text!/admin/js/templantes/painel/base/Visao.TopoDoPainel.html'
-], function($, Backbone, _, Bootstrap, TemplanteTopoDoPainel){
+, 'text!/admin/js/templantes/painel/base/BarraDeNav/Visao.BarraNav.html'
+], function($, Backbone, _, Bootstrap, TemplanteBarraDeNavDoPainel) {
   
   /* Aqui acrescentamos os eventos para este sub-módulo. Assim ficará fácil para manipular os eventos que são
    * locais a este escopo. Este padrão será utilizado na maioria dos escopos que iremos criar.
@@ -19,15 +19,15 @@ define([
    * @Veja http://pragmatic-backbone.com/using-events-like-a-baws
    * @Veja https://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/
    *
-   * @Propriedade {Objeto} [evtsDoTopo] Extenção dos eventos do Backbone.
+   * @Propriedade {Evento} [eventos] Extenção dos eventos do Backbone.
    */
-  var evtsDoTopo = _.extend({}, Backbone.Events);
+  var eventos = _.extend({}, Backbone.Events);
   
-  /* @Classe Topo().
+  /* @Classe BarraDeNav().
    *
-   * Este é a nosso classe responsável pela gerencia da nossa visão do topo da interface base do aplicativo. 
-   ----------------------------------------------------------------------------------------------------------*/
-  var Topo = function() {
+   * Este é a nosso classe responsável pela gerencia da nossa visão da barra de nav. da interface base do aplicativo. 
+   ------------------------------------------------------------------------------------------------------------------*/
+  var BarraDeNav = function() {
     
     this.opcoesDoMenu = [
       {'nome': 'Cadastrar'}  // Lista de opções para realizar algum cadastro.
@@ -40,7 +40,7 @@ define([
   
   /* @Visão visao().
    */
-  Topo.prototype.visao = Backbone.View.extend({
+  BarraDeNav.prototype.visao = Backbone.View.extend({
     
     /* @Propriedade {Objeto} [attributes] Os atributos desta visão que serão acrescentados 
      * como atributos HTML (id, class, etc.) do elemento (this.el) DOM desta visão. */
@@ -63,7 +63,7 @@ define([
      */
     _renderizar: function () {
       
-      this.$el.html(_.template(TemplanteTopoDoPainel));
+      this.$el.html(_.template(TemplanteBarraDeNavDoPainel));
      
       return this;
     },
@@ -94,7 +94,7 @@ define([
   
   /* @Visão visaoDoItemNoMenuDoTopo().
    */
-  Topo.prototype.visaoDoItemNoMenuDoTopo = Backbone.View.extend({
+  BarraDeNav.prototype.visaoDoItemNoMenuDoTopo = Backbone.View.extend({
     
     /* @Construtor initialize().
      * 
@@ -118,7 +118,7 @@ define([
    * @Parametro {Texto} [item.nome] O nome do item que será adicionado no menu. Ex,. 'Exame'.
    * @Parametro {Text} [item.rota] Valor da rota para este item do menu. Ex,. '#exameLista'.
    */
-  Topo.prototype._adcItemNoMenuDoTopo = function(item) {
+  BarraDeNav.prototype._adcItemNoMenuDoTopo = function(item) {
     var visao = new this.visaoDoItemNoMenuDoTopo(item);
     
     visao.render();
@@ -128,7 +128,7 @@ define([
   /* @Método [Publico] descarregar().
    * Descarregamos aqui as nossas visões e tudo mais que seja necessário. 
    */
-  Topo.prototype.descarregar = function() {
+  BarraDeNav.prototype.descarregar = function() {
     
     if (this.visaoBase) { 
       //this.visaoBase.descarregar(); 
@@ -137,5 +137,5 @@ define([
    
   };
   
-  return Topo;
+  return BarraDeNav;
 });

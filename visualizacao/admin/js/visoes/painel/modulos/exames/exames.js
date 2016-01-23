@@ -23,7 +23,7 @@ define([
    * @Veja http://pragmatic-backbone.com/using-events-like-a-baws
    * @Veja https://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/
    *
-   * @Propriedade {Evento} [eventos] Extenção dos eventos do Backbone.
+   * @Variavel {Evento} [eventos] Extenção dos eventos do Backbone.
    */
   var eventos = _.extend({}, Backbone.Events);
   
@@ -76,11 +76,14 @@ define([
   /* @Propriedade {Pilha} [subModulosEstaticos]. Para cada um dos nóssos sub-módulos estáticos,
    * nós iremos necessitar de informar:
    *
-   * - [modulo]        Servirá para identificarmos este módulo.
-   * - [modelo]        O modelo deste módulo.
-   * - [identificador] Serve para identificar o elemento DOM que conterá esta visão. 
-   * - [subModulo]     Nome da rota para este sub-modulo.
-   * - [valor]         Modulo de visão dos sub-modulos.
+   * - {Texto}  [modulo]        Servirá para identificarmos este módulo.
+   * - {Texto}  [modelo]        O modelo deste módulo.
+   * - {Texto}  [identificador] Serve para identificar o elemento DOM que conterá esta visão. 
+   * - {Texto}  [subModulo]     Nome da rota para este sub-modulo.
+   * - {Modulo} [valor]         Modulo de visão dos sub-modulos.
+   * - {Evento} [evts]          O serviço de eventos local.
+   * - {Pilha}  [acoes]         As ações requisitadas para o sub-modulo.
+   * - {Pilha}  [livre]         As ações que são livres para acesso.
    */
   Exames.prototype.subModulosEstaticos = [
     {'modulo': 'exames', 'modelo': 'Exame', 'identificador': null, 'subModulo': 'examesCriar', 'valor': ModuloVisaoExamesCriar, 'evts': eventos, 'nome': 'moduloVisaoExamesCriar', 'acoes': ['Criar', 'Total'], 'livre': ['Livre'] }

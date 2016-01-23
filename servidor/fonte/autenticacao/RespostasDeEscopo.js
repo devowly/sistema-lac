@@ -24,7 +24,7 @@ var EmissorEvento = require('events').EventEmitter;
  * @Veja https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
  * @Veja http://expressjs.com/en/guide/error-handling.html
  *
- * @Parametro {Número} [estatus] O código de estatos de resposta do servidor HTTP REST.
+ * @Parametro {Número} [estatos] O código de estatos de resposta do servidor HTTP REST.
  * @Parametro {Texto} [mensagem] Uma mensagem de resposta.
  * @Parametro {Texto} [codigo] Além dos estadus nós informamos um código que informa ao cliente o que realmente aconteceu.
  ---------------------------------------------------------------------------------------------------------------------------------*/

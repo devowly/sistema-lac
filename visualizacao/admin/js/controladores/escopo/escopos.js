@@ -69,7 +69,7 @@ define([
    */
   Escopos.prototype._carregarOsEscopos = function(cd) {
     this.escopos = [];
-  
+
     if (this.modeloSessao && this.modeloSessao.get('auth')) {
       // Antes de requisitarmos os escopos nós teremos que verificar se o usuário está realmente autenticado.
       this.modeloSessao.seAutenticado((function(seValido, resposta) {

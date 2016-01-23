@@ -202,7 +202,7 @@ define([
         success: function (modelo, resposta) {
 
           // Limpamos o modelo.
-          modelo.clear();
+          if (modelo) modelo.clear();
           
           // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
           esteObjeto.set({auth: false});
@@ -253,6 +253,13 @@ define([
           cd(true, resposta);
         },
         error: function(modelo, resposta) {
+          
+          // Limpamos o modelo.
+          if (modelo) modelo.clear();
+          
+          // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
+          esteObjeto.set({auth: false});
+          
           Aplicativo.eventos.trigger('modelo:sessao:usuario:fora');
           cd(false, resposta);
         }

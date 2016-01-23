@@ -1,6 +1,6 @@
 'use strict'
 
-/* Aqui vamos adicionar as caracteristicas de trabalhar com as rotas, Carregar os arquivos de visão.  
+/* Aqui vamos adicionar as caracteristicas de trabalhar com as rotas, Carregar os arquivos de visão etc.  
  * 
  * @arquivo roteador.js
  */ 
@@ -89,27 +89,31 @@ define([
   /* @Função inicializar().
    *
    * Responsável por verificar o estado de autenticação do usuário e também por
-   * iniciar o nosso roteador e o histório de rotas.
+   * iniciar o nosso roteador, histório de rotas e os controladores.
    ----------------------------------------------------------------------------*/
   var inicializar = function() {
     
-    /* Iniciamos aqui o controle das nossas rotas. Cada um dos módulos e seus sub-módulos
+    /* @Variavel {Controlador} [ctrldrRotas].
+     * Iniciamos aqui o controle das nossas rotas. Cada um dos módulos e seus sub-módulos
      * poderão oferecer visões relacionadas a determinada rota.
      */
     var ctrldrRotas = new ControladorRotas();
     
-    /* Iniciamos aqui o controlador dos módulos do nosso sitio. Os modulos irão oferecer
+    /* @Variavel {Controlador} [ctrldrModulos].
+     * Iniciamos aqui o controlador dos módulos do nosso sitio. Os modulos irão oferecer
      * as caracteristicas básicas para os nossos modelos REST.
      */
     var ctrldrModulos = new ControladorModulos(ctrldrRotas);
     
-    /* Iniciamos aqui o nosso controlador da interface base do nosso sistema. Assim iremos 
+    /* @Variavel {Controlador} [ctrldrInterfaceBase].
+     * Iniciamos aqui o nosso controlador da interface base do nosso sistema. Assim iremos 
      * controlar a aparencia base que será preenchida por cada módulo dependendo do
      * acesso a determinado escopo. 
      */
     var ctrldrInterfaceBase = new ControladorInterfaceBase(ModeloSessao);
     
-    /* Iniciamos aqui o nosso controlador de escopos. Assim podemos requisitar os 
+    /* @Variavel {Controlador} [ctrldrEscopos].
+     * Iniciamos aqui o nosso controlador de escopos. Assim podemos requisitar os 
      * escopos deste usuário sempre que possível.
      */
     var ctrldrEscopos = new ControladorEscopos(ModeloSessao); 

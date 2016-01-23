@@ -142,9 +142,14 @@ define([
           var acoes = this.subModulos[modulo][rota].acoes;
           var livre = this.subModulos[modulo][rota].livre;
           
-          this.escopos.sePossuiAcessoAoEscopo(modulo, modelo, acoes, livre, (function(possui){
-            if(possui){
+          this.escopos.sePossuiAcessoAoEscopo(modulo, modelo, acoes, livre, (function(sePossuiPermissaoDeAcesso){
+            if(sePossuiPermissaoDeAcesso){
               // Apresentar a visão do sub-modulo.
+              if (id === null) {
+                
+              } else {
+                
+              }
             } else {
               // Talvez apresentar uma visão informando que não possui acesso?
             }

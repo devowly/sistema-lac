@@ -11,8 +11,9 @@ define([
   'jquery'
 , 'backbone'
 , 'underscore'
-, 'visoes/painel/base/topo'
-], function($, Backbone, _, VisaoTopoDoPainel){
+, 'visoes/painel/base/topo/topo'
+, 'visoes/painel/base/barraDeNav/barraDeNav'
+], function($, Backbone, _, VisaoTopoDoPainel, VisaoBarraDeNavDoPainel){
   
   /* @Controlador InterfaceBase().
    * 
@@ -107,6 +108,7 @@ define([
    */
   InterfaceBase.prototype.visoesEstaticas = [
     { 'identificador': 'div#topo > span#topo-menu', 'nome': 'visaoTopoDoPainel', 'valor': VisaoTopoDoPainel }
+  , { 'identificador': 'div#barra-navegacao', 'nome': 'visaoBarraDeNavDoPainel', 'valor': VisaoBarraDeNavDoPainel }
   ];
   
   return InterfaceBase;

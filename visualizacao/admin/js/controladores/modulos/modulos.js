@@ -58,10 +58,10 @@ define([
   /* @Propriedade {Pilha} [modulosEstaticos]. Para cada um dos nóssos módulos estáticos,
    * nós iremos necessitar de informar:
    *
-   * - [identificador] Serve para identificar o elemento DOM que conterá esta visão. 
-   * - [modulo]        Servirá para identificarmos este módulo.
-   * - [nome]          Variavel que iremos utilizar para armazenar os dados da visão do modulo.
-   * - [valor]         Modulo de visão.
+   * - {Texto} [identificador]  Serve para identificar o elemento DOM que conterá esta visão. 
+   * - {Texto} [modulo]         Servirá para identificarmos este módulo.
+   * - {Texto} [nome]           Variavel que iremos utilizar para armazenar os dados da visão do modulo.
+   * - {Modulo} [valor]         Modulo de visão.
    */
   Modulos.prototype.modulosEstaticos = [
     { 'identificador': null, 'modulo': 'exames', 'nome': 'moduloVisaoExames', 'valor': ModuloVisaoExames }

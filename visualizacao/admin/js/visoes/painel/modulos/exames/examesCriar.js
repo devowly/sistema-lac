@@ -13,7 +13,7 @@ define([
 , 'underscore'
 ], function($, Backbone, _){
   
-  /* @Propriedade {Evento} [eventos] Armazena uma extenção dos eventos do Backbone. */
+  /* @Variavel {Evento} [eventos] Armazena uma extenção dos eventos do Backbone. */
   var eventos = null;
   
   /* @Classe ExamesCriar().
