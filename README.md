@@ -1,5 +1,5 @@
 # sistema-lac
-Um sistema que possui caracteristicas básicas para os laboratorios de analises clinicas.
+Um sistema que possui caracteristicas básicas para os laboratorios de analises clinicas.  
 [![Build Status](https://travis-ci.org/devowly/sistema-lac.svg?branch=master)](https://travis-ci.org/devowly/sistema-lac)
 #### Documentação
 Nós temos uma documentação em andamento [aqui](https://github.com/devowly/sistema-lac/wiki). Se você for desenvolvedor, nós também temos a documentação dos padrões utilizados pelos desenvolvedores deste projeto em andamento [aqui](https://github.com/devowly/padrao-codigos/wiki).
