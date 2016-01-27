@@ -12,3 +12,5 @@ Para iniciar a visão você deve executar o comando 'node iniciar.js' no diretó
 Temos aqui a divisão dos diretórios em 2 arquivos principais. listamos eles abaixo:
 * /visualizacao/admin/ (Contêm apenas a visão referente ao administrador).
 * /visualizacao/publico/ (Contêm a visão do sitio para os pacientes, médicos e convênios).
+* /visualizacao/estilos/ (Contêm os arquivos de CSS).
+* /visualizacao/bibliotecas/ (Contêm as bibliotecas).
