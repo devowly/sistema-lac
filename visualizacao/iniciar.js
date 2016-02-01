@@ -75,6 +75,12 @@ configuracao.load(function (args, opcs) {
   // Iremos servir as páginas do diretorio "/admin"
   aplic.use('/admin', express.static(pasta.join(__dirname, 'admin')));  
   
+  // Iremos servir as páginas do diretorio "/bibliotecas"
+  aplic.use('/bibliotecas', express.static(pasta.join(__dirname, 'incluir/bibliotecas'))); 
+
+  // Iremos servir as páginas do diretorio "/estilos"
+  aplic.use('/estilos', express.static(pasta.join(__dirname, 'incluir/estilos')));   
+  
   // Iremos servir as páginas do diretorio "/publico"
   aplic.use('/', express.static(pasta.join(__dirname, 'publico')));
   
@@ -82,10 +88,10 @@ configuracao.load(function (args, opcs) {
   aplic.use(morgan('combined'));
   
   // Espera pelos eventos do sistema operacional.
-  var eventosSistema = require('./utilitarios/EventosSistema');
+  var eventosDoSistema = require('./utilitarios/EventosDoSistema');
  
   // Iniciamos aqui a escuta pelos eventos de sinalização e ou excessão.
-  eventosSistema.iniciar();
+  eventosDoSistema.iniciar();
   
   console.log('Carregando o servidor HTTP e HTTPS.');
   
