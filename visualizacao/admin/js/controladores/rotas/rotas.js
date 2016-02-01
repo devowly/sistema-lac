@@ -61,13 +61,27 @@ define([
    */
   Rotas.prototype.carregarAsRotasParaModulo = function(listaDeModulos) {
     var modulos = listaDeModulos;
+    
+    // Carregamos aqui a nossa lista de módulos.
     for (var ca = 0; ca < modulos.length; ca++) {
       // Caso o módulo não foi carregado nós prosseguimos.
       if (!this.modulos[modulos[ca].modulo]) {
+        // Iniciamos o nosso módulo
         this.modulos[modulos[ca].modulo] = new modulos[ca].valor(this.escopos, this);
+        // Iniciamos as bandeiras para o módulo.
+        this.modulos[modulos[ca].modulo].carregarAsBandeiras();
         
         // A partir de agora estaremos trocando informações a partir dos canais de eventos. Será que isso ficou obsoleto?
         // objDoMod[modulos[ca].nome] = this.modulos[modulos[ca].modulo];
+      }
+    }
+    
+    // Depois que todas bandeiras de todos os módulos estiverem carregadas é a hora de carregarmos os seus sub-módulos.
+    // Isso é importante porque alguns módulos irão necessitar das bandeiras de outros módulos ou sub-módulos.
+    for (var ca = 0; ca < modulos.length; ca++) {
+      // Caso o módulo já foi carregado então nós prosseguimos.
+      if (this.modulos[modulos[ca].modulo]) {
+        this.modulos[modulos[ca].modulo].carregarAsRotasParaSubModulos();
       }
     }
   };

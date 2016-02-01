@@ -31,10 +31,10 @@ define([
    * @Parametro {Texto} [canal] Nome do canal
    */
   Eventos.prototype.adcNovoCanalDeEventos = function(canal) {
-    if (Aplicativo[canal] === undefined) {
-      return (Aplicativo[canal] = _.extend({}, Backbone.Events));
+    if (Aplicativo['Canais'][canal] === undefined) {
+      return (Aplicativo['Canais'][canal] = _.extend({}, Backbone.Events));
     }
-    return Aplicativo[canal];
+    return Aplicativo['Canais'][canal];
   };
   
   /* @Método {Publico} [pegarUmCanalDeEventosPeloNomeDoCanal].
@@ -44,7 +44,7 @@ define([
    * @Retorna {Evento|Nulo} Um evento relacionado a um determinado canal ou nulo.
    */
   Eventos.prototype.pegarUmCanalDeEventosPeloNomeDoCanal = function(canal) {
-    return Aplicativo[canal];
+    return Aplicativo['Canais'][canal];
   };
   
   /* @Método {Publico} [adcEsperaPorEventoEmUmCanal].
@@ -56,8 +56,8 @@ define([
    * @Retorna {Boleano} Verdadeiro em caso de sucesso, ou falso em caso de alguma coisa não funcionar.
    */
   Eventos.prototype.adcEsperaPorEventoEmUmCanal = function(canal, msgDeEvento, fnc) {
-    if (Aplicativo[canal]) {
-      Aplicativo[canal].on(msgDeEvento, fnc);
+    if (Aplicativo['Canais'][canal]) {
+      Aplicativo['Canais'][canal].on(msgDeEvento, fnc);
       return true;
     } 
     return false;
@@ -72,8 +72,8 @@ define([
    * @Retorna {Boleano} Verdadeiro em caso de sucesso, ou falso em caso de alguma coisa não funcionar.
    */
   Eventos.prototype.dispararEventoEmUmCanal = function(canal, msgDeEvento, dados) {
-    if (Aplicativo[canal]) {
-      Aplicativo[canal].trigger(msgDeEvento, dados);
+    if (Aplicativo['Canais'][canal]) {
+      Aplicativo['Canais'][canal].trigger(msgDeEvento, dados);
       return true;
     } 
     return false;

@@ -46,17 +46,28 @@ define([
     /* @Propriedade {Utilitario} [escopos].
      * Contêm métodos para lidarmos com os escopos e também as bandeiras dos diversos módulos. */
     this.escopos = Escopos;
-    this.escopos.carregarAsBandeirasDoModulo(this.listaDasMinhasBandeiras);
     
     /* @Propriedade {Controlador} [ctrldrRotas].
      * Responsavel por lidar com as diversas rotas dos módulos e dos sub-módulos. */
     this.ctrldrRotas = ctrldrRotas;
+  };
+  
+  /* @Método {Publico} [carregarAsBandeiras].
+   * Carregamos as bandeiras deste módulo.
+   */
+  Unidades.prototype.carregarAsBandeiras = function() {
+    this.escopos.carregarAsBandeirasDoModulo(this.listaDasMinhasBandeiras);
+  };
+  
+  /* @Método {Publico} [carregarAsRotasParaSubModulos].
+   * Carregamos as rotas dos sub-módulos deste módulo.
+   */
+  Unidades.prototype.carregarAsRotasParaSubModulos = function() {
     this.ctrldrRotas.carregarAsRotasParaSubModulo(this.listaDosMeusSubModulosEstaticos);
     
     ctrldrEventos.dispararEventoEmUmCanal(MODULO, 'Okay', {'OK': 'LOLz'});
     ctrldrEventos.dispararEventoEmUmCanal(MODULO, 'Okay', {'OK': 'LOLz'});
     ctrldrEventos.dispararEventoEmUmCanal(MODULO, 'Okay', {'OK': 'LOLz'});
-    
   };
   
   /* @Propriedade {Matriz} (Constante) [listaDasMinhasBandeiras].

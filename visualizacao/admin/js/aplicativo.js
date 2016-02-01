@@ -31,6 +31,9 @@ define([
    */
   Aplicativo.eventosGlobais = _.extend({}, Backbone.Events);
   
+  /* @Propriedade {Matriz} [Canais] Armazena uma lista de canais de eventos para módulos, sub-módulos etc. */
+  Aplicativo['Canais'] = [];
+  
   /* @Função inicializar().
    *
    * Responsável por inicializar o nosso roteador e também por sobrescrever o método sync() e o ajaxPrefilter().
