@@ -37,21 +37,21 @@ define([
     
     /* Evento disparado quando o usuário tiver realizado a entrada com sucesso. Logo após isso
      * podemos apresentar a interface base. */
-    Aplicativo.eventos.on('modelo:sessao:usuario:dentro', this._carregarInterface, this);
+    Aplicativo.eventosGlobais.on('modelo:sessao:usuario:dentro', this._carregarInterface, this);
     
     /* Evento disparado sempre que o nosso roteador estiver carregado, aqui verificamos se
      * a sessão do usuário está aberta, depois disso nós acrescentamos as nossas visões no DOM.   
      * Lembre-se que quando o roteador estiver carregado isso significa que já foi realizado
      * uma verificação do estado da sessão do usuário. Além disso, quando o roteador é carregado
      * significa que o sitio foi acessado inicialmente ou a página foi reiniciada pelo usuário. */
-    Aplicativo.eventos.once('roteador:carregado', this._carregarInterface, this);
+    Aplicativo.eventosGlobais.once('roteador:carregado', this._carregarInterface, this);
     
     /* Quando uma rota nova é acessada então este evento será disparado. */
-    Aplicativo.eventos.on('roteador:rota:modificada', function() { }, this);
+    Aplicativo.eventosGlobais.on('roteador:rota:modificada', function() { }, this);
     
     /* Quando o usuário sair do painel. Usamos isto para realizar a remoção das nossas visões.
      * @Veja http://stackoverflow.com/a/11534056/4187180 */
-    Aplicativo.eventos.on('modelo:sessao:usuario:fora', this._descarregarInterface, this);
+    Aplicativo.eventosGlobais.on('modelo:sessao:usuario:fora', this._descarregarInterface, this);
     
   };
   
@@ -73,7 +73,7 @@ define([
         
       // Informamos que as nossas visões estão totalmente carregadas e podem agora 
       // receber requisições.
-      Aplicativo.eventos.trigger('controlador:interfacebase:carregada');
+      Aplicativo.eventosGlobais.trigger('controlador:interfacebase:carregada');
     }
   };
   
@@ -96,15 +96,15 @@ define([
  
     // Informamos aqui que as nossas visões e tudo mais que seja necessário estão
     // totalmente encerradas.
-    // Aplicativo.eventos.trigger('controlador:interfacebase:descarregada');
+    // Aplicativo.eventosGlobais.trigger('controlador:interfacebase:descarregada');
   };
   
   /* @Propriedade {Pilha} [visoesEstaticas]. Para cada uma das nossas visões, nós
    * iremos necessitar de informar:
    *
-   * - [identificador] Serve para identificar o elemento DOM que conterá esta visão.
-   * - [nome]          A variavel que iremos utilizar para armazenar os dados da visão.
-   * - [valor]         O modulo de visão.
+   * - {Texto} [identificador] Serve para identificar o elemento DOM que conterá esta visão.
+   * - {Texto} [nome]          A variavel que iremos utilizar para armazenar os dados da visão.
+   * - {Visão} [valor]         O modulo de visão.
    */
   InterfaceBase.prototype.visoesEstaticas = [
     { 'identificador': 'div#topo > span#topo-menu', 'nome': 'visaoTopoDoPainel', 'valor': VisaoTopoDoPainel }

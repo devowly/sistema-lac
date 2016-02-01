@@ -41,18 +41,18 @@ define([
      * requisitado para manipular a visão apresentada ao usuário. Por exemplo, se a sessão
      * estiver expirada então devemos manipular para que o usuário não possua acesso a determinadas
      * visões e ações. */
-    Aplicativo.eventos.on('controlador:escopos:requisicao:carregar:escopos', function(cd) {
+    Aplicativo.eventosGlobais.on('controlador:escopos:requisicao:carregar:escopos', function(cd) {
       this._carregarOsEscopos(cd);
     }, this);
     
     /* Evento disparado quando o usuário tiver realizado a saida com sucesso. */
-    Aplicativo.eventos.on('modelo:sessao:usuario:fora', function() {
+    Aplicativo.eventosGlobais.on('modelo:sessao:usuario:fora', function() {
       this.escopos = null;
     }, this);
     
     /* Evento disparado sempre que a rota for modificada assim nós podemos 
      * recarregar os escopos deste usuário ou fazer outras coisas. */
-    Aplicativo.eventos.on('roteador:rota:modificada', function() {
+    Aplicativo.eventosGlobais.on('roteador:rota:modificada', function() {
       
     }, this);
     

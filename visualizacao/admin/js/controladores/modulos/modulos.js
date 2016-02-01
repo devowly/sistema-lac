@@ -13,7 +13,8 @@ define([
 , 'underscore'
 , 'controladores/modulos/escopos'
 , 'visoes/painel/modulos/exames/exames'
-], function($, Backbone, _, Escopos, ModuloVisaoExames) {
+, 'visoes/painel/modulos/unidades/unidades'
+], function($, Backbone, _, Escopos, ModuloVisaoExames, ModuloVisaoUnidades) {
   
   /* @Controlador Modulos().
    * 
@@ -28,12 +29,12 @@ define([
     this.escopos = new Escopos();
     this.ctrldrRotas = ctrldrRotas;
     this.ctrldrRotas.adcEscopos(this.escopos);
-    this.ctrldrRotas.carregarAsRotasParaModulo(this.modulosEstaticos, this);
+    this.ctrldrRotas.carregarAsRotasParaModulo(this.modulosEstaticos);
     
     /* Evento disparado logo após todas as visões da interface base estiverem carregadas e prontas 
      * para receberem entradas dos módulos. A interface base não é nada mais que uma coluna dorsal
      * das visões base deste aplicativo. */
-    Aplicativo.eventos.on('controlador:interfacebase:carregada', function() {
+    Aplicativo.eventosGlobais.on('controlador:interfacebase:carregada', function() {
       
       if (!this.moduloVisaoExames) {
         //this.moduloVisaoExames = new ModuloVisaoExames(this.escopos);
@@ -42,7 +43,7 @@ define([
     
     /* Evento disparado quando a interface base estiver descarregada. Utilizamos isso para descarregar
      * os nossos módulos e tudo mais que for necessário. */
-    Aplicativo.eventos.on('controlador:interfacebase:descarregada', function() {
+    Aplicativo.eventosGlobais.on('controlador:interfacebase:descarregada', function() {
       
       // <umdez> Provavelmente não será necessário adicionar esta caracteristica. Eu digo isso 
       // porque não tras beneficio algum. Seria apenas mais uma forma de aumentar a complexidade 
@@ -60,11 +61,11 @@ define([
    *
    * - {Texto} [identificador]  Serve para identificar o elemento DOM que conterá esta visão. 
    * - {Texto} [modulo]         Servirá para identificarmos este módulo.
-   * - {Texto} [nome]           Variavel que iremos utilizar para armazenar os dados da visão do modulo.
    * - {Modulo} [valor]         Modulo de visão.
    */
   Modulos.prototype.modulosEstaticos = [
-    { 'identificador': null, 'modulo': 'exames', 'nome': 'moduloVisaoExames', 'valor': ModuloVisaoExames }
+    { 'identificador': null, 'modulo': 'exames', 'valor': ModuloVisaoExames }
+  , { 'identificador': null, 'modulo': 'unidades', 'valor': ModuloVisaoUnidades }
   ];
   
   return Modulos;

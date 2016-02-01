@@ -119,7 +119,7 @@ configuracao.load(function (args, opcs) {
   aplic.use(morgan('combined'));
   
   // Espera pelos eventos do sistema operacional.
-  var eventosSistema = require('./utilitarios/EventosSistema');
+  var eventosDoSistema = require('./utilitarios/EventosDoSistema');
   
   // Chamamos o arquivo principal, ele vai carregar os outros arquivos principais do servidor.
   var sitio = require('./fonte/iniciador/principal');
@@ -127,7 +127,7 @@ configuracao.load(function (args, opcs) {
   sitio.prosseguir(configuracao, aplic, jwt, function() {
     
     // Iniciamos aqui a escuta pelos eventos de sinalização e ou excessão.
-    eventosSistema.iniciar();
+    eventosDoSistema.iniciar();
     
     registrador.debug('Carregando o servidor HTTP, HTTPS e XMPP.');
     

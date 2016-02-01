@@ -1,6 +1,8 @@
 'use strict'
 
-/* Versão 0.0.1-Beta
+/* Exporta objeto contendo os dados de configuração.
+ *
+ * @Arquivo configuracao.js
  */
 
 define([

@@ -95,7 +95,7 @@ define([
      * <umdez> Não é realmente necessário (Porem diminuirá a paranoia). */
     idAttribute: 'id',
     
-    /* @Propriedade {Pilha} [colecoesAninhadas] Isso vai ser utilizado para quando formos pegar os dados 
+    /* @Propriedade {Matriz} [colecoesAninhadas] Isso vai ser utilizado para quando formos pegar os dados 
      * das coleções aninhadas pertecentes a este modelo. */
     colecoesAninhadas: [
       'escopos'
@@ -114,8 +114,8 @@ define([
     * que listamos abaixo:
     *
     * - [estatus 200] Tudo certo. Estado padrão para informar que a requisição ocorreu com exito.
-    * - [estatus 401] Não autorizado. Quando a autenticação é requerida e falhou ou dados necessários não foram providos.
     * - [estatus 400] Uma requisição errada. O servidor não pode ou não vai processar a requisição porque houve um erro no cliente (ex., sintaxe de requisição mau formada).
+    * - [estatus 401] Não autorizado. Quando a autenticação é requerida e falhou ou dados necessários não foram providos.
     * - [estatus 403] Acesso proibido. Retornamos este valor sempre que o acesso a uma fonte é proibida.
     * - [estatus 404] Não encontrado. A fonte requisitada não pode ser encontrada mas pode ser disponível no futuro.
     * - [estatus 500] Erro interno no servidor. Uma mensagem generica, disparada quando uma condição não esperada foi encontrada.
@@ -165,13 +165,13 @@ define([
            * o escopo do usuário.
            */
           esteObjeto.escopos.url = 'sessao/' + modelo.id + '/escopos';
-          Aplicativo.eventos.trigger('modelo:sessao:usuario:dentro');  // Escopo pronto para ser requisitado.
+          Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:dentro');  // Escopo pronto para ser requisitado.
           
           cd(true, resposta);
         },
         error: function (modelo, resposta) {
           
-          Aplicativo.eventos.trigger('modelo:sessao:usuario:fora');
+          Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:fora');
           cd(false, resposta);
         }
       });
@@ -207,14 +207,14 @@ define([
           // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
           esteObjeto.set({auth: false});
 
-          Aplicativo.eventos.trigger('modelo:sessao:usuario:fora');
+          Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:fora');
         },
         error: function () {
           
           // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
           esteObjeto.set({auth: false});
  
-          Aplicativo.eventos.trigger('modelo:sessao:usuario:fora');
+          Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:fora');
         }
       });      
     },
@@ -235,8 +235,9 @@ define([
       /* Este método envolve as rotas, sendo utilizado para a gente manipular a visão do usuário.
        * Mostrando a visão de entrada se o usuário não estiver validado. Antes de iniciarmos qualquer
        * rota vamos ver se o usuário é valido.
-       *
-       * Enviamos aqui um GET para a rota '/sessao/' se retornar sucesso então nosso token é valido
+       */
+       
+      /* Enviamos aqui um GET para a rota '/sessao/' se retornar sucesso então nosso token é valido
        * e com este token válido é possível realizarmos novas requisições.
        */
       this.fetch({
@@ -248,7 +249,7 @@ define([
            */
           esteObjeto.escopos.url = 'sessao/' + modelo.id + '/escopos';
           
-          Aplicativo.eventos.trigger('modelo:sessao:usuario:validado');  
+          Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:validado');  
           
           cd(true, resposta);
         },
@@ -260,7 +261,7 @@ define([
           // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
           esteObjeto.set({auth: false});
           
-          Aplicativo.eventos.trigger('modelo:sessao:usuario:fora');
+          Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:fora');
           cd(false, resposta);
         }
       });

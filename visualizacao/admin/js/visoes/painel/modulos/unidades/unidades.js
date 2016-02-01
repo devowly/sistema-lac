@@ -1,6 +1,6 @@
 'use strict'
 
-/* @arquivo exames.js */
+/* @arquivo unidades.js */
 
 /* Versão 0.0.1-Beta
  */
@@ -11,14 +11,14 @@ define([
 , 'underscore'
 , 'bootstrap'
 , 'controladores/eventos/eventos'
-, 'text!/admin/js/templantes/painel/modulos/exames/Visao.Exames.html'
-, 'visoes/painel/modulos/exames/examesCriar'
-, 'visoes/painel/modulos/exames/examesLer'
-, 'visoes/painel/modulos/exames/examesListar'
-], function($, Backbone, _, Bootstrap, ControladorEventos, TemplanteModuloExames, ModuloVisaoExamesCriar, ModuloVisaoExamesLer, ModuloVisaoExamesListar) {
+, 'text!/admin/js/templantes/painel/modulos/unidades/Visao.Unidades.html'
+, 'visoes/painel/modulos/unidades/unidadesCriar'
+, 'visoes/painel/modulos/unidades/unidadesLer'
+, 'visoes/painel/modulos/unidades/unidadesListar'
+], function($, Backbone, _, Bootstrap, ControladorEventos, TemplanteModuloUnidades, ModuloVisaoUnidadesCriar, ModuloVisaoUnidadesLer, ModuloVisaoUnidadesListar) {
   
   /* @Variavel {Texto} [MODULO] Nome deste módulo. */
-  var MODULO = 'Exames';
+  var MODULO = 'Unidades';
   
   /* Aqui acrescentamos os eventos locais para este módulo. Assim ficará fácil para manipular os eventos que são 
    * locais a este escopo.
@@ -29,14 +29,14 @@ define([
    * Responsavel por lidar com os diversos eventos dos módulos e dos sub-módulos. */
   var ctrldrEventos = null;
   
-  /* @Modulo Exames().
+  /* @Modulo Unidades().
    *
-   * Este é o nosso módulo responsável pela gerencia da nossa visão principal dos exames. 
+   * Este é o nosso módulo responsável pela gerencia da nossa visão principal das unidades. 
    *
    * @Propriedade {Utilitario} [Escopos] Contêm métodos para lidarmos com os escopos e também as bandeiras dos diversos módulos. 
    * @Propriedade {Controlador} [ctrldrRotas] Responsavel por lidar com as diversas rotas dos módulos e dos sub-módulos.
    -------------------------------------------------------------------------------------------------------------------------------*/
-  var Exames = function(Escopos, ctrldrRotas) {
+  var Unidades = function(Escopos, ctrldrRotas) {
     
     // Iniciamos aqui os nossos eventos. Lembre-se que temos que adicionar os eventos deste 
     // módulo bem antes de iniciar os seus sub-módulos.
@@ -53,7 +53,9 @@ define([
     this.ctrldrRotas = ctrldrRotas;
     this.ctrldrRotas.carregarAsRotasParaSubModulo(this.listaDosMeusSubModulosEstaticos);
     
-    ctrldrEventos.dispararEventoEmUmCanal(MODULO, 'Okay', {'OK': 'LOL'});
+    ctrldrEventos.dispararEventoEmUmCanal(MODULO, 'Okay', {'OK': 'LOLz'});
+    ctrldrEventos.dispararEventoEmUmCanal(MODULO, 'Okay', {'OK': 'LOLz'});
+    ctrldrEventos.dispararEventoEmUmCanal(MODULO, 'Okay', {'OK': 'LOLz'});
     
   };
   
@@ -70,14 +72,14 @@ define([
    * - [ACESSO_LIVRE]     Chave de acesso livre, assim o controlador irá aceitar qualquer requisição.
    * - [ACESSO_TOTAL]     Chave de acesso do usuário raiz, com esta chave é possível acessar todas as rotas.
    */
-  Exames.prototype.listaDasMinhasBandeiras = [
-    {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Criar', 'acesso': 'ACESSO_CRIAR', 'valor': 0x00000001 }                   
-  , {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Listar', 'acesso': 'ACESSO_LISTAR', 'valor': (0x00000002 | 0x00000020) }  
-  , {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Ler', 'acesso': 'ACESSO_LER', 'valor': (0x00000004 | 0x00000020) }        
-  , {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Atualizar', 'acesso': 'ACESSO_ATUALIZAR', 'valor': 0x00000008 }           
-  , {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Deletar', 'acesso': 'ACESSO_DELETAR', 'valor': 0x00000010 }               
-  , {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Livre', 'acesso': 'ACESSO_LIVRE', 'valor': 0x00000020 }                   
-  , {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Total', 'acesso': 'ACESSO_TOTAL', 'valor': 0x00000040 }                   
+  Unidades.prototype.listaDasMinhasBandeiras = [
+    {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Criar', 'acesso': 'ACESSO_CRIAR', 'valor': 0x00000001 }                   
+  , {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Listar', 'acesso': 'ACESSO_LISTAR', 'valor': (0x00000002 | 0x00000020) }  
+  , {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Ler', 'acesso': 'ACESSO_LER', 'valor': (0x00000004 | 0x00000020) }        
+  , {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Atualizar', 'acesso': 'ACESSO_ATUALIZAR', 'valor': 0x00000008 }           
+  , {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Deletar', 'acesso': 'ACESSO_DELETAR', 'valor': 0x00000010 }               
+  , {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Livre', 'acesso': 'ACESSO_LIVRE', 'valor': 0x00000020 }                   
+  , {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Total', 'acesso': 'ACESSO_TOTAL', 'valor': 0x00000040 }                   
   ];
   
   /* @Propriedade {Matriz} (Constante) [listaDosMeusSubModulosEstaticos]. 
@@ -91,16 +93,16 @@ define([
    * - {Matriz} [acoes]         As ações requisitadas para o sub-modulo.
    * - {Matriz} [livre]         As ações que são livres para acesso.
    */
-  Exames.prototype.listaDosMeusSubModulosEstaticos = [
-    {'modulo': 'exames', 'modelo': 'Exame', 'identificador': null, 'nome': 'examesCriar', 'valor': ModuloVisaoExamesCriar, 'acoes': ['Criar', 'Total'], 'livre': ['Livre'] }
-  , {'modulo': 'exames', 'modelo': 'Exame', 'identificador': null, 'nome': 'examesLer', 'valor': ModuloVisaoExamesLer, 'acoes': ['Ler', 'Total'], 'livre': ['Livre'] }
-  , {'modulo': 'exames', 'modelo': 'Exame', 'identificador': null, 'nome': 'examesListar', 'valor': ModuloVisaoExamesListar, 'acoes': ['Listar', 'Total'], 'livre': ['Livre'] }
+  Unidades.prototype.listaDosMeusSubModulosEstaticos = [
+    {'modulo': 'unidades', 'modelo': 'Unidade', 'identificador': null, 'nome': 'unidadesCriar', 'valor': ModuloVisaoUnidadesCriar, 'acoes': ['Criar', 'Total'], 'livre': ['Livre'] }
+  , {'modulo': 'unidades', 'modelo': 'Unidade', 'identificador': null, 'nome': 'unidadesLer', 'valor': ModuloVisaoUnidadesLer, 'acoes': ['Ler', 'Total'], 'livre': ['Livre'] }
+  , {'modulo': 'unidades', 'modelo': 'Unidade', 'identificador': null, 'nome': 'unidadesListar', 'valor': ModuloVisaoUnidadesListar, 'acoes': ['Listar', 'Total'], 'livre': ['Livre'] }
   ];
    
-  Exames.prototype.descarregar = function() {
-    // this.escopos.remBandeiraParaUmModulo('exames');
+  Unidades.prototype.descarregar = function() {
+    // this.escopos.remBandeiraParaUmModulo('unidades');
   };
   
-  return Exames;
+  return Unidades;
 
 });

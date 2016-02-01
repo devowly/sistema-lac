@@ -21,7 +21,7 @@ define([
     
     this.bandeiras = new Bandeiras();
     
-   /* @Propriedade {Pilha} [escopos] Uma lista com todos os escopos que requisitaremos as bandeiras. 
+   /* @Propriedade {Matriz} [escopos] Uma lista com todos os escopos que requisitaremos as bandeiras. 
     * Cada um dos escopos oferece acesso a uma rota REST dependendo da bandeira. Por exemplo., 
     * o escopo 'Exame' possuirá acessos CRUD. Para saber se possuimos algum acesso qualquer
     * iremos encontrar isso nas bandeiras deste escopo.
@@ -41,13 +41,16 @@ define([
   /* @Método {Publico} carregarAsBandeirasDoModulo(). Realiza para cada modulo o carregamento das 
    * suas bandeiras. Lembre-se que um modulo pode ter bandeiras com acesso, valores e ações únicos.
    *
+   * @Parametro {Matriz} [listaDeBandeiras] Uma lista com as bandeiras de determinado modulo.
    */
   Escopos.prototype.carregarAsBandeirasDoModulo = function(listaDeBandeiras) {
     for (var ca = 0; ca < listaDeBandeiras.length; ca++) {
-      this.bandeiras.adcUmaBandeiraParaModulo(
-        listaDeBandeiras[ca].modulo, listaDeBandeiras[ca].modelo, listaDeBandeiras[ca].acao
-      , listaDeBandeiras[ca].acesso, listaDeBandeiras[ca].valor
-      );  
+      var modulo = listaDeBandeiras[ca].modulo;
+      var modelo = listaDeBandeiras[ca].modelo;
+      var acao = listaDeBandeiras[ca].acao;
+      var acesso = listaDeBandeiras[ca].acesso;
+      var valor = listaDeBandeiras[ca].valor;
+      this.bandeiras.adcUmaBandeiraParaModulo(modulo, modelo, acao, acesso, valor);  
     }
     return true;
   };
@@ -59,7 +62,7 @@ define([
    *
    * @Parametro {Texto} [modulo] O nome do modulo que possui as bandeiras. Por exemplo: 'exames'.
    * @Parametro {Texto} [modelo] O modelo que possui as bandeiras.
-   * @Parametro {Pilha} [acoes] As ações de acesso requisitado. Por exemplo 'Listar' ou 'Criar'.
+   * @Parametro {Matriz} [acoes] As ações de acesso requisitado. Por exemplo 'Listar' ou 'Criar'.
    * @Retorna {Número} Soma das bandeiras das ações informadas.
    */
   Escopos.prototype.pegarValorDaBandeiraPelasAcoes = function(modulo, modelo, acoes) {
@@ -72,7 +75,7 @@ define([
    *
    * @Parametro {Texto} [modulo] O modulo que possui as bandeiras.
    * @Parametro {Texto} [modelo] O modelo que possui as bandeiras.
-   * @Parametro {Pilha} [acoes] As ações de acesso requisitado. Por exemplo 'Listar' ou 'Criar'.
+   * @Parametro {Matriz} [acoes] As ações de acesso requisitado. Por exemplo 'Listar' ou 'Criar'.
    * @Retorna {falso|verdadeiro} falso se não houver acesso, verdadeiro caso contrário.
    */
   Escopos.prototype.sePossuiAcesso = function(modulo, modelo, acoes, valor) {
@@ -85,7 +88,7 @@ define([
    * dinamicamente, sendo assim, temos que verificar a cada acesso os escopos. Isso vai oferecer
    * mais uma camada de proteção ao nosso aplicativo.
    *
-   * @Parametro {Pilha} [escopos] Uma pilha contendo cada escopo e o valor da bandeira.
+   * @Parametro {Matriz} [escopos] Uma pilha contendo cada escopo e o valor da bandeira.
    * @Parametro {Função} [cd] Chamada depois que a manipulação dos escopos terminar.
    */
   Escopos.prototype.manipularOsEscopos = function(escopos, cd) {
@@ -117,7 +120,7 @@ define([
    */
   Escopos.prototype.requisitarOsEscopos = function(cd) {
 
-    Aplicativo.eventos.trigger('controlador:escopos:requisicao:carregar:escopos', (function(erro, escopos) {
+    Aplicativo.eventosGlobais.trigger('controlador:escopos:requisicao:carregar:escopos', (function(erro, escopos) {
       
       if (erro) {
         // Lembre-se que se este erro for de validação, provavelmente a visão do usuário será modificada
@@ -144,8 +147,8 @@ define([
    *
    * @Parametro {Texto} [modulo] O nome do modulo.
    * @Parametro {Texto} [modelo] O nome do modelo.
-   * @Parametro {Pilha} [acoes] Contêm as ações.
-   * @Parametro {Pilha} [livre] Contêm as bandeiras de livre acesso.
+   * @Parametro {Matriz} [acoes] Contêm as ações.
+   * @Parametro {Matriz} [livre] Contêm as bandeiras de livre acesso.
    * @Parametro {Função} [cd] Chamada depois que a requisição de acesso terminar.
    */
   Escopos.prototype.sePossuiAcessoAoEscopo = function(modulo, modelo, acoes, livre, cd) {

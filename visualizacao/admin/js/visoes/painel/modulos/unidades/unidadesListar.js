@@ -1,7 +1,7 @@
 'use strict'
 
 /*
- * @arquivo examesLer.js
+ * @arquivo unidadesListar.js
  */ 
 
 /* Versão 0.0.1-Beta
@@ -13,16 +13,16 @@ define([
 , 'underscore'
 ], function($, Backbone, _){
   
-  /* @Submodulo ExamesLer().
+  /* @Submodulo UnidadesListar().
    *
    --------------------------------------------------------------------------------------*/
-  var ExamesLer = function() {
+  var UnidadesListar = function() {
     
   };
 
-  ExamesLer.prototype.inicializar = function() {
+  UnidadesListar.prototype.inicializar = function() {
     
   };
   
-  return ExamesLer;
+  return UnidadesListar;
 });

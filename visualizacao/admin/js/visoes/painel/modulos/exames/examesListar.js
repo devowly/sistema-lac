@@ -13,7 +13,7 @@ define([
 , 'underscore'
 ], function($, Backbone, _){
   
-  /* @Classe ExamesListar().
+  /* @Submodulo ExamesListar().
    *
    --------------------------------------------------------------------------------------*/
   var ExamesListar = function() {

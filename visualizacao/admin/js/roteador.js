@@ -6,6 +6,7 @@
  */ 
 
 /* Versão 0.0.1-Beta
+ * - Adc. caracteristica de troca das visões pelo roteador. (issue #52) [AFAZER].
  */
  
 define([
@@ -37,6 +38,8 @@ define([
     /* @Construtor initialize().
      *
      * Aqui realizamos o inicio do nosso roteador. 
+     *
+     * @Parametro {Controlador} [ctrldrRotas] Gerencia as rotas.
      */
     initialize: function (ctrldrRotas) {
       this.ctrldrRotas = ctrldrRotas;
@@ -48,7 +51,7 @@ define([
        * @Veja http://stackoverflow.com/a/9704262/4187180
        */
       this.bind('route', function() {
-        Aplicativo.eventos.trigger('roteador:rota:modificada');
+        Aplicativo.eventosGlobais.trigger('roteador:rota:modificada');
       });
       
       /* Iniciamos a visão de entrada, sempre que o usuário acessar o nosso sitio, será apresentada
@@ -93,6 +96,12 @@ define([
    ----------------------------------------------------------------------------*/
   var inicializar = function() {
     
+    /* @Variavel {Controlador} [ctrldrEscopos].
+     * Iniciamos aqui o nosso controlador de escopos. Assim podemos requisitar os 
+     * escopos deste usuário sempre que possível.
+     */
+    var ctrldrEscopos = new ControladorEscopos(ModeloSessao); 
+    
     /* @Variavel {Controlador} [ctrldrRotas].
      * Iniciamos aqui o controle das nossas rotas. Cada um dos módulos e seus sub-módulos
      * poderão oferecer visões relacionadas a determinada rota.
@@ -112,16 +121,10 @@ define([
      */
     var ctrldrInterfaceBase = new ControladorInterfaceBase(ModeloSessao);
     
-    /* @Variavel {Controlador} [ctrldrEscopos].
-     * Iniciamos aqui o nosso controlador de escopos. Assim podemos requisitar os 
-     * escopos deste usuário sempre que possível.
-     */
-    var ctrldrEscopos = new ControladorEscopos(ModeloSessao); 
-    
     /* Sempre é necessário verificar o estado da sessão do usuário. A gente confere o estado aqui,
      * porque quando o usuário recarregar a página nós iremos apresentar a visão correta.
      */
-    ModeloSessao.seAutenticado((function(seValido, resposta){
+    ModeloSessao.seAutenticado((function(seAutenticado, resposta) {
       
       /* Devemos iniciar aqui o roteador porque sempre iremos apresentar a visão
        * depois de verificar a sessão do usuário. */
@@ -129,7 +132,7 @@ define([
       
       /* Disparamos este evento quando o nosso roteador estiver carregado com sucesso.
        * Assim utilizamos ele para acrescentar as rotas dos nossos módulos. */
-      Aplicativo.eventos.trigger('roteador:carregado');
+      Aplicativo.eventosGlobais.trigger('roteador:carregado');
         
       // Iniciamos aqui o histórico das rotas.
       Backbone.history.start();   

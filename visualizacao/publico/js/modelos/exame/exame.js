@@ -27,7 +27,7 @@ define([
   var Exame = Backbone.Model.extend({
 
     // O endereço REST onde iremos pegar os dados.
-    urlRoot: Configuracao.cors.serverAddressSsl + "exames",
+    urlRoot: Configuracao.cors.serverAddress + "exames",
 
     // Isso vai ser utilizado para quando formos pegar os dados 
     // das coleções aninhadas pertecentes a este modelo.
@@ -40,7 +40,7 @@ define([
       // Cada um dos exames possue uma orientação a ser informada.
       // Aqui nós substituimos a url de ColecaoExameOrientacoes.
       this.exameOrientacoes = nestCollection(this, 'exameOrientacoes', new ColecaoExameOrientacoes(this.get('exameOrientacoes')));
-      this.exameOrientacoes.url = Configuracao.cors.serverAddressSsl + 'exames/' + this.id + '/ExameOrientacao';
+      this.exameOrientacoes.url = Configuracao.cors.serverAddress + 'exames/' + this.id + '/ExameOrientacao';
     },
     
     // Aqui os atributos padrões deste modelo de exame.

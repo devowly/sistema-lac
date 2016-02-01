@@ -27,9 +27,9 @@ define([
    * @Veja http://pragmatic-backbone.com/using-events-like-a-baws
    * @Veja https://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/
    *
-   * @Propriedade {Evento} [eventos] Extenção dos eventos do Backbone.
+   * @Propriedade {Evento} [eventosGlobais] Extenção dos eventos do Backbone.
    */
-  Aplicativo.eventos = _.extend({}, Backbone.Events);
+  Aplicativo.eventosGlobais = _.extend({}, Backbone.Events);
   
   /* @Função inicializar().
    *

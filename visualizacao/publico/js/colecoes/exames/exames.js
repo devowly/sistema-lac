@@ -63,7 +63,7 @@
     /* A url não é nada mais que uma rota que temos no serviço REST Epilogue. Neste endereço, iremos
      * realizar a listagem dos registros do banco.
      */
-    url: Configuracao.cors.serverAddressSsl + "exames",
+    url: Configuracao.cors.serverAddress + "exames",
    
    /* Existem três tipos de modos no Paginator, listo cada um deles abaixo:
     *

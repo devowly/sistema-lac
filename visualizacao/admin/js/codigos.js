@@ -24,9 +24,9 @@ define([
     /* @Propriedade {Objeto} [CODIGOS] Armazena os códigos de resposta divididos em conjuntos das 
      * pilhas 'INFO', 'SUCESSO' e 'ERRO'. */
     this.CODIGOS = {
-      'INFO': [],    // Aqui são os códigos relacionados às informações.
-      'SUCESSO': [], // Aqui os códigos de sucesso.
-      'ERRO': []     // Informar o cliente que houve algum erro.
+      'INFO': []     // Aqui são os códigos relacionados às informações.
+    , 'SUCESSO': []  // Aqui os códigos de sucesso.
+    , 'ERRO': []     // Informar o cliente que houve algum erro.
     };
   };
   
@@ -44,25 +44,14 @@ define([
   CodigosDeResposta.prototype.adicionarUmCodigo = function(tipo, nome, valor, mensagem) {
    
     if ('INFO' === tipo) {  // Códigos de informação poder ser apresentados com cor azul.
-      this.CODIGOS['INFO'].push({
-        nome: nome
-      , cod: valor.toString()
-      , msg: mensagem
-      });
+      this.CODIGOS['INFO'].push({ nome: nome, cod: valor.toString(), msg: mensagem });
       
     } else if ('SUCESSO' === tipo) {  // Códigos de sucesso poderão ser apresentados com a cor verde.
-      this.CODIGOS['SUCESSO'].push({
-        nome: nome
-      , cod: valor.toString()
-      , msg: mensagem
-      }); 
+      this.CODIGOS['SUCESSO'].push({ nome: nome, cod: valor.toString(), msg: mensagem }); 
       
     } else if ('ERRO' === tipo) {  // Códigos de erro podem ser apresentados com a cor vermelha.
-      this.CODIGOS['ERRO'].push({
-        nome: nome
-      , cod: valor.toString()
-      , msg: mensagem
-      }) 
+      this.CODIGOS['ERRO'].push({ nome: nome, cod: valor.toString(), msg: mensagem }) 
+      
     } else {
       console.log('Você informou um tipo que não existe.')
       return false;

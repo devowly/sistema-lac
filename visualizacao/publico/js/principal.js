@@ -27,42 +27,42 @@ require.config({
   // Os caminhos de cada um dos nossos modulos.
   paths: {
     
-    'async': '../bibliotecas/async/async',    // Para carregar scripts assincronamente.
-    'gmapas': '../bibliotecas/async/gmapas',  // Mapa do Google. @veja http://blog.millermedeiros.com/requirejs-2-0-delayed-module-evaluation-and-google-maps/
+    'async': '/bibliotecas/async/async',    // Para carregar scripts assincronamente.
+    'gmapas': '/bibliotecas/async/gmapas',  // Mapa do Google. @veja http://blog.millermedeiros.com/requirejs-2-0-delayed-module-evaluation-and-google-maps/
     
-    'text': '../bibliotecas/text', // Para carregamento de arquivos em texto. por exemplo, arquivos .html.
+    'text': '/bibliotecas/text', // Para carregamento de arquivos em texto. por exemplo, arquivos .html.
     
-    'underscore': '../bibliotecas/underscore',
+    'underscore': '/bibliotecas/underscore',
     
     // Backbone e suas extenções
-    'backbone': '../bibliotecas/backbone',
-    'backbone.paginator': '../bibliotecas/backbone.paginator',  // Adicionar paginação ao BackBone. @veja https://github.com/backbone-paginator/backbone.paginator
-    'nesting': '../bibliotecas/nesting',   // Para utilizarmos nos modelos. @veja https://gist.github.com/geddski/1610397
+    'backbone': '/bibliotecas/backbone',
+    'backbone.paginator': '/bibliotecas/backbone.paginator',  // Adicionar paginação ao BackBone. @veja https://github.com/backbone-paginator/backbone.paginator
+    'nesting': '/bibliotecas/nesting',   // Para utilizarmos nos modelos. @veja https://gist.github.com/geddski/1610397
     
     // Backgrid e suas extenções e dependencias.
-    'backgrid': '../bibliotecas/backgrid',  // backgrid @veja http://backgridjs.com/
-    'backgrid-filter': '../bibliotecas/backgrid-filter',  // Oferece filtro para o BackGrid.  @veja https://github.com/wyuenho/backgrid-filter
-    'backgrid-automaticfilter': '../bibliotecas/backgrid-automaticfilter',  // Extenção para o backgrid e para o backgrid-filter.
-    'backgrid-paginator': '../bibliotecas/backgrid-paginator', // Oferece paginação ao BackGrid. @veja https://github.com/wyuenho/backgrid-paginator
-    'backgrid-cellbuttons': '../bibliotecas/backgrid-cellbuttons', // Oferece células de botões ao BackGrid. 
-    'lunr': '../bibliotecas/lunr',  // lunr. @veja http://lunrjs.com/
+    'backgrid': '/bibliotecas/backgrid',  // backgrid @veja http://backgridjs.com/
+    'backgrid-filter': '/bibliotecas/backgrid-filter',  // Oferece filtro para o BackGrid.  @veja https://github.com/wyuenho/backgrid-filter
+    'backgrid-automaticfilter': '/bibliotecas/backgrid-automaticfilter',  // Extenção para o backgrid e para o backgrid-filter.
+    'backgrid-paginator': '/bibliotecas/backgrid-paginator', // Oferece paginação ao BackGrid. @veja https://github.com/wyuenho/backgrid-paginator
+    'backgrid-cellbuttons': '/bibliotecas/backgrid-cellbuttons', // Oferece células de botões ao BackGrid. 
+    'lunr': '/bibliotecas/lunr',  // lunr. @veja http://lunrjs.com/
     
     // BootStrap e suas extenções
-    'bootstrap': '../bibliotecas/bootstrap',
-    'bootstrap-widgets': '../bibliotecas/bootstrap-widgets',
-    'button.6619238bf476cc3999511336bc046bfa': '../bibliotecas/button.6619238bf476cc3999511336bc046bfa',
-    'ie10-viewport-bug-workaround': '../bibliotecas/ie10-viewport-bug-workaround',
-    'ie-emulation-modes-warning': '../bibliotecas/ie-emulation-modes-warning',
+    'bootstrap': '/bibliotecas/bootstrap',
+    'bootstrap-widgets': '/bibliotecas/bootstrap-widgets',
+    'button.6619238bf476cc3999511336bc046bfa': '/bibliotecas/button.6619238bf476cc3999511336bc046bfa',
+    'ie10-viewport-bug-workaround': '/bibliotecas/ie10-viewport-bug-workaround',
+    'ie-emulation-modes-warning': '/bibliotecas/ie-emulation-modes-warning',
     
     // jQuery e suas extenções.
-    'jquery': '../bibliotecas/jquery',
-    'jquery-ui': '../bibliotecas/jquery-ui',
-    'jquery.scrollTo': '../bibliotecas/jquery.scrollTo',
+    'jquery': '/bibliotecas/jquery',
+    'jquery-ui': '/bibliotecas/jquery-ui',
+    'jquery.scrollTo': '/bibliotecas/jquery.scrollTo',
     
     // Pasta dos nossos templantes
     'templantes': '../templantes',
     
-    'domReady': '../bibliotecas/domReady'
+    'domReady': '/bibliotecas/domReady'
   },
   
   // Lembre-se: Somente usar o shim para aqueles scripts que não são AMD.

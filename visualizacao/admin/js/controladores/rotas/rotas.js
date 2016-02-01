@@ -21,10 +21,10 @@ define([
    --------------------------------------------------------------------------------------*/
   var Rotas = function() {
     
-    /* @Propriedade {Pilha} [modulos] Contêm os módulos. */
+    /* @Propriedade {Matriz} [modulos] Contêm os módulos. */
     this.modulos = [];
     
-    /* @Propriedade {Pilha} [subModulos] Contêm os sub-módulos. */
+    /* @Propriedade {Matriz} [subModulos] Contêm os sub-módulos. */
     this.subModulos = [];
     
     /* @Propriedade {Utilitario} [escopos] Os escopos. */
@@ -53,19 +53,21 @@ define([
    * Aqui carregaremos as rotas para os modulos. Cada um dos módulos possuirá uma rota, por exemplo,
    * o módulo 'exames' possuirá uma rota #exames.
    *
-   * @Parametro {Pilha} [listaDeModulos] Contêm a lista dos modulos que iremos carregar.
+   * @Parametro {Matriz} [listaDeModulos] Contêm a lista dos modulos que iremos carregar.
    * @Parametro {Texto} [listaDeModulos.identificador] Serve para identificar o elemento DOM que conterá esta visão.
    * @Parametro {Texto} [listaDeModulos.modulo] Servirá para identificarmos este módulo.
    * @Parametro {Texto} [listaDeModulos.nome] Variavel que iremos utilizar para armazenar os dados da visão.
    * @Parametro {Modulo} [listaDeModulos.valor] Modulo de visão.
    */
-  Rotas.prototype.carregarAsRotasParaModulo = function(listaDeModulos, objDoMod) {
+  Rotas.prototype.carregarAsRotasParaModulo = function(listaDeModulos) {
     var modulos = listaDeModulos;
     for (var ca = 0; ca < modulos.length; ca++) {
       // Caso o módulo não foi carregado nós prosseguimos.
       if (!this.modulos[modulos[ca].modulo]) {
         this.modulos[modulos[ca].modulo] = new modulos[ca].valor(this.escopos, this);
-        objDoMod[modulos[ca].nome] = this.modulos[modulos[ca].modulo];
+        
+        // A partir de agora estaremos trocando informações a partir dos canais de eventos. Será que isso ficou obsoleto?
+        // objDoMod[modulos[ca].nome] = this.modulos[modulos[ca].modulo];
       }
     }
   };
@@ -74,7 +76,7 @@ define([
    * 
    * Aqui carregaremos as rotas para os sub-modulos. 
    *
-   * @Parametro {Pilha} [listaDeSubModulos] Contêm a lista dos sub-modulos que iremos carregar.
+   * @Parametro {Matriz} [listaDeSubModulos] Contêm a lista dos sub-modulos que iremos carregar.
    * @Parametro {Texto} [listaDeSubModulos.modulo] Servirá para identificarmos o módulo deste sub-modulo.
    * @Parametro {Texto} [listaDeSubModulos.modelo] O modelo.
    * @Parametro {Texto} [listaDeSubModulos.identificador] Serve para identificar o elemento DOM que conterá esta visão.
@@ -82,7 +84,7 @@ define([
    * @Parametro {Modulo} [listaDeSubModulos.valor] Modulo de visão.
    * @Parametro {Evento} [listaDeSubModulos.evts] Eventos locais ao modulo e sub-modulos.
    */
-  Rotas.prototype.carregarAsRotasParaSubModulo = function(listaDeSubModulos, objDoSubMod) {
+  Rotas.prototype.carregarAsRotasParaSubModulo = function(listaDeSubModulos) {
     var subModulos = listaDeSubModulos;
     
     // Percorremos cada um dos sub-modulos.
@@ -96,17 +98,18 @@ define([
       }
       
       // Acrescentamos os dados para o sub-modulo.
-      this.subModulos[subModulos[ca].modulo][subModulos[ca].subModulo] = {
+      this.subModulos[subModulos[ca].modulo][subModulos[ca].nome] = {
         'modulo': subModulos[ca].modulo
-      , 'subModulo': subModulos[ca].subModulo
+      , 'nome': subModulos[ca].nome
       , 'modelo': subModulos[ca].modelo
       , 'identificador': subModulos[ca].identificador
-      , 'valor': new subModulos[ca].valor(this.escopos, subModulos[ca].evts)
+      , 'valor': new subModulos[ca].valor(this.escopos)
       , 'livre': subModulos[ca].livre
       , 'acoes': subModulos[ca].acoes
       }
       
-      objDoSubMod[subModulos[ca].nome] = this.subModulos[subModulos[ca].modulo][subModulos[ca].subModulo].valor;
+      // A partir de agora estaremos trocando informações a partir dos canais de eventos. Será que isso ficou obsoleto?
+      // objDoSubMod[subModulos[ca].nome] = this.subModulos[subModulos[ca].modulo][subModulos[ca].subModulo].valor;
     }
   };
   
@@ -118,7 +121,7 @@ define([
    * alguma bandeira de acesso.
    *
    * @Parametro {Texto} [rota] O valor da rota que o usuário requisitou.
-   * @Parametro {Texto} [id] O identificador que o usuário requisitou.
+   * @Parametro {Texto} [id] Um identificador que o usuário informou na requisição.
    */
   Rotas.prototype.manipularAsRotas = function(rota, id) {
     if (this.modulos[rota]) {
