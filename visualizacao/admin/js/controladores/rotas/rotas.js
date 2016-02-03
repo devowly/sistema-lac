@@ -48,41 +48,19 @@ define([
     this.escopos = escopos;
   };
   
-  /* @Método {Publico} carregarAsRotasParaModulo(). 
+  /* @Método {Publico} adcUmaRotaParaUmModulo(). 
    * 
-   * Aqui carregaremos as rotas para os modulos. Cada um dos módulos possuirá uma rota, por exemplo,
+   * Aqui carregaremos uma rota para um modulo. Cada um dos módulos possuirá uma rota, por exemplo,
    * o módulo 'exames' possuirá uma rota #exames.
    *
-   * @Parametro {Matriz} [listaDeModulos] Contêm a lista dos modulos que iremos carregar.
-   * @Parametro {Texto} [listaDeModulos.identificador] Serve para identificar o elemento DOM que conterá esta visão.
-   * @Parametro {Texto} [listaDeModulos.modulo] Servirá para identificarmos este módulo.
-   * @Parametro {Texto} [listaDeModulos.nome] Variavel que iremos utilizar para armazenar os dados da visão.
-   * @Parametro {Modulo} [listaDeModulos.valor] Modulo de visão.
+   * @Parametro {Texto} [modulo] Servirá para identificarmos este módulo.
+   * @Parametro {Modulo} [valor] Modulo de visão.
    */
-  Rotas.prototype.carregarAsRotasParaModulo = function(listaDeModulos) {
-    var modulos = listaDeModulos;
-    
-    // Carregamos aqui a nossa lista de módulos.
-    for (var ca = 0; ca < modulos.length; ca++) {
-      // Caso o módulo não foi carregado nós prosseguimos.
-      if (!this.modulos[modulos[ca].modulo]) {
-        // Iniciamos o nosso módulo
-        this.modulos[modulos[ca].modulo] = new modulos[ca].valor(this.escopos, this);
-        // Iniciamos as bandeiras para o módulo.
-        this.modulos[modulos[ca].modulo].carregarAsBandeiras();
-        
-        // A partir de agora estaremos trocando informações a partir dos canais de eventos. Será que isso ficou obsoleto?
-        // objDoMod[modulos[ca].nome] = this.modulos[modulos[ca].modulo];
-      }
-    }
-    
-    // Depois que todas bandeiras de todos os módulos estiverem carregadas é a hora de carregarmos os seus sub-módulos.
-    // Isso é importante porque alguns módulos irão necessitar das bandeiras de outros módulos ou sub-módulos.
-    for (var ca = 0; ca < modulos.length; ca++) {
-      // Caso o módulo já foi carregado então nós prosseguimos.
-      if (this.modulos[modulos[ca].modulo]) {
-        this.modulos[modulos[ca].modulo].carregarAsRotasParaSubModulos();
-      }
+  Rotas.prototype.adcUmaRotaParaUmModulo = function(modulo, valor) {
+       
+    // Caso o módulo já foi carregado então nós prosseguimos.
+    if (this.modulos[modulo] === undefined) {
+      this.modulos[modulo] = valor;
     }
   };
   

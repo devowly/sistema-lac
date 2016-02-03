@@ -1,7 +1,7 @@
 'use strict'
 
 /*
- * @arquivo modulos.js
+ * @arquivo subModulos.js
  */ 
 
 /* Versão 0.0.1-Beta
@@ -16,7 +16,7 @@ define([
 , 'visoes/painel/modulos/unidades/unidades'
 ], function($, Backbone, _, Escopos, ModuloVisaoExames, ModuloVisaoUnidades) {
   
-  /* @Controlador Modulos().
+  /* @Utilitario SubModulos().
    * 
    * Acrescenta as caracteristicas para gerenciamento dos diversos módulos e sub-módulos do 
    * aplicativo.
@@ -24,7 +24,7 @@ define([
    * @Propriedade {Controlador} [ctrldrRotas] Responsavel por lidar com as diversas rotas dos 
    *                                          módulos e dos sub-módulos.
    --------------------------------------------------------------------------------------------*/
-  var Modulos = function(ctrldrRotas) {
+  var SubModulos = function(ctrldrRotas) {
     var esteObjeto = this;
     
     /* @Propriedade {Utilitario} [escopos] Responsavel por lidar com os escopos. */
@@ -34,36 +34,14 @@ define([
      * Responsavel por lidar com as diversas rotas dos módulos e dos sub-módulos. */
     this.ctrldrRotas = ctrldrRotas;
     this.ctrldrRotas.adcEscopos(this.escopos);
+    //this.ctrldrRotas.carregarAsRotasParaModulo(this.modulosEstaticos);
     
     /* @Propriedade {Matriz} [modulos] Contêm os módulos. */
     this.modulos = [];
     
     // Carregaremos os nossos módulos.
     this._carregarOsModulos();
-    
-    /* Evento disparado logo após todas as visões da interface base estiverem carregadas e prontas 
-     * para receberem entradas dos módulos. A interface base não é nada mais que uma coluna dorsal
-     * das visões base deste aplicativo. */
-    Aplicativo.eventosGlobais.on('controlador:interfacebase:carregada', function() {
-      
-      if (!this.moduloVisaoExames) {
-        //this.moduloVisaoExames = new ModuloVisaoExames(this.escopos);
-      }
-    }, this);
-    
-    /* Evento disparado quando a interface base estiver descarregada. Utilizamos isso para descarregar
-     * os nossos módulos e tudo mais que for necessário. */
-    Aplicativo.eventosGlobais.on('controlador:interfacebase:descarregada', function() {
-      
-      // <umdez> Provavelmente não será necessário adicionar esta caracteristica. Eu digo isso 
-      // porque não tras beneficio algum. Seria apenas mais uma forma de aumentar a complexidade 
-      // do código. 
-      
-      if (this.moduloVisaoExames) {
-        //this.moduloVisaoExames.descarregar();
-        //this.moduloVisaoExames = null;
-      }
-    }, this);
+ 
   };
   
   /* @Método {Privado} _carregarOsModulos().
@@ -92,7 +70,7 @@ define([
     }
   };
   
-  /* @Propriedade {Matriz} (Constante) [modulosEstaticos]. Para cada um dos nóssos módulos estáticos,
+  /* @Propriedade {Matriz} [modulosEstaticos]. Para cada um dos nóssos módulos estáticos,
    * nós iremos necessitar de informar:
    *
    * - {Texto} [identificador]  Serve para identificar o elemento DOM que conterá esta visão. 
@@ -104,5 +82,5 @@ define([
   , { 'identificador': null, 'modulo': 'unidades', 'valor': ModuloVisaoUnidades }
   ];
   
-  return Modulos;
+  return SubModulos;
 });

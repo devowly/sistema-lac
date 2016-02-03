@@ -20,14 +20,17 @@ define([
   /* @Variavel {Texto} [MODULO] Nome deste módulo. */
   var MODULO = 'Unidades';
   
+  /* @Variavel {Texto} [MODELO] Nome do modelo deste módulo. */
+  var MODELO = 'Unidade';
+  
+  /* @Variavel {Controlador} [ctrldrEventos].
+   * Responsavel por lidar com os diversos eventos dos módulos e dos sub-módulos. */
+  var ctrldrEventos = new ControladorEventos();
+  
   /* Aqui acrescentamos os eventos locais para este módulo. Assim ficará fácil para manipular os eventos que são 
    * locais a este escopo.
    * @Variavel {Evento} [eventos] Armazena os eventos. */
   var eventos = null;
-  
-  /* @Variavel {Controlador} [ctrldrEventos].
-   * Responsavel por lidar com os diversos eventos dos módulos e dos sub-módulos. */
-  var ctrldrEventos = null;
   
   /* @Modulo Unidades().
    *
@@ -39,10 +42,9 @@ define([
   var Unidades = function(Escopos, ctrldrRotas) {
     
     // Iniciamos aqui os nossos eventos. Lembre-se que temos que adicionar os eventos deste 
-    // módulo bem antes de iniciar os seus sub-módulos.
-    ctrldrEventos = new ControladorEventos();
+    // módulo sempre antes de iniciar os seus sub-módulos.
     eventos = ctrldrEventos.adcNovoCanalDeEventos(MODULO);
-       
+    
     /* @Propriedade {Utilitario} [escopos].
      * Contêm métodos para lidarmos com os escopos e também as bandeiras dos diversos módulos. */
     this.escopos = Escopos;
@@ -52,16 +54,12 @@ define([
     this.ctrldrRotas = ctrldrRotas;
   };
   
-  /* @Método {Publico} [carregarAsBandeiras].
-   * Carregamos as bandeiras deste módulo.
-   */
+  /* @Método {Publico} [carregarAsBandeiras]. Carregamos as bandeiras deste módulo. */
   Unidades.prototype.carregarAsBandeiras = function() {
     this.escopos.carregarAsBandeirasDoModulo(this.listaDasMinhasBandeiras);
   };
   
-  /* @Método {Publico} [carregarAsRotasParaSubModulos].
-   * Carregamos as rotas dos sub-módulos deste módulo.
-   */
+  /* @Método {Publico} [carregarAsRotasParaSubModulos]. Carregamos as rotas dos sub-módulos deste módulo. */
   Unidades.prototype.carregarAsRotasParaSubModulos = function() {
     this.ctrldrRotas.carregarAsRotasParaSubModulo(this.listaDosMeusSubModulosEstaticos);
     
@@ -84,13 +82,13 @@ define([
    * - [ACESSO_TOTAL]     Chave de acesso do usuário raiz, com esta chave é possível acessar todas as rotas.
    */
   Unidades.prototype.listaDasMinhasBandeiras = [
-    {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Criar', 'acesso': 'ACESSO_CRIAR', 'valor': 0x00000001 }                   
-  , {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Listar', 'acesso': 'ACESSO_LISTAR', 'valor': (0x00000002 | 0x00000020) }  
-  , {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Ler', 'acesso': 'ACESSO_LER', 'valor': (0x00000004 | 0x00000020) }        
-  , {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Atualizar', 'acesso': 'ACESSO_ATUALIZAR', 'valor': 0x00000008 }           
-  , {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Deletar', 'acesso': 'ACESSO_DELETAR', 'valor': 0x00000010 }               
-  , {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Livre', 'acesso': 'ACESSO_LIVRE', 'valor': 0x00000020 }                   
-  , {'modulo': 'unidades', 'modelo': 'Unidade', 'acao': 'Total', 'acesso': 'ACESSO_TOTAL', 'valor': 0x00000040 }                   
+    {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Criar', 'acesso': 'ACESSO_CRIAR', 'valor': 0x00000001 }                   
+  , {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Listar', 'acesso': 'ACESSO_LISTAR', 'valor': (0x00000002 | 0x00000020) }  
+  , {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Ler', 'acesso': 'ACESSO_LER', 'valor': (0x00000004 | 0x00000020) }        
+  , {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Atualizar', 'acesso': 'ACESSO_ATUALIZAR', 'valor': 0x00000008 }           
+  , {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Deletar', 'acesso': 'ACESSO_DELETAR', 'valor': 0x00000010 }               
+  , {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Livre', 'acesso': 'ACESSO_LIVRE', 'valor': 0x00000020 }                   
+  , {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Total', 'acesso': 'ACESSO_TOTAL', 'valor': 0x00000040 }                   
   ];
   
   /* @Propriedade {Matriz} (Constante) [listaDosMeusSubModulosEstaticos]. 
@@ -105,9 +103,9 @@ define([
    * - {Matriz} [livre]         As ações que são livres para acesso.
    */
   Unidades.prototype.listaDosMeusSubModulosEstaticos = [
-    {'modulo': 'unidades', 'modelo': 'Unidade', 'identificador': null, 'nome': 'unidadesCriar', 'valor': ModuloVisaoUnidadesCriar, 'acoes': ['Criar', 'Total'], 'livre': ['Livre'] }
-  , {'modulo': 'unidades', 'modelo': 'Unidade', 'identificador': null, 'nome': 'unidadesLer', 'valor': ModuloVisaoUnidadesLer, 'acoes': ['Ler', 'Total'], 'livre': ['Livre'] }
-  , {'modulo': 'unidades', 'modelo': 'Unidade', 'identificador': null, 'nome': 'unidadesListar', 'valor': ModuloVisaoUnidadesListar, 'acoes': ['Listar', 'Total'], 'livre': ['Livre'] }
+    {'modulo': MODULO, 'modelo': MODELO, 'identificador': null, 'nome': 'unidadesCriar', 'valor': ModuloVisaoUnidadesCriar, 'acoes': ['Criar', 'Total'], 'livre': ['Livre'] }
+  , {'modulo': MODULO, 'modelo': MODELO, 'identificador': null, 'nome': 'unidadesLer', 'valor': ModuloVisaoUnidadesLer, 'acoes': ['Ler', 'Total'], 'livre': ['Livre'] }
+  , {'modulo': MODULO, 'modelo': MODELO, 'identificador': null, 'nome': 'unidadesListar', 'valor': ModuloVisaoUnidadesListar, 'acoes': ['Listar', 'Total'], 'livre': ['Livre'] }
   ];
    
   Unidades.prototype.descarregar = function() {

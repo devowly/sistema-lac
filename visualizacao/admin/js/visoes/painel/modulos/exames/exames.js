@@ -20,14 +20,16 @@ define([
   /* @Variavel {Texto} [MODULO] Nome deste módulo. */
   var MODULO = 'Exames';
   
-  /* Aqui acrescentamos os eventos locais para este módulo. Assim ficará fácil para manipular os eventos que são 
-   * locais a este escopo.
-   * @Variavel {Evento} [eventos] Armazena os eventos. */
-  var eventos = null;
+  /* @Variavel {Texto} [MODELO] Nome do modelo deste módulo. */
+  var MODELO = 'Exame';
   
   /* @Variavel {Controlador} [ctrldrEventos].
    * Responsavel por lidar com os diversos eventos dos módulos e dos sub-módulos. */
-  var ctrldrEventos = null;
+  var ctrldrEventos = new ControladorEventos();
+  
+  /* @Variavel {Evento} [eventos] Armazena os eventos. Aqui acrescentamos os eventos locais para este módulo.
+   * Assim ficará fácil para manipular os eventos que são locais a este escopo. */
+  var eventos = null;
   
   /* @Modulo Exames().
    *
@@ -40,7 +42,6 @@ define([
     
     // Iniciamos aqui os nossos eventos. Lembre-se que temos que adicionar os eventos deste 
     // módulo sempre antes de iniciar os seus sub-módulos.
-    ctrldrEventos = new ControladorEventos();
     eventos = ctrldrEventos.adcNovoCanalDeEventos(MODULO);
        
     /* @Propriedade {Utilitario} [escopos].
@@ -52,16 +53,12 @@ define([
     this.ctrldrRotas = ctrldrRotas;
   };
   
-  /* @Método {Publico} [carregarAsBandeiras].
-   * Carregamos as bandeiras deste módulo.
-   */
+  /* @Método {Publico} [carregarAsBandeiras]. Carregamos as bandeiras deste módulo. */
   Exames.prototype.carregarAsBandeiras = function() {
     this.escopos.carregarAsBandeirasDoModulo(this.listaDasMinhasBandeiras);
   };
   
-  /* @Método {Publico} [carregarAsRotasParaSubModulos].
-   * Carregamos as rotas dos sub-módulos deste módulo.
-   */
+  /* @Método {Publico} [carregarAsRotasParaSubModulos]. Carregamos as rotas dos sub-módulos deste módulo. */
   Exames.prototype.carregarAsRotasParaSubModulos = function() {
     this.ctrldrRotas.carregarAsRotasParaSubModulo(this.listaDosMeusSubModulosEstaticos);
     
@@ -82,13 +79,13 @@ define([
    * - [ACESSO_TOTAL]     Chave de acesso do usuário raiz, com esta chave é possível acessar todas as rotas.
    */
   Exames.prototype.listaDasMinhasBandeiras = [
-    {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Criar', 'acesso': 'ACESSO_CRIAR', 'valor': 0x00000001 }                   
-  , {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Listar', 'acesso': 'ACESSO_LISTAR', 'valor': (0x00000002 | 0x00000020) }  
-  , {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Ler', 'acesso': 'ACESSO_LER', 'valor': (0x00000004 | 0x00000020) }        
-  , {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Atualizar', 'acesso': 'ACESSO_ATUALIZAR', 'valor': 0x00000008 }           
-  , {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Deletar', 'acesso': 'ACESSO_DELETAR', 'valor': 0x00000010 }               
-  , {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Livre', 'acesso': 'ACESSO_LIVRE', 'valor': 0x00000020 }                   
-  , {'modulo': 'exames', 'modelo': 'Exame', 'acao': 'Total', 'acesso': 'ACESSO_TOTAL', 'valor': 0x00000040 }                   
+    {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Criar', 'acesso': 'ACESSO_CRIAR', 'valor': 0x00000001 }                   
+  , {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Listar', 'acesso': 'ACESSO_LISTAR', 'valor': (0x00000002 | 0x00000020) }  
+  , {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Ler', 'acesso': 'ACESSO_LER', 'valor': (0x00000004 | 0x00000020) }        
+  , {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Atualizar', 'acesso': 'ACESSO_ATUALIZAR', 'valor': 0x00000008 }           
+  , {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Deletar', 'acesso': 'ACESSO_DELETAR', 'valor': 0x00000010 }               
+  , {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Livre', 'acesso': 'ACESSO_LIVRE', 'valor': 0x00000020 }                   
+  , {'modulo': MODULO, 'modelo': MODELO, 'acao': 'Total', 'acesso': 'ACESSO_TOTAL', 'valor': 0x00000040 }                   
   ];
   
   /* @Propriedade {Matriz} (Constante) [listaDosMeusSubModulosEstaticos]. 
@@ -103,9 +100,9 @@ define([
    * - {Matriz} [livre]         As ações que são livres para acesso.
    */
   Exames.prototype.listaDosMeusSubModulosEstaticos = [
-    {'modulo': 'exames', 'modelo': 'Exame', 'identificador': null, 'nome': 'examesCriar', 'valor': ModuloVisaoExamesCriar, 'acoes': ['Criar', 'Total'], 'livre': ['Livre'] }
-  , {'modulo': 'exames', 'modelo': 'Exame', 'identificador': null, 'nome': 'examesLer', 'valor': ModuloVisaoExamesLer, 'acoes': ['Ler', 'Total'], 'livre': ['Livre'] }
-  , {'modulo': 'exames', 'modelo': 'Exame', 'identificador': null, 'nome': 'examesListar', 'valor': ModuloVisaoExamesListar, 'acoes': ['Listar', 'Total'], 'livre': ['Livre'] }
+    {'modulo': MODULO, 'modelo': MODELO, 'identificador': null, 'nome': 'examesCriar', 'valor': ModuloVisaoExamesCriar, 'acoes': ['Criar', 'Total'], 'livre': ['Livre'] }
+  , {'modulo': MODULO, 'modelo': MODELO, 'identificador': null, 'nome': 'examesLer', 'valor': ModuloVisaoExamesLer, 'acoes': ['Ler', 'Total'], 'livre': ['Livre'] }
+  , {'modulo': MODULO, 'modelo': MODELO, 'identificador': null, 'nome': 'examesListar', 'valor': ModuloVisaoExamesListar, 'acoes': ['Listar', 'Total'], 'livre': ['Livre'] }
   ];
    
   Exames.prototype.descarregar = function() {
