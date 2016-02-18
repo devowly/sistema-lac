@@ -11,10 +11,13 @@ define([
   'jquery'
 , 'backbone'
 , 'underscore'
+, 'eventos'
 , 'controladores/modulos/escopos'
 , 'visoes/painel/modulos/exames/exames'
 , 'visoes/painel/modulos/unidades/unidades'
-], function($, Backbone, _, Escopos, ModuloVisaoExames, ModuloVisaoUnidades) {
+], function($, Backbone, _, Eventos, Escopos, ModuloVisaoExames, ModuloVisaoUnidades) {
+  
+  var evts = new Eventos();
   
   /* @Controlador Modulos().
    * 
@@ -44,7 +47,7 @@ define([
     /* Evento disparado logo após todas as visões da interface base estiverem carregadas e prontas 
      * para receberem entradas dos módulos. A interface base não é nada mais que uma coluna dorsal
      * das visões base deste aplicativo. */
-    Aplicativo.eventosGlobais.on('controlador:interfacebase:carregada', function() {
+    evts.subscrever('Global', 'controlador:interfacebase:carregada', 'sempreQuandoPublicado', function() {
       
       if (!this.moduloVisaoExames) {
         //this.moduloVisaoExames = new ModuloVisaoExames(this.escopos);
@@ -53,7 +56,7 @@ define([
     
     /* Evento disparado quando a interface base estiver descarregada. Utilizamos isso para descarregar
      * os nossos módulos e tudo mais que for necessário. */
-    Aplicativo.eventosGlobais.on('controlador:interfacebase:descarregada', function() {
+    evts.subscrever('Global', 'controlador:interfacebase:descarregada', 'sempreQuandoPublicado', function() {
       
       // <umdez> Provavelmente não será necessário adicionar esta caracteristica. Eu digo isso 
       // porque não tras beneficio algum. Seria apenas mais uma forma de aumentar a complexidade 
@@ -64,6 +67,7 @@ define([
         //this.moduloVisaoExames = null;
       }
     }, this);
+    
   };
   
   /* @Método {Privado} _carregarOsModulos().

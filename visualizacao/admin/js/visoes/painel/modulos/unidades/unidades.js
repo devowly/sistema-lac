@@ -10,13 +10,15 @@ define([
 , 'backbone'
 , 'underscore'
 , 'bootstrap'
-, 'controladores/eventos/eventos'
+, 'eventos'
 , 'text!/admin/js/templantes/painel/modulos/unidades/Visao.Unidades.html'
 , 'visoes/painel/modulos/unidades/unidadesCriar'
 , 'visoes/painel/modulos/unidades/unidadesLer'
 , 'visoes/painel/modulos/unidades/unidadesListar'
-], function($, Backbone, _, Bootstrap, ControladorEventos, TemplanteModuloUnidades, ModuloVisaoUnidadesCriar, ModuloVisaoUnidadesLer, ModuloVisaoUnidadesListar) {
+], function($, Backbone, _, Bootstrap, Eventos, TemplanteModuloUnidades, ModuloVisaoUnidadesCriar, ModuloVisaoUnidadesLer, ModuloVisaoUnidadesListar) {
   
+  var evts = new Eventos();
+   
   /* @Variavel {Texto} [MODULO] Nome deste módulo. */
   var MODULO = 'Unidades';
   
@@ -25,7 +27,7 @@ define([
   
   /* @Variavel {Controlador} [ctrldrEventos].
    * Responsavel por lidar com os diversos eventos dos módulos e dos sub-módulos. */
-  var ctrldrEventos = new ControladorEventos();
+  //var ctrldrEventos = new ControladorEventos();
   
   /* Aqui acrescentamos os eventos locais para este módulo. Assim ficará fácil para manipular os eventos que são 
    * locais a este escopo.
@@ -43,7 +45,8 @@ define([
     
     // Iniciamos aqui os nossos eventos. Lembre-se que temos que adicionar os eventos deste 
     // módulo sempre antes de iniciar os seus sub-módulos.
-    eventos = ctrldrEventos.adcNovoCanalDeEventos(MODULO);
+    // eventos = ctrldrEventos.adcNovoCanalDeEventos(MODULO);
+    evts.adcCanal(MODULO);
     
     /* @Propriedade {Utilitario} [escopos].
      * Contêm métodos para lidarmos com os escopos e também as bandeiras dos diversos módulos. */
@@ -63,9 +66,9 @@ define([
   Unidades.prototype.carregarAsRotasParaSubModulos = function() {
     this.ctrldrRotas.carregarAsRotasParaSubModulo(this.listaDosMeusSubModulosEstaticos);
     
-    ctrldrEventos.dispararEventoEmUmCanal(MODULO, 'Okay', {'OK': 'LOLz'});
-    ctrldrEventos.dispararEventoEmUmCanal(MODULO, 'Okay', {'OK': 'LOLz'});
-    ctrldrEventos.dispararEventoEmUmCanal(MODULO, 'Okay', {'OK': 'LOLz'});
+    evts.publicar(MODULO, 'Okay', {'OK': 'LOLz'});
+    evts.publicar(MODULO, 'Okay', {'OK': 'LOLz'});
+    evts.publicar(MODULO, 'Okay', {'OK': 'LOLz'});
   };
   
   /* @Propriedade {Matriz} (Constante) [listaDasMinhasBandeiras].

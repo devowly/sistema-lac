@@ -14,10 +14,13 @@ define([
   'jquery'
 , 'underscore'
 , 'backbone'
+, 'eventos'
 , 'codigos'
 , 'nesting'
 , 'colecoes/escopos/escopos'
-], function($, _, Backbone, CodigosDeResposta, nesting, ColecaoEscopos) {
+], function($, _, Backbone, Eventos, CodigosDeResposta, nesting, ColecaoEscopos) {
+  
+  var evts = new Eventos();
   
  /* Os modelos são a parte central de um aplicativo, contendo os dados e também uma parte longa de toda logica que a cerca:
   * Conversões, validações, propriedades e controle de acesso. Um modelo possue funcionalidades básicas para a gerencia dos dados.
@@ -165,13 +168,15 @@ define([
            * o escopo do usuário.
            */
           esteObjeto.escopos.url = 'sessao/' + modelo.id + '/escopos';
-          Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:dentro');  // Escopo pronto para ser requisitado.
+          //Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:dentro');  // Escopo pronto para ser requisitado.
+          evts.publicar('Global', 'modelo:sessao:usuario:dentro', null);  // Escopo pronto para ser requisitado.
           
           cd(true, resposta);
         },
         error: function (modelo, resposta) {
           
-          Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:fora');
+          //Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:fora');
+          evts.publicar('Global', 'modelo:sessao:usuario:fora', null); 
           cd(false, resposta);
         }
       });
@@ -207,14 +212,16 @@ define([
           // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
           esteObjeto.set({auth: false});
 
-          Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:fora');
+          //Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:fora');
+          evts.publicar('Global', 'modelo:sessao:usuario:fora', null); 
         },
         error: function () {
           
           // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
           esteObjeto.set({auth: false});
  
-          Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:fora');
+          // Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:fora');
+          evts.publicar('Global', 'modelo:sessao:usuario:fora', null);
         }
       });      
     },
@@ -249,7 +256,8 @@ define([
            */
           esteObjeto.escopos.url = 'sessao/' + modelo.id + '/escopos';
           
-          Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:validado');  
+          // Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:validado');  
+          evts.publicar('Global', 'modelo:sessao:usuario:validado', null);
           
           cd(true, resposta);
         },
@@ -261,7 +269,9 @@ define([
           // Muda o valor de auth para false, fazendo com que seja disparado o evento change:auth.
           esteObjeto.set({auth: false});
           
-          Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:fora');
+          // Aplicativo.eventosGlobais.trigger('modelo:sessao:usuario:fora');
+          evts.publicar('Global', 'modelo:sessao:usuario:fora', null);
+          
           cd(false, resposta);
         }
       });

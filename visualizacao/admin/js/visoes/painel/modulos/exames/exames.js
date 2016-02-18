@@ -10,12 +10,12 @@ define([
 , 'backbone'
 , 'underscore'
 , 'bootstrap'
-, 'controladores/eventos/eventos'
+, 'eventos'
 , 'text!/admin/js/templantes/painel/modulos/exames/Visao.Exames.html'
 , 'visoes/painel/modulos/exames/examesCriar'
 , 'visoes/painel/modulos/exames/examesLer'
 , 'visoes/painel/modulos/exames/examesListar'
-], function($, Backbone, _, Bootstrap, ControladorEventos, TemplanteModuloExames, ModuloVisaoExamesCriar, ModuloVisaoExamesLer, ModuloVisaoExamesListar) {
+], function($, Backbone, _, Bootstrap, Eventos, TemplanteModuloExames, ModuloVisaoExamesCriar, ModuloVisaoExamesLer, ModuloVisaoExamesListar) {
   
   /* @Variavel {Texto} [MODULO] Nome deste módulo. */
   var MODULO = 'Exames';
@@ -23,13 +23,15 @@ define([
   /* @Variavel {Texto} [MODELO] Nome do modelo deste módulo. */
   var MODELO = 'Exame';
   
-  /* @Variavel {Controlador} [ctrldrEventos].
-   * Responsavel por lidar com os diversos eventos dos módulos e dos sub-módulos. */
-  var ctrldrEventos = new ControladorEventos();
+  var CANAL = 'modulo:exames';
   
-  /* @Variavel {Evento} [eventos] Armazena os eventos. Aqui acrescentamos os eventos locais para este módulo.
+  /* @Variavel {Utilitario} [evts].
+   * Responsavel por lidar com os diversos eventos dos módulos e dos sub-módulos. */
+  var evts = new Eventos();
+  
+  /* @Variavel {Evento} [evts] Armazena os eventos. Aqui acrescentamos os eventos locais para este módulo.
    * Assim ficará fácil para manipular os eventos que são locais a este escopo. */
-  var eventos = null;
+  //var evts = null;
   
   /* @Modulo Exames().
    *
@@ -42,8 +44,9 @@ define([
     
     // Iniciamos aqui os nossos eventos. Lembre-se que temos que adicionar os eventos deste 
     // módulo sempre antes de iniciar os seus sub-módulos.
-    eventos = ctrldrEventos.adcNovoCanalDeEventos(MODULO);
-       
+    // evts = ctrldrEventos.adcNovoCanalDeEventos(MODULO);
+    evts.adcCanal(CANAL);
+    
     /* @Propriedade {Utilitario} [escopos].
      * Contêm métodos para lidarmos com os escopos e também as bandeiras dos diversos módulos. */
     this.escopos = Escopos;
@@ -62,7 +65,7 @@ define([
   Exames.prototype.carregarAsRotasParaSubModulos = function() {
     this.ctrldrRotas.carregarAsRotasParaSubModulo(this.listaDosMeusSubModulosEstaticos);
     
-    ctrldrEventos.dispararEventoEmUmCanal(MODULO, 'Okay', {'OK': 'LOL'});
+    evts.publicar(CANAL, 'Okay', {'OK': 'LOL'});
   };
   
   /* @Propriedade {Matriz} (Constante) [listaDasMinhasBandeiras].

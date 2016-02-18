@@ -18,8 +18,11 @@ define([
 , 'underscore'
 , 'roteador' // Requisitamos o arquivo roteador.js
 , 'backbone'
+, 'eventos'
 , 'configuracao'
-], function($, _, Roteador, Backbone, Configuracao){
+], function($, _, Roteador, Backbone, Eventos, Configuracao){
+  
+  var evts = new Eventos();
   
   /* Aqui acrescentamos os eventos ao nosso objeto Aplicativo. Assim fica fácil utilizarmos eventos em diversos módulos 
    * do nosso aplicativo, porque assim não será necessário passar o seu valor para cada módulo.
@@ -33,6 +36,7 @@ define([
   
   /* @Propriedade {Matriz} [Canais] Armazena uma lista de canais de eventos para módulos, sub-módulos etc. */
   Aplicativo['Canais'] = [];
+  Aplicativo['Canais']['Global'] = _.extend({}, Backbone.Events);
   
   /* @Função inicializar().
    *

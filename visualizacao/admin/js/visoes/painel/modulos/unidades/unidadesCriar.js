@@ -11,15 +11,16 @@ define([
   'jquery'
 , 'backbone'
 , 'underscore'
-, 'controladores/eventos/eventos'
-], function($, Backbone, _, ControladorEventos){
+, 'eventos'
+], function($, Backbone, _, Eventos){
   
   /* @Variavel {Texto} [MODULO] Nome do módulo a que este sub-módulo pertence. */
   var MODULO = 'Unidades';
   
   /* @Variavel {Controlador} [ctrldrEventos].
    * Responsavel por lidar com os diversos eventos dos módulos e dos sub-módulos. */
-  var ctrldrEventos = new ControladorEventos();
+  // var ctrldrEventos = new ControladorEventos();
+  var evts = new Eventos();
   
   /* @Submodulo UnidadesCriar().
    *
@@ -30,9 +31,9 @@ define([
      * as bandeiras dos diversos módulos.  */
     this.escopos = Escopos;
     
-    ctrldrEventos.adcEsperaPorEventoEmUmCanal(MODULO, 'Okay', (function(dados){
+    evts.subscrever(MODULO, 'Okay', 'sempreQuandoPublicado', function(dados) {
       console.log(dados.OK);
-    }).bind(this));
+    }, this);
     
   };
 

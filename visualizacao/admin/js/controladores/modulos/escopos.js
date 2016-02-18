@@ -11,8 +11,11 @@ define([
   'jquery'
 , 'backbone'
 , 'underscore'
+, 'eventos'
 , 'controladores/modulos/bandeiras'
-], function($, Backbone, _, Bandeiras){
+], function($, Backbone, _, Eventos, Bandeiras){
+  
+  var evts = new Eventos();
   
   /* @Utilitario Escopos().
    *
@@ -120,7 +123,7 @@ define([
    */
   Escopos.prototype.requisitarOsEscopos = function(cd) {
 
-    Aplicativo.eventosGlobais.trigger('controlador:escopos:requisicao:carregar:escopos', (function(erro, escopos) {
+    evts.publicar('Global', 'controlador:escopos:requisicao:carregar:escopos', (function(erro, escopos) {
       
       if (erro) {
         // Lembre-se que se este erro for de validação, provavelmente a visão do usuário será modificada
@@ -139,6 +142,7 @@ define([
         this.manipularOsEscopos(escopos, cd);
       }
     }).bind(this));
+    
   };
   
   /* @Método {Publico} sePossuiAcessoAoEscopo().

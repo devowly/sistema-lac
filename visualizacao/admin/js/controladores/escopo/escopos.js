@@ -12,8 +12,11 @@
 define([
   'jquery'
 , 'backbone'
+, 'eventos'
 , 'utilitarios'
-], function($, Backbone, Utilitarios){
+], function($, Backbone, Eventos, Utilitarios){
+  
+  var evts = new Eventos();
   
   /* @Controlador Escopos().
    *
@@ -41,21 +44,20 @@ define([
      * requisitado para manipular a visão apresentada ao usuário. Por exemplo, se a sessão
      * estiver expirada então devemos manipular para que o usuário não possua acesso a determinadas
      * visões e ações. */
-    Aplicativo.eventosGlobais.on('controlador:escopos:requisicao:carregar:escopos', function(cd) {
+    evts.subscrever('Global', 'controlador:escopos:requisicao:carregar:escopos', 'sempreQuandoPublicado', function(cd) {
       this._carregarOsEscopos(cd);
     }, this);
     
     /* Evento disparado quando o usuário tiver realizado a saida com sucesso. */
-    Aplicativo.eventosGlobais.on('modelo:sessao:usuario:fora', function() {
+    evts.subscrever('Global', 'modelo:sessao:usuario:fora', 'sempreQuandoPublicado', function() {
       this.escopos = null;
     }, this);
     
     /* Evento disparado sempre que a rota for modificada assim nós podemos 
      * recarregar os escopos deste usuário ou fazer outras coisas. */
-    Aplicativo.eventosGlobais.on('roteador:rota:modificada', function() {
-      
+    evts.subscrever('Global', 'roteador:rota:modificada', 'sempreQuandoPublicado', function() {
+      this.escopos = null;
     }, this);
-    
   };
   
   /* @Método [Privado] _carregarOsEscopos().

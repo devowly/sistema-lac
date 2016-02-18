@@ -11,9 +11,12 @@ define([
   'jquery'
 , 'backbone'
 , 'underscore'
+, 'eventos'
 , 'visoes/painel/base/topo/topo'
 , 'visoes/painel/base/barraDeNav/barraDeNav'
-], function($, Backbone, _, VisaoTopoDoPainel, VisaoBarraDeNavDoPainel){
+], function($, Backbone, _, Eventos, VisaoTopoDoPainel, VisaoBarraDeNavDoPainel){
+  
+  var evts = new Eventos();
   
   /* @Controlador InterfaceBase().
    * 
@@ -37,21 +40,21 @@ define([
     
     /* Evento disparado quando o usuário tiver realizado a entrada com sucesso. Logo após isso
      * podemos apresentar a interface base. */
-    Aplicativo.eventosGlobais.on('modelo:sessao:usuario:dentro', this._carregarInterface, this);
+    evts.subscrever('Global', 'modelo:sessao:usuario:dentro', 'sempreQuandoPublicado', this._carregarInterface, this);
     
     /* Evento disparado sempre que o nosso roteador estiver carregado, aqui verificamos se
      * a sessão do usuário está aberta, depois disso nós acrescentamos as nossas visões no DOM.   
      * Lembre-se que quando o roteador estiver carregado isso significa que já foi realizado
      * uma verificação do estado da sessão do usuário. Além disso, quando o roteador é carregado
      * significa que o sitio foi acessado inicialmente ou a página foi reiniciada pelo usuário. */
-    Aplicativo.eventosGlobais.once('roteador:carregado', this._carregarInterface, this);
+    evts.subscrever('Global', 'roteador:carregado', 'quandoPublicado', this._carregarInterface, this);
     
     /* Quando uma rota nova é acessada então este evento será disparado. */
-    Aplicativo.eventosGlobais.on('roteador:rota:modificada', function() { }, this);
+    evts.subscrever('Global', 'roteador:rota:modificada', 'sempreQuandoPublicado', function() {}, this);
     
     /* Quando o usuário sair do painel. Usamos isto para realizar a remoção das nossas visões.
      * @Veja http://stackoverflow.com/a/11534056/4187180 */
-    Aplicativo.eventosGlobais.on('modelo:sessao:usuario:fora', this._descarregarInterface, this);
+    evts.subscrever('Global', 'modelo:sessao:usuario:fora', 'sempreQuandoPublicado', this._descarregarInterface, this);
     
   };
   
@@ -73,7 +76,7 @@ define([
         
       // Informamos que as nossas visões estão totalmente carregadas e podem agora 
       // receber requisições.
-      Aplicativo.eventosGlobais.trigger('controlador:interfacebase:carregada');
+      evts.publicar('Global', 'controlador:interfacebase:carregada', null);
     }
   };
   

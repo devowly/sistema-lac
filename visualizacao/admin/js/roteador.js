@@ -13,13 +13,16 @@ define([
   'jquery'
 , 'backbone'
 , 'underscore'
+, 'eventos'
 , 'controladores/escopo/escopos'
 , 'controladores/interface/interfaceBase'
 , 'controladores/modulos/modulos'
 , 'controladores/rotas/rotas'
 , 'visoes/entrada/entrada'
 , 'modelos/sessao/sessao'
-], function($, Backbone, _, ControladorEscopos, ControladorInterfaceBase, ControladorModulos, ControladorRotas, VisaoEntrada, ModeloSessao){
+], function($, Backbone, _, Eventos, ControladorEscopos, ControladorInterfaceBase, ControladorModulos, ControladorRotas, VisaoEntrada, ModeloSessao){
+  
+  var evts = new Eventos();
   
   /* @Roteador SitioRoteador().
    *
@@ -51,7 +54,9 @@ define([
        * @Veja http://stackoverflow.com/a/9704262/4187180
        */
       this.bind('route', function() {
-        Aplicativo.eventosGlobais.trigger('roteador:rota:modificada');
+        // Aplicativo.eventosGlobais.trigger('roteador:rota:modificada');
+        
+        evts.publicar('Global', 'roteador:rota:modificada', null);
       });
       
       /* Iniciamos a visão de entrada, sempre que o usuário acessar o nosso sitio, será apresentada
@@ -132,7 +137,9 @@ define([
       
       /* Disparamos este evento quando o nosso roteador estiver carregado com sucesso.
        * Assim utilizamos ele para acrescentar as rotas dos nossos módulos. */
-      Aplicativo.eventosGlobais.trigger('roteador:carregado');
+      // Aplicativo.eventosGlobais.trigger('roteador:carregado');
+        
+      evts.publicar('Global', 'roteador:carregado', null);
         
       // Iniciamos aqui o histórico das rotas.
       Backbone.history.start();   
