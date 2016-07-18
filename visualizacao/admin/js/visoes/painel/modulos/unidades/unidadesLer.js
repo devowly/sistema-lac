@@ -1,8 +1,4 @@
-'use strict'
-
-/*
- * @arquivo unidadesLer.js
- */ 
+/* @arquivo unidadesLer.js */ 
 
 /* Versão 0.0.1-Beta
  */
@@ -12,6 +8,7 @@ define([
 , 'backbone'
 , 'underscore'
 ], function($, Backbone, _){
+  'use strict';
   
   /* @Submodulo UnidadesLer().
    *

@@ -1,8 +1,4 @@
-'use strict'
-
-/* 
- * @arquivo eventos.js
- */ 
+/* @arquivo eventos.js */ 
 
 /* Versão 0.0.1-Beta
  */
@@ -11,6 +7,7 @@ define([
   'jquery'
 , 'backbone'
 ], function($, Backbone){
+  'use strict';
   
   /* @Controlador Eventos().
    *

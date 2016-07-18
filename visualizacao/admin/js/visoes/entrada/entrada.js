@@ -1,5 +1,3 @@
-'use strict'
-
 /* @arquivo entrada.js */
 
 /* Versão 0.0.1-Beta
@@ -15,6 +13,7 @@ define([
 , 'text!/admin/js/templantes/entrada/Visao.Entrada.html'
 , 'text!/admin/js/templantes/painel/Visao.Painel.html'
 ], function($, Backbone, _, Bootstrap, Utilitarios, TemplanteEntrada, TemplantePainel){
+  'use strict';
   
   /* @Visão Entrada().
    *

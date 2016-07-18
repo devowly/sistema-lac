@@ -1,4 +1,7 @@
-'use strict'
+/* Responsavel por lidar com os códigos de resposta do serviço REST. 
+ *
+ * @arquivo codigos.js 
+ */
 
 /* Versão 0.0.1-Beta
  */
@@ -8,6 +11,7 @@ define([
 , 'underscore'
 , 'backbone'
 ], function($, _, BackBone){
+  'use strict';
   
   /* @Classe CodigosDeResposta().
    * 
@@ -71,7 +75,7 @@ define([
    * pode ser apresentada com a cor vermelha. Assim, as cores podem representar a gravidade do código retornado.
    *
    * @Parametro {Texto} [valor] O valor do nosso código. Geralmente um campo texto com valor único.
-   * @Retorno {Objeto|nulo} Um objeto contendo uma mensagem, tipo e o nome se encontrarmos o código, ou valor null, se não for encontrado o código.
+   * @Retorno {Objeto|nulo} Um objeto contendo uma mensagem, tipo e o nome se encontrarmos o código, ou valor nulo se não for encontrado o código.
    */
   CodigosDeResposta.prototype.procurarUmCodigoPeloValor = function(valor) {
     var CODS = this.CODIGOS;

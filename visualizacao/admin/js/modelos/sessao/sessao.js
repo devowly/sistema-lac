@@ -1,8 +1,6 @@
-'use strict'
-
 /* Responsável por lidar com a sessão do usuário.
  *
- * @Arquivo sessao.js
+ * @arquivo sessao.js
  */
 
 /* Versão 0.0.1-Beta 
@@ -19,6 +17,7 @@ define([
 , 'nesting'
 , 'colecoes/escopos/escopos'
 ], function($, _, Backbone, Eventos, CodigosDeResposta, nesting, ColecaoEscopos) {
+  'use strict';
   
   var evts = new Eventos();
   

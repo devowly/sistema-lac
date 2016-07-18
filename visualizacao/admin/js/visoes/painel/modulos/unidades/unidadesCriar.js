@@ -1,8 +1,4 @@
-'use strict'
-
-/*
- * @arquivo unidadesCriar.js
- */ 
+/* @arquivo unidadesCriar.js */
 
 /* Versão 0.0.1-Beta
  */
@@ -13,6 +9,7 @@ define([
 , 'underscore'
 , 'eventos'
 ], function($, Backbone, _, Eventos){
+  'use strict';
   
   /* @Variavel {Texto} [MODULO] Nome do módulo a que este sub-módulo pertence. */
   var MODULO = 'Unidades';

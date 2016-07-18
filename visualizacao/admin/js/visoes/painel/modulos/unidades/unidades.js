@@ -1,5 +1,3 @@
-'use strict'
-
 /* @arquivo unidades.js */
 
 /* Versão 0.0.1-Beta
@@ -16,7 +14,9 @@ define([
 , 'visoes/painel/modulos/unidades/unidadesLer'
 , 'visoes/painel/modulos/unidades/unidadesListar'
 ], function($, Backbone, _, Bootstrap, Eventos, TemplanteModuloUnidades, ModuloVisaoUnidadesCriar, ModuloVisaoUnidadesLer, ModuloVisaoUnidadesListar) {
+  'use strict';
   
+  /* @Variavel {Evento} [evts] Eventos deste módulo. */
   var evts = new Eventos();
    
   /* @Variavel {Texto} [MODULO] Nome deste módulo. */

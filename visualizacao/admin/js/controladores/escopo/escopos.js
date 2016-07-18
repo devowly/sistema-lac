@@ -1,5 +1,3 @@
-'use strict'
-
 /* Aqui realizamos a requisição dos escopos de determinado usuário que realizou entrada.
  *
  * @arquivo escopos.js
@@ -15,6 +13,7 @@ define([
 , 'eventos'
 , 'utilitarios'
 ], function($, Backbone, Eventos, Utilitarios){
+  'use strict';
   
   var evts = new Eventos();
   

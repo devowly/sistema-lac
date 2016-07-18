@@ -1,5 +1,3 @@
-'use strict'
-
 /* @arquivo aplicativo.js */
 
 /* Versão 0.0.1-Beta
@@ -21,6 +19,7 @@ define([
 , 'eventos'
 , 'configuracao'
 ], function($, _, Roteador, Backbone, Eventos, Configuracao){
+  'use strict';
   
   var evts = new Eventos();
   
